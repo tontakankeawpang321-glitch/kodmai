@@ -234,6 +234,131 @@
     gap: 8px;
   }
 
+  /* * FLOATING CHECK-IN BUTTON 
+   * ปรับแก้ให้ลอยตัวชิดขวา 
+   */
+  .checkin-btn {
+    position: fixed;
+    bottom: 120px;  /* ตำแหน่งความสูงจากด้านล่าง */
+    right: 0;       /* ชิดขวา */
+    z-index: 1000;  /* อยู่ชั้นบนสุด */
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    width: auto;
+    padding: 12px 16px 12px 20px;
+    
+    background: linear-gradient(to left, #d97706, #f59e0b);
+    color: white;
+    border: none;
+    
+    /* ทรงแคปซูลชิดขอบ (มนซ้าย เหลี่ยมขวา) */
+    border-radius: 50px 0 0 50px;
+    
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: -4px 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s, padding-right 0.2s;
+  }
+  
+  .checkin-btn:hover {
+    padding-right: 24px; /* ยืดออกเล็กน้อยเมื่อเอาเมาส์ชี้ */
+  }
+  
+  .checkin-btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* Modal Overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000; /* สูงกว่าปุ่ม */
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; animation: fadeIn 0.2s; }
+  
+  /* Modal Box */
+  .modal-box {
+    background: white;
+    width: 100%;
+    max-width: 360px;
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+  }
+  
+  .modal-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+  .modal-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+  
+  .progress-container {
+    background: #e2e8f0;
+    border-radius: 999px;
+    height: 12px;
+    width: 100%;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  
+  .day-count { font-size: 32px; font-weight: 800; color: #d97706; line-height: 1; }
+  .day-label { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+  
+  .action-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .btn-confirm { background: var(--army-primary); color: white; margin-bottom: 8px; }
+  .btn-confirm:disabled { background: #cbd5e1; cursor: not-allowed; }
+  .btn-close { background: transparent; color: var(--text-muted); margin-top: 8px; }
+
+  /* Reward Box (Hidden by default) */
+  .reward-box {
+    display: none;
+    background: #ecfdf5;
+    border: 2px dashed #10b981;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+    color: #064e3b;
+  }
+  .reward-code {
+    font-family: monospace;
+    font-size: 24px;
+    font-weight: bold;
+    color: #059669;
+    background: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 8px;
+    display: block;
+    letter-spacing: 2px;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
   /* SVG Icons */
   svg { display: block; }
 </style>
@@ -251,7 +376,7 @@
   </header>
 
   <div class="container">
-
+    
     <!-- Facebook Page Card -->
     <div class="section-card">
       <div class="fb-wrapper">
@@ -380,6 +505,149 @@
     </div>
 
   </div>
+
+  <!-- MOVED: Floating Daily Check-in Button -->
+  <button class="checkin-btn" onclick="openCheckinModal()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+      <path d="M9 15l2 2 4-4"></path>
+    </svg>
+    เช็คชื่อ (Check-in)
+  </button>
+
+  <!-- Check-in Modal Dialog -->
+  <div id="checkinModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-title">เช็คชื่อประจำวัน</div>
+      <div class="modal-desc">เช็คชื่อให้ครบ 100 วัน เพื่อปลดล็อกโค้ดพิเศษสำหรับลบโฆษณาถาวร! หมดเขต 30 ธ.ค. 69 </div>
+      
+      <div class="day-count" id="currentDay">0</div>
+      <div class="day-label">จำนวนวันที่เช็คชื่อ (เป้าหมาย: 100)</div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      
+      <button class="action-btn btn-confirm" id="btnConfirmCheckin" onclick="performCheckin()">ลงชื่อเข้าใช้ (Check-in)</button>
+      
+      <div id="rewardContainer" class="reward-box">
+        🎉 ยินดีด้วย! คุณเช็คชื่อครบ 100 วัน
+        <div>โค้ดลบโฆษณาถาวรของคุณคือ:</div>
+        <span class="reward-code">NOADS2024</span>
+        <div style="font-size:12px; margin-top:8px;">(แคปหน้าจอนี้ไว้เป็นหลักฐาน)</div>
+      </div>
+
+      <div id="statusMessage" style="color: #ef4444; font-size: 14px; margin: 8px 0; height: 20px;"></div>
+      
+      <button class="action-btn btn-close" onclick="closeCheckinModal()">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const TARGET_DAYS = 100;
+    const STORAGE_KEY = 'exam_portal_checkin';
+    
+    // UI Elements
+    const modal = document.getElementById('checkinModal');
+    const displayCount = document.getElementById('currentDay');
+    const progressBar = document.getElementById('progressBar');
+    const btnConfirm = document.getElementById('btnConfirmCheckin');
+    const statusMsg = document.getElementById('statusMessage');
+    const rewardBox = document.getElementById('rewardContainer');
+
+    // Open Modal
+    function openCheckinModal() {
+      updateUI();
+      modal.classList.add('active');
+    }
+
+    // Close Modal
+    function closeCheckinModal() {
+      modal.classList.remove('active');
+    }
+
+    // Get Data from LocalStorage
+    function getData() {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (data) {
+        return JSON.parse(data);
+      }
+      return { count: 0, lastCheckIn: null };
+    }
+
+    // Save Data to LocalStorage
+    function saveData(count, dateStr) {
+      const data = { count: count, lastCheckIn: dateStr };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    // Update UI based on data
+    function updateUI() {
+      const data = getData();
+      const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+      
+      // Update Texts & Progress
+      displayCount.innerText = data.count;
+      const percentage = Math.min((data.count / TARGET_DAYS) * 100, 100);
+      progressBar.style.width = percentage + '%';
+
+      // Reset UI states
+      statusMsg.innerText = '';
+      rewardBox.style.display = 'none';
+
+      // Check if already checked in today
+      if (data.lastCheckIn === today) {
+        btnConfirm.disabled = true;
+        btnConfirm.innerText = 'วันนี้เช็คชื่อไปแล้ว';
+        statusMsg.innerText = 'กลับมาใหม่พรุ่งนี้นะครับ!';
+      } else {
+        btnConfirm.disabled = false;
+        btnConfirm.innerText = 'ลงชื่อเข้าใช้ (Check-in)';
+      }
+
+      // Check Reward Condition
+      if (data.count >= TARGET_DAYS) {
+        rewardBox.style.display = 'block';
+        btnConfirm.style.display = 'none'; // Hide button if completed
+        statusMsg.innerText = '';
+      }
+    }
+
+    // Perform Check-in Logic
+    function performCheckin() {
+      const data = getData();
+      const today = new Date().toISOString().split('T')[0];
+
+      if (data.lastCheckIn === today) {
+        return; // Prevent double check-in (safety)
+      }
+
+      // Increment
+      const newCount = data.count + 1;
+      
+      // Save
+      saveData(newCount, today);
+
+      // Update UI
+      updateUI();
+
+      // Simple animation feedback
+      btnConfirm.innerText = 'เรียบร้อย!';
+      setTimeout(() => {
+        if (newCount < TARGET_DAYS) {
+           // closeCheckinModal(); // Optional: Close auto or keep open
+        }
+      }, 1500);
+    }
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeCheckinModal();
+    });
+
+  </script>
 
 </body>
 </html>
