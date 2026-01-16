@@ -1,1 +1,385 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ศูนย์รวมข้อสอบ นนส. / นสต.</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Color Palette */
+    --army-primary: #1e5631;      /* เขียวทหารเข้ม */
+    --army-light: #4ade80;        /* เขียวสว่างสำหรับ Icon */
+    --army-bg: #f0fdf4;           /* พื้นหลังอ่อนโทนเขียว */
+    
+    --police-primary: #172554;    /* น้ำเงินตำรวจเข้ม */
+    --police-light: #60a5fa;      /* ฟ้าสว่างสำหรับ Icon */
+    --police-bg: #eff6ff;         /* พื้นหลังอ่อนโทนฟ้า */
 
+    --bg-page: #f8fafc;           /* พื้นหลังเว็บ */
+    --text-main: #1e293b;         /* สีตัวหนังสือหลัก */
+    --text-muted: #64748b;        /* สีตัวหนังสือรอง */
+    --white: #ffffff;
+    
+    /* Spacing & Layout */
+    --radius-card: 16px;
+    --radius-btn: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    margin: 0;
+    font-family: 'Sarabun', sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding-bottom: 40px;
+  }
+
+  /* Header Section */
+  header {
+    background: linear-gradient(135deg, var(--army-primary) 0%, #0f172a 50%, var(--police-primary) 100%);
+    color: var(--white);
+    padding: 30px 20px 40px; /* Extra bottom padding for overlap effect */
+    border-radius: 0 0 24px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+  
+  h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+  p.subtitle { margin: 6px 0 0; font-size: 14px; opacity: 0.9; font-weight: 300; }
+
+  /* Main Container */
+  .container {
+    max-width: 600px; /* Mobile focused max-width */
+    margin: -30px auto 0; /* Pull up to overlap header */
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Section Styles */
+  .section-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+
+  /* Facebook Responsive Wrapper */
+  .fb-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 10px;
+    background: #fff;
+  }
+
+  /* Accordion Customization */
+  details.custom-accordion {
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  /* Accordion Header */
+  summary.accordion-header {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    cursor: pointer;
+    background: var(--white);
+    font-weight: 700;
+    font-size: 18px;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  
+  summary.accordion-header::-webkit-details-marker { display: none; }
+
+  /* Hover effect for header */
+  summary.accordion-header:active { background-color: #f1f5f9; }
+
+  /* Icon Containers */
+  .icon-box {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Army Theme */
+  .army-theme .icon-box { background-color: var(--army-bg); color: var(--army-primary); }
+  .army-theme summary { border-left: 4px solid var(--army-primary); }
+  
+  /* Police Theme */
+  .police-theme .icon-box { background-color: var(--police-bg); color: var(--police-primary); }
+  .police-theme summary { border-left: 4px solid var(--police-primary); }
+
+  /* Arrow Icon Animation */
+  .chevron { margin-left: auto; transition: transform 0.3s ease; color: var(--text-muted); }
+  details[open] .chevron { transform: rotate(180deg); }
+
+  /* Content Panel */
+  .accordion-content {
+    padding: 0 16px 20px 16px;
+    background: var(--white);
+    border-top: 1px solid #f1f5f9;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Grid for Buttons */
+  .btn-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 column on mobile is safer for long Thai text */
+    gap: 10px;
+    margin-top: 16px;
+  }
+  
+  @media (min-width: 480px) {
+    .btn-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Link Buttons */
+  .link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-btn);
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: #cbd5e1;
+  }
+
+  .link-btn:active { transform: translateY(0); }
+  
+  /* Icon inside button */
+  .link-btn span { display: flex; align-items: center; gap: 8px; }
+  .link-btn i { font-style: normal; font-size: 12px; opacity: 0.5; }
+
+  /* Theme Specific Button Colors */
+  .army-theme .link-btn:hover { border-color: var(--army-light); color: var(--army-primary); background-color: var(--army-bg); }
+  .police-theme .link-btn:hover { border-color: var(--police-light); color: var(--police-primary); background-color: var(--police-bg); }
+
+  /* Special Highlight Button */
+  .highlight-btn-wrapper { margin: 24px 0; }
+  .highlight-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: var(--radius-card);
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .highlight-btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+    background-size: 200% 200%;
+    animation: shine 3s infinite;
+  }
+
+  @keyframes shine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Comments Section */
+  .comments-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-md);
+  }
+  .comments-header {
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* SVG Icons */
+  svg { display: block; }
+</style>
+</head>
+<body>
+
+  <!-- Facebook SDK -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0" nonce="abc123"></script>
+
+  <!-- Header -->
+  <header>
+    <h1>เตรียมสอบ นนส. / นสต.</h1>
+    <p class="subtitle">แหล่งรวมข้อมูลการสอบและแบบฝึกหัดทหาร-ตำรวจ</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Facebook Page Card -->
+    <div class="section-card">
+      <div class="fb-wrapper">
+        <div class="fb-page" 
+          data-href="https://www.facebook.com/s0ldier02/" 
+          data-tabs="timeline" 
+          data-width="500" 
+          data-height="350" 
+          data-small-header="false" 
+          data-adapt-container-width="true" 
+          data-hide-cover="false" 
+          data-show-facepile="true">
+        </div>
+      </div>
+    </div>
+
+    <!-- Army Section (นนส.) -->
+    <div class="section-card army-theme">
+      <details class="custom-accordion" open>
+        <summary class="accordion-header">
+          <div class="icon-box">
+            <!-- Icon: Shield/Star for Army -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M12 8v8"></path><path d="M8 12h8"></path>
+            </svg>
+          </div>
+          <span>นายสิบทหารบก (นนส.)</span>
+          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="accordion-content">
+          <div class="btn-grid">
+            <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ-นนส" target="_blank" class="link-btn">
+              <span>📜 หลักเกณฑ์ข้อสอบ</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/ประวตศาสตร-นนส" target="_blank" class="link-btn">
+              <span>🏰 ประวัติศาสตร์</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/วชาองกฤษ-นนส" target="_blank" class="link-btn">
+              <span>🇬🇧 ภาษาอังกฤษ</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/วชาคณตศาสตร-นนส" target="_blank" class="link-btn">
+              <span>🧮 คณิตศาสตร์</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/วชาภาษาไทย-นนส" target="_blank" class="link-btn">
+              <span>🇹🇭 ภาษาไทย</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/วชาพทธศาสนา-นนส" target="_blank" class="link-btn">
+              <span>🙏 พุทธศาสนา</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/เทคนคพเศษ" target="_blank" class="link-btn">
+              <span>💡 เทคนิคพิเศษ</span> <i>&rsaquo;</i>
+            </a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Police Section (นสต.) -->
+    <div class="section-card police-theme">
+      <details class="custom-accordion">
+        <summary class="accordion-header">
+          <div class="icon-box">
+            <!-- Icon: Badge for Police -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path>
+            </svg>
+          </div>
+          <span>นายสิบตำรวจ (นสต.)</span>
+          <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </summary>
+        <div class="accordion-content">
+          <div class="btn-grid">
+            <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ- นสต" target="_blank" class="link-btn">
+              <span>📜 หลักเกณฑ์ข้อสอบ</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/คณตศาสตร" target="_blank" class="link-btn">
+              <span>🧮 คณิตศาสตร์</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/ภาษาไทย" target="_blank" class="link-btn">
+              <span>🇹🇭 ภาษาไทย</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/คอมพวเตอร-เทคโนโลยสารสนเทศ" target="_blank" class="link-btn">
+              <span>💻 คอมพิวเตอร์</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/ภาษาองกฤษ" target="_blank" class="link-btn">
+              <span>🇬🇧 ภาษาอังกฤษ</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/กฏหมาย-พ-ร-บ" target="_blank" class="link-btn">
+              <span>⚖️ กฎหมาย พ.ร.บ.</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/สงคม-วฒนธรรม-จรยธรรม-และอาเซยน" target="_blank" class="link-btn">
+              <span>🌏 สังคม/อาเซียน</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/ความรทั่วไป" target="_blank" class="link-btn">
+              <span>📚 ความรู้ทั่วไป</span> <i>&rsaquo;</i>
+            </a>
+            <a href="https://sites.google.com/view/tiwkhosoob/เทคนคพเศษ" target="_blank" class="link-btn">
+              <span>💡 เทคนิคพิเศษ</span> <i>&rsaquo;</i>
+            </a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Highlight Button -->
+    <div class="highlight-btn-wrapper">
+      <a class="highlight-btn" href="https://sites.google.com/view/tiwkhosoob/แบบทดสอบ-100-ขอ" target="_blank">
+        📝 แบบทดสอบ อัปเดตล่าสุด 100 ข้อ
+      </a>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <div class="comments-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1877F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>ความคิดเห็น</span>
+      </div>
+      <div class="fb-comments" 
+        data-href="https://sites.google.com/view/tiwkhosoob/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" 
+        data-width="100%" 
+        data-numposts="5">
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
