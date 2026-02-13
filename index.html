@@ -48,7 +48,7 @@
 
         .wrap { max-width: 600px; margin: 0 auto; padding: 0 16px; position: relative; }
 
-        /* Favorite Toggle บน Header */
+        /* Favorite Toggle */
         .fav-header-btn {
             position: absolute; top: 16px; right: 16px;
             background: rgba(255,255,255,0.2);
@@ -90,20 +90,7 @@
             border: none; cursor: pointer;
         }
 
-        /* Law Card */
-        .law-card {
-            background: white; border-radius: var(--radius-card); padding: 16px;
-            border: 1px solid var(--border); position: relative; 
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        .law-card:active { transform: scale(0.99); }
-        .fav-add-btn {
-            position: absolute; top: 12px; right: 12px; color: #cbd5e1;
-            padding: 6px; cursor: pointer; transition: color 0.2s;
-        }
-        .fav-add-btn.active { color: #ef4444; font-variation-settings: 'FILL' 1; }
-
-        /* Categories Chip */
+        /* Chips */
         .chip {
             white-space: nowrap; padding: 6px 14px; border-radius: 20px;
             font-size: 13px; color: var(--text-muted); background: white;
@@ -112,18 +99,6 @@
         .chip.active {
             background: var(--primary); color: white; border-color: var(--primary);
             font-weight: 500; box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
-        }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Facebook Content Styling */
-        .fb-container {
-            display: flex; 
-            justify-content: center; 
-            background: white;
-            width: 100%;
-            overflow: hidden;
-            min-height: 200px;
         }
 
         /* Modals */
@@ -148,45 +123,18 @@
 
         .hidden { display: none !important; }
         
-        /* Pulse Animation */
-        .icon-pulse { animation: pulse-orange 2s infinite; }
-        @keyframes pulse-orange {
-            0% { text-shadow: 0 0 0 rgba(245, 158, 11, 0); }
-            50% { text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
-            100% { text-shadow: 0 0 0 rgba(245, 158, 11, 0); }
-        }
-        
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dot Indicators */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
         .dot { width: 6px; height: 6px; background-color: #cbd5e1; border-radius: 50%; transition: all 0.3s; }
         .dot.active { width: 20px; background-color: var(--accent); border-radius: 10px; }
-
-        /* --- Fix for Slider Text Overflow on Mobile (สำคัญ) --- */
-        #latestTrack > div {
-            padding-left: 10px;
-            padding-right: 10px;
-            width: 100%;
-            flex-shrink: 0; /* ห้ามหด */
-            box-sizing: border-box;
-        }
-        /* บังคับตัดคำและบรรทัดสำหรับข้อความใน Slider ทุกตัว */
-        #latestTrack span {
-            white-space: normal !important;
-            word-wrap: break-word !important;
-            overflow-wrap: anywhere !important;
-            display: block;
-            line-height: 1.4;
-            max-width: 100%;
-        }
     </style>
 </head>
 <body>
 
-<!-- Header Section -->
 <header class="app-header">
     <div class="wrap">
         <div class="flex items-center gap-3">
@@ -198,7 +146,7 @@
                 <p class="text-[11px] opacity-80 font-medium">คลังกฎหมายอัพเดทล่าสุด</p>
             </div>
         </div>
-        <!-- ใช้ ID เดิมเพื่อให้ CSS ทำงาน แต่เราจะเปลี่ยนปุ่มนี้ด้วย JS ทันที -->
+        <!-- ปุ่มรายการโปรดที่จะถูก Override -->
         <button id="btnOpenFavs" class="fav-header-btn" title="รายการโปรด">
             <span class="material-symbols-rounded">bookmark_heart</span>
         </button>
@@ -206,10 +154,8 @@
 </header>
 
 <main class="wrap">
-    
-    <!-- Home Page -->
+    <!-- Home View -->
     <div id="view-home">
-        <!-- Search Section -->
         <section class="relative z-20">
             <div class="search-container">
                 <span class="material-symbols-rounded text-slate-400 ml-2">search</span>
@@ -220,29 +166,27 @@
             </div>
         </section>
 
-        <!-- Announcements / Slider -->
+        <!-- Slider -->
         <section class="mt-6">
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-2 text-amber-600 font-bold text-xs">
-                        <span class="material-symbols-rounded icon-pulse text-lg">campaign</span>
+                        <span class="material-symbols-rounded text-lg">campaign</span>
                         อัพเดทล่าสุดรายหมวด
                     </div>
-                    <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">New</span>
                 </div>
                 
-                <div id="latestViewport" class="overflow-hidden relative touch-pan-y">
+                <div id="latestViewport" class="overflow-hidden relative">
                     <div id="latestTrack" class="flex transition-transform duration-500 ease-in-out w-full">
-                        <!-- Slider Content: Corrected width and spacing -->
-                        <div class="w-full flex flex-col gap-1 items-center text-center p-2 box-border">
+                        <div class="w-full flex flex-col gap-1 items-center text-center p-2 shrink-0">
                             <span class="text-sm font-bold text-slate-800">พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)</span>
                             <span class="text-xs text-slate-500">อัพเดทแนวปฏิบัติใหม่ เริ่มใช้ 1 ม.ค. 67</span>
                         </div>
-                        <div class="w-full flex flex-col gap-1 items-center text-center p-2 box-border">
+                        <div class="w-full flex flex-col gap-1 items-center text-center p-2 shrink-0">
                             <span class="text-sm font-bold text-slate-800">กฎหมายจราจรใหม่</span>
                             <span class="text-xs text-slate-500">ตัดแต้มใบขับขี่ เริ่มบังคับใช้แล้ว</span>
                         </div>
-                         <div class="w-full flex flex-col gap-1 items-center text-center p-2 box-border">
+                         <div class="w-full flex flex-col gap-1 items-center text-center p-2 shrink-0">
                             <span class="text-sm font-bold text-slate-800">ประมวลกฎหมายแพ่งฯ (ฉบับแก้ไข)</span>
                             <span class="text-xs text-slate-500">ปรับปรุงเรื่องดอกเบี้ยผิดนัด</span>
                         </div>
@@ -257,57 +201,44 @@
             </div>
         </section>
 
-        <!-- Categories Section -->
+        <!-- Category Bar -->
         <section class="mt-4">
             <div id="catbar" class="flex overflow-x-auto gap-2 pb-2 scrollbar-hide px-1">
-                <button class="chip active" onclick="filterCategory('all', this)">ทั้งหมด</button>
-                <button class="chip" onclick="filterCategory('แพ่ง', this)">แพ่ง</button>
-                <button class="chip" onclick="filterCategory('อาญา', this)">อาญา</button>
-                <button class="chip" onclick="filterCategory('ธุรกิจ', this)">ธุรกิจ</button>
-                <button class="chip" onclick="filterCategory('แรงงาน', this)">แรงงาน</button>
-                <button class="chip" onclick="filterCategory('จราจร', this)">จราจร</button>
+                <button class="chip active">ทั้งหมด</button>
+                <button class="chip">แพ่ง</button>
+                <button class="chip">อาญา</button>
+                <button class="chip">ธุรกิจ</button>
+                <button class="chip">แรงงาน</button>
+                <button class="chip">จราจร</button>
             </div>
         </section>
 
-        <!-- Law List Section -->
+        <!-- List Section -->
         <section class="mt-4 pb-20">
             <div class="flex items-center justify-between mb-4 px-1">
                 <div class="flex items-center gap-2">
                     <span class="w-1.5 h-5 bg-blue-700 rounded-full"></span>
                     <h2 id="panelTitle" class="font-bold text-slate-800">รายการกฎหมาย</h2>
                 </div>
-                <span id="panelNote" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">All List</span>
             </div>
             <div id="list" class="flex flex-col gap-3">
-                <!-- Cards will be rendered by JS -->
-            </div>
-            
-            <!-- Pagination -->
-            <div class="flex justify-center items-center gap-3 mt-8 pb-8">
-                <button id="btnPrev" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 font-medium hover:bg-slate-50 disabled:opacity-50 transition-colors">
-                    ก่อนหน้า
-                </button>
-                <span class="text-[10px] text-slate-400">แสดงผลลัพธ์ทั้งหมด</span>
-                <button id="btnNext" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 font-medium hover:bg-slate-50 disabled:opacity-50 transition-colors">
-                    ถัดไป
-                </button>
+                <div class="text-center py-10 text-slate-400 text-sm">กำลังโหลดรายการกฎหมาย...</div>
             </div>
         </section>
     </div>
 
-    <!-- Community Page -->
+    <!-- Community View -->
     <div id="view-community" class="hidden">
         <div class="pt-6 pb-20">
-            <!-- COMMUNITY VIEW: Facebook Feed -->
             <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
                 <div class="p-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
                     <span class="material-symbols-rounded text-blue-600">forum</span>
                     <span class="font-bold text-slate-800">ชุมชนคนรักกฎหมาย</span>
                 </div>
-                <div class="fb-container p-2">
+                <div class="p-4 flex justify-center min-h-[300px]">
+                    <!-- Facebook Plugin -->
                     <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0"></script>
-                    <!-- Adjusted data-width to 380 for better mobile fit -->
                     <div class="fb-page" 
                          data-href="https://www.facebook.com/interesting.deka/?locale=th_TH" 
                          data-tabs="timeline" 
@@ -324,7 +255,6 @@
     </div>
 </main>
 
-<!-- Navigation Bar -->
 <nav class="bottom-nav">
     <div id="nav-home" class="nav-item active" onclick="switchTab('home')">
         <span class="material-symbols-rounded">home</span>
@@ -336,12 +266,11 @@
     </div>
 </nav>
 
-<!-- Chatbot Floating Button -->
-<button id="fab-chat" class="fixed bottom-[90px] right-5 w-14 h-14 bg-amber-600 text-white rounded-2xl shadow-xl flex items-center justify-center z-50 hover:bg-amber-700 transition-colors shadow-amber-600/30">
+<button id="fab-chat" class="fixed bottom-[90px] right-5 w-14 h-14 bg-amber-600 text-white rounded-2xl shadow-xl flex items-center justify-center z-50 hover:bg-amber-700 transition-colors">
     <span class="material-symbols-rounded text-3xl">smart_toy</span>
 </button>
 
-<!-- Favorites Modal -->
+<!-- Fav Modal -->
 <div id="modalFavs" class="modal-overlay">
     <div class="modal-box relative">
         <header class="p-4 border-b flex justify-between items-center bg-slate-50">
@@ -354,319 +283,248 @@
             </button>
         </header>
         <div id="favContainer" class="p-4 overflow-y-auto space-y-3 min-h-[200px] bg-slate-50/50">
-            <!-- Fav items -->
             <div class="text-center text-slate-400 py-10">กำลังโหลดรายการ...</div>
         </div>
     </div>
 </div>
 
-<!-- Chatbot Modal -->
-<div id="modalChat" class="modal-overlay flex-col !justify-end sm:!justify-center transition-all duration-300 z-[250]">
-    <div class="bg-white w-full sm:max-w-[400px] h-[85vh] sm:h-[600px] rounded-t-[32px] sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative animate-slide-up ring-1 ring-black/5">
+<!-- Chat Modal -->
+<div id="modalChat" class="modal-overlay flex-col !justify-end sm:!justify-center z-[250]">
+    <div class="bg-white w-full sm:max-w-[400px] h-[85vh] sm:h-[600px] rounded-t-[32px] sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative">
         <header class="p-4 border-b flex justify-between items-center bg-white shrink-0 shadow-sm z-10">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-md">
                     <span class="material-symbols-rounded text-xl">smart_toy</span>
                 </div>
                 <div>
                     <span class="font-bold text-slate-800 block leading-tight">Thai Law AI</span>
-                    <span class="text-[10px] text-green-500 flex items-center gap-1 font-medium bg-green-50 px-1.5 rounded-full mt-0.5 w-fit">
+                    <span class="text-[10px] text-green-500 font-medium flex items-center gap-1">
                         <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> ออนไลน์
                     </span>
                 </div>
             </div>
-            <button id="btnCloseChat" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-full transition-colors">
+            <button id="btnCloseChat" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-full">
                 <span class="material-symbols-rounded">close</span>
             </button>
         </header>
         
-        <div id="chat-history" class="flex-1 overflow-y-auto p-4 flex flex-col bg-slate-50/50 gap-3 scroll-smooth">
-            <div class="text-center py-2 text-xs text-slate-400">วันนี้</div>
+        <div id="chat-history" class="flex-1 overflow-y-auto p-4 flex flex-col bg-slate-50/50 gap-3">
             <div class="bubble bubble-ai">
-                สวัสดีครับ 🙏 ผมคือ AI ผู้ช่วยทางกฎหมาย<br>
-                มีข้อสงสัยเรื่องกฎหมายมาตราไหน หรือต้องการคำแนะนำเบื้องต้น สอบถามได้เลยครับ
+                สวัสดีครับ มีข้อสงสัยเรื่องกฎหมายมาตราไหน สอบถามได้เลยครับ
             </div>
         </div>
         
-        <div id="chatLoading" class="px-5 py-2 hidden bg-slate-50">
-             <div class="flex items-center gap-2 text-[11px] text-slate-500 italic bg-white px-3 py-1.5 rounded-full w-fit shadow-sm border border-slate-100">
-                <span class="material-symbols-rounded animate-spin text-sm text-blue-500">sync</span>
-                AI กำลังค้นหาและเรียบเรียง...
-             </div>
+        <!-- Loading Indicator -->
+        <div id="chatLoading" class="hidden px-4 py-2 text-center">
+            <span class="text-[10px] text-slate-400 bg-white border px-2 py-1 rounded-full shadow-sm">AI กำลังพิมพ์...</span>
         </div>
         
-        <div class="p-3 border-t bg-white flex gap-2 items-end">
-            <div class="flex-1 bg-slate-100 rounded-[20px] px-4 py-2 border border-transparent focus-within:border-blue-500 focus-within:bg-white transition-all flex items-center gap-2">
-                <input id="user-input" type="text" class="flex-1 bg-transparent text-sm outline-none text-slate-700 min-h-[24px] max-h-[100px]" placeholder="พิมพ์คำถามที่นี่..." autocomplete="off">
-            </div>
-            <button id="send-btn" class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-700 shadow-lg shadow-blue-200 active:scale-95 transition-transform shrink-0 mb-0.5">
+        <div class="p-3 border-t bg-white flex gap-2 items-center">
+            <input id="user-input" type="text" class="flex-1 bg-slate-100 rounded-full px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-blue-500 transition-all" placeholder="พิมพ์คำถามที่นี่..." autocomplete="off">
+            <button id="send-btn" class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-700 active:scale-95 transition-all shadow-md">
                 <span class="material-symbols-rounded text-[20px] ml-0.5">send</span>
             </button>
         </div>
     </div>
 </div>
 
-<!-- Scripts -->
+<script src="./app.js"></script>
 
-<!-- 1. UI Control Script -->
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Init Slider
+    // --- APP LOGIC FIXES & OVERRIDES ---
+    
+    // Config
+    const BACKEND_URL = 'https://polished-sunset-f33e.tontakankeawpang321.workers.dev';
+    let chatHistory = [];
+
+    window.addEventListener('load', () => {
+        // 1. Button Replacement (Fix Conflict with app.js)
+        setTimeout(() => {
+            const oldBtn = document.getElementById('btnOpenFavs');
+            if(oldBtn) {
+                const newBtn = oldBtn.cloneNode(true);
+                newBtn.id = 'btnOpenFavs_New';
+                oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+                newBtn.addEventListener('click', () => window.openFavs());
+            }
+        }, 800);
+
+        // 2. Init Slider
         initSlider();
 
-        // -- Event Listeners for UI Shell --
+        // 3. Init Chat Logic (Adding Event Listeners Manually)
+        const sendBtn = document.getElementById('send-btn');
+        const userInput = document.getElementById('user-input');
+
+        if(sendBtn) {
+            sendBtn.addEventListener('click', handleUserMessage);
+            // Debugging log
+            console.log("Chat Send button activated");
+        }
         
-        // Navigation Tabs
-        const navHome = document.getElementById('nav-home');
-        const navCommunity = document.getElementById('nav-community');
-        if(navHome) navHome.addEventListener('click', () => switchTab('home'));
-        if(navCommunity) navCommunity.addEventListener('click', () => switchTab('community'));
-
-        // Chatbot Modal
-        const fabChat = document.getElementById('fab-chat');
-        const btnCloseChat = document.getElementById('btnCloseChat');
-        if(fabChat) fabChat.addEventListener('click', () => toggleModal('modalChat', true));
-        if(btnCloseChat) btnCloseChat.addEventListener('click', () => toggleModal('modalChat', false));
-
-        // Favorites Modal
-        const btnCloseFavs = document.getElementById('btnCloseFavs');
-        if(btnCloseFavs) btnCloseFavs.addEventListener('click', () => toggleModal('modalFavs', false));
+        if(userInput) {
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleUserMessage();
+            });
+        }
     });
 
-    // Helper: Switch Tabs
-    function switchTab(tab) {
-        const viewHome = document.getElementById('view-home');
-        const viewCommunity = document.getElementById('view-community');
-        const navHome = document.getElementById('nav-home');
-        const navCommunity = document.getElementById('nav-community');
+    // --- UI HELPERS ---
 
-        if (tab === 'home') {
-            if(viewHome) viewHome.classList.remove('hidden');
-            if(viewCommunity) viewCommunity.classList.add('hidden');
-            if(navHome) navHome.classList.add('active');
-            if(navCommunity) navCommunity.classList.remove('active');
-        } else if (tab === 'community') {
-            if(viewHome) viewHome.classList.add('hidden');
-            if(viewCommunity) viewCommunity.classList.remove('hidden');
-            if(navHome) navHome.classList.remove('active');
-            if(navCommunity) navCommunity.classList.add('active');
-        }
+    window.switchTab = function(tab) {
+        document.getElementById('view-home').classList.toggle('hidden', tab !== 'home');
+        document.getElementById('view-community').classList.toggle('hidden', tab !== 'community');
+        document.getElementById('nav-home').classList.toggle('active', tab === 'home');
+        document.getElementById('nav-community').classList.toggle('active', tab === 'community');
     }
 
-    // Helper: Toggle Modal
     function toggleModal(id, show) {
         const el = document.getElementById(id);
         if(!el) return;
         
-        if (show) {
+        if(show) {
             el.classList.add('active');
+            // Focus input if opening chat
             if(id === 'modalChat') {
-                const input = document.getElementById('user-input');
-                if(input) setTimeout(() => input.focus(), 100);
+                setTimeout(() => document.getElementById('user-input').focus(), 300);
             }
         } else {
             el.classList.remove('active');
         }
     }
 
-    // Helper: Slider
-    function initSlider() {
-        let currentSlide = 0;
-        const track = document.getElementById('latestTrack');
-        const dots = document.querySelectorAll('.dot');
-        const slides = 3; 
-        
-        if(!track) return;
+    // --- FAVORITES LOGIC (Overridden) ---
 
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            dots.forEach((d, i) => {
-                d.className = `dot ${i === currentSlide ? 'active' : ''}`;
-            });
-        }, 4000);
-    }
-    
-    window.switchTab = switchTab;
-    window.toggleModal = toggleModal;
-</script>
-
-<!-- 2. Law Data & Core Logic (External) -->
-<script src="./app.js"></script>
-
-<!-- 3. Overrides & Extra Logic (This runs LAST and replaces the button completely to detach app.js logic) -->
-<script>
-    // ใช้ window.addEventListener 'load' เพื่อให้แน่ใจว่า app.js โหลดเสร็จแล้วค่อยทำงานทับ
-    window.addEventListener('load', () => {
-        const oldBtn = document.getElementById('btnOpenFavs');
-        if(oldBtn) {
-            // โคลนปุ่มและเปลี่ยน ID เพื่อทำลาย Event Listener เดิมทั้งหมดของ app.js
-            const newBtn = oldBtn.cloneNode(true);
-            newBtn.id = 'btnOpenFavs_Override'; 
-            oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-            
-            // ใส่ Event Listener ของเราเอง
-            newBtn.addEventListener('click', function() {
-                window.openFavs();
-            });
-            console.log("Overrides button successfully");
-        }
-    });
-
-    // Custom Open Favs Function
     window.openFavs = function() {
-        // ลองดึง laws จาก Global (เผื่อ app.js ประกาศไว้แบบ var หรือ window.laws)
-        // หรือถ้า app.js ประกาศแบบ const laws = [...] ที่ root scope, เราอาจจะเข้าถึงโดยตรงได้ในบาง browser context
-        // แต่ถ้าเข้าถึงไม่ได้ เราจะพยายามดึงข้อมูล (Fallback) เท่าที่ทำได้
-        
-        let lawDataSrc = [];
-        try {
-            if (typeof laws !== 'undefined') {
-                lawDataSrc = laws;
-            } else if (typeof window.laws !== 'undefined') {
-                lawDataSrc = window.laws;
-            } else {
-                console.warn("Law database not accessible directly.");
-                // Fallback: ถ้าหา laws ไม่เจอจริงๆ อาจจะต้องแสดงข้อความ
-            }
-        } catch(e) {
-             console.error("Error accessing laws:", e);
-        }
-        
         const container = document.getElementById('favContainer');
+        const lawData = window.laws || []; // Try to get data from app.js
         
-        if (lawDataSrc.length === 0) {
-            container.innerHTML = `<div class="text-center text-slate-400 py-10 flex flex-col items-center gap-2">
-                <span class="material-symbols-rounded text-4xl opacity-30">error</span>
-                <span>ไม่พบฐานข้อมูลกฎหมาย (รอโหลด...)</span>
-            </div>`;
-            toggleModal('modalFavs', true);
-            return;
-        }
-
-        // Get favorites from localStorage
+        // Get IDs from LocalStorage
         let favIds = [];
         try {
             const stored = JSON.parse(localStorage.getItem('favLaws')) || [];
-            // รองรับทั้งแบบเก็บแค่ ID [1,2] และแบบเก็บ Object [{id:1},...]
-            if (stored.length > 0) {
-                if (typeof stored[0] !== 'object') {
-                    favIds = stored;
-                } else {
-                    favIds = stored.map(item => item.id);
-                }
-            }
-        } catch(e) {}
+            // Handle both legacy format ([1,2]) and object format ([{id:1}])
+            favIds = stored.map(item => (typeof item === 'object' ? item.id : item));
+        } catch(e) { favIds = []; }
 
-        const favData = lawDataSrc.filter(l => favIds.includes(l.id));
+        const myFavs = lawData.filter(l => favIds.includes(l.id));
         container.innerHTML = '';
-        
-        if (favData.length === 0) {
+
+        if(myFavs.length === 0) {
             container.innerHTML = `<div class="text-center text-slate-400 py-10 flex flex-col items-center gap-2">
-                <span class="material-symbols-rounded text-4xl opacity-30">bookmark_off</span>
+                <span class="material-symbols-rounded text-4xl opacity-20">bookmark_off</span>
                 <span>ยังไม่มีรายการโปรด</span>
             </div>`;
         } else {
-            favData.forEach(law => {
-                const item = document.createElement('div');
-                item.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center gap-3';
+            myFavs.forEach(law => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center gap-3 animate-slide-up';
                 
-                // Link Logic: ถ้าไม่มี link ให้สร้าง Google Search Link
-                let linkUrl = law.link;
-                if (!linkUrl) {
-                    linkUrl = `https://www.google.com/search?q=${encodeURIComponent(law.title + ' ' + law.code + ' มาตรา ' + law.section)}`;
-                }
-                
-                item.innerHTML = `
-                    <a href="${linkUrl}" target="_blank" class="flex-1 min-w-0 group block text-left">
-                        <div class="text-[10px] font-bold text-blue-600 truncate">${law.code} ม.${law.section}</div>
-                        <div class="font-bold text-sm text-slate-800 truncate group-hover:text-blue-700 transition-colors">${law.title}</div>
-                        <div class="flex items-center gap-1 mt-1 text-blue-500 hover:underline">
-                             <span class="text-[10px] font-medium">อ่านฉบับเต็ม</span>
+                // Fallback link if missing
+                const link = law.link || `https://www.google.com/search?q=${encodeURIComponent(law.title + ' ม.' + law.section)}`;
+
+                card.innerHTML = `
+                    <div class="flex-1 min-w-0">
+                        <div class="text-[10px] font-bold text-blue-600 truncate">${law.code || 'กฎหมาย'} ม.${law.section}</div>
+                        <div class="font-bold text-sm text-slate-800 truncate mb-1">${law.title}</div>
+                        
+                        <a href="${link}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-semibold text-white bg-blue-600 px-3 py-1 rounded-full hover:bg-blue-700 transition-colors">
+                             <span>อ่านฉบับเต็ม</span>
                              <span class="material-symbols-rounded text-[14px]">open_in_new</span>
-                        </div>
-                    </a>
-                    <button onclick="toggleFav(${law.id}, this); setTimeout(window.openFavs, 100);" class="text-red-500 hover:bg-red-50 p-2 rounded-full shrink-0 ml-2">
-                        <span class="material-symbols-rounded font-variation-settings-fill">delete</span>
+                        </a>
+                    </div>
+                    <button onclick="removeFav(${law.id})" class="text-slate-300 hover:text-red-500 p-2 transition-colors">
+                        <span class="material-symbols-rounded">delete</span>
                     </button>
                 `;
-                container.appendChild(item);
+                container.appendChild(card);
             });
         }
         toggleModal('modalFavs', true);
-    }
-</script>
+    };
 
-<!-- 4. Chatbot Backend Logic (Module) -->
-<script type="module">
-    const BACKEND_URL = 'https://polished-sunset-f33e.tontakankeawpang321.workers.dev'; 
-    let chatHistory = [];
-    const chatHistoryEl = document.getElementById('chat-history');
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
+    window.removeFav = function(id) {
+        let stored = JSON.parse(localStorage.getItem('favLaws')) || [];
+        stored = stored.filter(item => (typeof item === 'object' ? item.id !== id : item !== id));
+        localStorage.setItem('favLaws', JSON.stringify(stored));
+        window.openFavs(); // Refresh immediately
+    };
 
-    if(sendBtn) sendBtn.addEventListener('click', handleUserMessage);
-    if(userInput) userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleUserMessage();
-    });
+    // --- CHAT LOGIC (Restored) ---
 
     async function handleUserMessage() {
-        const text = userInput.value.trim();
+        const input = document.getElementById('user-input');
+        const text = input.value.trim();
         if (!text) return;
 
+        // 1. Add User Bubble
         addBubble(text, 'user');
-        userInput.value = '';
-        
+        input.value = '';
         chatHistory.push({ role: "user", content: text });
 
+        // 2. Show Loading
         const loading = document.getElementById('chatLoading');
-        if(loading) loading.classList.remove('hidden');
+        loading.classList.remove('hidden');
         scrollToBottom();
 
+        // 3. Fetch AI Response
         try {
             const response = await fetch(BACKEND_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    message: text,
-                    history: chatHistory 
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, history: chatHistory })
             });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('API Error');
 
             const data = await response.json();
-            const aiReply = data.reply || data.response || data.message || JSON.stringify(data);
+            const aiReply = data.reply || data.response || data.message || "ขออภัย ระบบขัดข้องชั่วคราว";
 
-            if(loading) loading.classList.add('hidden');
+            loading.classList.add('hidden');
             addBubble(aiReply, 'ai');
-            
             chatHistory.push({ role: "assistant", content: aiReply });
 
         } catch (error) {
-            console.error('Error:', error);
-            if(loading) loading.classList.add('hidden');
-            addBubble("ขออภัยครับ เกิดข้อผิดพลาดในการเชื่อมต่อกับระบบ กรุณาลองใหม่อีกครั้ง", 'ai');
+            console.error(error);
+            loading.classList.add('hidden');
+            addBubble("ขออภัยครับ เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่", 'ai');
         }
     }
 
     function addBubble(text, type) {
-        if(!chatHistoryEl) return;
+        const historyEl = document.getElementById('chat-history');
         const bubble = document.createElement('div');
         bubble.className = `bubble bubble-${type} animate-slide-up`;
-        bubble.innerHTML = text;
-        chatHistoryEl.appendChild(bubble);
+        bubble.innerText = text; // Use innerText for safety
+        historyEl.appendChild(bubble);
         scrollToBottom();
     }
 
     function scrollToBottom() {
-        if(chatHistoryEl) chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
+        const historyEl = document.getElementById('chat-history');
+        historyEl.scrollTop = historyEl.scrollHeight;
+    }
+
+    // --- EVENT BINDINGS (Static) ---
+    document.getElementById('btnCloseFavs').onclick = () => toggleModal('modalFavs', false);
+    document.getElementById('fab-chat').onclick = () => toggleModal('modalChat', true);
+    document.getElementById('btnCloseChat').onclick = () => toggleModal('modalChat', false);
+
+    // Slider
+    function initSlider() {
+        let current = 0;
+        const track = document.getElementById('latestTrack');
+        const dots = document.querySelectorAll('.dot');
+        if(!track) return;
+        setInterval(() => {
+            current = (current + 1) % 3;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            dots.forEach((d, i) => d.className = `dot ${i === current ? 'active' : ''}`);
+        }, 4000);
     }
 </script>
 
 </body>
 </html>
+
+
