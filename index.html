@@ -7,26 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    /* Color Palette */
-    --army-primary: #1e5631;      /* เขียวทหารเข้ม */
-    --army-light: #4ade80;        /* เขียวสว่างสำหรับ Icon */
-    --army-bg: #f0fdf4;           /* พื้นหลังอ่อนโทนเขียว */
+    /* Color Palette - Modern & Fresh */
+    --army-primary: #1e5631;
+    --army-soft: #dcfce7;
+    --army-text: #14532d;
     
-    --police-primary: #172554;    /* น้ำเงินตำรวจเข้ม */
-    --police-light: #60a5fa;      /* ฟ้าสว่างสำหรับ Icon */
-    --police-bg: #eff6ff;         /* พื้นหลังอ่อนโทนฟ้า */
+    --police-primary: #1e3a8a;
+    --police-soft: #dbeafe;
+    --police-text: #1e40af;
 
-    --bg-page: #f8fafc;           /* พื้นหลังเว็บ */
-    --text-main: #1e293b;         /* สีตัวหนังสือหลัก */
-    --text-muted: #64748b;        /* สีตัวหนังสือรอง */
+    --bg-page: #f1f5f9;
+    --text-main: #334155;
+    --text-muted: #64748b;
     --white: #ffffff;
     
     /* Spacing & Layout */
-    --radius-card: 16px;
-    --radius-btn: 12px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --nav-height: 65px;
+    --radius-card: 20px;
+    --radius-btn: 16px;
+    --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --nav-height: 70px;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -37,44 +37,50 @@
     background-color: var(--bg-page);
     color: var(--text-main);
     line-height: 1.5;
-    padding-bottom: calc(var(--nav-height) + 20px); /* เว้นที่ด้านล่างกันเมนูบัง */
+    padding-bottom: calc(var(--nav-height) + 30px);
   }
 
   /* Header Section */
   header {
-    background: linear-gradient(135deg, var(--army-primary) 0%, #0f172a 50%, var(--police-primary) 100%);
+    background: linear-gradient(120deg, #1e293b 0%, #0f172a 100%);
     color: var(--white);
-    padding: 30px 20px 40px; 
-    border-radius: 0 0 24px 24px;
+    padding: 40px 20px 50px; 
+    border-radius: 0 0 30px 30px;
     text-align: center;
-    box-shadow: var(--shadow-md);
     position: relative;
     z-index: 20;
+    overflow: hidden;
   }
   
-  h1 { margin: 0; font-size: 22px; font-weight: 700; }
-  p.subtitle { margin: 6px 0 0; font-size: 14px; opacity: 0.9; font-weight: 300; }
+  /* Background Pattern decoration */
+  header::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%);
+    transform: rotate(30deg);
+    pointer-events: none;
+  }
+  
+  h1 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; position: relative; }
+  p.subtitle { margin: 8px 0 0; font-size: 15px; opacity: 0.8; font-weight: 400; position: relative; }
 
   /* Main Container */
   .container {
     max-width: 600px;
-    margin: -30px auto 0;
-    padding: 0 16px;
+    margin: -35px auto 0;
+    padding: 0 20px;
     position: relative;
     z-index: 10;
   }
 
   /* Tab System */
-  .tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease-out;
-  }
-  .tab-content.active {
-    display: block;
-  }
+  .tab-content { display: none; animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .tab-content.active { display: block; }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -82,200 +88,191 @@
   .section-card {
     background: var(--white);
     border-radius: var(--radius-card);
-    box-shadow: var(--shadow-md);
-    margin-bottom: 20px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 24px;
     overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.03);
+    transition: transform 0.2s ease;
   }
 
-  /* Facebook Responsive Fix */
-  .fb-wrapper {
-    display: flex;
-    justify-content: center;
-    background: #fff;
-    width: 100%;
-    overflow: hidden;
-    padding: 10px 0;
-  }
-  .fb-page, .fb-page span, .fb-page iframe {
-    width: 100% !important;
-    max-width: 500px !important;
-  }
-
-  /* Accordion */
+  /* Accordion Header Styling */
   details.custom-accordion { width: 100%; }
   summary.accordion-header {
     list-style: none;
     display: flex;
     align-items: center;
-    padding: 18px 20px;
+    padding: 20px;
     cursor: pointer;
     background: var(--white);
-    font-weight: 700;
-    font-size: 18px;
-    user-select: none;
+    position: relative;
   }
   summary.accordion-header::-webkit-details-marker { display: none; }
-  summary.accordion-header:active { background-color: #f1f5f9; }
 
+  /* Icon Box on Header */
   .icon-box {
-    width: 42px; height: 42px; border-radius: 10px;
+    width: 50px; height: 50px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    margin-right: 16px; flex-shrink: 0;
+    margin-right: 18px; flex-shrink: 0;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
   }
-  .army-theme .icon-box { background-color: var(--army-bg); color: var(--army-primary); }
-  .army-theme summary { border-left: 4px solid var(--army-primary); }
-  .police-theme .icon-box { background-color: var(--police-bg); color: var(--police-primary); }
-  .police-theme summary { border-left: 4px solid var(--police-primary); }
+  
+  .header-text { display: flex; flex-direction: column; }
+  .header-title { font-weight: 700; font-size: 18px; color: var(--text-main); }
+  .header-desc { font-size: 13px; color: var(--text-muted); font-weight: 400; }
 
-  .chevron { margin-left: auto; transition: transform 0.3s ease; color: var(--text-muted); }
-  details[open] .chevron { transform: rotate(180deg); }
+  /* Theme Specifics */
+  .army-theme .icon-box { background: var(--army-soft); color: var(--army-primary); }
+  .army-theme details[open] summary .header-title { color: var(--army-text); }
+  
+  .police-theme .icon-box { background: var(--police-soft); color: var(--police-primary); }
+  .police-theme details[open] summary .header-title { color: var(--police-text); }
 
+  /* Chevron Animation */
+  .chevron { margin-left: auto; color: #cbd5e1; transition: transform 0.3s ease; }
+  details[open] .chevron { transform: rotate(180deg); color: var(--text-muted); }
+
+  /* Accordion Content */
   .accordion-content {
-    padding: 0 16px 20px 16px;
-    background: var(--white);
-    border-top: 1px solid #f1f5f9;
+    padding: 10px 20px 24px 20px;
+    background: #ffffff;
+    /* เส้นแบ่งบางๆ */
+    border-top: 1px dashed #e2e8f0; 
   }
 
-  /* Buttons Grid */
+  /* Grid Layout */
   .btn-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-top: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
   }
-  @media (min-width: 480px) { .btn-grid { grid-template-columns: 1fr 1fr; } }
 
+  /* Modern Link Button */
   .link-btn {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 16px;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px 15px;
+    background: #ffffff;
     border-radius: var(--radius-btn);
-    color: var(--text-main);
     text-decoration: none;
-    font-size: 15px; font-weight: 500;
-    box-shadow: var(--shadow-sm);
+    color: var(--text-main);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #f1f5f9; /* Border บางมากๆ */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03); /* เงาจางๆ */
+    position: relative;
+    overflow: hidden;
   }
-  .link-btn:active { transform: translateY(1px); }
-  .army-theme .link-btn:hover { border-color: var(--army-light); color: var(--army-primary); background-color: var(--army-bg); }
-  .police-theme .link-btn:hover { border-color: var(--police-light); color: var(--police-primary); background-color: var(--police-bg); }
+  
+  .link-btn:active { transform: scale(0.96); }
+
+  /* Icon Circle Background inside button */
+  .btn-icon-wrapper {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+  }
+  .link-btn svg { width: 24px; height: 24px; stroke-width: 2.5px; }
+  .link-btn span { font-size: 14px; font-weight: 600; text-align: center; }
+
+  /* Button Colors */
+  .icon-rule { background-color: #fef3c7; color: #d97706; } /* Yellow/Orange */
+  .icon-math { background-color: #dbeafe; color: #2563eb; } /* Blue */
+  .icon-thai { background-color: #ffedd5; color: #ea580c; } /* Orange */
+  .icon-eng { background-color: #f3e8ff; color: #9333ea; } /* Purple */
+
+  /* Hover Effects */
+  .link-btn:hover { border-color: transparent; box-shadow: var(--shadow-hover); transform: translateY(-3px); }
 
   /* Highlight Button */
-  .highlight-btn-wrapper { margin: 24px 0; }
+  .highlight-btn-wrapper { margin: 10px 0 30px; }
   .highlight-btn {
-    display: block; width: 100%; padding: 18px;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8);
-    color: white; text-align: center; text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    width: 100%; padding: 20px;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: white; text-decoration: none;
     border-radius: var(--radius-card);
     font-weight: 700; font-size: 18px;
-    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
-    position: relative; overflow: hidden;
+    box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.5);
+    transition: transform 0.2s;
   }
+  .highlight-btn:active { transform: scale(0.98); }
 
-  /* Comments */
+  /* Community Section */
+  .fb-wrapper {
+    display: flex; justify-content: center; background: #fff;
+    width: 100%; overflow: hidden; padding: 10px 0;
+  }
+  .fb-page, .fb-page span, .fb-page iframe { width: 100% !important; max-width: 100% !important; }
+
   .comments-section {
-    background: #fff; padding: 20px;
+    background: #fff; padding: 24px;
     border-radius: var(--radius-card);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-soft);
   }
-  .comments-header {
-    font-weight: 700; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
+  .comments-header { font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-size: 18px; }
 
-  /* Bottom Navigation */
+  /* Bottom Nav */
   .bottom-nav {
     position: fixed; bottom: 0; left: 0; width: 100%;
     height: var(--nav-height);
-    background: #ffffff;
-    display: flex; justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    display: flex; justify-content: space-around; align-items: center;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
     z-index: 1500;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid rgba(255,255,255,0.5);
   }
   .nav-item {
     display: flex; flex-direction: column; align-items: center;
-    color: var(--text-muted); text-decoration: none;
-    font-size: 12px; gap: 4px;
+    color: #94a3b8; text-decoration: none;
+    font-size: 12px; gap: 6px;
     background: none; border: none; cursor: pointer;
     width: 50%; height: 100%; justify-content: center;
+    transition: color 0.2s;
   }
-  .nav-item.active { color: var(--police-primary); font-weight: 700; }
-  .nav-item svg { width: 24px; height: 24px; }
+  .nav-item.active { color: #2563eb; font-weight: 600; }
+  .nav-item svg { width: 26px; height: 26px; stroke-width: 2px; }
 
-  /* Floating Buttons */
+  /* Floating UI */
   .floating-group {
     position: fixed; right: 0; z-index: 1000;
-    display: flex; align-items: center; gap: 8px;
-    padding: 12px 16px 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 20px 12px 24px;
     color: white; border: none;
     border-radius: 50px 0 0 50px;
-    font-size: 14px; font-weight: 700; cursor: pointer;
-    box-shadow: -4px 4px 15px rgba(0,0,0,0.2);
-    transition: all 0.2s;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
   }
-  .floating-group:active { transform: scale(0.95); }
-  
-  /* Positions adjusted to not overlap Nav Bar */
-  .checkin-btn {
-    bottom: calc(var(--nav-height) + 20px);
-    background: linear-gradient(to left, #d97706, #f59e0b);
-  }
-  .ai-btn {
-    bottom: calc(var(--nav-height) + 80px);
-    background: linear-gradient(to left, #6366f1, #8b5cf6);
-  }
+  .checkin-btn { bottom: calc(var(--nav-height) + 20px); background: linear-gradient(to left, #f59e0b, #fbbf24); color: #78350f; }
+  .ai-btn { bottom: calc(var(--nav-height) + 80px); background: linear-gradient(to left, #6366f1, #818cf8); }
 
-  /* Chat Window */
+  /* Chat & Modals (Keep existing logic mostly) */
   .chat-container {
-    display: none;
-    position: fixed; bottom: var(--nav-height); right: 0;
-    width: 100%; max-width: 400px;
-    height: 60vh; max-height: 600px;
-    background: white; z-index: 2000;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
-    flex-direction: column;
-    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none; position: fixed; bottom: var(--nav-height); right: 0;
+    width: 100%; max-width: 400px; height: 60vh; max-height: 600px;
+    background: white; z-index: 2000; border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+    flex-direction: column; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @media (min-width: 480px) {
-    .chat-container {
-      right: 20px; bottom: calc(var(--nav-height) + 20px);
-      width: 360px; border-radius: 20px;
-    }
+    .chat-container { right: 20px; bottom: calc(var(--nav-height) + 20px); width: 360px; border-radius: 20px; }
   }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-  .chat-header {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white; padding: 15px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: 700;
-  }
-  .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
-  .chat-message { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 14px; word-wrap: break-word; }
-  .msg-ai { background: white; border: 1px solid #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; }
-  .msg-user { background: #6366f1; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-  .chat-footer { padding: 10px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; }
-  .chat-input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 20px; outline: none; }
-  .chat-send-btn { background: #6366f1; color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .chat-header { background: #6366f1; color: white; padding: 16px; display: flex; justify-content: space-between; font-weight: 700; }
+  .chat-body { flex: 1; padding: 16px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 12px; }
+  .chat-message { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.4; }
+  .msg-ai { background: white; border: 1px solid #e2e8f0; align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg-user { background: #6366f1; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .chat-footer { padding: 12px; background: white; border-top: 1px solid #f1f5f9; display: flex; gap: 10px; }
+  .chat-input { flex: 1; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 24px; outline: none; background: #f8fafc; }
+  .chat-send-btn { background: #6366f1; color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-  /* Modal */
-  .modal-overlay {
-    display: none; position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6); z-index: 3000;
-    justify-content: center; align-items: center; padding: 20px;
-  }
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
   .modal-overlay.active { display: flex; }
-  .modal-box {
-    background: white; width: 100%; max-width: 340px;
-    border-radius: 20px; padding: 24px; text-align: center;
-    animation: popUp 0.3s;
-  }
-  @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-box { background: white; width: 100%; max-width: 320px; border-radius: 24px; padding: 30px; text-align: center; animation: popUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+  @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
   /* Utility */
   svg { display: block; }
@@ -291,7 +288,7 @@
   <!-- Header -->
   <header>
     <h1>เตรียมสอบ นนส. / นสต.</h1>
-    <p class="subtitle">แหล่งรวมข้อมูลการสอบและแบบฝึกหัด</p>
+    <p class="subtitle">แหล่งรวมข้อมูลการสอบและแบบฝึกหัดออนไลน์</p>
   </header>
 
   <div class="container">
@@ -299,43 +296,89 @@
     <!-- ================= TAB: HOME ================= -->
     <div id="tab-home" class="tab-content active">
       
-      <!-- Army -->
+      <!-- Army Section -->
       <div class="section-card army-theme">
         <details class="custom-accordion" open>
           <summary class="accordion-header">
             <div class="icon-box">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
-            <span>นายสิบทหารบก (นนส.)</span>
-            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="header-text">
+              <span class="header-title">นายสิบทหารบก</span>
+              <span class="header-desc">แนวข้อสอบ นนส.</span>
+            </div>
+            <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="accordion-content">
             <div class="btn-grid">
-              <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ-นนส" target="_blank" class="link-btn">📜 หลักเกณฑ์</a>
-              <a href="https://sites.google.com/view/tiwkhosoob/วชาคณตศาสตร-นนส" target="_blank" class="link-btn">🧮 คณิตศาสตร์</a>
-              <a href="https://sites.google.com/view/tiwkhosoob/วชาภาษาไทย-นนส" target="_blank" class="link-btn">🇹🇭 ภาษาไทย</a>
-              <a href="https://sites.google.com/view/tiwkhosoob/วชาองกฤษ-นนส" target="_blank" class="link-btn">🇬🇧 ภาษาอังกฤษ</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ-นนส" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-rule">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <span>หลักเกณฑ์</span>
+              </a>
+              <a href="https://sites.google.com/view/tiwkhosoob/วชาคณตศาสตร-นนส" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-math">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+                </div>
+                <span>คณิตศาสตร์</span>
+              </a>
+              <a href="https://sites.google.com/view/tiwkhosoob/วชาภาษาไทย-นนส" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-thai">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                </div>
+                <span>ภาษาไทย</span>
+              </a>
+              <a href="https://sites.google.com/view/tiwkhosoob/วชาองกฤษ-นนส" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-eng">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <span>ภาษาอังกฤษ</span>
+              </a>
             </div>
           </div>
         </details>
       </div>
 
-      <!-- Police -->
+      <!-- Police Section -->
       <div class="section-card police-theme">
         <details class="custom-accordion">
           <summary class="accordion-header">
             <div class="icon-box">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path></svg>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path></svg>
             </div>
-            <span>นายสิบตำรวจ (นสต.)</span>
-            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="header-text">
+              <span class="header-title">นายสิบตำรวจ</span>
+              <span class="header-desc">แนวข้อสอบ นสต.</span>
+            </div>
+            <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="accordion-content">
             <div class="btn-grid">
-              <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ- นสต" target="_blank" class="link-btn">📜 หลักเกณฑ์</a>
-              <a href="https://sites.google.com/view/tiwkhosoob/คณตศาสตร" target="_blank" class="link-btn">🧮 คณิตศาสตร์</a>
-              <a href="https://sites.google.com/view/tiwkhosoob/ภาษาไทย" target="_blank" class="link-btn">🇹🇭 ภาษาไทย</a>
-              <a href="https://sites.google.com/view/tiwkhosoob/ภาษาองกฤษ" target="_blank" class="link-btn">🇬🇧 ภาษาอังกฤษ</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ- นสต" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-rule">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <span>หลักเกณฑ์</span>
+              </a>
+              <a href="https://sites.google.com/view/tiwkhosoob/คณตศาสตร" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-math">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+                </div>
+                <span>คณิตศาสตร์</span>
+              </a>
+              <a href="https://sites.google.com/view/tiwkhosoob/ภาษาไทย" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-thai">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                </div>
+                <span>ภาษาไทย</span>
+              </a>
+              <a href="https://sites.google.com/view/tiwkhosoob/ภาษาองกฤษ" target="_blank" class="link-btn">
+                <div class="btn-icon-wrapper icon-eng">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <span>ภาษาอังกฤษ</span>
+              </a>
             </div>
           </div>
         </details>
@@ -344,7 +387,8 @@
       <!-- Highlight -->
       <div class="highlight-btn-wrapper">
         <a class="highlight-btn" href="https://sites.google.com/view/tiwkhosoob/แบบทดสอบ-100-ขอ" target="_blank">
-          📝 แบบทดสอบ 100 ข้อ
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>
+          แบบทดสอบ 100 ข้อ
         </a>
       </div>
     </div>
@@ -352,17 +396,17 @@
     <!-- ================= TAB: COMMUNITY ================= -->
     <div id="tab-community" class="tab-content">
       
-      <!-- Facebook Page (ย้ายกลับมาที่นี่) -->
+      <!-- Facebook Page -->
       <div class="section-card">
         <div class="fb-wrapper">
           <div class="fb-page" 
             data-href="https://www.facebook.com/s0ldier02/" 
             data-tabs="timeline" 
-            data-width="500" 
-            data-height="300" 
-            data-small-header="false" 
+            data-width=""
+            data-height="400" 
+            data-small-header="true" 
             data-adapt-container-width="true" 
-            data-hide-cover="false" 
+            data-hide-cover="true" 
             data-show-facepile="true">
           </div>
         </div>
@@ -370,7 +414,7 @@
 
       <div class="comments-section">
         <div class="comments-header">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1877F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           <span>ความคิดเห็นชุมชน</span>
         </div>
         <div class="fb-comments" data-href="https://sites.google.com/view/tiwkhosoob/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" data-width="100%" data-numposts="5"></div>
@@ -382,51 +426,55 @@
   <!-- FLOATING BUTTONS -->
   <button class="floating-group ai-btn" onclick="toggleChat(true)">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><line x1="9" y1="10" x2="9.01" y2="10"></line><line x1="15" y1="10" x2="15.01" y2="10"></line></svg>
-    AI Assistant
+    AI ติวเตอร์
   </button>
 
   <button class="floating-group checkin-btn" onclick="openCheckin()">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>
-    เช็คชื่อ (Check-in)
+    เช็คชื่อ
   </button>
 
   <!-- CHAT WINDOW -->
   <div class="chat-container" id="chatWindow">
     <div class="chat-header">
       <span>AI ติวเตอร์</span>
-      <div onclick="toggleChat(false)" style="cursor:pointer;">✕</div>
+      <div onclick="toggleChat(false)" style="cursor:pointer; padding:5px;">✕</div>
     </div>
     <div class="chat-body" id="chatBody">
       <div class="chat-message msg-ai">สวัสดีครับ! ผมคือ AI ผู้ช่วยติวสอบ ถามอะไรก็ได้เลยครับ</div>
     </div>
     <div class="chat-footer">
       <input type="text" class="chat-input" id="chatInput" placeholder="พิมพ์ข้อความ..." onkeypress="handleEnter(event)">
-      <button class="chat-send-btn" onclick="sendMessage()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+      <button class="chat-send-btn" onclick="sendMessage()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
     </div>
   </div>
 
   <!-- CHECK-IN MODAL -->
   <div id="checkinModal" class="modal-overlay">
     <div class="modal-box">
-      <h3 style="margin:0 0 10px;">เช็คชื่อประจำวัน</h3>
-      <p style="color:#666; font-size:14px;">สะสมครบ 100 วัน รับรางวัลพิเศษ</p>
-      <div id="currentDay" style="font-size:32px; font-weight:800; color:#d97706;">0</div>
-      <div style="background:#e2e8f0; height:10px; border-radius:5px; margin:10px 0; overflow:hidden;">
-        <div id="progressBar" style="width:0%; height:100%; background:#f59e0b; transition:width 0.3s;"></div>
+      <h3 style="margin:0 0 10px; font-size:22px;">เช็คชื่อประจำวัน</h3>
+      <p style="color:#64748b; font-size:14px; margin-bottom:20px;">สะสมครบ 100 วัน รับรางวัลพิเศษ</p>
+      
+      <div style="font-size:48px; font-weight:800; color:#d97706; margin-bottom:10px;" id="currentDay">0</div>
+      <div style="font-size:14px; color:#94a3b8; margin-bottom:15px;">วันที่ต่อเนื่อง</div>
+
+      <div style="background:#f1f5f9; height:12px; border-radius:6px; margin:0 0 24px; overflow:hidden; position:relative;">
+        <div id="progressBar" style="width:0%; height:100%; background:linear-gradient(90deg, #f59e0b, #d97706); transition:width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius:6px;"></div>
       </div>
-      <button id="btnCheckin" onclick="doCheckin()" style="width:100%; padding:12px; background:#1e5631; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;">ลงชื่อเข้าใช้</button>
-      <button onclick="closeCheckin()" style="width:100%; padding:10px; background:none; border:none; color:#666; margin-top:5px; cursor:pointer;">ปิดหน้าต่าง</button>
+      
+      <button id="btnCheckin" onclick="doCheckin()" style="width:100%; padding:14px; background:#1e5631; color:white; border:none; border-radius:12px; font-weight:600; font-size:16px; cursor:pointer; box-shadow: 0 4px 6px -1px rgba(30, 86, 49, 0.2); transition:transform 0.1s;">ลงชื่อเข้าใช้</button>
+      <button onclick="closeCheckin()" style="width:100%; padding:12px; background:none; border:none; color:#94a3b8; margin-top:8px; cursor:pointer; font-size:14px;">ปิดหน้าต่าง</button>
     </div>
   </div>
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <button class="nav-item active" onclick="switchTab('home', this)">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
       <span>หน้าหลัก</span>
     </button>
     <button class="nav-item" onclick="switchTab('community', this)">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       <span>ชุมชน</span>
     </button>
   </nav>
@@ -440,6 +488,18 @@
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
       window.scrollTo(0,0);
+
+      // Header control logic
+      const header = document.querySelector('header');
+      const container = document.querySelector('.container');
+      
+      if(tabId === 'community') {
+        header.style.display = 'none';
+        container.style.marginTop = '20px';
+      } else {
+        header.style.display = 'block';
+        container.style.marginTop = '-35px';
+      }
     }
 
     // --- CHAT LOGIC ---
@@ -501,10 +561,13 @@
         btn.disabled = true;
         btn.innerText = "วันนี้เช็คชื่อแล้ว";
         btn.style.background = "#cbd5e1";
+        btn.style.boxShadow = "none";
+        btn.style.transform = "none";
       } else {
         btn.disabled = false;
         btn.innerText = "ลงชื่อเข้าใช้";
         btn.style.background = "#1e5631";
+        btn.style.boxShadow = "0 4px 6px -1px rgba(30, 86, 49, 0.2)";
       }
     }
 
@@ -519,7 +582,6 @@
       updateCheckinUI();
     }
     
-    // Close modal on outside click
     document.getElementById('checkinModal').addEventListener('click', (e) => {
       if(e.target.id === 'checkinModal') closeCheckin();
     });
