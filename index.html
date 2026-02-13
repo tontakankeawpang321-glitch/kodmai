@@ -18,11 +18,7 @@
             --primary-gradient: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
             --accent: #d97706;
             --bg-app: #f1f5f9;
-            --bg-card: #ffffff;
             --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #cbd5e1;
-            --radius-card: 12px;
             --bottom-nav-height: 70px;
         }
 
@@ -48,7 +44,7 @@
 
         .wrap { max-width: 600px; margin: 0 auto; padding: 0 16px; position: relative; }
 
-        /* Favorite Toggle */
+        /* Fav Button */
         .fav-header-btn {
             position: absolute; top: 16px; right: 16px;
             background: rgba(255,255,255,0.2);
@@ -65,12 +61,12 @@
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-height);
             background: white; display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid var(--border); z-index: 100;
+            border-top: 1px solid #cbd5e1; z-index: 100;
             padding-bottom: env(safe-area-inset-bottom);
         }
         .nav-item { 
             display: flex; flex-direction: column; align-items: center; gap: 4px;
-            color: var(--text-muted); font-size: 12px; font-weight: 500; flex: 1;
+            color: #64748b; font-size: 12px; font-weight: 500; flex: 1;
             cursor: pointer;
         }
         .nav-item.active { color: var(--primary); }
@@ -81,7 +77,7 @@
             background: white; border-radius: 14px; padding: 4px 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; gap: 8px;
             margin-top: -28px; position: relative; z-index: 20;
-            border: 1px solid var(--border); align-items: center; height: 56px;
+            border: 1px solid #cbd5e1; align-items: center; height: 56px;
         }
         .search-input { flex: 1; border: none; outline: none; font-size: 16px; background: transparent; color: var(--text-main); }
         .search-btn { 
@@ -93,8 +89,8 @@
         /* Chips */
         .chip {
             white-space: nowrap; padding: 6px 14px; border-radius: 20px;
-            font-size: 13px; color: var(--text-muted); background: white;
-            border: 1px solid var(--border); transition: all 0.2s; cursor: pointer;
+            font-size: 13px; color: #64748b; background: white;
+            border: 1px solid #cbd5e1; transition: all 0.2s; cursor: pointer;
         }
         .chip.active {
             background: var(--primary); color: white; border-color: var(--primary);
@@ -119,7 +115,7 @@
         /* Chat Bubbles */
         .bubble { padding: 10px 14px; border-radius: 15px; font-size: 15px; max-width: 85%; margin-bottom: 8px; line-height: 1.4; word-wrap: break-word;}
         .bubble-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .bubble-ai { background: white; color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .bubble-ai { background: white; color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
 
         .hidden { display: none !important; }
         
@@ -131,6 +127,10 @@
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .dot { width: 6px; height: 6px; background-color: #cbd5e1; border-radius: 50%; transition: all 0.3s; }
         .dot.active { width: 20px; background-color: var(--accent); border-radius: 10px; }
+
+        /* Heart Animation */
+        .heart-icon { transition: transform 0.2s, color 0.2s; font-variation-settings: 'FILL' 0; }
+        .heart-icon.active { color: #ef4444 !important; font-variation-settings: 'FILL' 1 !important; transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -236,7 +236,6 @@
                     <span class="font-bold text-slate-800">ชุมชนคนรักกฎหมาย</span>
                 </div>
                 <div class="p-4 flex justify-center min-h-[300px]">
-                    <!-- Facebook Plugin -->
                     <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0"></script>
                     <div class="fb-page" 
@@ -314,7 +313,6 @@
             </div>
         </div>
         
-        <!-- Loading Indicator -->
         <div id="chatLoading" class="hidden px-4 py-2 text-center">
             <span class="text-[10px] text-slate-400 bg-white border px-2 py-1 rounded-full shadow-sm">AI กำลังพิมพ์...</span>
         </div>
@@ -331,14 +329,15 @@
 <script src="./app.js"></script>
 
 <script>
-    // --- APP LOGIC FIXES & OVERRIDES ---
-    
-    // Config
+    // --- APP LOGIC REWRITE (STABLE) ---
+
     const BACKEND_URL = 'https://polished-sunset-f33e.tontakankeawpang321.workers.dev';
     let chatHistory = [];
 
+    // 1. Initial Load & Overrides
     window.addEventListener('load', () => {
-        // 1. Button Replacement (Fix Conflict with app.js)
+        
+        // Fix Button Conflict: Override the header favorite button
         setTimeout(() => {
             const oldBtn = document.getElementById('btnOpenFavs');
             if(oldBtn) {
@@ -349,61 +348,126 @@
             }
         }, 800);
 
-        // 2. Init Slider
+        // Init Components
         initSlider();
-
-        // 3. Init Chat Logic (Adding Event Listeners Manually)
-        const sendBtn = document.getElementById('send-btn');
-        const userInput = document.getElementById('user-input');
-
-        if(sendBtn) {
-            sendBtn.addEventListener('click', handleUserMessage);
-            // Debugging log
-            console.log("Chat Send button activated");
-        }
+        initChat();
         
-        if(userInput) {
-            userInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') handleUserMessage();
-            });
-        }
+        // START OBSERVER: Watch for app.js rendering and paint hearts immediately
+        startFavObserver();
     });
 
-    // --- UI HELPERS ---
+    // --- FAVORITE SYSTEM (NEW & ROBUST) ---
 
-    window.switchTab = function(tab) {
-        document.getElementById('view-home').classList.toggle('hidden', tab !== 'home');
-        document.getElementById('view-community').classList.toggle('hidden', tab !== 'community');
-        document.getElementById('nav-home').classList.toggle('active', tab === 'home');
-        document.getElementById('nav-community').classList.toggle('active', tab === 'community');
-    }
+    // 2. The Main Toggle Function (Overrides app.js logic)
+    // ฟังก์ชันนี้ถูกเรียกเมื่อกดปุ่มหัวใจในหน้าลิสต์
+    window.toggleFav = function(id) {
+        // Prevent default event bubbling if needed
+        if(event) { event.stopPropagation(); }
 
-    function toggleModal(id, show) {
-        const el = document.getElementById(id);
-        if(!el) return;
-        
-        if(show) {
-            el.classList.add('active');
-            // Focus input if opening chat
-            if(id === 'modalChat') {
-                setTimeout(() => document.getElementById('user-input').focus(), 300);
-            }
+        // Get current favorites
+        let stored = [];
+        try {
+            stored = JSON.parse(localStorage.getItem('favLaws')) || [];
+            // Normalize to array of IDs only to prevent errors
+            stored = stored.map(s => (typeof s === 'object' ? s.id : s));
+        } catch(e) { stored = []; }
+
+        const index = stored.indexOf(id);
+        const isAdding = index === -1;
+
+        if (isAdding) {
+            stored.push(id);
         } else {
-            el.classList.remove('active');
+            stored.splice(index, 1);
         }
+
+        // Save immediately
+        localStorage.setItem('favLaws', JSON.stringify(stored));
+
+        // Update UI immediately (Don't wait for reload)
+        updateHeartVisuals(id, isAdding);
+
+        console.log(`Fav ${id}: ${isAdding ? 'Added' : 'Removed'}`);
+    };
+
+    // 3. Visual Update Helper
+    function updateHeartVisuals(id, isActive) {
+        // Find all heart icons for this ID (in case of multiples)
+        // Assuming app.js uses onclick="toggleFav(123)" on the button
+        // We look for elements related to this ID. 
+        // Best bet: Query all heart icons and check their parent/wrapper context if possible.
+        // OR simpler: app.js usually re-renders. But for instant feedback:
+        
+        // Strategy: Look for buttons calling this toggleFav ID
+        const buttons = document.querySelectorAll(`button[onclick*="toggleFav(${id})"], .fav-btn-${id}`);
+        buttons.forEach(btn => {
+            const icon = btn.querySelector('.material-symbols-rounded') || btn;
+            if(isActive) {
+                icon.classList.add('text-red-500', 'active');
+                icon.style.fontVariationSettings = "'FILL' 1";
+            } else {
+                icon.classList.remove('text-red-500', 'active');
+                icon.style.fontVariationSettings = "'FILL' 0";
+            }
+        });
     }
 
-    // --- FAVORITES LOGIC (Overridden) ---
+    // 4. Observer: Automatically paint hearts when list updates
+    function startFavObserver() {
+        const listEl = document.getElementById('list');
+        if(!listEl) return;
 
+        // Function to paint all hearts based on storage
+        const paintHearts = () => {
+            let stored = JSON.parse(localStorage.getItem('favLaws')) || [];
+            stored = stored.map(s => (typeof s === 'object' ? s.id : s));
+            
+            // Loop through all laws in the list
+            // We assume app.js renders buttons with onclick="toggleFav(id)"
+            const buttons = listEl.querySelectorAll('button[onclick*="toggleFav"]');
+            
+            buttons.forEach(btn => {
+                // Extract ID from onclick string "toggleFav(101)"
+                const match = btn.getAttribute('onclick').match(/toggleFav\((\d+)\)/);
+                if(match && match[1]) {
+                    const id = parseInt(match[1]);
+                    const icon = btn.querySelector('.material-symbols-rounded') || btn;
+                    
+                    // Add class for easy finding later
+                    btn.classList.add(`fav-btn-${id}`); 
+                    // Make icon transition smooth
+                    icon.classList.add('heart-icon');
+
+                    if(stored.includes(id)) {
+                        icon.classList.add('text-red-500', 'active');
+                        icon.style.fontVariationSettings = "'FILL' 1";
+                    } else {
+                        icon.classList.remove('text-red-500', 'active');
+                        icon.style.fontVariationSettings = "'FILL' 0";
+                    }
+                }
+            });
+        };
+
+        // Watch for changes in the list (when app.js loads data)
+        const observer = new MutationObserver((mutations) => {
+            paintHearts();
+        });
+        
+        observer.observe(listEl, { childList: true, subtree: true });
+        
+        // Run once immediately
+        paintHearts();
+    }
+
+    // 5. Open Fav Modal Logic
     window.openFavs = function() {
         const container = document.getElementById('favContainer');
-        const lawData = window.laws || []; // Try to get data from app.js
+        const lawData = window.laws || []; 
         
-        // Get IDs from LocalStorage
         let favIds = [];
         try {
             const stored = JSON.parse(localStorage.getItem('favLaws')) || [];
-            // Handle both legacy format ([1,2]) and object format ([{id:1}])
             favIds = stored.map(item => (typeof item === 'object' ? item.id : item));
         } catch(e) { favIds = []; }
 
@@ -420,7 +484,7 @@
                 const card = document.createElement('div');
                 card.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center gap-3 animate-slide-up';
                 
-                // Fallback link if missing
+                // Link Logic
                 const link = law.link || `https://www.google.com/search?q=${encodeURIComponent(law.title + ' ม.' + law.section)}`;
 
                 card.innerHTML = `
@@ -444,30 +508,36 @@
     };
 
     window.removeFav = function(id) {
-        let stored = JSON.parse(localStorage.getItem('favLaws')) || [];
-        stored = stored.filter(item => (typeof item === 'object' ? item.id !== id : item !== id));
-        localStorage.setItem('favLaws', JSON.stringify(stored));
-        window.openFavs(); // Refresh immediately
+        // Reuse toggle logic to keep it consistent
+        window.toggleFav(id); 
+        // Refresh modal content
+        window.openFavs();
     };
 
-    // --- CHAT LOGIC (Restored) ---
+    // --- OTHER UI LOGIC ---
+
+    function initChat() {
+        const sendBtn = document.getElementById('send-btn');
+        const userInput = document.getElementById('user-input');
+        if(sendBtn) sendBtn.addEventListener('click', handleUserMessage);
+        if(userInput) userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleUserMessage();
+        });
+    }
 
     async function handleUserMessage() {
         const input = document.getElementById('user-input');
         const text = input.value.trim();
         if (!text) return;
 
-        // 1. Add User Bubble
         addBubble(text, 'user');
         input.value = '';
         chatHistory.push({ role: "user", content: text });
 
-        // 2. Show Loading
         const loading = document.getElementById('chatLoading');
         loading.classList.remove('hidden');
         scrollToBottom();
 
-        // 3. Fetch AI Response
         try {
             const response = await fetch(BACKEND_URL, {
                 method: 'POST',
@@ -478,7 +548,7 @@
             if (!response.ok) throw new Error('API Error');
 
             const data = await response.json();
-            const aiReply = data.reply || data.response || data.message || "ขออภัย ระบบขัดข้องชั่วคราว";
+            const aiReply = data.reply || data.response || data.message || "ระบบกำลังประมวลผล...";
 
             loading.classList.add('hidden');
             addBubble(aiReply, 'ai');
@@ -487,7 +557,7 @@
         } catch (error) {
             console.error(error);
             loading.classList.add('hidden');
-            addBubble("ขออภัยครับ เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่", 'ai');
+            addBubble("ขออภัยครับ เกิดข้อผิดพลาดในการเชื่อมต่อ", 'ai');
         }
     }
 
@@ -495,7 +565,7 @@
         const historyEl = document.getElementById('chat-history');
         const bubble = document.createElement('div');
         bubble.className = `bubble bubble-${type} animate-slide-up`;
-        bubble.innerText = text; // Use innerText for safety
+        bubble.innerText = text;
         historyEl.appendChild(bubble);
         scrollToBottom();
     }
@@ -505,12 +575,29 @@
         historyEl.scrollTop = historyEl.scrollHeight;
     }
 
-    // --- EVENT BINDINGS (Static) ---
+    // UI Helpers
+    window.switchTab = function(tab) {
+        document.getElementById('view-home').classList.toggle('hidden', tab !== 'home');
+        document.getElementById('view-community').classList.toggle('hidden', tab !== 'community');
+        document.getElementById('nav-home').classList.toggle('active', tab === 'home');
+        document.getElementById('nav-community').classList.toggle('active', tab === 'community');
+    }
+
+    function toggleModal(id, show) {
+        const el = document.getElementById(id);
+        if(!el) return;
+        if(show) {
+            el.classList.add('active');
+            if(id === 'modalChat') setTimeout(() => document.getElementById('user-input').focus(), 300);
+        } else {
+            el.classList.remove('active');
+        }
+    }
+
     document.getElementById('btnCloseFavs').onclick = () => toggleModal('modalFavs', false);
     document.getElementById('fab-chat').onclick = () => toggleModal('modalChat', true);
     document.getElementById('btnCloseChat').onclick = () => toggleModal('modalChat', false);
 
-    // Slider
     function initSlider() {
         let current = 0;
         const track = document.getElementById('latestTrack');
@@ -526,5 +613,3 @@
 
 </body>
 </html>
-
-
