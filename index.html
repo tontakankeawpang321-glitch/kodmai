@@ -1,615 +1,528 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
-    <title>กฎหมายไทยฉบับล่าสุด (Thai Law Lite)</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ศูนย์รวมข้อสอบ นนส. / นสต.</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Color Palette */
+    --army-primary: #1e5631;      /* เขียวทหารเข้ม */
+    --army-light: #4ade80;        /* เขียวสว่างสำหรับ Icon */
+    --army-bg: #f0fdf4;           /* พื้นหลังอ่อนโทนเขียว */
+    
+    --police-primary: #172554;    /* น้ำเงินตำรวจเข้ม */
+    --police-light: #60a5fa;      /* ฟ้าสว่างสำหรับ Icon */
+    --police-bg: #eff6ff;         /* พื้นหลังอ่อนโทนฟ้า */
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    --bg-page: #f8fafc;           /* พื้นหลังเว็บ */
+    --text-main: #1e293b;         /* สีตัวหนังสือหลัก */
+    --text-muted: #64748b;        /* สีตัวหนังสือรอง */
+    --white: #ffffff;
+    
+    /* Spacing & Layout */
+    --radius-card: 16px;
+    --radius-btn: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --nav-height: 65px;
+  }
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    margin: 0;
+    font-family: 'Sarabun', sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding-bottom: calc(var(--nav-height) + 20px); /* เว้นที่ด้านล่างกันเมนูบัง */
+  }
 
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --primary-gradient: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
-            --accent: #d97706;
-            --bg-app: #f1f5f9;
-            --text-main: #0f172a;
-            --bottom-nav-height: 70px;
-        }
+  /* Header Section */
+  header {
+    background: linear-gradient(135deg, var(--army-primary) 0%, #0f172a 50%, var(--police-primary) 100%);
+    color: var(--white);
+    padding: 30px 20px 40px; 
+    border-radius: 0 0 24px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 20;
+  }
+  
+  h1 { margin: 0; font-size: 22px; font-weight: 700; }
+  p.subtitle { margin: 6px 0 0; font-size: 14px; opacity: 0.9; font-weight: 300; }
 
-        body {
-            background-color: var(--bg-app);
-            color: var(--text-main);
-            font-family: "Sarabun", sans-serif;
-            padding-bottom: calc(var(--bottom-nav-height) + 20px);
-            margin: 0;
-            overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
+  /* Main Container */
+  .container {
+    max-width: 600px;
+    margin: -30px auto 0;
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+  }
 
-        /* --- UI Components --- */
-        .app-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 16px 16px 45px;
-            border-radius: 0 0 24px 24px;
-            position: relative;
-            z-index: 10;
-        }
+  /* Tab System */
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+  }
+  .tab-content.active {
+    display: block;
+  }
 
-        .wrap { max-width: 600px; margin: 0 auto; padding: 0 16px; position: relative; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-        /* Fav Button */
-        .fav-header-btn {
-            position: absolute; top: 16px; right: 16px;
-            background: rgba(255,255,255,0.2);
-            color: white; width: 42px; height: 42px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
-            transition: transform 0.2s;
-            cursor: pointer;
-            border: none;
-        }
-        .fav-header-btn:active { transform: scale(0.95); }
+  /* Cards */
+  .section-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.03);
+  }
 
-        /* Bottom Nav */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-height);
-            background: white; display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid #cbd5e1; z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .nav-item { 
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            color: #64748b; font-size: 12px; font-weight: 500; flex: 1;
-            cursor: pointer;
-        }
-        .nav-item.active { color: var(--primary); }
-        .nav-item.active .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
+  /* Facebook Responsive Fix */
+  .fb-wrapper {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+  }
+  .fb-page, .fb-page span, .fb-page iframe {
+    width: 100% !important;
+    max-width: 500px !important;
+  }
 
-        /* Search Bar */
-        .search-container {
-            background: white; border-radius: 14px; padding: 4px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; gap: 8px;
-            margin-top: -28px; position: relative; z-index: 20;
-            border: 1px solid #cbd5e1; align-items: center; height: 56px;
-        }
-        .search-input { flex: 1; border: none; outline: none; font-size: 16px; background: transparent; color: var(--text-main); }
-        .search-btn { 
-            background: var(--accent); color: white; width: 44px; height: 44px;
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            border: none; cursor: pointer;
-        }
+  /* Accordion */
+  details.custom-accordion { width: 100%; }
+  summary.accordion-header {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    cursor: pointer;
+    background: var(--white);
+    font-weight: 700;
+    font-size: 18px;
+    user-select: none;
+  }
+  summary.accordion-header::-webkit-details-marker { display: none; }
+  summary.accordion-header:active { background-color: #f1f5f9; }
 
-        /* Chips */
-        .chip {
-            white-space: nowrap; padding: 6px 14px; border-radius: 20px;
-            font-size: 13px; color: #64748b; background: white;
-            border: 1px solid #cbd5e1; transition: all 0.2s; cursor: pointer;
-        }
-        .chip.active {
-            background: var(--primary); color: white; border-color: var(--primary);
-            font-weight: 500; box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
-        }
+  .icon-box {
+    width: 42px; height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-right: 16px; flex-shrink: 0;
+  }
+  .army-theme .icon-box { background-color: var(--army-bg); color: var(--army-primary); }
+  .army-theme summary { border-left: 4px solid var(--army-primary); }
+  .police-theme .icon-box { background-color: var(--police-bg); color: var(--police-primary); }
+  .police-theme summary { border-left: 4px solid var(--police-primary); }
 
-        /* Modals */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-            z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;
-            backdrop-filter: blur(4px);
-        }
-        .modal-overlay.active { display: flex; }
-        
-        .modal-box {
-            background: white; width: 100%; max-width: 450px; border-radius: 24px;
-            max-height: 80vh; display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+  .chevron { margin-left: auto; transition: transform 0.3s ease; color: var(--text-muted); }
+  details[open] .chevron { transform: rotate(180deg); }
 
-        /* Chat Bubbles */
-        .bubble { padding: 10px 14px; border-radius: 15px; font-size: 15px; max-width: 85%; margin-bottom: 8px; line-height: 1.4; word-wrap: break-word;}
-        .bubble-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .bubble-ai { background: white; color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
+  .accordion-content {
+    padding: 0 16px 20px 16px;
+    background: var(--white);
+    border-top: 1px solid #f1f5f9;
+  }
 
-        .hidden { display: none !important; }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  /* Buttons Grid */
+  .btn-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  @media (min-width: 480px) { .btn-grid { grid-template-columns: 1fr 1fr; } }
 
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .dot { width: 6px; height: 6px; background-color: #cbd5e1; border-radius: 50%; transition: all 0.3s; }
-        .dot.active { width: 20px; background-color: var(--accent); border-radius: 10px; }
+  .link-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-btn);
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 15px; font-weight: 500;
+    box-shadow: var(--shadow-sm);
+  }
+  .link-btn:active { transform: translateY(1px); }
+  .army-theme .link-btn:hover { border-color: var(--army-light); color: var(--army-primary); background-color: var(--army-bg); }
+  .police-theme .link-btn:hover { border-color: var(--police-light); color: var(--police-primary); background-color: var(--police-bg); }
 
-        /* Heart Animation */
-        .heart-icon { transition: transform 0.2s, color 0.2s; font-variation-settings: 'FILL' 0; }
-        .heart-icon.active { color: #ef4444 !important; font-variation-settings: 'FILL' 1 !important; transform: scale(1.1); }
-    </style>
+  /* Highlight Button */
+  .highlight-btn-wrapper { margin: 24px 0; }
+  .highlight-btn {
+    display: block; width: 100%; padding: 18px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    color: white; text-align: center; text-decoration: none;
+    border-radius: var(--radius-card);
+    font-weight: 700; font-size: 18px;
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+    position: relative; overflow: hidden;
+  }
+
+  /* Comments */
+  .comments-section {
+    background: #fff; padding: 20px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-md);
+  }
+  .comments-header {
+    font-weight: 700; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Bottom Navigation */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    height: var(--nav-height);
+    background: #ffffff;
+    display: flex; justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+    z-index: 1500;
+    border-top: 1px solid #f1f5f9;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 12px; gap: 4px;
+    background: none; border: none; cursor: pointer;
+    width: 50%; height: 100%; justify-content: center;
+  }
+  .nav-item.active { color: var(--police-primary); font-weight: 700; }
+  .nav-item svg { width: 24px; height: 24px; }
+
+  /* Floating Buttons */
+  .floating-group {
+    position: fixed; right: 0; z-index: 1000;
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px 12px 20px;
+    color: white; border: none;
+    border-radius: 50px 0 0 50px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    box-shadow: -4px 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+  }
+  .floating-group:active { transform: scale(0.95); }
+  
+  /* Positions adjusted to not overlap Nav Bar */
+  .checkin-btn {
+    bottom: calc(var(--nav-height) + 20px);
+    background: linear-gradient(to left, #d97706, #f59e0b);
+  }
+  .ai-btn {
+    bottom: calc(var(--nav-height) + 80px);
+    background: linear-gradient(to left, #6366f1, #8b5cf6);
+  }
+
+  /* Chat Window */
+  .chat-container {
+    display: none;
+    position: fixed; bottom: var(--nav-height); right: 0;
+    width: 100%; max-width: 400px;
+    height: 60vh; max-height: 600px;
+    background: white; z-index: 2000;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
+    flex-direction: column;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (min-width: 480px) {
+    .chat-container {
+      right: 20px; bottom: calc(var(--nav-height) + 20px);
+      width: 360px; border-radius: 20px;
+    }
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  .chat-header {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white; padding: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700;
+  }
+  .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
+  .chat-message { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 14px; word-wrap: break-word; }
+  .msg-ai { background: white; border: 1px solid #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; }
+  .msg-user { background: #6366f1; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+  .chat-footer { padding: 10px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; }
+  .chat-input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 20px; outline: none; }
+  .chat-send-btn { background: #6366f1; color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); z-index: 3000;
+    justify-content: center; align-items: center; padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: white; width: 100%; max-width: 340px;
+    border-radius: 20px; padding: 24px; text-align: center;
+    animation: popUp 0.3s;
+  }
+  @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  /* Utility */
+  svg { display: block; }
+  .hidden { display: none !important; }
+</style>
 </head>
 <body>
 
-<header class="app-header">
-    <div class="wrap">
-        <div class="flex items-center gap-3">
-            <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
-                <span class="material-symbols-rounded" style="font-size: 28px;">balance</span>
+  <!-- Facebook SDK -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0" nonce="abc123"></script>
+
+  <!-- Header -->
+  <header>
+    <h1>เตรียมสอบ นนส. / นสต.</h1>
+    <p class="subtitle">แหล่งรวมข้อมูลการสอบและแบบฝึกหัด</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- ================= TAB: HOME ================= -->
+    <div id="tab-home" class="tab-content active">
+      
+      <!-- Army -->
+      <div class="section-card army-theme">
+        <details class="custom-accordion" open>
+          <summary class="accordion-header">
+            <div class="icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
-            <div>
-                <h1 class="text-xl font-bold tracking-tight">Thai Law Lite</h1>
-                <p class="text-[11px] opacity-80 font-medium">คลังกฎหมายอัพเดทล่าสุด</p>
+            <span>นายสิบทหารบก (นนส.)</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="accordion-content">
+            <div class="btn-grid">
+              <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ-นนส" target="_blank" class="link-btn">📜 หลักเกณฑ์</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/วชาคณตศาสตร-นนส" target="_blank" class="link-btn">🧮 คณิตศาสตร์</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/วชาภาษาไทย-นนส" target="_blank" class="link-btn">🇹🇭 ภาษาไทย</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/วชาองกฤษ-นนส" target="_blank" class="link-btn">🇬🇧 ภาษาอังกฤษ</a>
             </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Police -->
+      <div class="section-card police-theme">
+        <details class="custom-accordion">
+          <summary class="accordion-header">
+            <div class="icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path></svg>
+            </div>
+            <span>นายสิบตำรวจ (นสต.)</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="accordion-content">
+            <div class="btn-grid">
+              <a href="https://sites.google.com/view/tiwkhosoob/หลกเกณฑขอสอบ- นสต" target="_blank" class="link-btn">📜 หลักเกณฑ์</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/คณตศาสตร" target="_blank" class="link-btn">🧮 คณิตศาสตร์</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/ภาษาไทย" target="_blank" class="link-btn">🇹🇭 ภาษาไทย</a>
+              <a href="https://sites.google.com/view/tiwkhosoob/ภาษาองกฤษ" target="_blank" class="link-btn">🇬🇧 ภาษาอังกฤษ</a>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Highlight -->
+      <div class="highlight-btn-wrapper">
+        <a class="highlight-btn" href="https://sites.google.com/view/tiwkhosoob/แบบทดสอบ-100-ขอ" target="_blank">
+          📝 แบบทดสอบ 100 ข้อ
+        </a>
+      </div>
+    </div>
+
+    <!-- ================= TAB: COMMUNITY ================= -->
+    <div id="tab-community" class="tab-content">
+      
+      <!-- Facebook Page (ย้ายกลับมาที่นี่) -->
+      <div class="section-card">
+        <div class="fb-wrapper">
+          <div class="fb-page" 
+            data-href="https://www.facebook.com/s0ldier02/" 
+            data-tabs="timeline" 
+            data-width="500" 
+            data-height="300" 
+            data-small-header="false" 
+            data-adapt-container-width="true" 
+            data-hide-cover="false" 
+            data-show-facepile="true">
+          </div>
         </div>
-        <!-- ปุ่มรายการโปรดที่จะถูก Override -->
-        <button id="btnOpenFavs" class="fav-header-btn" title="รายการโปรด">
-            <span class="material-symbols-rounded">bookmark_heart</span>
-        </button>
-    </div>
-</header>
+      </div>
 
-<main class="wrap">
-    <!-- Home View -->
-    <div id="view-home">
-        <section class="relative z-20">
-            <div class="search-container">
-                <span class="material-symbols-rounded text-slate-400 ml-2">search</span>
-                <input id="q" class="search-input" type="search" placeholder="ชื่อกฎหมาย หรือ มาตรา...">
-                <button id="btnSearch" class="search-btn">
-                    <span class="material-symbols-rounded">arrow_forward</span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Slider -->
-        <section class="mt-6">
-            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center gap-2 text-amber-600 font-bold text-xs">
-                        <span class="material-symbols-rounded text-lg">campaign</span>
-                        อัพเดทล่าสุดรายหมวด
-                    </div>
-                </div>
-                
-                <div id="latestViewport" class="overflow-hidden relative">
-                    <div id="latestTrack" class="flex transition-transform duration-500 ease-in-out w-full">
-                        <div class="w-full flex flex-col gap-1 items-center text-center p-2 shrink-0">
-                            <span class="text-sm font-bold text-slate-800">พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)</span>
-                            <span class="text-xs text-slate-500">อัพเดทแนวปฏิบัติใหม่ เริ่มใช้ 1 ม.ค. 67</span>
-                        </div>
-                        <div class="w-full flex flex-col gap-1 items-center text-center p-2 shrink-0">
-                            <span class="text-sm font-bold text-slate-800">กฎหมายจราจรใหม่</span>
-                            <span class="text-xs text-slate-500">ตัดแต้มใบขับขี่ เริ่มบังคับใช้แล้ว</span>
-                        </div>
-                         <div class="w-full flex flex-col gap-1 items-center text-center p-2 shrink-0">
-                            <span class="text-sm font-bold text-slate-800">ประมวลกฎหมายแพ่งฯ (ฉบับแก้ไข)</span>
-                            <span class="text-xs text-slate-500">ปรับปรุงเรื่องดอกเบี้ยผิดนัด</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="dots" class="flex justify-center gap-1.5 mt-3">
-                    <div class="dot active"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Category Bar -->
-        <section class="mt-4">
-            <div id="catbar" class="flex overflow-x-auto gap-2 pb-2 scrollbar-hide px-1">
-                <button class="chip active">ทั้งหมด</button>
-                <button class="chip">แพ่ง</button>
-                <button class="chip">อาญา</button>
-                <button class="chip">ธุรกิจ</button>
-                <button class="chip">แรงงาน</button>
-                <button class="chip">จราจร</button>
-            </div>
-        </section>
-
-        <!-- List Section -->
-        <section class="mt-4 pb-20">
-            <div class="flex items-center justify-between mb-4 px-1">
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-5 bg-blue-700 rounded-full"></span>
-                    <h2 id="panelTitle" class="font-bold text-slate-800">รายการกฎหมาย</h2>
-                </div>
-            </div>
-            <div id="list" class="flex flex-col gap-3">
-                <div class="text-center py-10 text-slate-400 text-sm">กำลังโหลดรายการกฎหมาย...</div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Community View -->
-    <div id="view-community" class="hidden">
-        <div class="pt-6 pb-20">
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                <div class="p-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
-                    <span class="material-symbols-rounded text-blue-600">forum</span>
-                    <span class="font-bold text-slate-800">ชุมชนคนรักกฎหมาย</span>
-                </div>
-                <div class="p-4 flex justify-center min-h-[300px]">
-                    <div id="fb-root"></div>
-                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0"></script>
-                    <div class="fb-page" 
-                         data-href="https://www.facebook.com/interesting.deka/?locale=th_TH" 
-                         data-tabs="timeline" 
-                         data-width="380" 
-                         data-height="800" 
-                         data-small-header="true" 
-                         data-adapt-container-width="true" 
-                         data-hide-cover="false" 
-                         data-show-facepile="true">
-                    </div>
-                </div>
-            </div>
+      <div class="comments-section">
+        <div class="comments-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1877F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>ความคิดเห็นชุมชน</span>
         </div>
+        <div class="fb-comments" data-href="https://sites.google.com/view/tiwkhosoob/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" data-width="100%" data-numposts="5"></div>
+      </div>
     </div>
-</main>
 
-<nav class="bottom-nav">
-    <div id="nav-home" class="nav-item active" onclick="switchTab('home')">
-        <span class="material-symbols-rounded">home</span>
-        <span>หน้าหลัก</span>
+  </div>
+
+  <!-- FLOATING BUTTONS -->
+  <button class="floating-group ai-btn" onclick="toggleChat(true)">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><line x1="9" y1="10" x2="9.01" y2="10"></line><line x1="15" y1="10" x2="15.01" y2="10"></line></svg>
+    AI Assistant
+  </button>
+
+  <button class="floating-group checkin-btn" onclick="openCheckin()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>
+    เช็คชื่อ (Check-in)
+  </button>
+
+  <!-- CHAT WINDOW -->
+  <div class="chat-container" id="chatWindow">
+    <div class="chat-header">
+      <span>AI ติวเตอร์</span>
+      <div onclick="toggleChat(false)" style="cursor:pointer;">✕</div>
     </div>
-    <div id="nav-community" class="nav-item" onclick="switchTab('community')">
-        <span class="material-symbols-rounded">forum</span>
-        <span>ชุมชน</span>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message msg-ai">สวัสดีครับ! ผมคือ AI ผู้ช่วยติวสอบ ถามอะไรก็ได้เลยครับ</div>
     </div>
-</nav>
-
-<button id="fab-chat" class="fixed bottom-[90px] right-5 w-14 h-14 bg-amber-600 text-white rounded-2xl shadow-xl flex items-center justify-center z-50 hover:bg-amber-700 transition-colors">
-    <span class="material-symbols-rounded text-3xl">smart_toy</span>
-</button>
-
-<!-- Fav Modal -->
-<div id="modalFavs" class="modal-overlay">
-    <div class="modal-box relative">
-        <header class="p-4 border-b flex justify-between items-center bg-slate-50">
-            <h3 class="font-bold flex items-center gap-2">
-                <span class="material-symbols-rounded text-red-500">favorite</span>
-                รายการโปรดของคุณ
-            </h3>
-            <button id="btnCloseFavs" class="p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-200">
-                <span class="material-symbols-rounded">close</span>
-            </button>
-        </header>
-        <div id="favContainer" class="p-4 overflow-y-auto space-y-3 min-h-[200px] bg-slate-50/50">
-            <div class="text-center text-slate-400 py-10">กำลังโหลดรายการ...</div>
-        </div>
+    <div class="chat-footer">
+      <input type="text" class="chat-input" id="chatInput" placeholder="พิมพ์ข้อความ..." onkeypress="handleEnter(event)">
+      <button class="chat-send-btn" onclick="sendMessage()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
     </div>
-</div>
+  </div>
 
-<!-- Chat Modal -->
-<div id="modalChat" class="modal-overlay flex-col !justify-end sm:!justify-center z-[250]">
-    <div class="bg-white w-full sm:max-w-[400px] h-[85vh] sm:h-[600px] rounded-t-[32px] sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative">
-        <header class="p-4 border-b flex justify-between items-center bg-white shrink-0 shadow-sm z-10">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-md">
-                    <span class="material-symbols-rounded text-xl">smart_toy</span>
-                </div>
-                <div>
-                    <span class="font-bold text-slate-800 block leading-tight">Thai Law AI</span>
-                    <span class="text-[10px] text-green-500 font-medium flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> ออนไลน์
-                    </span>
-                </div>
-            </div>
-            <button id="btnCloseChat" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 rounded-full">
-                <span class="material-symbols-rounded">close</span>
-            </button>
-        </header>
-        
-        <div id="chat-history" class="flex-1 overflow-y-auto p-4 flex flex-col bg-slate-50/50 gap-3">
-            <div class="bubble bubble-ai">
-                สวัสดีครับ มีข้อสงสัยเรื่องกฎหมายมาตราไหน สอบถามได้เลยครับ
-            </div>
-        </div>
-        
-        <div id="chatLoading" class="hidden px-4 py-2 text-center">
-            <span class="text-[10px] text-slate-400 bg-white border px-2 py-1 rounded-full shadow-sm">AI กำลังพิมพ์...</span>
-        </div>
-        
-        <div class="p-3 border-t bg-white flex gap-2 items-center">
-            <input id="user-input" type="text" class="flex-1 bg-slate-100 rounded-full px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-blue-500 transition-all" placeholder="พิมพ์คำถามที่นี่..." autocomplete="off">
-            <button id="send-btn" class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-700 active:scale-95 transition-all shadow-md">
-                <span class="material-symbols-rounded text-[20px] ml-0.5">send</span>
-            </button>
-        </div>
+  <!-- CHECK-IN MODAL -->
+  <div id="checkinModal" class="modal-overlay">
+    <div class="modal-box">
+      <h3 style="margin:0 0 10px;">เช็คชื่อประจำวัน</h3>
+      <p style="color:#666; font-size:14px;">สะสมครบ 100 วัน รับรางวัลพิเศษ</p>
+      <div id="currentDay" style="font-size:32px; font-weight:800; color:#d97706;">0</div>
+      <div style="background:#e2e8f0; height:10px; border-radius:5px; margin:10px 0; overflow:hidden;">
+        <div id="progressBar" style="width:0%; height:100%; background:#f59e0b; transition:width 0.3s;"></div>
+      </div>
+      <button id="btnCheckin" onclick="doCheckin()" style="width:100%; padding:12px; background:#1e5631; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;">ลงชื่อเข้าใช้</button>
+      <button onclick="closeCheckin()" style="width:100%; padding:10px; background:none; border:none; color:#666; margin-top:5px; cursor:pointer;">ปิดหน้าต่าง</button>
     </div>
-</div>
+  </div>
 
-<script src="./app.js"></script>
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchTab('home', this)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>หน้าหลัก</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('community', this)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <span>ชุมชน</span>
+    </button>
+  </nav>
 
-<script>
-    // --- APP LOGIC REWRITE (STABLE) ---
+  <script>
+    // --- NAV LOGIC ---
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      window.scrollTo(0,0);
+    }
 
-    const BACKEND_URL = 'https://polished-sunset-f33e.tontakankeawpang321.workers.dev';
-    let chatHistory = [];
+    // --- CHAT LOGIC ---
+    function toggleChat(show) {
+      const chat = document.getElementById('chatWindow');
+      const btns = document.querySelectorAll('.floating-group');
+      
+      chat.style.display = show ? 'flex' : 'none';
+      btns.forEach(b => b.classList.toggle('hidden', show));
+      
+      if(show) setTimeout(() => document.getElementById('chatInput').focus(), 100);
+    }
 
-    // 1. Initial Load & Overrides
-    window.addEventListener('load', () => {
-        
-        // Fix Button Conflict: Override the header favorite button
-        setTimeout(() => {
-            const oldBtn = document.getElementById('btnOpenFavs');
-            if(oldBtn) {
-                const newBtn = oldBtn.cloneNode(true);
-                newBtn.id = 'btnOpenFavs_New';
-                oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-                newBtn.addEventListener('click', () => window.openFavs());
-            }
-        }, 800);
+    function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
 
-        // Init Components
-        initSlider();
-        initChat();
-        
-        // START OBSERVER: Watch for app.js rendering and paint hearts immediately
-        startFavObserver();
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const txt = input.value.trim();
+      if(!txt) return;
+      
+      const body = document.getElementById('chatBody');
+      body.innerHTML += `<div class="chat-message msg-user">${txt}</div>`;
+      input.value = '';
+      body.scrollTop = body.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "สวัสดีครับ มีอะไรให้ช่วยเกี่ยวกับการสอบถามได้เลย!";
+        if(txt.includes('สอบ')) reply = "ดูรายละเอียดการสอบได้ที่หน้าหลักเลยครับ";
+        body.innerHTML += `<div class="chat-message msg-ai">${reply}</div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 800);
+    }
+
+    // --- CHECKIN LOGIC ---
+    const STORAGE_KEY = 'exam_checkin';
+    const TARGET = 100;
+
+    function openCheckin() {
+      updateCheckinUI();
+      document.getElementById('checkinModal').classList.add('active');
+    }
+    function closeCheckin() {
+      document.getElementById('checkinModal').classList.remove('active');
+    }
+    
+    function getCheckinData() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { count: 0, lastDate: '' };
+    }
+
+    function updateCheckinUI() {
+      const data = getCheckinData();
+      const today = new Date().toISOString().split('T')[0];
+      const btn = document.getElementById('btnCheckin');
+      
+      document.getElementById('currentDay').innerText = data.count;
+      document.getElementById('progressBar').style.width = Math.min((data.count/TARGET)*100, 100) + '%';
+      
+      if(data.lastDate === today) {
+        btn.disabled = true;
+        btn.innerText = "วันนี้เช็คชื่อแล้ว";
+        btn.style.background = "#cbd5e1";
+      } else {
+        btn.disabled = false;
+        btn.innerText = "ลงชื่อเข้าใช้";
+        btn.style.background = "#1e5631";
+      }
+    }
+
+    function doCheckin() {
+      const data = getCheckinData();
+      const today = new Date().toISOString().split('T')[0];
+      if(data.lastDate === today) return;
+
+      data.count++;
+      data.lastDate = today;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      updateCheckinUI();
+    }
+    
+    // Close modal on outside click
+    document.getElementById('checkinModal').addEventListener('click', (e) => {
+      if(e.target.id === 'checkinModal') closeCheckin();
     });
-
-    // --- FAVORITE SYSTEM (NEW & ROBUST) ---
-
-    // 2. The Main Toggle Function (Overrides app.js logic)
-    // ฟังก์ชันนี้ถูกเรียกเมื่อกดปุ่มหัวใจในหน้าลิสต์
-    window.toggleFav = function(id) {
-        // Prevent default event bubbling if needed
-        if(event) { event.stopPropagation(); }
-
-        // Get current favorites
-        let stored = [];
-        try {
-            stored = JSON.parse(localStorage.getItem('favLaws')) || [];
-            // Normalize to array of IDs only to prevent errors
-            stored = stored.map(s => (typeof s === 'object' ? s.id : s));
-        } catch(e) { stored = []; }
-
-        const index = stored.indexOf(id);
-        const isAdding = index === -1;
-
-        if (isAdding) {
-            stored.push(id);
-        } else {
-            stored.splice(index, 1);
-        }
-
-        // Save immediately
-        localStorage.setItem('favLaws', JSON.stringify(stored));
-
-        // Update UI immediately (Don't wait for reload)
-        updateHeartVisuals(id, isAdding);
-
-        console.log(`Fav ${id}: ${isAdding ? 'Added' : 'Removed'}`);
-    };
-
-    // 3. Visual Update Helper
-    function updateHeartVisuals(id, isActive) {
-        // Find all heart icons for this ID (in case of multiples)
-        // Assuming app.js uses onclick="toggleFav(123)" on the button
-        // We look for elements related to this ID. 
-        // Best bet: Query all heart icons and check their parent/wrapper context if possible.
-        // OR simpler: app.js usually re-renders. But for instant feedback:
-        
-        // Strategy: Look for buttons calling this toggleFav ID
-        const buttons = document.querySelectorAll(`button[onclick*="toggleFav(${id})"], .fav-btn-${id}`);
-        buttons.forEach(btn => {
-            const icon = btn.querySelector('.material-symbols-rounded') || btn;
-            if(isActive) {
-                icon.classList.add('text-red-500', 'active');
-                icon.style.fontVariationSettings = "'FILL' 1";
-            } else {
-                icon.classList.remove('text-red-500', 'active');
-                icon.style.fontVariationSettings = "'FILL' 0";
-            }
-        });
-    }
-
-    // 4. Observer: Automatically paint hearts when list updates
-    function startFavObserver() {
-        const listEl = document.getElementById('list');
-        if(!listEl) return;
-
-        // Function to paint all hearts based on storage
-        const paintHearts = () => {
-            let stored = JSON.parse(localStorage.getItem('favLaws')) || [];
-            stored = stored.map(s => (typeof s === 'object' ? s.id : s));
-            
-            // Loop through all laws in the list
-            // We assume app.js renders buttons with onclick="toggleFav(id)"
-            const buttons = listEl.querySelectorAll('button[onclick*="toggleFav"]');
-            
-            buttons.forEach(btn => {
-                // Extract ID from onclick string "toggleFav(101)"
-                const match = btn.getAttribute('onclick').match(/toggleFav\((\d+)\)/);
-                if(match && match[1]) {
-                    const id = parseInt(match[1]);
-                    const icon = btn.querySelector('.material-symbols-rounded') || btn;
-                    
-                    // Add class for easy finding later
-                    btn.classList.add(`fav-btn-${id}`); 
-                    // Make icon transition smooth
-                    icon.classList.add('heart-icon');
-
-                    if(stored.includes(id)) {
-                        icon.classList.add('text-red-500', 'active');
-                        icon.style.fontVariationSettings = "'FILL' 1";
-                    } else {
-                        icon.classList.remove('text-red-500', 'active');
-                        icon.style.fontVariationSettings = "'FILL' 0";
-                    }
-                }
-            });
-        };
-
-        // Watch for changes in the list (when app.js loads data)
-        const observer = new MutationObserver((mutations) => {
-            paintHearts();
-        });
-        
-        observer.observe(listEl, { childList: true, subtree: true });
-        
-        // Run once immediately
-        paintHearts();
-    }
-
-    // 5. Open Fav Modal Logic
-    window.openFavs = function() {
-        const container = document.getElementById('favContainer');
-        const lawData = window.laws || []; 
-        
-        let favIds = [];
-        try {
-            const stored = JSON.parse(localStorage.getItem('favLaws')) || [];
-            favIds = stored.map(item => (typeof item === 'object' ? item.id : item));
-        } catch(e) { favIds = []; }
-
-        const myFavs = lawData.filter(l => favIds.includes(l.id));
-        container.innerHTML = '';
-
-        if(myFavs.length === 0) {
-            container.innerHTML = `<div class="text-center text-slate-400 py-10 flex flex-col items-center gap-2">
-                <span class="material-symbols-rounded text-4xl opacity-20">bookmark_off</span>
-                <span>ยังไม่มีรายการโปรด</span>
-            </div>`;
-        } else {
-            myFavs.forEach(law => {
-                const card = document.createElement('div');
-                card.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center gap-3 animate-slide-up';
-                
-                // Link Logic
-                const link = law.link || `https://www.google.com/search?q=${encodeURIComponent(law.title + ' ม.' + law.section)}`;
-
-                card.innerHTML = `
-                    <div class="flex-1 min-w-0">
-                        <div class="text-[10px] font-bold text-blue-600 truncate">${law.code || 'กฎหมาย'} ม.${law.section}</div>
-                        <div class="font-bold text-sm text-slate-800 truncate mb-1">${law.title}</div>
-                        
-                        <a href="${link}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-semibold text-white bg-blue-600 px-3 py-1 rounded-full hover:bg-blue-700 transition-colors">
-                             <span>อ่านฉบับเต็ม</span>
-                             <span class="material-symbols-rounded text-[14px]">open_in_new</span>
-                        </a>
-                    </div>
-                    <button onclick="removeFav(${law.id})" class="text-slate-300 hover:text-red-500 p-2 transition-colors">
-                        <span class="material-symbols-rounded">delete</span>
-                    </button>
-                `;
-                container.appendChild(card);
-            });
-        }
-        toggleModal('modalFavs', true);
-    };
-
-    window.removeFav = function(id) {
-        // Reuse toggle logic to keep it consistent
-        window.toggleFav(id); 
-        // Refresh modal content
-        window.openFavs();
-    };
-
-    // --- OTHER UI LOGIC ---
-
-    function initChat() {
-        const sendBtn = document.getElementById('send-btn');
-        const userInput = document.getElementById('user-input');
-        if(sendBtn) sendBtn.addEventListener('click', handleUserMessage);
-        if(userInput) userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleUserMessage();
-        });
-    }
-
-    async function handleUserMessage() {
-        const input = document.getElementById('user-input');
-        const text = input.value.trim();
-        if (!text) return;
-
-        addBubble(text, 'user');
-        input.value = '';
-        chatHistory.push({ role: "user", content: text });
-
-        const loading = document.getElementById('chatLoading');
-        loading.classList.remove('hidden');
-        scrollToBottom();
-
-        try {
-            const response = await fetch(BACKEND_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, history: chatHistory })
-            });
-
-            if (!response.ok) throw new Error('API Error');
-
-            const data = await response.json();
-            const aiReply = data.reply || data.response || data.message || "ระบบกำลังประมวลผล...";
-
-            loading.classList.add('hidden');
-            addBubble(aiReply, 'ai');
-            chatHistory.push({ role: "assistant", content: aiReply });
-
-        } catch (error) {
-            console.error(error);
-            loading.classList.add('hidden');
-            addBubble("ขออภัยครับ เกิดข้อผิดพลาดในการเชื่อมต่อ", 'ai');
-        }
-    }
-
-    function addBubble(text, type) {
-        const historyEl = document.getElementById('chat-history');
-        const bubble = document.createElement('div');
-        bubble.className = `bubble bubble-${type} animate-slide-up`;
-        bubble.innerText = text;
-        historyEl.appendChild(bubble);
-        scrollToBottom();
-    }
-
-    function scrollToBottom() {
-        const historyEl = document.getElementById('chat-history');
-        historyEl.scrollTop = historyEl.scrollHeight;
-    }
-
-    // UI Helpers
-    window.switchTab = function(tab) {
-        document.getElementById('view-home').classList.toggle('hidden', tab !== 'home');
-        document.getElementById('view-community').classList.toggle('hidden', tab !== 'community');
-        document.getElementById('nav-home').classList.toggle('active', tab === 'home');
-        document.getElementById('nav-community').classList.toggle('active', tab === 'community');
-    }
-
-    function toggleModal(id, show) {
-        const el = document.getElementById(id);
-        if(!el) return;
-        if(show) {
-            el.classList.add('active');
-            if(id === 'modalChat') setTimeout(() => document.getElementById('user-input').focus(), 300);
-        } else {
-            el.classList.remove('active');
-        }
-    }
-
-    document.getElementById('btnCloseFavs').onclick = () => toggleModal('modalFavs', false);
-    document.getElementById('fab-chat').onclick = () => toggleModal('modalChat', true);
-    document.getElementById('btnCloseChat').onclick = () => toggleModal('modalChat', false);
-
-    function initSlider() {
-        let current = 0;
-        const track = document.getElementById('latestTrack');
-        const dots = document.querySelectorAll('.dot');
-        if(!track) return;
-        setInterval(() => {
-            current = (current + 1) % 3;
-            track.style.transform = `translateX(-${current * 100}%)`;
-            dots.forEach((d, i) => d.className = `dot ${i === current ? 'active' : ''}`);
-        }, 4000);
-    }
-</script>
-
+  </script>
 </body>
 </html>
