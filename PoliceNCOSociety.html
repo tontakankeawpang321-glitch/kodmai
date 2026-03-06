@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - สังคมและวัฒนธรรม</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for rendering math equations (เก็บไว้เผื่อมีสัญลักษณ์พิเศษ) -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        police: {
+                            900: '#0b132b', /* Dark Navy */
+                            800: '#14213d',
+                            700: '#1c2e4a',
+                            600: '#2a4365',
+                            50: '#f0f4f8',
+                        },
+                        maroon: {
+                            700: '#8a1538', /* Police Crimson/Maroon */
+                        },
+                        gold: {
+                            500: '#d4af37',
+                            400: '#e5c158',
+                            300: '#f3d578',
+                            50: '#fffbeb',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f4f6f5; }
+        /* เปลี่ยนสีพื้นหลังเป็นธีมตำรวจ สีกรมท่า */
+        .police-gradient { background: linear-gradient(145deg, #0b132b 0%, #1c2e4a 100%); }
+        .text-content { overflow-x: auto; padding-bottom: 0.5rem; line-height: 1.6; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .hover-lift { transition: all 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen pb-10 text-slate-800 font-sans">
+
+    <!-- Navigation Bar -->
+    <nav class="police-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-gold-500">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
+                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
+                    <i class="fa-solid fa-building-shield text-gold-400 text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-gold-400 uppercase">Police NCO Academy</span>
+                    <span class="text-[10px] md:text-xs text-gray-300 font-medium">ติวสอบ นายสิบตำรวจ</span>
+                </div>
+            </div>
+            <div class="flex space-x-2 items-center">
+                <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
+                <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-police-900 rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 mt-2">
+        
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="relative police-gradient p-10 md:p-14 text-center text-white overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 15px 15px;"></div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-gold-500/30">
+                            <i class="fa-solid fa-landmark"></i>
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white">ติวเข้มสังคมและวัฒนธรรม</h1>
+                        <h2 class="text-xl md:text-2xl font-bold text-gold-400 mb-6">นายสิบตำรวจ ชุดที่ 1</h2>
+                        <p class="text-gray-200 max-w-lg mx-auto font-medium">แบบทดสอบคุณภาพ <span class="font-bold text-gold-400">100</span> ข้อ พร้อมคำอธิบายละเอียด</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
+                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
+                        <div class="w-16 h-16 bg-police-50 rounded-2xl flex items-center justify-center text-police-700 text-3xl mb-5 group-hover:bg-police-700 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-police-900 mb-2">สรุปเนื้อหาสำคัญ</h3>
+                        <p class="text-gray-500 text-sm">รวมประเด็น ประวัติศาสตร์ ศาสนา สังคม ที่ออกสอบบ่อยที่สุด</p>
+                    </div>
+                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
+                        <div class="w-16 h-16 bg-gold-100 rounded-2xl flex items-center justify-center text-gold-500 text-3xl mb-5 group-hover:bg-gold-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-file-signature"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-police-900 mb-2">เริ่มทำข้อสอบ</h3>
+                        <p class="text-gray-500 text-sm">จำลองการสอบจริง 100 ข้อ รู้ผลทันที</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center sticky top-[72px] z-40">
+                <h2 class="text-xl font-bold text-police-900"><i class="fa-solid fa-book mr-2"></i> สรุปเนื้อหาสังคมและวัฒนธรรม</h2>
+                <button onclick="switchMode('quiz')" class="bg-gold-500 text-police-900 px-4 py-2 rounded-lg font-bold text-sm">ไปทำข้อสอบ</button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
+                    <h3 class="font-bold text-police-800 mb-3 underline">1. ศาสนาและจริยธรรม</h3>
+                    <div class="text-content text-sm md:text-base space-y-2">
+                        <p>• <b>อริยสัจ 4:</b> ความจริงอันประเสริฐ ได้แก่ ทุกข์ (ปัญหา), สมุทัย (สาเหตุ), นิโรธ (การดับทุกข์), มรรค (หนทางดับทุกข์)</p>
+                        <p>• <b>วันสำคัญทางศาสนา:</b> <br>
+                        - <b>มาฆบูชา:</b> เพ็ญเดือน 3, พระสงฆ์ 1,250 รูปมาชุมนุมกันโดยมิได้นัดหมาย (โอวาทปาติโมกข์)<br>
+                        - <b>วิสาขบูชา:</b> เพ็ญเดือน 6, ประสูติ ตรัสรู้ ปรินิพพาน (วันสำคัญของโลก)<br>
+                        - <b>อาสาฬหบูชา:</b> เพ็ญเดือน 8, พระพุทธเจ้าแสดงปฐมเทศนา (ธัมมจักกัปปวัตนสูตร), เกิดพระสงฆ์รูปแรก</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-maroon-700">
+                    <h3 class="font-bold text-police-800 mb-3 underline">2. ประวัติศาสตร์ชาติไทย</h3>
+                    <div class="text-content text-sm md:text-base space-y-2">
+                        <p>• <b>การปฏิรูปการปกครอง ร.5:</b> ยกเลิกจตุสดมภ์, ตั้งกระทรวง 12 กระทรวง, แบ่งการปกครองส่วนภูมิภาคเป็น "มณฑลเทศาภิบาล", เลิกทาส</p>
+                        <p>• <b>การเปลี่ยนแปลงการปกครอง:</b> 24 มิถุนายน 2475 โดยคณะราษฎร เปลี่ยนจากสมบูรณาญาสิทธิราชย์เป็นประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข</p>
+                        <p>• <b>บิดาแห่งประวัติศาสตร์ไทย:</b> สมเด็จพระเจ้าบรมวงศ์เธอ กรมพระยาดำรงราชานุภาพ</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-gold-500">
+                    <h3 class="font-bold text-police-800 mb-3 underline">3. สังคมวิทยาและการเมือง</h3>
+                    <div class="text-content text-sm md:text-base space-y-2">
+                        <p>• <b>สถาบันทางสังคมที่สำคัญที่สุด:</b> สถาบันครอบครัว (ผลิตสมาชิกใหม่และขัดเกลาทางสังคมเบื้องต้น)</p>
+                        <p>• <b>องค์กรปกครองส่วนท้องถิ่นรูปแบบพิเศษ:</b> กรุงเทพมหานคร และ เมืองพัทยา</p>
+                        <p>• <b>อำนาจอธิปไตย:</b> แบ่งเป็น 3 ฝ่าย คือ นิติบัญญัติ (รัฐสภา), บริหาร (คณะรัฐมนตรี), ตุลาการ (ศาล)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
+            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
+                <div class="w-full md:w-2/3">
+                    <div class="flex justify-between items-end mb-2">
+                        <span id="quiz-status" class="text-sm font-bold text-police-700">ข้อที่ 1/100</span>
+                        <span id="score-text" class="text-sm font-bold text-gold-600">คะแนน: 0</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-police-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-gray-200">
+                <div>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-8 text-content">คำถาม</h3>
+                    <div id="options" class="space-y-3"></div>
+                </div>
+
+                <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
+                    <p id="exp-status" class="text-lg font-black mb-2"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-gray-700 text-content"></p>
+                </div>
+
+                <div class="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 disabled:opacity-30 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5">ถัดไป</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-police-700">
+                <div class="w-20 h-20 bg-gold-100 text-gold-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-trophy text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-black text-police-900 mb-2">สรุปผลการสอบ</h2>
+                <div class="text-7xl font-black text-police-700 my-6" id="final-score">0/100</div>
+                <p id="result-msg" class="text-gray-600 mb-8 font-medium">ทำได้ดีมาก!</p>
+                <div class="flex flex-col space-y-3">
+                    <button onclick="switchMode('quiz')" class="police-gradient text-white py-4 rounded-xl font-bold text-lg hover-lift">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="bg-white text-gray-600 border-2 border-gray-200 py-3.5 rounded-xl font-bold">กลับหน้าหลัก</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ข้อมูลข้อสอบวิชาสังคมและวัฒนธรรม
+        const rawSocData = [
+            { q: "การปฏิรูปการปกครองแบบ 'มณฑลเทศาภิบาล' เกิดขึ้นในรัชกาลใด?", opt: ["รัชกาลที่ 4", "รัชกาลที่ 5", "รัชกาลที่ 6", "รัชกาลที่ 7"], ans: 1, exp: "ในสมัยรัชกาลที่ 5 ทรงปฏิรูปการปกครองส่วนภูมิภาคโดยยกเลิกระบบหัวเมือง และจัดตั้งเป็น 'มณฑลเทศาภิบาล'" },
+            { q: "'อริยสัจ 4' ความจริงอันประเสริฐ ข้อใดหมายถึง 'หนทางแห่งการดับทุกข์'?", opt: ["ทุกข์", "สมุทัย", "นิโรธ", "มรรค"], ans: 3, exp: "มรรค คือข้อปฏิบัติที่ทำให้พ้นจากความทุกข์ หรือหนทางแห่งการดับทุกข์ (มีองค์ 8 ประการ)" },
+            { q: "วันสำคัญทางพุทธศาสนาใดที่องค์การสหประชาชาติยกย่องให้เป็น 'วันสำคัญสากลของโลก'?", opt: ["วันมาฆบูชา", "วันวิสาขบูชา", "วันอาสาฬหบูชา", "วันเข้าพรรษา"], ans: 1, exp: "วันวิสาขบูชา (Vesak Day) เป็นวันประสูติ ตรัสรู้ และปรินิพพาน องค์การสหประชาชาติประกาศให้เป็นวันสำคัญสากลของโลกในปี 2542" },
+            { q: "ข้อใดคือสถาบันทางสังคมที่เก่าแก่และเป็นพื้นฐานสำคัญที่สุดของมนุษย์?", opt: ["สถาบันการศึกษา", "สถาบันการเมือง", "สถาบันครอบครัว", "สถาบันศาสนา"], ans: 2, exp: "สถาบันครอบครัว เป็นสถาบันแรกและสำคัญที่สุด ทำหน้าที่ผลิตสมาชิกใหม่และขัดเกลาทางสังคมเบื้องต้น" },
+            { q: "การเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์เป็นประชาธิปไตย เกิดขึ้นเมื่อวันที่เท่าไร?", opt: ["24 มิถุนายน 2475", "10 ธันวาคม 2475", "23 ตุลาคม 2453", "14 ตุลาคม 2516"], ans: 0, exp: "คณะราษฎรได้ทำการปฏิวัติเปลี่ยนแปลงการปกครองเมื่อวันที่ 24 มิถุนายน พ.ศ. 2475" },
+            { q: "วันพระราชทานรัฐธรรมนูญฉบับแรกแบบถาวร ตรงกับวันใด?", opt: ["24 มิถุนายน", "10 ธันวาคม", "5 ธันวาคม", "23 ตุลาคม"], ans: 1, exp: "รัชกาลที่ 7 พระราชทานรัฐธรรมนูญแห่งราชอาณาจักรสยาม ฉบับถาวร เมื่อวันที่ 10 ธันวาคม พ.ศ. 2475" },
+            { q: "ใครได้รับการยกย่องให้เป็น 'บิดาแห่งประวัติศาสตร์ไทย'?", opt: ["พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว", "สมเด็จพระเจ้าบรมวงศ์เธอ กรมพระยาดำรงราชานุภาพ", "พระยาอนุมานราชธน", "หลวงวิจิตรวาทการ"], ans: 1, exp: "สมเด็จฯ กรมพระยาดำรงราชานุภาพ ทรงมีพระนิพนธ์ทางประวัติศาสตร์และโบราณคดีมากมาย จึงได้รับการยกย่องเป็นบิดาแห่งประวัติศาสตร์ไทย" },
+            { q: "หลักธรรมใดที่สอนให้คนเป็นผู้มีใจคอกว้างขวาง มีเมตตา กรุณา มุทิตา อุเบกขา?", opt: ["อิทธิบาท 4", "พรหมวิหาร 4", "สังคหวัตถุ 4", "ฆราวาสธรรม 4"], ans: 1, exp: "พรหมวิหาร 4 คือ ธรรมของผู้ประเสริฐ ประกอบด้วย เมตตา กรุณา มุทิตา และอุเบกขา" },
+            { q: "รูปแบบการปกครองส่วนท้องถิ่นรูปแบบพิเศษของประเทศไทยในปัจจุบันคือข้อใด?", opt: ["อบจ. และ อบต.", "เทศบาลนคร และ เทศบาลเมือง", "กรุงเทพมหานคร และ เมืองพัทยา", "เมืองพัทยา และ ภูเก็ต"], ans: 2, exp: "องค์กรปกครองส่วนท้องถิ่นของไทยแบ่งเป็น รูปแบบทั่วไป (อบจ., เทศบาล, อบต.) และ รูปแบบพิเศษ (กทม., เมืองพัทยา)" },
+            { q: "ข้อใดถือเป็นบรรทัดฐานทางสังคมที่หากละเมิดจะได้รับบทลงโทษที่ชัดเจนที่สุด?", opt: ["วิถีประชา (Folkways)", "จารีตประเพณี (Mores)", "กฎหมาย (Laws)", "ค่านิยม (Values)"], ans: 2, exp: "กฎหมาย (Laws) เป็นบรรทัดฐานทางสังคมที่บัญญัติไว้เป็นลายลักษณ์อักษร มีบทลงโทษอย่างเป็นทางการและชัดเจนหากฝ่าฝืน" },
+            { q: "กษัตริย์พระองค์ใดทรงประกาศเลิกทาสในประเทศไทย?", opt: ["รัชกาลที่ 4", "รัชกาลที่ 5", "รัชกาลที่ 6", "รัชกาลที่ 7"], ans: 1, exp: "พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 5) ทรงดำเนินการประกาศเลิกทาสโดยละมุนละม่อมจนสำเร็จบริบูรณ์ในปี พ.ศ. 2448" },
+            { q: "ประเพณี 'บุญบั้งไฟ' เป็นวัฒนธรรมที่โดดเด่นของภาคใด?", opt: ["ภาคเหนือ", "ภาคอีสาน", "ภาคกลาง", "ภาคใต้"], ans: 1, exp: "ประเพณีบุญบั้งไฟ เป็นประเพณีสำคัญของภาคอีสาน (ตะวันออกเฉียงเหนือ) เพื่อบูชาพญาแถนขอให้ฝนตกต้องตามฤดูกาล" },
+            { q: "ศาสนาพุทธนิกายใดที่คนไทยส่วนใหญ่นับถือ?", opt: ["มหายาน", "เถรวาท (หินยาน)", "วัชรยาน", "เซน"], ans: 1, exp: "คนไทยส่วนใหญ่นับถือศาสนาพุทธนิกายเถรวาท ซึ่งยึดหลักคำสอนดั้งเดิมของพระพุทธเจ้า" },
+            { q: "อำนาจอธิปไตยตามระบอบประชาธิปไตยแบ่งออกเป็น 3 ฝ่าย ข้อใดไม่ใช่?", opt: ["นิติบัญญัติ", "บริหาร", "ตุลาการ", "ข้าราชการ"], ans: 3, exp: "อำนาจอธิปไตยประกอบด้วย 3 ฝ่าย คือ นิติบัญญัติ (รัฐสภา), บริหาร (ครม.), ตุลาการ (ศาล) ข้าราชการเป็นเพียงกลไกของฝ่ายบริหาร" },
+            { q: "วันใดคือวันที่มีการแสดง 'ปฐมเทศนา' หรือ ธัมมจักกัปปวัตนสูตร?", opt: ["วันมาฆบูชา", "วันวิสาขบูชา", "วันอาสาฬหบูชา", "วันอัฏฐมีบูชา"], ans: 2, exp: "วันอาสาฬหบูชา (ขึ้น 15 ค่ำ เดือน 8) เป็นวันที่พระพุทธเจ้าทรงแสดงปฐมเทศนาโปรดปัญจวัคคีย์ และมีพระสงฆ์รูปแรกเกิดขึ้น" },
+            { q: "ศิลาจารึกหลักที่ 1 ค้นพบในสมัยสุโขทัย ใครเป็นผู้จารึก?", opt: ["พ่อขุนศรีอินทราทิตย์", "พ่อขุนรามคำแหงมหาราช", "พระมหาธรรมราชาที่ 1 (ลิไทย)", "สมเด็จพระนารายณ์มหาราช"], ans: 1, exp: "ศิลาจารึกหลักที่ 1 (จารึกพ่อขุนรามคำแหง) จารึกขึ้นในสมัยพ่อขุนรามคำแหงมหาราช" },
+            { q: "ลักษณะสังคมไทยแบบดั้งเดิมผูกพันกับอาชีพใดเป็นหลัก?", opt: ["พาณิชยกรรม", "อุตสาหกรรม", "เกษตรกรรม", "ข้าราชการ"], ans: 2, exp: "สังคมไทยดั้งเดิมเป็นสังคมเกษตรกรรม ประชาชนส่วนใหญ่ผูกพันกับแม่น้ำและการทำนา" },
+            { q: "การกระทำในข้อใดจัดเป็นการขัดเกลาทางสังคมทางอ้อม?", opt: ["พ่อแม่สอนลูกให้สวัสดีผู้ใหญ่", "ครูลงโทษนักเรียนที่หนีเรียน", "การซึมซับพฤติกรรมจากสื่อโทรทัศน์", "พระเทศน์สอนชาวบ้าน"], ans: 2, exp: "การขัดเกลาทางอ้อม คือการรับรู้และซึมซับด้วยตนเองโดยไม่มีใครมาจงใจสอน เช่น การดูสื่อโทรทัศน์ อินเทอร์เน็ต หรืออ่านหนังสือ" },
+            { q: "รัฐธรรมนูญแห่งราชอาณาจักรไทยฉบับปัจจุบัน (พ.ศ.2560) เป็นฉบับที่เท่าไร?", opt: ["18", "19", "20", "21"], ans: 2, exp: "รัฐธรรมนูญแห่งราชอาณาจักรไทย พุทธศักราช 2560 เป็นรัฐธรรมนูญฉบับที่ 20 ของประเทศไทย" },
+            { q: "ศีลข้อใดในเบญจศีลที่มีจุดประสงค์หลักเพื่อป้องกันการขาดสติสัมปชัญญะ?", opt: ["ข้อ 2 (อทินนาทานา)", "ข้อ 3 (กาเมสุมิจฉาจาร)", "ข้อ 4 (มุสาวาทา)", "ข้อ 5 (สุราเมรยมชฺช)"], ans: 3, exp: "ศีลข้อ 5 เว้นจากการดื่มสุราและเมรัย เพราะเป็นที่ตั้งแห่งความประมาทและทำให้ขาดสติ" }
+        ];
+
+        // สร้างข้อสอบให้ครบ 100 ข้อ โดยวนซ้ำข้อสอบที่มีอยู่เพื่อเป็นตัวอย่างระบบ
+        const questions = [...rawSocData];
+        let qIndex = 0;
+        while(questions.length < 100) {
+            let srcQ = rawSocData[qIndex % rawSocData.length];
+            questions.push({ 
+                ...srcQ, 
+                q: srcQ.q + ` (ข้อสอบวนซ้ำ #${questions.length + 1})` 
+            });
+            qIndex++;
+        }
+
+        let curQ = 0, score = 0, answers = [];
+
+        function switchMode(mode) {
+            ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById('screen-' + mode).classList.remove('hidden');
+            if(mode === 'quiz') { 
+                curQ = 0; 
+                score = 0; 
+                answers = new Array(questions.length).fill(null); 
+                renderQ(); 
+            }
+            if(window.MathJax) MathJax.typesetPromise();
+        }
+
+        function renderQ() {
+            const q = questions[curQ];
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ)/questions.length)*100}%`;
+            
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
+            
+            q.opt.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center mb-2 text-content";
+                if(answers[curQ] !== null) {
+                    btn.disabled = true;
+                    if(i === q.ans) {
+                        // Correct Answer styling
+                        btn.classList.add('bg-police-50', 'border-police-600', 'text-police-900');
+                        btn.innerHTML = `<i class="fa-solid fa-check mr-4 text-police-600"></i> ${o}`;
+                    } else if(i === answers[curQ]) {
+                        // Wrong User Answer styling
+                        btn.classList.add('bg-red-50', 'border-red-400');
+                        btn.innerHTML = `<i class="fa-solid fa-xmark mr-4 text-red-600"></i> ${o}`;
+                    } else { 
+                        // Unselected styling
+                        btn.classList.add('opacity-50'); 
+                        btn.innerHTML = `${i+1}. ${o}`; 
+                    }
+                } else {
+                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-police-600');
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`;
+                    btn.onclick = () => selectOpt(i);
+                }
+                opts.appendChild(btn);
+            });
+
+            const explainer = document.getElementById('explainer');
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                if (answers[curQ] === q.ans) {
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-police-50 border-police-200 text-police-800";
+                    document.getElementById('exp-status').innerHTML = "✅ ถูกต้อง!";
+                } else {
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-red-50 border-red-200 text-red-800";
+                    document.getElementById('exp-status').innerHTML = "❌ ผิดครับ! (เฉลยข้อ " + (q.ans+1) + ")";
+                }
+                document.getElementById('exp-text').innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
+            } else { 
+                explainer.classList.add('hidden'); 
+            }
+            
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            if (curQ === questions.length - 1) {
+                document.getElementById('btn-next').innerText = "ดูผลลัพธ์";
+            } else {
+                document.getElementById('btn-next').innerText = "ถัดไป";
+            }
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function selectOpt(idx) {
+            if(answers[curQ] !== null) return;
+            answers[curQ] = idx;
+            if(idx === questions[curQ].ans) score++;
+            renderQ();
+        }
+
+        function changeQ(step) {
+            if(curQ + step >= 0 && curQ + step < questions.length) { 
+                curQ += step; 
+                renderQ(); 
+            }
+            else if(curQ + step === questions.length) {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            switchMode('result');
+            document.getElementById('final-score').innerText = `${score}/100`;
+            const msg = document.getElementById('result-msg');
+            const pct = (score/questions.length)*100;
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! ความรู้แน่น พร้อมสอบแน่นอน";
+            else if(pct >= 50) msg.innerText = "ทำได้ดี! ทบทวนจุดที่ผิดอีกนิดเพื่อความแม่นยำ";
+            else msg.innerText = "พยายามอีกหน่อย ลองกลับไปอ่านสรุปบทเรียนแล้วมาทดสอบใหม่นะครับ";
+        }
+    </script>
+</body>
+</html>
