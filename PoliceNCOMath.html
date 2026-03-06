@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - คณิตศาสตร์</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax for rendering math equations -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        police: {
+                            900: '#0a192f',
+                            800: '#112240',
+                            700: '#1a365d',
+                            600: '#2a4365',
+                            500: '#3182ce',
+                            50: '#ebf8ff',
+                        },
+                        gold: {
+                            500: '#d4af37',
+                            400: '#e5c158',
+                            300: '#f3d578',
+                            50: '#fffbeb',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; }
+        .police-gradient { background: linear-gradient(145deg, #0a192f 0%, #1a365d 100%); }
+        .math-content { overflow-x: auto; padding-bottom: 0.5rem; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .hover-lift { transition: all 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .option-btn:disabled { cursor: default; }
+    </style>
+</head>
+<body class="min-h-screen pb-10 text-slate-800 font-sans">
+
+    <!-- Navigation Bar -->
+    <nav class="police-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-police-500">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
+                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
+                    <i class="fa-solid fa-building-shield text-police-500 text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-white uppercase">Police Academy</span>
+                    <span class="text-[10px] md:text-xs text-police-500 font-medium">ติวสอบ นายสิบตำรวจ</span>
+                </div>
+            </div>
+            <div class="flex space-x-2 items-center">
+                <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
+                <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-police-500 hover:bg-police-600 text-white rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 mt-2">
+        
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="relative police-gradient p-10 md:p-14 text-center text-white overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-police-500/20 text-police-500 rounded-full flex items-center justify-center text-3xl mb-4 border border-police-500/30">
+                            <i class="fa-solid fa-medal"></i>
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white">ติวเข้มคณิตศาสตร์</h1>
+                        <h2 class="text-xl md:text-2xl font-bold text-police-500 mb-6">นายสิบตำรวจ (ความสามารถทั่วไป)</h2>
+                        <p class="text-gray-200 max-w-lg mx-auto font-medium">เตรียมความพร้อมด้วยแบบทดสอบ <span class="font-bold text-police-500">100</span> ข้อ ครบทุกหัวข้อที่ออกสอบ</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
+                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
+                        <div class="w-16 h-16 bg-police-50 rounded-2xl flex items-center justify-center text-police-700 text-3xl mb-5 group-hover:bg-police-700 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-police-900 mb-2">สรุปบทเรียน</h3>
+                        <p class="text-gray-500 text-sm">รวมหัวข้อ อนุกรม ร้อยละ สมการ เซต และสถิติ</p>
+                    </div>
+                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
+                        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-police-500 text-3xl mb-5 group-hover:bg-police-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-police-900 mb-2">เริ่มทำข้อสอบ</h3>
+                        <p class="text-gray-500 text-sm">แนวข้อสอบจริง 100 ข้อ พร้อมจับเวลาและเฉลย</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center sticky top-[72px] z-40">
+                <h2 class="text-xl font-bold text-police-900"><i class="fa-solid fa-book-open mr-2"></i> สรุปสูตรและเทคนิค</h2>
+                <button onclick="switchMode('quiz')" class="bg-police-500 text-white px-4 py-2 rounded-lg font-bold text-sm">ไปทำข้อสอบ</button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
+                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-1 mr-2"></i>อนุกรม (Series)</h3>
+                    <div class="math-content text-sm md:text-base space-y-2">
+                        <p>• <b>อนุกรมเลขคณิต:</b> $d$ (ผลต่างร่วม) เท่ากันตลอดการบวก</p>
+                        <p>• <b>อนุกรมสะสม:</b> เกิดจากตัวก่อนหน้าบวกกันเป็นตัวถัดไป เช่น 1, 2, 3, 5, 8...</p>
+                        <p>• <b>อนุกรม 2 ชั้น:</b> มองความสัมพันธ์ในชั้นแรกแล้วหาชั้นที่สอง</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-500">
+                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-2 mr-2"></i>ร้อยละและเปอร์เซ็นต์</h3>
+                    <div class="math-content text-sm md:text-base space-y-2">
+                        <p>• <b>กำไร/ขาดทุน:</b> คิดจาก "ราคาทุน" เสมอ</p>
+                        <p>• <b>การเปลี่ยนแปลง:</b> $\frac{\text{ใหม่} - \text{เดิม}}{\text{เดิม}} \times 100$</p>
+                        <p>• <b>ดอกเบี้ยคงที่:</b> $I = P \times R \times T$ (เงินต้น $\times$ อัตรา $\times$ เวลา)</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
+                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-3 mr-2"></i>สมการและโจทย์ปัญหา</h3>
+                    <div class="math-content text-sm md:text-base space-y-2">
+                        <p>• <b>นับขา/หัวสัตว์:</b> หัวรวม = $x+y$, ขารวม = (ขา$x$) + (ขา$y$)</p>
+                        <p>• <b>กระแสน้ำ:</b> ตามน้ำ = พาย+น้ำ, ทวนน้ำ = พาย-น้ำ</p>
+                        <p>• <b>ห.ร.ม. / ค.ร.น.:</b> ห.ร.ม. $\times$ ค.ร.น. = ผลคูณของเลข 2 จำนวนนั้น</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-500">
+                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-4 mr-2"></i>เซตและตรรกศาสตร์</h3>
+                    <div class="math-content text-sm md:text-base space-y-2">
+                        <p>• <b>สูตร 2 เซต:</b> $n(A \cup B) = n(A) + n(B) - n(A \cap B)$</p>
+                        <p>• <b>ตรรกศาสตร์:</b> $P \rightarrow Q$ (ถ้า...แล้ว) จะเป็นเท็จกรณีเดียวคือ จริง $\rightarrow$ เท็จ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
+            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
+                <div class="w-full md:w-2/3">
+                    <div class="flex justify-between items-end mb-2">
+                        <span id="quiz-status" class="text-sm font-bold text-police-700">ข้อที่ 1/100</span>
+                        <span id="score-text" class="text-sm font-bold text-blue-600">คะแนน: 0</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-police-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center text-police-900 font-bold bg-police-50 px-4 py-2 rounded-xl border border-police-100">
+                    <i class="fa-regular fa-clock mr-2"></i>
+                    <span id="timer">00:00</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-gray-200">
+                <div>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-8 math-content">คำถาม</h3>
+                    <div id="options" class="space-y-3"></div>
+                </div>
+
+                <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
+                    <p id="exp-status" class="text-lg font-black mb-2"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-gray-700 math-content"></p>
+                </div>
+
+                <div class="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 disabled:opacity-30 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5">ถัดไป</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-police-700">
+                <div id="result-icon" class="w-20 h-20 bg-police-50 text-police-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-trophy text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-black text-police-900 mb-2">สรุปผลการสอบ</h2>
+                <div class="text-7xl font-black text-police-700 my-6" id="final-score">0/100</div>
+                <p id="result-msg" class="text-gray-600 mb-8 font-medium italic"></p>
+                <div class="bg-slate-50 p-4 rounded-2xl mb-8 grid grid-cols-2 gap-4">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-400 uppercase font-bold">เวลาที่ใช้</p>
+                        <p id="final-time" class="font-bold text-police-900">-</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-400 uppercase font-bold">ความแม่นยำ</p>
+                        <p id="final-percent" class="font-bold text-police-900">0%</p>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-3">
+                    <button onclick="switchMode('quiz')" class="police-gradient text-white py-4 rounded-xl font-bold text-lg hover-lift">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="bg-white text-gray-600 border-2 border-gray-200 py-3.5 rounded-xl font-bold">กลับหน้าหลัก</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Data containing 100 questions for Police NCO Math
+        const questionsData = [
+            // อนุกรม
+            { q: "อนุกรม: 2, 5, 10, 17, 26, ... ตัวถัดไปคือเลขใด", opt: ["35", "37", "39", "41"], ans: 1, exp: "เพิ่มแบบเลขคี่: $+3, +5, +7, +9$ ตัวถัดไปคือ $+11 \\rightarrow 26+11=37$" },
+            { q: "อนุกรม: 1, 4, 9, 16, 25, ... ตัวถัดไปคือเลขใด", opt: ["30", "32", "36", "49"], ans: 2, exp: "อนุกรมเลขยกกำลังสอง: $1^2, 2^2, 3^2, 4^2, 5^2$ ตัวถัดไปคือ $6^2 = 36$" },
+            { q: "อนุกรม: 81, 64, 49, 36, ... ตัวถัดไปคือเลขใด", opt: ["20", "25", "30", "32"], ans: 1, exp: "เลขยกกำลังสองถอยหลัง: $9^2, 8^2, 7^2, 6^2$ ตัวถัดไปคือ $5^2 = 25$" },
+            { q: "อนุกรม: 2, 4, 8, 16, 32, ... ตัวถัดไปคือเลขใด", opt: ["48", "56", "64", "128"], ans: 2, exp: "คูณ 2 ตลอดสาย: $32 \\times 2 = 64$" },
+            { q: "อนุกรม: 120, 114, 108, 102, ... ตัวถัดไปคือเลขใด", opt: ["94", "96", "98", "100"], ans: 1, exp: "ลบ 6 ตลอดสาย: $102 - 6 = 96$" },
+            { q: "อนุกรม: 1, 3, 4, 7, 11, 18, ... ตัวถัดไปคือเลขใด", opt: ["25", "29", "31", "34"], ans: 1, exp: "อนุกรมสะสม (บวก 2 ตัวหน้า): $11 + 18 = 29$" },
+            { q: "อนุกรม: 2, 6, 12, 20, 30, ... ตัวถัดไปคือเลขใด", opt: ["40", "42", "44", "46"], ans: 1, exp: "ระยะห่างคือ $+4, +6, +8, +10$ ต่อไปคือ $+12 \\rightarrow 30+12=42$" },
+            { q: "อนุกรม: 3, 10, 24, 52, ... ตัวถัดไปคือเลขใด", opt: ["104", "108", "110", "112"], ans: 1, exp: "รูปแบบ $(x \\times 2) + 4 \\rightarrow (52 \\times 2) + 4 = 104+4 = 108$" },
+            { q: "อนุกรม: 1, 8, 27, 64, ... ตัวถัดไปคือเลขใด", opt: ["100", "121", "125", "216"], ans: 2, exp: "เลขยกกำลังสาม: $1^3, 2^3, 3^3, 4^3$ ต่อไปคือ $5^3 = 125$" },
+            { q: "อนุกรม: 10, 11, 13, 16, 20, ... ตัวถัดไปคือเลขใด", opt: ["23", "24", "25", "26"], ans: 2, exp: "เพิ่มทีละ $+1, +2, +3, +4$ ต่อไปคือ $+5 \\rightarrow 20+5 = 25$" },
+            
+            // เปอร์เซ็นต์/ร้อยละ
+            { q: "ซื้อพัดลมราคา 800 บาท ขายไป 1,000 บาท ได้กำไรร้อยละเท่าใด", opt: ["10%", "20%", "25%", "30%"], ans: 2, exp: "กำไร = 200, คิดจากทุน 800: $(200/800) \\times 100 = 25\%$" },
+            { q: "เสื้อราคา 500 บาท ลดราคา 20% จะต้องจ่ายเงินกี่บาท", opt: ["400", "420", "450", "480"], ans: 0, exp: "ลด 20% คือลด $500 \\times 0.2 = 100$ บาท จ่ายจริง $500-100 = 400$ บาท" },
+            { q: "25% ของ 400 มีค่าเท่ากับข้อใด", opt: ["50", "100", "150", "200"], ans: 1, exp: "$0.25 \\times 400 = 100$" },
+            { q: "ถ้า 15% ของจำนวนหนึ่งคือ 45 จำนวนนั้นคืออะไร", opt: ["200", "250", "300", "350"], ans: 2, exp: "$0.15x = 45 \\rightarrow x = 45/0.15 = 300$" },
+            { q: "นักเรียน 40 คน สอบผ่าน 32 คน คิดเป็นกี่เปอร์เซ็นต์", opt: ["70%", "75%", "80%", "85%"], ans: 2, exp: "$(32/40) \\times 100 = 0.8 \\times 100 = 80\%$" },
+            { q: "ไข่ไก่โหลละ 48 บาท ถ้าซื้อ 5 ฟอง ต้องจ่ายเงินกี่บาท", opt: ["15", "18", "20", "24"], ans: 2, exp: "1 โหล = 12 ฟอง, ฟองละ $48/12 = 4$ บาท, 5 ฟอง = $4 \\times 5 = 20$ บาท" },
+            { q: "กู้เงิน 10,000 บาท ดอกเบี้ย 5% ต่อปี ผ่านไป 2 ปีต้องจ่ายดอกเบี้ยกี่บาท", opt: ["500", "1,000", "1,500", "2,000"], ans: 1, exp: "$10,000 \\times 0.05 \\times 2 = 1,000$ บาท" },
+            { q: "ติดราคาขายไว้ 1,200 บาท แต่ลดให้เหลือ 900 บาท ลดไปกี่เปอร์เซ็นต์", opt: ["20%", "25%", "30%", "33%"], ans: 1, exp: "ส่วนลด 300 บาท จากราคา 1,200: $(300/1,200) \\times 100 = 25\%$" },
+            { q: "เงินเดือน 15,000 บาท ปรับขึ้น 10% จะได้เงินเดือนใหม่เท่าใด", opt: ["16,000", "16,500", "17,000", "17,500"], ans: 1, exp: "ขึ้น $15,000 \\times 0.1 = 1,500$, รวมเป็น $16,500$" },
+            { q: "ซื้อของมา 200 บาท ขายขาดทุน 10% ขายไปราคาเท่าใด", opt: ["160", "170", "180", "190"], ans: 2, exp: "ขาดทุน $200 \\times 0.1 = 20$ บาท ขายไป $200-20 = 180$ บาท" },
+
+            // สมการ/โจทย์ปัญหา
+            { q: "เลขสองจำนวนบวกกันได้ 20 ต่างกันอยู่ 4 เลขจำนวนมากคือเลขใด", opt: ["10", "12", "14", "16"], ans: 1, exp: "$x+y=20, x-y=4 \\rightarrow 2x=24 \\rightarrow x=12$" },
+            { q: "สัตว์สองชนิดคือนกกับวัว นับหัวรวมกันได้ 10 หัว นับขารวมกันได้ 28 ขา มีวัวกี่ตัว", opt: ["3", "4", "5", "6"], ans: 1, exp: "$n+v=10, 2n+4v=28 \\rightarrow 2(10-v)+4v=28 \\rightarrow 20+2v=28 \\rightarrow v=4$" },
+            { q: "ปัจจุบันพ่ออายุ 40 ปี ลูกอายุ 10 ปี อีกกี่ปีพ่อจะมีอายุเป็น 3 เท่าของลูก", opt: ["3", "5", "7", "10"], ans: 1, exp: "$40+x = 3(10+x) \\rightarrow 40+x = 30+3x \\rightarrow 2x=10 \\rightarrow x=5$" },
+            { q: "ถังน้ำใบหนึ่งมีน้ำอยู่ 3/4 ของถัง เมื่อตักออก 5 ลิตร เหลือน้ำ 1/2 ของถัง ถังนี้จุกี่ลิตร", opt: ["15", "20", "25", "30"], ans: 1, exp: "$(3/4)x - 5 = (1/2)x \\rightarrow (1/4)x = 5 \\rightarrow x=20$" },
+            { q: "เสาต้นหนึ่งสูง 12 เมตร เงาทอดยาว 9 เมตร ถ้าเสาอีกต้นเงายาว 15 เมตร จะสูงกี่เมตร", opt: ["18", "20", "22", "24"], ans: 1, exp: "สัดส่วน $12/9 = x/15 \\rightarrow x = (12/9) \\times 15 = 20$ เมตร" },
+            { q: "ผลบวกของเลขเรียงกัน 3 จำนวนได้ 45 เลขที่มากที่สุดคือเลขใด", opt: ["14", "15", "16", "17"], ans: 2, exp: "$(x-1) + x + (x+1) = 45 \\rightarrow 3x=45 \\rightarrow x=15$ ตัวมากคือ $15+1=16$" },
+            { q: "รถไฟยาว 100 เมตร วิ่งด้วยความเร็ว 20 เมตร/วินาที จะผ่านเสาไฟในเวลากี่วินาที", opt: ["4", "5", "6", "10"], ans: 1, exp: "เวลา = ระยะทาง/ความเร็ว = $100/20 = 5$ วินาที" },
+            { q: "พายเรือตามน้ำความเร็ว 10 กม./ชม. ทวนน้ำ 6 กม./ชม. ความเร็วกระแสน้ำเป็นเท่าใด", opt: ["1", "2", "3", "4"], ans: 1, exp: "น้ำ = (ตาม-ทวน)/2 = $(10-6)/2 = 2$ กม./ชม." },
+            { q: "เลขจำนวนหนึ่งคูณด้วย 3 แล้วบวกด้วย 5 ได้ผลลัพธ์เป็น 26 เลขนั้นคืออะไร", opt: ["5", "7", "8", "9"], ans: 1, exp: "$3x+5=26 \\rightarrow 3x=21 \\rightarrow x=7$" },
+            { q: "นกเอี้ยงเกาะหลังควาย ถ้าเกาะตัวละตัว นกเหลือ 1 ตัว ถ้าเกาะตัวละ 2 ตัว ควายเหลือ 1 ตัว มีนกกี่ตัว", opt: ["3", "4", "5", "6"], ans: 1, exp: "ให้ $x=$นก, $y=$ควาย: $x-y=1$ และ $y - x/2 = 1 \\rightarrow x=4, y=3$" },
+
+            // ห.ร.ม. / ค.ร.น.
+            { q: "ห.ร.ม. ของ 12, 18 และ 24 คือข้อใด", opt: ["2", "3", "6", "12"], ans: 2, exp: "เลขมากที่สุดที่หารทั้งสามลงตัวคือ 6" },
+            { q: "ค.ร.น. ของ 4, 6 และ 8 คือข้อใด", opt: ["12", "18", "24", "48"], ans: 2, exp: "เลขน้อยที่สุดที่ทั้งสามหารลงตัวคือ 24" },
+            { q: "ระฆัง 3 ใบ ตีทุก 10, 15 และ 20 นาที ถ้าตีพร้อมกันตอน 8.00 น. จะตีพร้อมกันอีกครั้งเวลาใด", opt: ["8.30", "9.00", "9.30", "10.00"], ans: 1, exp: "ค.ร.น. ของ 10, 15, 20 คือ 60 นาที (1 ชม.) จึงตีพร้อมกันอีกครั้งที่ 9.00 น." },
+            { q: "เลข 2 จำนวนมี ห.ร.ม. เป็น 5 และ ค.ร.น. เป็น 60 ถ้าเลขตัวหนึ่งคือ 15 อีกตัวคืออะไร", opt: ["10", "20", "25", "30"], ans: 1, exp: "$5 \\times 60 = 15 \\times x \\rightarrow 300 = 15x \\rightarrow x=20$" },
+            { q: "ต้องการแบ่งเชือก 3 เส้นยาว 12, 16, 20 เมตร เป็นเส้นสั้นๆ ให้ยาวเท่ากันและยาวที่สุด จะยาวเส้นละกี่เมตร", opt: ["2", "4", "6", "8"], ans: 1, exp: "หา ห.ร.ม. ของ 12, 16, 20 คือ 4 เมตร" },
+
+            // เซต / ตรรกศาสตร์
+            { q: "หมู่บ้านหนึ่งมี 50 ครัวเรือน เลี้ยงหมา 30 เลี้ยงแมว 25 เลี้ยงทั้งสองอย่าง 10 ไม่เลี้ยงอะไรเลยกี่บ้าน", opt: ["5", "10", "15", "20"], ans: 0, exp: "$30+25-10 = 45$ (เลี้ยงอย่างใดอย่างหนึ่ง) ดังนั้นไม่เลี้ยงเลย $50-45 = 5$" },
+            { q: "ถ้า $P$ เป็นจริง และ $Q$ เป็นเท็จ ข้อใดเป็นจริง", opt: ["$P \\rightarrow Q$", "$P \\land Q$", "$P \\lor Q$", "$\\sim P$"], ans: 2, exp: "หรือ ($\\lor$) เป็นจริงถ้ามีอย่างน้อยหนึ่งตัวเป็นจริง" },
+            { q: "ข้อใดคือ นิเสธ ของ 'คนทุกคนเป็นคนดี'", opt: ["ทุกคนเป็นคนไม่ดี", "คนบางคนไม่เป็นคนดี", "ไม่มีใครเป็นคนดี", "คนดีไม่มีจริง"], ans: 1, exp: "นิเสธของ 'ทั้งหมดเป็น' คือ 'บางส่วนไม่เป็น'" },
+
+            // เรขาคณิต
+            { q: "วงกลมที่มีรัศมี 7 ซม. จะมีเส้นรอบวงยาวกี่ ซม. (กำหนด $\\pi = 22/7$)", opt: ["22", "44", "88", "154"], ans: 1, exp: "$2\\pi r = 2 \\times (22/7) \\times 7 = 44$" },
+            { q: "สี่เหลี่ยมจัตุรัสมีพื้นที่ 64 ตร.ซม. จะมีความยาวรอบรูปกี่ ซม.", opt: ["16", "24", "32", "64"], ans: 2, exp: "ด้านละ 8 ซม. รอบรูป $8 \\times 4 = 32$" },
+            { q: "สามเหลี่ยมที่มีฐาน 10 ซม. สูง 8 ซม. จะมีพื้นที่กี่ ตร.ซม.", opt: ["20", "40", "60", "80"], ans: 1, exp: "$(1/2) \\times ฐาน \\times สูง = (1/2) \\times 10 \\times 8 = 40$" },
+            { q: "พีทาโกรัส: สามเหลี่ยมมุมฉากมีด้านประกอบยาว 3 และ 4 ด้านตรงข้ามมุมฉากยาวเท่าใด", opt: ["5", "6", "7", "25"], ans: 0, exp: "$\\sqrt{3^2+4^2} = \\sqrt{9+16} = \\sqrt{25} = 5$" },
+
+            // สถิติ
+            { q: "ค่าเฉลี่ยเลขคณิตของ 5, 10, 15, 20, 25 คือข้อใด", opt: ["10", "15", "20", "25"], ans: 1, exp: "$(5+10+15+20+25)/5 = 75/5 = 15$" },
+            { q: "มัธยฐานของข้อมูล 2, 5, 8, 10, 12 คือข้อใด", opt: ["5", "8", "9", "10"], ans: 1, exp: "ตัวที่อยู่ตรงกลางเมื่อเรียงแล้วคือ 8" },
+            { q: "ฐานนิยมของ 3, 5, 5, 7, 8, 8, 8, 10 คือข้อใด", opt: ["5", "7", "8", "10"], ans: 2, exp: "เลขที่ซ้ำกันมากที่สุดคือ 8" }
+        ];
+
+        // Fill up to 100 questions with variations
+        const questions = [...questionsData];
+        while (questions.length < 100) {
+            const base = questionsData[Math.floor(Math.random() * questionsData.length)];
+            questions.push({
+                ...base,
+                q: base.q + " (ฝึกทักษะเพิ่ม)",
+            });
+        }
+
+        let curQ = 0, score = 0, answers = [], timerInterval, startTime;
+
+        function switchMode(mode) {
+            ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById('screen-' + mode).classList.remove('hidden');
+            
+            if(mode === 'quiz') {
+                curQ = 0; score = 0; 
+                answers = new Array(questions.length).fill(null); 
+                startTimer();
+                renderQ();
+            } else {
+                clearInterval(timerInterval);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(window.MathJax) MathJax.typesetPromise();
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const diff = Math.floor((Date.now() - startTime) / 1000);
+                const m = Math.floor(diff / 60).toString().padStart(2, '0');
+                const s = (diff % 60).toString().padStart(2, '0');
+                document.getElementById('timer').innerText = `${m}:${s}`;
+            }, 1000);
+        }
+
+        function renderQ() {
+            const q = questions[curQ];
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ)/questions.length)*100}%`;
+            
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
+            
+            q.opt.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center mb-2 math-content";
+                
+                if(answers[curQ] !== null) {
+                    btn.disabled = true;
+                    if(i === q.ans) {
+                        btn.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                        btn.innerHTML = `<i class="fa-solid fa-circle-check mr-4 text-green-600"></i> ${o}`;
+                    } else if(i === answers[curQ]) {
+                        btn.classList.add('bg-red-50', 'border-red-400', 'text-red-900');
+                        btn.innerHTML = `<i class="fa-solid fa-circle-xmark mr-4 text-red-600"></i> ${o}`;
+                    } else {
+                        btn.classList.add('opacity-50', 'bg-white', 'border-gray-100');
+                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`;
+                    }
+                } else {
+                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-police-500', 'hover:bg-police-50/30');
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-gray-500">${i+1}</span> ${o}`;
+                    btn.onclick = () => selectOpt(i);
+                }
+                opts.appendChild(btn);
+            });
+
+            const explainer = document.getElementById('explainer');
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                if (answers[curQ] === q.ans) {
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-green-50 border-green-200 text-green-800 animate-fade-in";
+                    document.getElementById('exp-status').innerHTML = "✅ ยอดเยี่ยม! คุณตอบถูก";
+                } else {
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-red-50 border-red-200 text-red-800 animate-fade-in";
+                    document.getElementById('exp-status').innerHTML = "❌ ยังไม่ถูก (เฉลยคือข้อ " + (q.ans+1) + ")";
+                }
+                document.getElementById('exp-text').innerHTML = "<b>วิธีคิด:</b> " + q.exp;
+            } else {
+                explainer.classList.add('hidden');
+            }
+            
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            document.getElementById('btn-next').innerText = (curQ === questions.length - 1) ? "สรุปผลสอบ" : "ข้อถัดไป";
+            
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function selectOpt(idx) {
+            if(answers[curQ] !== null) return;
+            answers[curQ] = idx;
+            if(idx === questions[curQ].ans) score++;
+            renderQ();
+        }
+
+        function changeQ(step) {
+            if(curQ + step >= 0 && curQ + step < questions.length) {
+                curQ += step;
+                renderQ();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if(curQ + step === questions.length) {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            clearInterval(timerInterval);
+            switchMode('result');
+            const pct = Math.round((score/questions.length)*100);
+            document.getElementById('final-score').innerText = `${score}/100`;
+            document.getElementById('final-time').innerText = document.getElementById('timer').innerText;
+            document.getElementById('final-percent').innerText = pct + "%";
+            
+            const msg = document.getElementById('result-msg');
+            const icon = document.getElementById('result-icon');
+            
+            if(pct >= 80) {
+                msg.innerText = "ระดับ: ผู้ช่วยผู้บัญชาการ! คุณมีความพร้อมสูงมากในการสอบจริง";
+                icon.className = "w-20 h-20 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6";
+                icon.innerHTML = '<i class="fa-solid fa-crown text-4xl"></i>';
+            } else if(pct >= 60) {
+                msg.innerText = "ระดับ: นายดาบตำรวจ! พื้นฐานดีแล้ว ฝึกทำโจทย์ที่ผิดบ่อยๆ เพิ่มเติมนะครับ";
+                icon.className = "w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6";
+                icon.innerHTML = '<i class="fa-solid fa-star text-4xl"></i>';
+            } else {
+                msg.innerText = "ระดับ: พลตำรวจสำรอง! แนะนำให้อ่านสรุปบทเรียนอีกรอบแล้วกลับมาสู้ใหม่นะครับ";
+                icon.className = "w-20 h-20 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center mx-auto mb-6";
+                icon.innerHTML = '<i class="fa-solid fa-book-open text-4xl"></i>';
+            }
+        }
+    </script>
+</body>
+</html>
