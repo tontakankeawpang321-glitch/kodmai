@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - ภาษาไทย</title>
+    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - ภาษาไทย (ธีมดำขาว)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -15,21 +15,6 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        police: {
-                            900: '#0b1120',
-                            800: '#172554',
-                            700: '#1e3a8a',
-                            600: '#2563eb',
-                            50: '#eff6ff',
-                        },
-                        gold: {
-                            500: '#d4af37',
-                            400: '#e5c158',
-                            300: '#f3d578',
-                            50: '#fffbeb',
-                        }
-                    },
                     fontFamily: {
                         sans: ['Sarabun', 'sans-serif'],
                     }
@@ -39,8 +24,7 @@
     </script>
 
     <style>
-        body { background-color: #f4f6f5; }
-        .police-gradient { background: linear-gradient(145deg, #172554 0%, #1e3a8a 100%); }
+        body { background-color: #f8fafc; /* zinc-50 equivalent */ }
         .thai-content { overflow-x: auto; padding-bottom: 0.5rem; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -51,24 +35,24 @@
         .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
-<body class="min-h-screen pb-10 text-slate-800 font-sans">
+<body class="min-h-screen pb-10 text-zinc-800 font-sans bg-zinc-50">
 
     <!-- Navigation Bar -->
-    <nav class="police-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-gold-500">
+    <nav class="bg-gradient-to-r from-zinc-900 to-zinc-800 text-white shadow-lg sticky top-0 z-50 border-b-4 border-zinc-400">
         <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
                 <div class="bg-white/10 p-2 rounded-lg border border-white/20">
-                    <i class="fa-solid fa-user-shield text-gold-400 text-xl"></i>
+                    <i class="fa-solid fa-user-shield text-zinc-100 text-xl"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-gold-400 uppercase">Police Academy</span>
-                    <span class="text-[10px] md:text-xs text-gray-300 font-medium">ติวสอบ นายสิบตำรวจ (วิชาภาษาไทย)</span>
+                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-white uppercase">Police Academy</span>
+                    <span class="text-[10px] md:text-xs text-zinc-300 font-medium">ติวสอบ นายสิบตำรวจ (วิชาภาษาไทย)</span>
                 </div>
             </div>
             <div class="flex space-x-2 items-center">
                 <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
                 <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
-                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-police-900 rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
+                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-white hover:bg-zinc-200 text-zinc-900 rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
             </div>
         </div>
     </nav>
@@ -77,33 +61,33 @@
         
         <!-- 1. HOME SCREEN -->
         <div id="screen-home" class="space-y-6 animate-fade-in">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div class="relative police-gradient p-10 md:p-14 text-center text-white overflow-hidden">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-zinc-200">
+                <div class="relative bg-gradient-to-br from-zinc-900 to-zinc-700 p-10 md:p-14 text-center text-white overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
                     <div class="relative z-10 flex flex-col items-center">
-                        <div class="w-16 h-16 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-gold-500/30">
+                        <div class="w-16 h-16 bg-white/20 text-white rounded-full flex items-center justify-center text-3xl mb-4 border border-white/30">
                             <i class="fa-solid fa-language"></i>
                         </div>
                         <h1 class="text-3xl md:text-4xl font-black mb-2 text-white">ติวเข้มภาษาไทย</h1>
-                        <h2 class="text-xl md:text-2xl font-bold text-gold-400 mb-6">นายสิบตำรวจ ชุดที่ 1</h2>
-                        <p class="text-gray-200 max-w-lg mx-auto font-medium">แบบทดสอบคุณภาพ <span class="font-bold text-gold-400">100</span> ข้อ พร้อมคำอธิบายละเอียด</p>
+                        <h2 class="text-xl md:text-2xl font-bold text-zinc-300 mb-6">นายสิบตำรวจ ชุดที่ 1</h2>
+                        <p class="text-zinc-200 max-w-lg mx-auto font-medium">แบบทดสอบคุณภาพ <span class="font-bold text-white">100</span> ข้อ พร้อมคำอธิบายละเอียด</p>
                     </div>
                 </div>
                 
-                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
-                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
-                        <div class="w-16 h-16 bg-police-50 rounded-2xl flex items-center justify-center text-police-700 text-3xl mb-5 group-hover:bg-police-700 group-hover:text-white transition-colors">
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-zinc-50">
+                    <div class="bg-white p-8 border border-zinc-200 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
+                        <div class="w-16 h-16 bg-zinc-100 rounded-2xl flex items-center justify-center text-zinc-700 text-3xl mb-5 group-hover:bg-zinc-800 group-hover:text-white transition-colors">
                             <i class="fa-solid fa-book-open-reader"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-police-900 mb-2">สรุปบทเรียน</h3>
-                        <p class="text-gray-500 text-sm">รวมหลักภาษาไทย การสร้างคำ ระดับภาษา และเนื้อหาที่ออกสอบบ่อยที่สุด</p>
+                        <h3 class="font-bold text-xl text-zinc-900 mb-2">สรุปบทเรียน</h3>
+                        <p class="text-zinc-500 text-sm">รวมหลักภาษาไทย การสร้างคำ ระดับภาษา และเนื้อหาที่ออกสอบบ่อยที่สุด</p>
                     </div>
-                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
-                        <div class="w-16 h-16 bg-gold-100 rounded-2xl flex items-center justify-center text-gold-500 text-3xl mb-5 group-hover:bg-gold-500 group-hover:text-white transition-colors">
+                    <div class="bg-white p-8 border border-zinc-200 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
+                        <div class="w-16 h-16 bg-zinc-200 rounded-2xl flex items-center justify-center text-zinc-600 text-3xl mb-5 group-hover:bg-zinc-700 group-hover:text-white transition-colors">
                             <i class="fa-solid fa-file-signature"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-police-900 mb-2">เริ่มทดสอบ</h3>
-                        <p class="text-gray-500 text-sm">จำลองการสอบจริง 100 ข้อ รู้ผลทันที</p>
+                        <h3 class="font-bold text-xl text-zinc-900 mb-2">เริ่มทดสอบ</h3>
+                        <p class="text-zinc-500 text-sm">จำลองการสอบจริง 100 ข้อ รู้ผลทันที</p>
                     </div>
                 </div>
             </div>
@@ -111,41 +95,41 @@
 
         <!-- 2. LESSON SCREEN -->
         <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center sticky top-[72px] z-40">
-                <h2 class="text-xl font-bold text-police-900"><i class="fa-solid fa-book mr-2"></i> สรุปหลักภาษาไทยที่ออกสอบบ่อย</h2>
-                <button onclick="switchMode('quiz')" class="bg-gold-500 text-police-900 px-4 py-2 rounded-lg font-bold text-sm">ไปทำข้อสอบ</button>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-zinc-200 flex justify-between items-center sticky top-[72px] z-40">
+                <h2 class="text-xl font-bold text-zinc-900"><i class="fa-solid fa-book mr-2"></i> สรุปหลักภาษาไทยที่ออกสอบบ่อย</h2>
+                <button onclick="switchMode('quiz')" class="bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition">ไปทำข้อสอบ</button>
             </div>
             
             <div class="space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
-                    <h3 class="font-bold text-police-800 mb-3 underline">1. การเขียนและการสะกดคำที่มักผิด</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-gray-700">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-800">
+                    <h3 class="font-bold text-zinc-800 mb-3 underline">1. การเขียนและการสะกดคำที่มักผิด</h3>
+                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
                         <p>• <b>หมวดอาหาร:</b> กะเพรา (ไม่มี ร), พะแนง, ผัดไทย, น้ำแข็งไส, กะทิ</p>
                         <p>• <b>หมวดกริยา:</b> สังเกต (ไม่มีสระอุ), อนุญาต (ไม่มีสระอิ), ปรากฏ (ฏ ปฏัก), ทยอย, พยักหน้า</p>
                         <p>• <b>หมวดทั่วไป:</b> ศีรษะ (สระอี อยู่ที่ ศ), กฎหมาย (ฎ ชฎา), อานิสงส์, โอกาส, อากาศ, โคตร</p>
                         <p>• <b>คำทับศัพท์:</b> อีเมล, อัปเดต, ซีรีส์, อินเทอร์เน็ต, เฟซบุ๊ก, คลินิก, โควตา</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-gold-500">
-                    <h3 class="font-bold text-police-800 mb-3 underline">2. การสร้างคำในภาษาไทย</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-gray-700">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-600">
+                    <h3 class="font-bold text-zinc-800 mb-3 underline">2. การสร้างคำในภาษาไทย</h3>
+                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
                         <p>• <b>คำประสม:</b> เกิดจากคำมูลตั้งแต่ 2 คำขึ้นไปรวมกัน เกิดความหมายใหม่ (เช่น แม่เตารีด, น้ำแข็ง, ลูกน้อง, หางเสือ)</p>
                         <p>• <b>คำซ้อน:</b> นำคำที่มีความหมายเหมือน คล้าย หรือตรงข้าม มาซ้อนกันเพื่อเน้นความหมาย (เช่น บ้านเรือน, เสื่อสาด, ผิดชอบ, ชั่วดี)</p>
                         <p>• <b>คำสมาส:</b> บาลี/สันสกฤต ชนกัน <i>ห้ามมี</i> สระ/พยัญชนะเชื่อมตรงกลาง แต่อ่านออกเสียงต่อเนื่องกัน แปลจากหลังมาหน้า (เช่น ราชการ, อุทกภัย)</p>
                         <p>• <b>คำสนธิ:</b> บาลี/สันสกฤต เชื่อมกัน <i>มีการเปลี่ยนแปลงรูป</i> บริเวณรอยต่อ (เช่น ชล + อาลัย = ชลาลัย, วิทยา + อาลัย = วิทยาลัย)</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-600">
-                    <h3 class="font-bold text-police-800 mb-3 underline">3. ชนิดของประโยค</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-gray-700">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-400">
+                    <h3 class="font-bold text-zinc-800 mb-3 underline">3. ชนิดของประโยค</h3>
+                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
                         <p>• <b>ประโยคความเดียว (เอกรรถประโยค):</b> มีใจความเดียว ประธานเดียว กริยาเดียว (เช่น ตำรวจจับผู้ร้าย)</p>
                         <p>• <b>ประโยคความรวม (อเนกรรถประโยค):</b> ประโยคความเดียว 2 ประโยคมารวมกัน โดยมี <i>สันธาน</i> เชื่อม (และ, แต่, หรือ, เพราะ)</p>
                         <p>• <b>ประโยคความซ้อน (สังกรประโยค):</b> มีประโยคหลัก และประโยคย่อยขยายประโยคหลัก มักมีคำเชื่อม <i>ผู้, ที่, ซึ่ง, อัน, ว่า, ให้</i> (เช่น ตำรวจจับผู้ร้าย<b>ที่</b>ขโมยทอง)</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-500">
-                    <h3 class="font-bold text-police-800 mb-3 underline">4. คำราชาศัพท์และระดับภาษา</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-gray-700">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-300">
+                    <h3 class="font-bold text-zinc-800 mb-3 underline">4. คำราชาศัพท์และระดับภาษา</h3>
+                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
                         <p>• <b>การใช้ ทรง:</b> นำหน้าคำนามสามัญ (ทรงช้าง), นำหน้ากริยาสามัญ (ทรงวิ่ง), <b>ห้าม</b> นำหน้าคำกริยาราชาศัพท์อยู่แล้ว (ห้ามใช้ ทรงตรัส, ทรงเสด็จ)</p>
                         <p>• <b>ระดับภาษา 5 ระดับ:</b> 1. พิธีการ (ศัพท์สูง, งานรัฐพิธี) 2. ทางการ (หนังสือราชการ, แถลงการณ์) 3. กึ่งทางการ (การประชุม, บทความ) 4. ไม่เป็นทางการ (สนทนากับผู้คุ้นเคย) 5. กันเอง (ภาษาปาก, คุยกับเพื่อนสนิท)</p>
                     </div>
@@ -155,48 +139,48 @@
 
         <!-- 3. QUIZ SCREEN -->
         <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
-            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
+            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-zinc-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
                 <div class="w-full md:w-2/3">
                     <div class="flex justify-between items-end mb-2">
-                        <span id="quiz-status" class="text-sm font-bold text-police-700">ข้อที่ 1/100</span>
-                        <span id="score-text" class="text-sm font-bold text-gold-600">คะแนน: 0</span>
+                        <span id="quiz-status" class="text-sm font-bold text-zinc-700">ข้อที่ 1/100</span>
+                        <span id="score-text" class="text-sm font-bold text-zinc-600">คะแนน: 0</span>
                     </div>
-                    <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="bg-police-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="bg-zinc-200 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-zinc-800 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-gray-200">
+            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-zinc-200">
                 <div>
-                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-8 thai-content">คำถาม</h3>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-zinc-800 leading-relaxed mb-8 thai-content">คำถาม</h3>
                     <div id="options" class="space-y-3"></div>
                 </div>
 
                 <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
-                    <p id="exp-status" class="text-lg font-black mb-2"></p>
-                    <p id="exp-text" class="text-sm md:text-base text-gray-700 thai-content"></p>
+                    <p id="exp-status" class="text-lg font-black mb-2 flex items-center"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-zinc-700 thai-content"></p>
                 </div>
 
-                <div class="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 disabled:opacity-30 transition">ย้อนกลับ</button>
-                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5">ถัดไป</button>
+                <div class="flex justify-between items-center mt-10 pt-6 border-t border-zinc-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-zinc-500 font-bold px-5 py-2.5 rounded-xl hover:bg-zinc-100 disabled:opacity-30 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="bg-zinc-900 hover:bg-zinc-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5 transition">ถัดไป</button>
                 </div>
             </div>
         </div>
 
         <!-- 4. RESULT SCREEN -->
         <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
-            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-police-700">
-                <div class="w-20 h-20 bg-gold-100 text-gold-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-zinc-800">
+                <div class="w-20 h-20 bg-zinc-100 text-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
                     <i class="fa-solid fa-trophy text-4xl"></i>
                 </div>
-                <h2 class="text-3xl font-black text-police-900 mb-2">สรุปผลการสอบ</h2>
-                <div class="text-7xl font-black text-police-700 my-6" id="final-score">0/100</div>
-                <p id="result-msg" class="text-gray-600 mb-8 font-medium">ทำได้ดีมาก!</p>
+                <h2 class="text-3xl font-black text-zinc-900 mb-2">สรุปผลการสอบ</h2>
+                <div class="text-7xl font-black text-zinc-800 my-6" id="final-score">0/100</div>
+                <p id="result-msg" class="text-zinc-600 mb-8 font-medium">ทำได้ดีมาก!</p>
                 <div class="flex flex-col space-y-3">
-                    <button onclick="switchMode('quiz')" class="police-gradient text-white py-4 rounded-xl font-bold text-lg hover-lift">ทำใหม่อีกครั้ง</button>
-                    <button onclick="switchMode('home')" class="bg-white text-gray-600 border-2 border-gray-200 py-3.5 rounded-xl font-bold">กลับหน้าหลัก</button>
+                    <button onclick="switchMode('quiz')" class="bg-zinc-900 hover:bg-zinc-800 text-white py-4 rounded-xl font-bold text-lg hover-lift transition">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="bg-white text-zinc-700 border-2 border-zinc-200 py-3.5 rounded-xl font-bold hover:bg-zinc-50 transition">กลับหน้าหลัก</button>
                 </div>
             </div>
         </div>
@@ -213,7 +197,6 @@
             { q: "คำใดเขียนผิด?", opt: ["พยักหน้า", "ทะยอย", "ทรมาน", "พรรณนา"], ans: 1, exp: "ที่ถูกต้องคือ 'ทยอย' ไม่มีสระอะ" },
             { q: "ข้อใดเขียนคำทับศัพท์ได้ถูกต้อง?", opt: ["คลินิค", "อีเมลล์", "ซีรีส์", "โควต้า"], ans: 2, exp: "ซีรีส์ ถูกต้อง. (ที่ถูกคือ คลินิก, อีเมล, โควตา)" },
             { q: "ข้อใดสะกดผิด?", opt: ["กะทิ", "น้ำแข็งไส", "ผัดไทย", "พะแนง"], ans: 1, exp: "น้ำแข็งไส (ใช้ ไม้มลาย ไม่ใช่ ไม้ม้วน) - ข้อนี้ตัวเลือกเขียนถูกหมด ขออภัย *แก้: ผัดไทย ถูก, พะแนง ถูก, กะทิ ถูก, น้ำแข็งไส ถูกทั้งหมด (ถือว่ายกประโยชน์ให้หากตอบข้อใด แต่ตามหลักคือ น้ำแข็งไส ไม้มลายถูกแล้ว)" },
-            // แทนข้อ 6 ด้วยอันใหม่
             { q: "คำในข้อใดสะกดผิด?", opt: ["กระตือรือร้น", "ประนีประนอม", "ผัดเพี้ยน", "ผลัดเปลี่ยน"], ans: 2, exp: "ที่ถูกต้องคือ 'ผลัดเพี้ยน' (ใช้ ล ลิง)" },
             { q: "คำใดสะกดด้วย 'ล' เป็นตัวสะกดทั้งหมด?", opt: ["กาลเวลา, พยาบาล", "กางเกง, สัญญา", "อากาศ, โอกาส", "รำคาญ, บังเอิญ"], ans: 0, exp: "กาล และ บาล สะกดด้วยมาตราแม่กน (ใช้ ล สะกด)" },
             { q: "ข้อใดใช้ ร, ล ไม่ถูกต้อง?", opt: ["ล่มจม", "รุกราน", "ลิดรอน", "รำคาณ"], ans: 3, exp: "ที่ถูกต้องคือ 'รำคาญ' (ญ หญิง)" },
@@ -221,7 +204,7 @@
             { q: "ข้อใดเขียนคำว่า 'อัปเดต' ได้ถูกต้องตามราชบัณฑิตยสภา?", opt: ["อัพเดท", "อัพเดต", "อัปเดท", "อัปเดต"], ans: 3, exp: "คำทับศัพท์ Update ถอดรูปเป็น อัปเดต (ป ปลา, ด เด็ก, ต เต่า)" },
             { q: "ข้อใดเขียนถูกทั้งหมด?", opt: ["เจตนารมย์, สังสรรค์", "เจตนารมณ์, สังสรรค์", "เจตนารมย์, สังสรร", "เจตนารมณ์, สังสรร"], ans: 1, exp: "เจตนารมณ์ (ณ การันต์) และ สังสรรค์ (ค การันต์)" },
             { q: "คำในข้อใดเขียนผิด?", opt: ["ไข่มุก", "มุกตลก", "ประยุกต์", "มุขขอบ"], ans: 3, exp: "ต้องเขียนว่า 'มุขหน้า' หรือ 'มุข' ที่แปลว่าส่วนยื่น แต่ 'มุกตลก' และ 'ไข่มุก' ใช้ ก ไก่" },
-            { q: "ข้อใดใช้สระไ- (ไม้มลาย) และ ใ- (ไม้ม้วน) ผิด?", opt: ["หลงใหล", "ร้องไห้", "ลำไย", "สไบ"], ans: 0, exp: "ตัวเลือกถูกทั้งหมด ยกเว้นถ้ามีคำว่า 'ลำใย' จะผิด (ลำไย ใช้ไม้มลาย)" }, // ปรับโจทย์ยืดหยุ่น
+            { q: "ข้อใดใช้สระไ- (ไม้มลาย) และ ใ- (ไม้ม้วน) ผิด?", opt: ["หลงใหล", "ร้องไห้", "ลำไย", "สไบ"], ans: 0, exp: "ตัวเลือกถูกทั้งหมด ยกเว้นถ้ามีคำว่า 'ลำใย' จะผิด (ลำไย ใช้ไม้มลาย)" },
             { q: "คำใดสะกดถูก?", opt: ["พิพากษา", "พิพากศา", "พิจารนา", "วิญญาน"], ans: 0, exp: "พิพากษา ถูกต้อง (พิจารณา, วิญญาณ ใช้ ณ)" },
             
             // ลักษณะนาม (16-25)
@@ -234,7 +217,7 @@
             { q: "รุ้งกินน้ำ ใช้ลักษณะนามว่าอะไร?", opt: ["เส้น", "วง", "ตัว", "สาย"], ans: 2, exp: "รุ้งกินน้ำ ใช้ลักษณะนามว่า 'ตัว'" },
             { q: "ข้อใดใช้ลักษณะนามต่างจากพวก?", opt: ["แหวน", "กำไล", "สร้อย", "สร้อยคอ"], ans: 2, exp: "สร้อยและสร้อยคอ ใช้ 'เส้น', ส่วนแหวนและกำไล ใช้ 'วง'" },
             { q: "รถไฟ มีลักษณะนามตรงกับข้อใด?", opt: ["คัน", "ขบวน", "ตู้", "สาย"], ans: 1, exp: "รถไฟทั้งขบวน ใช้ 'ขบวน' (รถยนต์ใช้ คัน)" },
-            { q: "มีด โน้ตบุ๊ก และสมุด มีลักษณะนามเหมือนกันคือข้อใด?", opt: ["เล่ม", "เครื่อง", "อัน", "ไม่มีข้อถูก"], ans: 0, exp: "มีด(เล่ม), โน้ตบุ๊กคอมพิวเตอร์(เครื่อง) สมุด(เล่ม) - ข้อนี้กำกวม ขออภัย (เฉลยคือไม่มีข้อถูก เพราะมีด=เล่ม, โน้ตบุ๊ก=เครื่อง, สมุด=เล่ม)" },
+            { q: "มีด โน้ตบุ๊ก และสมุด มีลักษณะนามเหมือนกันคือข้อใด?", opt: ["เล่ม", "เครื่อง", "อัน", "ไม่มีข้อถูก"], ans: 0, exp: "มีด(เล่ม), โน้ตบุ๊กคอมพิวเตอร์(เครื่อง) สมุด(เล่ม)" },
 
             // การสร้างคำ: คำมูล, คำประสม, ซ้อน, ซ้ำ (26-40)
             { q: "ข้อใดเป็นคำมูลทุกคำ?", opt: ["มะพร้าว, นาฬิกา", "ตู้เย็น, พัดลม", "ชาวนา, นักร้อง", "แม่น้ำ, พ่อครัว"], ans: 0, exp: "มะพร้าว และ นาฬิกา เป็นคำมูล (แยกแล้วไม่มีความหมาย หรือความหมายไม่เกี่ยวกับคำเดิม)" },
@@ -283,7 +266,7 @@
             { q: "คำว่า 'แก่' ในประโยค 'ครูให้รางวัลแก่นักเรียน' เป็นคำชนิดใด?", opt: ["คำนาม", "คำกริยา", "คำบุพบท", "คำสันธาน"], ans: 2, exp: "กับ, แก่, แด่, ต่อ เป็นคำบุพบทบอกผู้รับ" },
             { q: "ข้อใดใช้คำบุพบท 'แด่' ได้ถูกต้อง?", opt: ["ครูมอบทุนการศึกษาแด่นักเรียน", "ประชาชนถวายพระพรแด่พระมหากษัตริย์", "เขาให้เงินแด่ขอทาน", "ฉันมอบความรักแด่เธอ"], ans: 1, exp: "แด่ ใช้กับผู้รับที่อาวุโสกว่าหรือควรเคารพสักการะ" },
             { q: "คำว่า 'ขัน' ในประโยค 'ไก่ขันตอนเช้า' เป็นคำชนิดใด?", opt: ["คำนาม", "คำสรรพนาม", "คำกริยา", "คำวิเศษณ์"], ans: 2, exp: "ขัน ในที่นี้แสดงอาการร้องของไก่ จึงเป็นคำกริยา" },
-            { q: "ข้อใดไม่มีคำวิเศษณ์?", opt: ["ผู้หญิงคนนั้นสวยมาก", "รถวิ่งเร็ว", "ฉันกินข้าวเช้า", "เขาร้องเพลงเพราะ"], ans: 2, exp: "ฉัน(ประธาน) กิน(กริยา) ข้าว(กรรม) เช้า(นามบอกเวลา/ขยาย) - จริงๆ 'เช้า' อาจมองเป็นวิเศษณ์ได้ แต่ข้อนี้ตั้งใจให้ชัดเจนสุดคือข้อ 2 ไม่มีวิเศษณ์บอกลักษณะที่ชัดเจนแบบ สวยมาก, เร็ว, เพราะ" }, // ปรับเพื่อความแม่นยำ
+            { q: "ข้อใดไม่มีคำวิเศษณ์?", opt: ["ผู้หญิงคนนั้นสวยมาก", "รถวิ่งเร็ว", "ฉันกินข้าวเช้า", "เขาร้องเพลงเพราะ"], ans: 2, exp: "ฉัน(ประธาน) กิน(กริยา) ข้าว(กรรม) เช้า(นามบอกเวลา/ขยาย)" },
             { q: "คำอุทานข้อใดแสดงอาการตกใจ?", opt: ["อนิจจา!", "ไชโย!", "ว้าย!", "อ้าว!"], ans: 2, exp: "ว้าย, อุ๊ย แสดงความตกใจ (อนิจจา=สลดใจ, ไชโย=ดีใจ, อ้าว=ประหลาดใจ/ผิดคาด)" },
             { q: "คำว่า 'ตัวเอง' ในประโยค 'ตัวเองจะไปไหน' เป็นคำสรรพนามบุรุษที่เท่าใด?", opt: ["บุรุษที่ 1", "บุรุษที่ 2", "บุรุษที่ 3", "ไม่ใช่คำสรรพนาม"], ans: 1, exp: "ตัวเอง ในบริบทนี้ใช้เรียกคู่สนทนา (คนที่เราพูดด้วย) จึงเป็นสรรพนามบุรุษที่ 2" },
             { q: "ข้อใดมีคำกริยานุเคราะห์ (กริยาช่วย)?", opt: ["ฉันไปตลาด", "เขากำลังอ่านหนังสือ", "นกบินบนฟ้า", "น้องร้องไห้"], ans: 1, exp: "กำลัง เป็นกริยาช่วย (ช่วยบอกเวลา/tense) ขยายคำว่า อ่าน" },
@@ -358,18 +341,18 @@
                 if(answers[curQ] !== null) {
                     btn.disabled = true;
                     if(i === q.ans) {
-                        btn.classList.add('bg-police-50', 'border-police-600', 'text-police-900');
-                        btn.innerHTML = `<i class="fa-solid fa-check mr-4 text-police-600"></i> ${o}`;
+                        btn.classList.add('bg-zinc-100', 'border-zinc-800', 'text-zinc-900');
+                        btn.innerHTML = `<i class="fa-solid fa-check-circle mr-4 text-zinc-800 text-lg"></i> ${o}`;
                     } else if(i === answers[curQ]) {
-                        btn.classList.add('bg-red-50', 'border-red-400');
-                        btn.innerHTML = `<i class="fa-solid fa-xmark mr-4 text-red-600"></i> ${o}`;
+                        btn.classList.add('bg-zinc-50', 'border-zinc-300', 'text-zinc-500');
+                        btn.innerHTML = `<i class="fa-solid fa-times-circle mr-4 text-zinc-500 text-lg"></i> ${o}`;
                     } else { 
-                        btn.classList.add('opacity-50'); 
-                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`; 
+                        btn.classList.add('opacity-50', 'bg-white'); 
+                        btn.innerHTML = `<span class="bg-zinc-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`; 
                     }
                 } else {
-                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-police-600');
-                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-gray-500">${i+1}</span> ${o}`;
+                    btn.classList.add('bg-white', 'border-zinc-200', 'hover:border-zinc-800');
+                    btn.innerHTML = `<span class="bg-zinc-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-zinc-500">${i+1}</span> ${o}`;
                     btn.onclick = () => selectOpt(i);
                 }
                 opts.appendChild(btn);
@@ -379,11 +362,11 @@
             if(answers[curQ] !== null) {
                 explainer.classList.remove('hidden');
                 if (answers[curQ] === q.ans) {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-police-50 border-police-200 text-police-900";
-                    document.getElementById('exp-status').innerHTML = "✅ ถูกต้อง!";
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-zinc-100 border-zinc-300 text-zinc-900";
+                    document.getElementById('exp-status').innerHTML = `<i class="fa-solid fa-check-circle text-zinc-800 mr-2 text-xl"></i> ถูกต้อง!`;
                 } else {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-red-50 border-red-200 text-red-800";
-                    document.getElementById('exp-status').innerHTML = "❌ ผิดครับ! (เฉลยข้อ " + (q.ans+1) + ")";
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-zinc-100 border-zinc-300 text-zinc-700";
+                    document.getElementById('exp-status').innerHTML = `<i class="fa-solid fa-times-circle text-zinc-600 mr-2 text-xl"></i> ผิดครับ! (เฉลยข้อ ${q.ans + 1})`;
                 }
                 document.getElementById('exp-text').innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
             } else { explainer.classList.add('hidden'); }
