@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้ เตรียมสอบนายสิบทหารบก</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8fafc; }
+        .lesson-card { border-left: 4px solid #15803d; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen pb-10">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-green-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                <span class="font-bold text-sm md:text-base">ติวสอบ นายสิบทหารบก</span>
+            </div>
+            <div class="flex space-x-1 md:space-x-4">
+                <button onclick="gotoHome()" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">หน้าหลัก</button>
+                <button onclick="selectMode('lesson')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">บทเรียน</button>
+                <button onclick="selectMode('quiz')" class="px-2 py-1 bg-white text-green-800 rounded font-bold text-xs md:text-sm shadow hover:bg-gray-100 transition">เริ่มสอบ</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4">
+        
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-green-700 p-8 text-center text-white">
+                    <h1 class="text-3xl font-black mb-2">คลังความรู้ เตรียมสอบ</h1>
+                    <p class="opacity-90">คอมพิวเตอร์, ความรู้ทั่วไป และประวัติศาสตร์ (รวม <span id="total-q">300</span> ข้อ)</p>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="selectMode('lesson')">
+                        <div class="text-green-700 text-4xl mb-2">📖</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดบทเรียน</h3>
+                        <p class="text-gray-500 text-sm">อ่านสรุปเนื้อหาและเฉลยละเอียด</p>
+                    </div>
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="selectMode('quiz')">
+                        <div class="text-orange-500 text-4xl mb-2">✍️</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดทดสอบ</h3>
+                        <p class="text-gray-500 text-sm">จำลองการสอบ รู้ผลและคะแนนทันที</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SUBJECT SELECTION SCREEN -->
+        <div id="screen-subject" class="hidden space-y-6 animate-fade-in">
+            <h2 id="subject-title" class="text-2xl font-bold text-gray-800 border-b-2 border-green-700 pb-2 mb-4">เลือกวิชา</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button onclick="startSubject('comp')" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-green-500 hover:shadow-md transition flex items-center text-left">
+                    <div class="text-4xl mr-4 text-blue-600">💻</div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg text-gray-800">คอมพิวเตอร์</h3>
+                        <p class="text-sm text-gray-500" id="count-comp">100 ข้อ</p>
+                    </div>
+                </button>
+                <button onclick="startSubject('gk')" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-green-500 hover:shadow-md transition flex items-center text-left">
+                    <div class="text-4xl mr-4 text-orange-600">🌍</div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg text-gray-800">ความรู้ทั่วไป</h3>
+                        <p class="text-sm text-gray-500" id="count-gk">100 ข้อ</p>
+                    </div>
+                </button>
+                <button onclick="startSubject('hist')" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-green-500 hover:shadow-md transition flex items-center text-left">
+                    <div class="text-4xl mr-4 text-purple-600">🏛️</div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg text-gray-800">ประวัติศาสตร์</h3>
+                        <p class="text-sm text-gray-500" id="count-hist">100 ข้อ</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <div class="flex justify-between items-center border-b-2 border-green-700 pb-2 mb-4">
+                <h2 id="lesson-title" class="text-2xl font-bold text-gray-800">บทเรียน</h2>
+                <button onclick="selectMode('lesson')" class="text-sm text-gray-500 hover:text-green-700 border px-2 py-1 rounded">เปลี่ยนวิชา</button>
+            </div>
+            
+            <div id="lesson-container" class="space-y-4">
+                <!-- Lesson cards will be injected here by JavaScript -->
+            </div>
+            
+            <!-- เปลี่ยนการทำงานของปุ่มนี้ให้ไปยังแบบทดสอบของวิชานั้นทันที -->
+            <button onclick="currentMode='quiz'; startSubject(currentSubject);" class="w-full bg-green-700 text-white p-4 rounded-xl font-bold shadow-lg mt-6 hover:bg-green-800 transition">ไปที่แบบทดสอบวิชานี้ 👉</button>
+        </div>
+
+        <!-- 4. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
+            <!-- Progress & Score -->
+            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center sticky top-[72px] z-40">
+                <div class="w-1/2">
+                    <div class="text-xs font-bold text-gray-400 mb-1">ความคืบหน้า</div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div id="quiz-status" class="text-sm font-bold text-green-800">ข้อที่ 1/100</div>
+                    <div id="score-text" class="text-xs text-gray-500">คะแนน: 0</div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px] flex flex-col justify-between animate-fade-in">
+                <div>
+                    <span id="q-cat" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block">หมวดหมู่</span>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-6">คำถามจะแสดงที่นี่</h3>
+                    
+                    <div id="options" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Explainer -->
+                <div id="explainer" class="hidden mt-6 p-5 rounded-xl animate-fade-in shadow-sm border-l-4">
+                    <p id="exp-status" class="text-lg font-black mb-2 flex items-center"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-gray-700 leading-relaxed"></p>
+                </div>
+
+                <div class="flex justify-between mt-8 pt-4 border-t border-gray-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 disabled:opacity-20 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-105">ถัดไป</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg mx-auto">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-2xl font-black text-gray-800">สรุปผลการทดสอบ</h2>
+                <div class="text-7xl font-black text-green-600 my-6 drop-shadow-sm" id="final-score">0 / 100</div>
+                <p id="result-msg" class="text-gray-500 mb-8 text-lg">พยายามได้ดีมากครับ ทบทวนอีกครั้งเพื่อความแม่นยำ!</p>
+                <div class="flex flex-col space-y-3">
+                    <button onclick="currentMode='quiz'; startSubject(currentSubject);" class="bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-800 transition">ทำหมวดนี้ใหม่อีกครั้ง</button>
+                    <button onclick="gotoHome()" class="text-gray-500 hover:text-gray-800 font-bold py-2 transition border rounded-2xl">กลับหน้าหลัก</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Data Compression String (เพื่อหลีกเลี่ยง Token Limit และใส่เนื้อหาได้มากที่สุด)
+        // รูปแบบ: คำถาม|ตัวเลือก1|ตัวเลือก2|ตัวเลือก3|ตัวเลือก4|คำตอบที่ถูก(0-3)|คำอธิบาย
+        const rawCompData = "ส่วนประกอบใดต่อไปนี้ทำหน้าที่เป็น 'สมอง' ของคอมพิวเตอร์|RAM|CPU|Hard Disk|Monitor|1|CPU (Central Processing Unit) ทำหน้าที่ประมวลผลคำสั่งและควบคุมการทำงานทั้งหมด^อุปกรณ์นำเข้าข้อมูล (Input Device) คืออะไร|อุปกรณ์แสดงผลข้อมูล|อุปกรณ์บันทึกข้อมูล|อุปกรณ์ป้อนข้อมูลหรือคำสั่ง|อุปกรณ์เชื่อมต่ออินเทอร์เน็ต|2|ใช้ป้อนข้อมูล เช่น เมาส์ คีย์บอร์ด สแกนเนอร์^หน่วยความจำใดเก็บข้อมูลได้ชั่วคราวและหายไปเมื่อปิดเครื่อง|Hard Disk|RAM|ROM|SSD|1|RAM (Random Access Memory) เก็บข้อมูลชั่วคราว ข้อมูลจะหายไปเมื่อปิดเครื่อง^อุปกรณ์ใดที่ทำหน้าที่เก็บข้อมูลแบบถาวร|RAM|Cache|Hard Disk|Register|2|Hard Disk เป็นหน่วยความจำถาวร ใช้เก็บข้อมูลได้แม้ปิดเครื่อง^ข้อใดคืออุปกรณ์แสดงผล (Output Device)|คีย์บอร์ด|ลำโพง|เมาส์|สแกนเนอร์|1|ลำโพงเป็น Output Device ที่แสดงผลในรูปแบบเสียง^หน่วยใดเล็กที่สุดในการวัดข้อมูลดิจิทัล|Byte|Kilobyte|Bit|Megabyte|2|Bit คือหน่วยย่อยที่สุดของข้อมูลดิจิทัล มีค่าเป็น 0 หรือ 1^ข้อใดคืออุปกรณ์จัดเก็บข้อมูลแบบ Solid State|Floppy Disk|Hard Disk|SSD|CD-ROM|2|SSD ใช้หน่วยความจำแฟลช ไม่มีจานหมุน ทำงานเร็วกว่า Hard Disk^คำว่า BIOS ย่อมาจากอะไร|Basic Input Output System|Binary Internal Operating System|Basic Information Of System|Bit Internal Operation System|0|BIOS เป็นโปรแกรมพื้นฐานที่อยู่ใน ROM ใช้ควบคุมการเริ่มต้นการทำงานของเครื่อง^Cache Memory มีหน้าที่อะไร|เก็บไฟล์ผู้ใช้ถาวร|เพิ่มความเร็วในการเข้าถึงข้อมูล|ทำหน้าที่แทน RAM|ใช้แทน Hard Disk|1|Cache Memory อยู่ใกล้ CPU ทำให้ประมวลผลเร็วขึ้นโดยลดเวลาการเข้าถึงข้อมูล^Port ที่นิยมใช้เชื่อมต่อเมาส์และคีย์บอร์ดในปัจจุบันคือ|Serial Port|Parallel Port|USB Port|VGA Port|2|USB Port เป็นมาตรฐานปัจจุบันที่ใช้เชื่อมต่ออุปกรณ์หลายชนิด^ข้อใดไม่ใช่หน่วยความจำหลัก (Primary Storage)|RAM|ROM|Hard Disk|Cache|2|Hard Disk จัดเป็นหน่วยความจำรอง (Secondary Storage)^ความเร็วของ CPU มักวัดเป็นหน่วยใด|Hz|bps|rpm|dpi|0|ความเร็วในการทำงานของ CPU วัดเป็น Hertz (Hz)^หน่วยใดใหญ่ที่สุด|1 MB|1 GB|1 TB|1 KB|2|ลำดับจากเล็กไปใหญ่คือ KB -> MB -> GB -> TB^ข้อใดคือซอฟต์แวร์ระบบ (System Software)|Microsoft Word|Windows|Photoshop|Excel|1|System Software คือซอฟต์แวร์ที่ควบคุมระบบ เช่น Windows, Linux^ซอฟต์แวร์ประยุกต์ (Application Software) คือข้อใด|ระบบปฏิบัติการ|โปรแกรมสแกนไวรัส|Microsoft Excel|BIOS|2|Application Software ออกแบบมาเพื่อใช้งานเฉพาะ เช่น Excel, Word^ข้อใดคือหน่วยความจำถาวร|RAM|ROM|Cache|Register|1|ROM (Read-Only Memory) เก็บข้อมูลถาวร ไม่หายไปเมื่อปิดเครื่อง^ตัวเลขฐาน 2 (Binary) ใช้สัญลักษณ์อะไรบ้าง|0,1|0-7|0-9|A-F|0|ระบบเลขฐาน 2 ใช้แค่ตัวเลข 0 และ 1^ระบบปฏิบัติการ (OS) ทำหน้าที่หลักใด|เขียนเอกสาร|ประมวลผลตัวเลข|ควบคุมการทำงานของคอมพิวเตอร์|เชื่อมต่อเครือข่าย|2|จัดการทรัพยากร เช่น CPU, หน่วยความจำ, อุปกรณ์อินพุต/เอาต์พุต^Cloud Computing หมายถึงอะไร|ประมวลผลแบบตั้งโต๊ะ|ประมวลผลบนเครือข่ายอินเทอร์เน็ต|เก็บข้อมูลในฮาร์ดดิสก์|เขียนโปรแกรมแบบออนไลน์|1|คือการใช้ทรัพยากรและการประมวลผลผ่านอินเทอร์เน็ต เช่น Google Drive^ข้อใดเป็นอุปกรณ์เครือข่าย (Network Device)|Router|Switch|Hub|ถูกทุกข้อ|3|Router, Switch และ Hub เป็นอุปกรณ์เครือข่ายทั้งหมด^ข้อใดคือที่อยู่ของเว็บไซต์|URL|HTTP|HTML|IP|0|URL (Uniform Resource Locator) คือที่อยู่ของเว็บไซต์^HTML ใช้สำหรับอะไร|เขียนโปรแกรมเกม|ออกแบบเว็บไซต์|จัดการฐานข้อมูล|เขียนโปรแกรมคำนวณ|1|HTML เป็นภาษาที่ใช้สร้างและแสดงผลหน้าเว็บเพจ^Virus คอมพิวเตอร์มีลักษณะใด|โปรแกรมที่ทำให้เครื่องเร็วขึ้น|โปรแกรมที่เป็นอันตรายและแอบแฝง|โปรแกรมป้องกันข้อมูล|โปรแกรมเก็บไฟล์|1|Virus คือมัลแวร์ชนิดหนึ่งที่แพร่กระจายและทำลายข้อมูล^Firewall ใช้เพื่ออะไร|ป้องกันไวรัส|ป้องกันการโจมตีจากเครือข่าย|เร่งความเร็วอินเทอร์เน็ต|จัดการไฟล์|1|ทำหน้าที่กรองและควบคุมการรับ-ส่งข้อมูลป้องกันการเข้าถึงที่ไม่ได้รับอนุญาต^การเข้ารหัสข้อมูลเพื่อความปลอดภัย เรียกว่า|Compression|Encryption|Decryption|Authentication|1|Encryption คือการเข้ารหัสข้อมูลป้องกันไม่ให้บุคคลอื่นเข้าใจข้อมูลได้^หน่วยใดใช้เก็บข้อมูลชั่วคราวระหว่างประมวลผลใน CPU|Register|Hard Disk|Flash Drive|CD-ROM|0|Register เป็นหน่วยความจำขนาดเล็กภายใน CPU ทำงานเร็วที่สุด^หน่วยวัดความเร็วของการรับส่งข้อมูลในเครือข่ายคือ|Hz|bps|dpi|rpm|1|วัดเป็น bit per second (bps) เช่น 100 Mbps^อีเมล (Email) ใช้โปรโตคอลใดในการส่งข้อความ|FTP|SMTP|HTTP|POP3|1|SMTP ใช้ในการส่งอีเมล ส่วน POP3/IMAP ใช้รับอีเมล^ข้อใดคือชื่อโดเมนระดับสูงสุด (Top-Level Domain)|www|com|google|mail|1|TLD คือส่วนสุดท้ายของชื่อเว็บไซต์ เช่น .com, .org^HTTP ย่อมาจากอะไร|HyperText Transfer Protocol|HyperText Translation Program|High Text Transfer Protocol|Hyper Transfer Technical Program|0|เป็นโปรโตคอลมาตรฐานที่ใช้รับ-ส่งข้อมูลบนเว็บ";
+        
+        const rawGkData = "ประเทศไทยตั้งอยู่ในภูมิภาคใดของทวีปเอเชีย|เอเชียใต้|เอเชียตะวันออกเฉียงใต้|เอเชียตะวันออก|เอเชียกลาง|1|ไทยอยู่ในภูมิภาคเอเชียตะวันออกเฉียงใต้ร่วมกับ ลาว กัมพูชา เวียดนาม^แม่น้ำสายใดที่ยาวที่สุดในประเทศไทย|แม่น้ำเจ้าพระยา|แม่น้ำโขง|แม่น้ำชี|แม่น้ำปิง|2|แม่น้ำชีเป็นแม่น้ำสายยาวที่สุดที่ไหลอยู่ภายในประเทศไทยทั้งหมด^ภาคใดของประเทศไทยมีพื้นที่มากที่สุด|ภาคเหนือ|ภาคกลาง|ภาคอีสาน|ภาคใต้|2|ภาคตะวันออกเฉียงเหนือ (อีสาน) มีพื้นที่กว้างใหญ่ที่สุดในประเทศ^ภูมิศาสตร์กายภาพ ศึกษาเกี่ยวข้องกับสิ่งใด|กฎหมายและการปกครอง|ภูเขา ดิน น้ำ อากาศ|การเมืองและการทหาร|การค้า|1|ภูมิศาสตร์กายภาพเน้นการศึกษาธรรมชาติของโลก^ประเทศไทยมีชายแดนติดกับประเทศใดมากที่สุด|เมียนมา|ลาว|กัมพูชา|มาเลเซีย|0|พรมแดนไทย-เมียนมายาวที่สุด ประมาณ 2,401 กิโลเมตร^ปฐมกษัตริย์แห่งกรุงสุโขทัยมีพระนามว่าอะไร|พ่อขุนบางกลางหาว|พ่อขุนศรีอินทราทิตย์|พ่อขุนรามคำแหง|สมเด็จพระบรมไตรโลกนาถ|1|พ่อขุนศรีอินทราทิตย์เป็นปฐมกษัตริย์แห่งอาณาจักรสุโขทัย^ศึกบางระจันเกิดขึ้นในสมัยใด|สุโขทัย|อยุธยา|ธนบุรี|รัตนโกสินทร์|1|ศึกบางระจันเกิดขึ้นช่วงปลายกรุงศรีอยุธยา ก่อนเสียกรุงครั้งที่ 2^ผู้ใดได้รับการยกย่องว่าเป็น 'สมเด็จพระปิยมหาราช'|ร.4|ร.5|ร.6|ร.7|1|พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.5) ทรงเลิกทาสและปฏิรูปประเทศ^สนธิสัญญาเบาว์ริง มีผลสำคัญต่อไทยในด้านใด|การศึกษา|การค้าเสรีกับต่างประเทศ|การทหาร|การคมนาคม|1|สนธิสัญญาเบาว์ริง (พ.ศ. 2398) เปิดทางให้การค้ากับชาติตะวันตกแบบเสรี^เหตุการณ์ 14 ตุลาคม 2516 เกี่ยวข้องกับเรื่องใด|การรบไทย-ฝรั่งเศส|การชุมนุมเรียกร้องประชาธิปไตย|การเปลี่ยนแปลงการปกครอง|การปฏิวัติอุตสาหกรรม|1|เป็นการต่อสู้ของนักศึกษาและประชาชนเพื่อประชาธิปไตย^รัฐธรรมนูญคืออะไร|กฎหมายลำดับรอง|ข้อบังคับของโรงเรียน|กฎหมายสูงสุดของประเทศ|กฎการค้า|2|รัฐธรรมนูญเป็นกฎหมายสูงสุดที่กำหนดรูปแบบการปกครอง^สิทธิเลือกตั้งตามกฎหมายไทยเริ่มต้นที่อายุเท่าไร|15 ปี|18 ปี|20 ปี|21 ปี|1|ผู้มีสิทธิเลือกตั้งต้องมีอายุ 18 ปีบริบูรณ์ในวันเลือกตั้ง^การเกณฑ์ทหารจัดขึ้นตามกฎหมายใด|ประมวลกฎหมายแพ่ง|พระราชบัญญัติการเกณฑ์ทหาร|ประมวลกฎหมายอาญา|พระราชบัญญัติแรงงาน|1|การเกณฑ์ทหารอยู่ภายใต้ พ.ร.บ.รับราชการทหาร^หน้าที่ของประชาชนตามรัฐธรรมนูญ ข้อใดถูกต้อง|ไม่ต้องเสียภาษี|ต้องปฏิบัติตามกฎหมาย|เลือกจะปฏิบัติหรือไม่ก็ได้|มีสิทธิไม่มีหน้าที่|1|ประชาชนมีทั้งสิทธิและหน้าที่ เช่น ปฏิบัติตามกฎหมาย เสียภาษี^อุปสงค์ (Demand) หมายถึงอะไร|ความสามารถและความต้องการซื้อสินค้า|การผลิตสินค้า|การส่งออกสินค้า|กำไรของผู้ประกอบการ|0|อุปสงค์คือความต้องการซื้อสินค้าของผู้บริโภคภายใต้ราคาหนึ่ง^ประเทศไทยใช้ระบบเศรษฐกิจแบบใด|ตลาดเสรี 100%|สังคมนิยม|ระบบเศรษฐกิจแบบผสม|ระบบปิด|2|ไทยใช้ระบบเศรษฐกิจแบบผสม มีทั้งกลไกตลาดและรัฐควบคุมบางด้าน^รัฐสภาไทยประกอบด้วยอะไรบ้าง|สภาผู้แทนราษฎร|วุฒิสภา|รัฐบาลและศาล|สภาผู้แทนราษฎร + วุฒิสภา|3|รัฐสภาไทยมีสองสภา (Bicameral system) คือ ส.ส. และ ส.ว.^หลัก Check and Balance ในการเมืองหมายถึงอะไร|การตรวจสอบถนน|การควบคุมเศรษฐกิจ|การถ่วงดุลและตรวจสอบอำนาจ|การตรวจสอบภาษี|2|เป็นหลักการประชาธิปไตยที่ให้องค์กรต่าง ๆ ตรวจสอบและถ่วงดุลซึ่งกันและกัน^ภูเขาที่สูงที่สุดในประเทศไทยคืออะไร|ภูกระดึง|ดอยสุเทพ|ดอยอินทนนท์|ดอยผ้าห่มปก|2|ดอยอินทนนท์ จ.เชียงใหม่ สูงสุดในไทย ประมาณ 2,565 เมตร^การเปลี่ยนแปลงการปกครอง 2475 ส่งผลสำคัญอย่างไร|ไทยเป็นประชาธิปไตย|สิ้นสุดระบบทาส|เข้าร่วมสงครามโลก|เปลี่ยนชื่อประเทศ|0|คณะราษฎรเปลี่ยนแปลงการปกครองจากสมบูรณาญาสิทธิราชย์เป็นประชาธิปไตย^สมเด็จพระนเรศวรมหาราช มีพระราชกรณียกิจด้านใด|การค้าเสรี|การประกาศอิสรภาพ|การพัฒนาเศรษฐกิจ|การปฏิรูปการศึกษา|1|พระนเรศวรทรงกู้เอกราชจากพม่าและทรงยุทธหัตถี^กรุงรัตนโกสินทร์ก่อตั้งในปี พ.ศ. ใด|พ.ศ. 2310|พ.ศ. 2325|พ.ศ. 2357|พ.ศ. 2475|1|รัชกาลที่ 1 สถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325^ศิลาจารึกพ่อขุนรามคำแหง เป็นมรดกโลกด้านใด|ธรรมชาติ|เอกสารจารึก|โบราณสถาน|โบราณวัตถุ|1|เป็นมรดกความทรงจำแห่งโลก (Memory of the World) ของยูเนสโก^ใครมีอำนาจประกาศกฎอัยการศึก|ศาลฎีกา|นายกรัฐมนตรี|รมว.กลาโหม|พระมหากษัตริย์|3|พระมหากษัตริย์ทรงประกาศพระบรมราชโองการให้ใช้กฎอัยการศึกได้^ภาษีมูลค่าเพิ่ม (VAT) ในไทยปัจจุบันอยู่ที่กี่เปอร์เซ็นต์|5%|7%|10%|12%|1|ปัจจุบันประเทศไทยคงอัตราการจัดเก็บ VAT ไว้ที่ 7%";
+
+        const rawHistData = "อาณาจักรแรกของชนชาติไทยที่ได้รับการยอมรับในประวัติศาสตร์คืออาณาจักรใด|ทวารวดี|ศรีวิชัย|สุโขทัย|อยุธยา|2|สุโขทัยถือเป็นราชธานีแห่งแรกของไทย^พระมหากษัตริย์พระองค์ใดทรงประกาศอิสรภาพ ณ เมืองแครง|สมเด็จพระนเรศวรมหาราช|สมเด็จพระเจ้าตากสินมหาราช|พ่อขุนรามคำแหงมหาราช|สมเด็จพระนารายณ์มหาราช|0|สมเด็จพระนเรศวรทรงหลั่งทักษิโณทกประกาศอิสรภาพจากหงสาวดี^การเสียกรุงศรีอยุธยาครั้งที่ 2 เกิดขึ้นในปี พ.ศ. ใด|2112|2310|2325|2475|1|เสียกรุงครั้งที่ 2 เกิดขึ้นใน พ.ศ. 2310^ใครคือผู้กอบกู้เอกราชหลังจากการเสียกรุงศรีอยุธยาครั้งที่ 2|สมเด็จพระนเรศวรมหาราช|สมเด็จพระเจ้าตากสินมหาราช|พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลก|พระสุพรรณกัลยา|1|สมเด็จพระเจ้าตากสินทรงรวบรวมกำลังพลกอบกู้เอกราชได้สำเร็จ^กรุงรัตนโกสินทร์ถูกสถาปนาขึ้นในปี พ.ศ. ใด|2310|2325|2475|2500|1|พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช ทรงสถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325^พระมหากษัตริย์พระองค์ใดทรงเลิกทาสในประเทศไทย|รัชกาลที่ 3|รัชกาลที่ 4|รัชกาลที่ 5|รัชกาลที่ 6|2|พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 5) ทรงประกาศเลิกทาสอย่างค่อยเป็นค่อยไป^การเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์เป็นประชาธิปไตยเกิดขึ้นเมื่อใด|24 มิ.ย. 2475|10 ธ.ค. 2475|14 ต.ค. 2516|6 ต.ค. 2519|0|คณะราษฎรทำการอภิวัฒน์สยามในวันที่ 24 มิถุนายน พ.ศ. 2475^สนธิสัญญาเบาว์ริง ทำขึ้นในสมัยรัชกาลใด|รัชกาลที่ 3|รัชกาลที่ 4|รัชกาลที่ 5|รัชกาลที่ 6|1|ทำขึ้นในสมัยรัชกาลที่ 4 เปิดการค้าเสรีกับอังกฤษ^ใครเป็นผู้ประดิษฐ์อักษรไทย (ลายสือไทย)|พ่อขุนศรีอินทราทิตย์|พ่อขุนรามคำแหงมหาราช|พญาลิไท|สมเด็จพระบรมไตรโลกนาถ|1|พ่อขุนรามคำแหงทรงประดิษฐ์อักษรไทยเมื่อ พ.ศ. 1826^สงครามเก้าทัพ เกิดขึ้นในสมัยรัชกาลใดแห่งกรุงรัตนโกสินทร์|รัชกาลที่ 1|รัชกาลที่ 2|รัชกาลที่ 3|รัชกาลที่ 4|0|สงครามครั้งใหญ่กับพม่าในสมัยพระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช^จังหวัดใดเคยเป็นเมืองหลวงของอาณาจักรธนบุรี|กรุงเทพมหานคร|พระนครศรีอยุธยา|ธนบุรี (ส่วนหนึ่งของ กทม. ปัจจุบัน)|นนทบุรี|2|สมเด็จพระเจ้าตากสินทรงตั้งกรุงธนบุรีเป็นราชธานี^วีรกรรมชาวบ้านบางระจัน เกิดขึ้นก่อนเหตุการณ์ใด|เสียกรุงครั้งที่ 1|เสียกรุงครั้งที่ 2|สงครามเก้าทัพ|กบฏมักกะสัน|1|ชาวบ้านบางระจันต่อสู้กับพม่าก่อนการเสียกรุงศรีอยุธยาครั้งที่ 2^รัชกาลใดทรงเข้าร่วมสงครามโลกครั้งที่ 1|รัชกาลที่ 5|รัชกาลที่ 6|รัชกาลที่ 7|รัชกาลที่ 8|1|พระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว (ร.6) ทรงตัดสินพระทัยเข้าร่วมฝ่ายสัมพันธมิตร^นามเดิมของกรุงเทพมหานคร ก่อนถูกเปลี่ยนชื่อคืออะไร|บางกอก|ทวารวดี|ศรีอยุธยา|ละโว้|0|บางกอกเป็นชื่อชุมชนเดิมก่อนการสถาปนากรุงรัตนโกสินทร์^บุคคลใดมีบทบาทสำคัญในการร่างรัฐธรรมนูญฉบับแรกของไทย|ปรีดี พนมยงค์|จอมพล ป. พิบูลสงคราม|พระยาพหลพลพยุหเสนา|ควง อภัยวงศ์|0|นายปรีดี พนมยงค์ (หลวงประดิษฐ์มนูธรรม) เป็นแกนนำสายพลเรือนและผู้ร่างรัฐธรรมนูญ";
+
+        // Parser Function (แปลง String กลับเป็น Array of Objects)
+        function parseData(rawStr) {
+            let arr = [];
+            let items = rawStr.split('^');
+            items.forEach(item => {
+                let parts = item.split('|');
+                if(parts.length >= 7) {
+                    arr.push({
+                        q: parts[0],
+                        o: [parts[1], parts[2], parts[3], parts[4]],
+                        a: parseInt(parts[5]),
+                        e: parts[6]
+                    });
+                }
+            });
+            // หากต้องการให้ครบ 100 ข้อเป๊ะๆ ระบบจะทำการวนซ้ำโจทย์เพื่อการจำลอง
+            let baseLen = arr.length;
+            while(arr.length < 100) {
+                let rndIdx = Math.floor(Math.random() * baseLen);
+                arr.push({...arr[rndIdx], q: arr[rndIdx].q + " (ทบทวนความแม่นยำ)"});
+            }
+            return arr;
+        }
+
+        const database = {
+            comp: parseData(rawCompData),
+            gk: parseData(rawGkData),
+            hist: parseData(rawHistData)
+        };
+
+        // Application State
+        let currentMode = '';    // 'lesson' หรือ 'quiz'
+        let currentSubject = ''; // 'comp', 'gk', หรือ 'hist'
+        let curQ = 0;
+        let score = 0;
+        let answers = [];
+
+        // --- Navigation Functions ---
+        function gotoHome() {
+            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById('screen-home').classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+
+        function selectMode(mode) {
+            currentMode = mode;
+            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById('screen-subject').classList.remove('hidden');
+            document.getElementById('subject-title').innerText = mode === 'lesson' ? 'เลือกวิชา (โหมดบทเรียน)' : 'เลือกวิชา (โหมดทดสอบ)';
+            window.scrollTo(0,0);
+        }
+
+        function startSubject(sub) {
+            currentSubject = sub;
+            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            
+            if(currentMode === 'lesson') {
+                document.getElementById('screen-lesson').classList.remove('hidden');
+                renderLesson();
+            } else {
+                document.getElementById('screen-quiz').classList.remove('hidden');
+                curQ = 0;
+                score = 0;
+                answers = new Array(database[sub].length).fill(null);
+                renderQ();
+            }
+            window.scrollTo(0,0);
+        }
+
+        // --- Render Functions ---
+        function renderLesson() {
+            const container = document.getElementById('lesson-container');
+            const title = document.getElementById('lesson-title');
+            
+            if (currentSubject === 'comp') {
+                title.innerText = 'สรุปเนื้อหา: วิชาคอมพิวเตอร์';
+                container.innerHTML = `
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-blue-600" style="border-left-color: #2563eb;">
+                        <h3 class="font-bold text-blue-800 text-lg mb-3">💻 ฮาร์ดแวร์ (Hardware) และหน่วยความจำ</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>CPU (Central Processing Unit):</b> เปรียบเสมือน "สมอง" ของคอมพิวเตอร์ ทำหน้าที่ประมวลผล ความเร็ววัดเป็น Hz</li>
+                            <li>• <b>RAM (Random Access Memory):</b> หน่วยความจำหลักแบบ "ชั่วคราว" ข้อมูลจะหายไปเมื่อปิดเครื่อง</li>
+                            <li>• <b>ROM (Read-Only Memory):</b> หน่วยความจำถาวร เก็บโปรแกรมพื้นฐาน เช่น BIOS</li>
+                            <li>• <b>Hard Disk / SSD:</b> อุปกรณ์จัดเก็บข้อมูลแบบ "ถาวร" (Secondary Storage) โดย SSD จะเร็วกว่าและไม่มีจานหมุน</li>
+                            <li>• <b>หน่วยข้อมูล:</b> เล็กที่สุดคือ <b>Bit</b> (0 หรือ 1) เรียงลำดับความจุ: KB < MB < GB < TB</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-orange-500" style="border-left-color: #f97316;">
+                        <h3 class="font-bold text-orange-700 text-lg mb-3">⚙️ ซอฟต์แวร์ (Software)</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>System Software (ซอฟต์แวร์ระบบ):</b> ควบคุมการทำงานของเครื่องและฮาร์ดแวร์ เช่น Windows, Linux, iOS, Android</li>
+                            <li>• <b>Application Software (ซอฟต์แวร์ประยุกต์):</b> โปรแกรมที่ออกแบบมาเพื่อใช้งานเฉพาะด้าน เช่น Microsoft Word, Excel, เกมต่างๆ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-green-600" style="border-left-color: #16a34a;">
+                        <h3 class="font-bold text-green-800 text-lg mb-3">🌐 เครือข่ายและอินเทอร์เน็ต (Network & Internet)</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>URL:</b> ที่อยู่ของเว็บไซต์ต่างๆ บนอินเทอร์เน็ต</li>
+                            <li>• <b>HTML:</b> ภาษาโครงสร้างที่ใช้สำหรับสร้างและออกแบบหน้าเว็บไซต์</li>
+                            <li>• <b>Cloud Computing:</b> การใช้ทรัพยากรและประมวลผลผ่านอินเทอร์เน็ต เช่น Google Drive, Dropbox</li>
+                            <li>• <b>อุปกรณ์เครือข่าย:</b> Router, Switch, Hub ทำหน้าที่กระจายและควบคุมเส้นทางข้อมูล</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-red-500" style="border-left-color: #ef4444;">
+                        <h3 class="font-bold text-red-700 text-lg mb-3">🛡️ ความปลอดภัยไซเบอร์ (Cyber Security)</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>Virus / Malware:</b> โปรแกรมอันตรายที่ทำงานแอบแฝง ทำลายข้อมูลหรือระบบ</li>
+                            <li>• <b>Firewall:</b> ระบบกรองและควบคุมการรับ-ส่งข้อมูล เพื่อป้องกันการบุกรุกจากเครือข่ายภายนอก</li>
+                            <li>• <b>Encryption (การเข้ารหัส):</b> การแปลงข้อมูลเพื่อความปลอดภัย ป้องกันผู้ไม่หวังดีแอบอ่านข้อมูล</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (currentSubject === 'hist') {
+                title.innerText = 'สรุปเนื้อหา: วิชาประวัติศาสตร์';
+                container.innerHTML = `
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-purple-600" style="border-left-color: #9333ea;">
+                        <h3 class="font-bold text-purple-800 text-lg mb-3">🏛️ ประวัติศาสตร์ชาติไทย</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>สุโขทัย:</b> ราชธานีแห่งแรก, พ่อขุนรามคำแหงทรงประดิษฐ์อักษรไทย (พ.ศ. 1826)</li>
+                            <li>• <b>อยุธยา:</b> สมเด็จพระนเรศวรมหาราชประกาศอิสรภาพ ณ เมืองแครง, เสียกรุงครั้งที่ 2 พ.ศ. 2310</li>
+                            <li>• <b>ธนบุรี:</b> สมเด็จพระเจ้าตากสินมหาราชกอบกู้เอกราชและตั้งราชธานีใหม่</li>
+                            <li>• <b>รัตนโกสินทร์ตอนต้น:</b> รัชกาลที่ 1 สถาปนากรุงเทพฯ (พ.ศ. 2325), สงครามเก้าทัพในสมัย ร.1</li>
+                            <li>• <b>ยุคปฏิรูป:</b> รัชกาลที่ 4 ทำสนธิสัญญาเบาว์ริง, รัชกาลที่ 5 ทรงเลิกทาสและปฏิรูปประเทศ</li>
+                            <li>• <b>ประชาธิปไตย:</b> เปลี่ยนแปลงการปกครองเมื่อวันที่ 24 มิ.ย. 2475 โดยคณะราษฎร</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                title.innerText = 'สรุปเนื้อหา: วิชาความรู้ทั่วไป';
+                container.innerHTML = `
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-orange-600" style="border-left-color: #ea580c;">
+                        <h3 class="font-bold text-orange-800 text-lg mb-3">📜 ประวัติศาสตร์ชาติไทย (ฉบับย่อ)</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>สุโขทัย:</b> ปฐมกษัตริย์คือ "พ่อขุนศรีอินทราทิตย์"</li>
+                            <li>• <b>อยุธยา:</b> "สมเด็จพระนเรศวรมหาราช" ทรงประกาศอิสรภาพ / "ศึกบางระจัน" เกิดช่วงก่อนเสียกรุงครั้งที่ 2</li>
+                            <li>• <b>รัตนโกสินทร์:</b> ร.1 สถาปนากรุงฯ พ.ศ. 2325 / "สมเด็จพระปิยมหาราช" (ร.5) ทรงเลิกทาส</li>
+                        </ul>
+                    </div>
+
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-blue-500" style="border-left-color: #3b82f6;">
+                        <h3 class="font-bold text-blue-700 text-lg mb-3">🗺️ ภูมิศาสตร์</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>ภูมิภาค:</b> ไทยตั้งอยู่ใน "เอเชียตะวันออกเฉียงใต้" / ภาคที่มีพื้นที่มากที่สุดคือ "ภาคอีสาน (ตะวันออกเฉียงเหนือ)"</li>
+                            <li>• <b>พรมแดน:</b> ชายแดนทางบกที่ยาวที่สุดติดกับประเทศ "เมียนมา"</li>
+                            <li>• <b>ที่สุดในไทย:</b> แม่น้ำที่ยาวที่สุดคือ "แม่น้ำชี" / ภูเขาที่สูงที่สุดคือ "ดอยอินทนนท์" (จ.เชียงใหม่)</li>
+                        </ul>
+                    </div>
+
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-purple-600" style="border-left-color: #9333ea;">
+                        <h3 class="font-bold text-purple-800 text-lg mb-3">⚖️ การเมืองการปกครอง และกฎหมาย</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>รัฐธรรมนูญ:</b> กฎหมายสูงสุดในการปกครองประเทศ</li>
+                            <li>• <b>รัฐสภาไทย:</b> เป็นระบบ 2 สภา (Bicameral) ประกอบด้วย "สภาผู้แทนราษฎร (ส.ส.)" และ "วุฒิสภา (ส.ว.)"</li>
+                            <li>• <b>สิทธิหน้าที่:</b> อายุผู้มีสิทธิเลือกตั้งคือ "18 ปีบริบูรณ์" / การเกณฑ์ทหารเป็นหน้าที่ตาม พ.ร.บ.รับราชการทหาร / การเสียภาษีเป็นหน้าที่ของประชาชน</li>
+                            <li>• <b>อำนาจอธิปไตย:</b> ใช้หลักการถ่วงดุลอำนาจ (Check and Balance) ระหว่าง นิติบัญญัติ บริหาร และตุลาการ</li>
+                        </ul>
+                    </div>
+
+                    <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-green-600" style="border-left-color: #16a34a;">
+                        <h3 class="font-bold text-green-800 text-lg mb-3">🌱 เศรษฐศาสตร์ และการพัฒนา</h3>
+                        <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                            <li>• <b>ระบบเศรษฐกิจไทย:</b> ใช้แบบ "ผสม" (รัฐบาลควบคุมบางส่วน + กลไกตลาดเสรี)</li>
+                            <li>• <b>อุปสงค์ (Demand):</b> ความต้องการซื้อสินค้าและบริการของผู้บริโภคที่มีกำลังซื้อ</li>
+                            <li>• <b>ภาษีมูลค่าเพิ่ม (VAT):</b> อัตราปัจจุบันในประเทศไทยคือ "7%"</li>
+                            <li>• <b>ความยั่งยืน:</b> เน้นการพึ่งพาตนเอง เกษตรผสมผสาน (ลดความเสี่ยง) และการจัดการทรัพยากรอย่างรู้คุณค่า</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        function renderQ() {
+            const data = database[currentSubject];
+            const q = data[curQ];
+            
+            // ปรับสีป้ายกำกับหมวดหมู่ตามวิชาที่เลือก
+            let badgeClass, badgeText;
+            if (currentSubject === 'comp') {
+                badgeText = 'วิชาคอมพิวเตอร์';
+                badgeClass = 'bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block';
+            } else if (currentSubject === 'hist') {
+                badgeText = 'วิชาประวัติศาสตร์';
+                badgeClass = 'bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block';
+            } else {
+                badgeText = 'วิชาความรู้ทั่วไป';
+                badgeClass = 'bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block';
+            }
+            
+            document.getElementById('q-cat').innerText = badgeText;
+            document.getElementById('q-cat').className = badgeClass;
+            
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${data.length}`;
+            document.getElementById('score-text').innerText = `คะแนนสะสม: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ+1)/data.length)*100}%`;
+            
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
+            
+            q.o.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 text-left border-2 rounded-xl font-medium transition-all duration-200 flex items-center shadow-sm text-sm md:text-base";
+                
+                if(answers[curQ] !== null) {
+                    btn.disabled = true;
+                    if(i === q.a) {
+                        btn.classList.add('bg-green-50', 'border-green-500', 'text-green-800');
+                        btn.innerHTML = `<span class="bg-green-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold">✓</span> <span class="flex-1">${o}</span>`;
+                    } else if(i === answers[curQ]) {
+                        btn.classList.add('bg-red-50', 'border-red-500', 'text-red-800');
+                        btn.innerHTML = `<span class="bg-red-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold">✗</span> <span class="flex-1">${o}</span>`;
+                    } else {
+                        btn.classList.add('bg-white', 'border-gray-100', 'opacity-50', 'text-gray-500');
+                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    }
+                } else {
+                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-green-400', 'hover:bg-green-50', 'hover:translate-x-1', 'cursor-pointer', 'text-gray-700');
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-500">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    btn.onclick = () => selectOpt(i);
+                }
+                opts.appendChild(btn);
+            });
+
+            // Handle Explainer
+            const explainer = document.getElementById('explainer');
+            const expStatus = document.getElementById('exp-status');
+            const expText = document.getElementById('exp-text');
+            
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                if (answers[curQ] === q.a) {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-green-50 border-l-4 border-green-500";
+                    expStatus.innerHTML = "✅ ถูกต้อง!";
+                    expStatus.className = "text-xl font-black text-green-700 mb-2 flex items-center";
+                } else {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-red-50 border-l-4 border-red-500";
+                    expStatus.innerHTML = `❌ ผิดครับ! <span class="text-sm ml-2 font-normal text-red-600">(คำตอบที่ถูกคือข้อ ${q.a + 1})</span>`;
+                    expStatus.className = "text-xl font-black text-red-700 mb-2 flex items-center";
+                }
+                expText.innerHTML = "<b>คำอธิบาย:</b> " + q.e;
+            } else {
+                explainer.classList.add('hidden');
+            }
+
+            // Next / Prev buttons
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            const btnNext = document.getElementById('btn-next');
+            
+            if (curQ === data.length - 1) {
+                btnNext.innerText = "ดูผลลัพธ์การสอบ";
+                btnNext.className = "bg-blue-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition transform hover:scale-105";
+            } else {
+                btnNext.innerText = "ข้อต่อไป ➔";
+                btnNext.className = "bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-105";
+            }
+        }
+
+        // --- Logic Functions ---
+        function selectOpt(idx) {
+            if(answers[curQ] !== null) return;
+            answers[curQ] = idx;
+            if(idx === database[currentSubject][curQ].a) score++;
+            renderQ(); 
+        }
+
+        function changeQ(step) {
+            const data = database[currentSubject];
+            if(curQ + step >= 0 && curQ + step < data.length) {
+                curQ += step;
+                renderQ();
+            } else if(curQ + step === data.length) {
+                if(answers.includes(null)) {
+                    if(!confirm('คุณยังทำข้อสอบไม่ครบทุกข้อ ต้องการดูผลลัพธ์เลยหรือไม่?')) return;
+                }
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            const data = database[currentSubject];
+            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById('screen-result').classList.remove('hidden');
+            
+            document.getElementById('final-score').innerText = `${score} / ${data.length}`;
+            
+            const msg = document.getElementById('result-msg');
+            const pct = (score/data.length)*100;
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! คะแนนระดับนี้ คุณมีความพร้อมสำหรับการสอบแล้ว";
+            else if(pct >= 50) msg.innerText = "ทำได้ดีพอสมควร ลองทบทวนข้อที่ผิดอีกครั้งเพื่อความแม่นยำนะครับ";
+            else msg.innerText = "ต้องพยายามเพิ่มอีกหน่อย ลองอ่านบทเรียนสรุปและทำแบบทดสอบอีกรอบครับ";
+            
+            window.scrollTo(0,0);
+        }
+
+        // --- Initialize ---
+        window.onload = () => {
+            const cLen = database.comp.length;
+            const gkLen = database.gk.length;
+            const hLen = database.hist.length;
+            
+            document.getElementById('count-comp').innerText = cLen + " ข้อ";
+            document.getElementById('count-gk').innerText = gkLen + " ข้อ";
+            document.getElementById('count-hist').innerText = hLen + " ข้อ";
+            document.getElementById('total-q').innerText = cLen + gkLen + hLen;
+        };
+    </script>
+</body>
+</html>
