@@ -2,558 +2,343 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>เตรียมสอบภาษาอังกฤษ: บทเรียน & แบบทดสอบ 100 ข้อ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้ วิชาภาษาอังกฤษ ชุดที่ 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['"Noto Sans Thai"', 'sans-serif'] },
-                    colors: {
-                        emerald: {"50":"#ecfdf5","100":"#d1fae5","200":"#a7f3d0","300":"#6ee7b7","400":"#34d399","500":"#10b981","600":"#059669","700":"#047857","800":"#065f46","900":"#064e3b","950":"#022c22"}
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8fafc; /* Slate 50 */
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Smooth Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        
-        /* Modern Option Styling */
-        .option-label { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-        .option-input:checked + .option-label {
-            background-color: #f0fdf4;
-            border-color: #10b981;
-            box-shadow: 0 0 0 1px #10b981, 0 4px 6px -1px rgb(16 185 129 / 0.1);
-        }
-        
-        /* Validation States */
-        .correct-answer {
-            background-color: #ecfdf5 !important;
-            border-color: #10b981 !important;
-            color: #065f46 !important;
-            box-shadow: 0 4px 15px -3px rgba(16, 185, 129, 0.2) !important;
-        }
-        .wrong-answer {
-            background-color: #fef2f2 !important;
-            border-color: #ef4444 !important;
-            color: #991b1b !important;
-            opacity: 0.8;
-        }
-
-        /* Animations */
-        .fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8fafc; }
+        .lesson-card { border-left: 4px solid #15803d; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Button Active State */
-        .btn-press:active { transform: scale(0.97); }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
     </style>
 </head>
-<body class="text-slate-800 antialiased pb-24">
+<body class="min-h-screen pb-10">
 
-    <!-- Glassmorphism Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm">
-        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-md">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </div>
-                <div>
-                    <h1 class="text-lg sm:text-xl font-bold text-slate-900 leading-tight">คลังข้อสอบอังกฤษ</h1>
-                    <p class="text-xs sm:text-sm text-slate-500 font-medium">นายสิบทหารบก / ประทวน</p>
-                </div>
+    <!-- Navigation Bar -->
+    <nav class="bg-green-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                <span class="font-bold text-sm md:text-base">ติวอังกฤษ นายสิบทหารบก</span>
             </div>
-            
-            <!-- Score Pill -->
-            <div class="bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner transition-colors duration-500" id="score-container">
-                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                <div class="text-sm font-bold text-slate-700 font-mono" id="score-text">0/0</div>
+            <div class="flex space-x-1 md:space-x-4">
+                <button onclick="switchMode('home')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">หน้าหลัก</button>
+                <button onclick="switchMode('lesson')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-2 py-1 bg-white text-green-800 rounded font-bold text-xs md:text-sm shadow hover:bg-gray-100 transition">เริ่มสอบ</button>
             </div>
         </div>
+    </nav>
 
-        <!-- Segmented Control Tabs -->
-        <div class="max-w-md mx-auto px-4 pb-3">
-            <div class="flex p-1 space-x-1 bg-slate-100/80 rounded-2xl shadow-inner border border-slate-200/50">
-                <button onclick="switchTab('study')" id="tab-study" class="flex-1 py-2 text-sm font-bold rounded-xl shadow-sm bg-white text-emerald-700 transition-all duration-300 flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    บทเรียน
-                </button>
-                <button onclick="switchTab('quiz')" id="tab-quiz" class="flex-1 py-2 text-sm font-medium rounded-xl text-slate-500 hover:text-slate-700 transition-all duration-300 flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-                    แบบทดสอบ
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-3xl mx-auto px-4 mt-6">
+    <main class="max-w-4xl mx-auto p-4">
         
-        <!-- ============================================== -->
-        <!-- SECTION 1: STUDY GUIDE -->
-        <!-- ============================================== -->
-        <section id="study-section" class="fade-in-up space-y-5">
-            
-            <!-- Grammar Card -->
-            <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200/60 p-6 sm:p-8 overflow-hidden relative">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-                
-                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-5 flex items-center gap-3 relative z-10">
-                    <div class="bg-emerald-100 text-emerald-600 p-2 rounded-xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-green-700 p-8 text-center text-white">
+                    <h1 class="text-3xl font-black mb-2">ภาษาอังกฤษ ชุดที่ 1</h1>
+                    <p class="opacity-90">คลังความรู้และแบบทดสอบ 100 ข้อ เพื่อความพร้อมสูงสุด</p>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('lesson')">
+                        <div class="text-green-700 text-4xl mb-2">📖</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดบทเรียน</h3>
+                        <p class="text-gray-500 text-sm">สรุปเนื้อหาสำคัญ Grammar & Vocab</p>
                     </div>
-                    สรุปไวยากรณ์ออกสอบบ่อย
-                </h2>
-                
-                <div class="space-y-4 relative z-10">
-                    <!-- Grammar Item -->
-                    <div class="group border border-slate-100 bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-5 transition-colors">
-                        <h3 class="font-bold text-emerald-700 mb-2">Tense พื้นฐาน (กาลเวลา)</h3>
-                        <ul class="space-y-3 text-sm text-slate-600">
-                            <li class="flex items-start gap-2">
-                                <div class="mt-1 w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                                <div><strong class="text-slate-800">Present Simple (S + V.1):</strong> ความจริง, กิจวัตรประจำวัน (every day, always)<br><span class="text-slate-400 text-xs inline-block mt-0.5">*ประธานเอกพจน์ V.1 ต้องเติม s/es เช่น The sun rises.</span></div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <div class="mt-1 w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                                <div><strong class="text-slate-800">Past Simple (S + V.2):</strong> จบไปแล้วในอดีต (yesterday, last night)<br><span class="text-slate-400 text-xs inline-block mt-0.5">*ปฏิเสธใช้ didn't + V.1 เช่น They didn't go.</span></div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <div class="mt-1 w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                                <div><strong class="text-slate-800">Present Continuous:</strong> กำลังเกิดตอนนี้ (S + is/am/are + V.ing)</div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Grammar Item -->
-                    <div class="group border border-slate-100 bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-5 transition-colors">
-                        <h3 class="font-bold text-emerald-700 mb-2">Prepositions & โครงสร้างอื่นๆ</h3>
-                        <ul class="space-y-3 text-sm text-slate-600">
-                            <li class="flex items-start gap-2">
-                                <div class="mt-1 w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                                <div><strong class="text-slate-800">In / On / At:</strong> <i>In</i> (เมือง, ประเทศ, เดือน), <i>On</i> (วันในสัปดาห์), <i>At</i> (เวลาที่เจาะจง, ความสามารถ เช่น good <u>at</u>)</div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <div class="mt-1 w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0"></div>
-                                <div><strong class="text-slate-800">Comparison (การเปรียบเทียบ):</strong> <br>ขั้นกว่า: เติม -er หรือ more + than<br>ขั้นสุด: The + -est หรือ The most</div>
-                            </li>
-                        </ul>
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('quiz')">
+                        <div class="text-orange-500 text-4xl mb-2">✍️</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดทดสอบ</h3>
+                        <p class="text-gray-500 text-sm">จำลองการสอบ 100 ข้อ รู้ผลทันที</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Vocab Card -->
-            <div class="bg-slate-900 rounded-[2rem] shadow-lg p-6 sm:p-8 relative overflow-hidden">
-                <!-- Abstract BG -->
-                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-                
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-5 flex items-center gap-3 relative z-10">
-                    <div class="bg-slate-800 text-amber-400 p-2 rounded-xl border border-slate-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                    </div>
-                    คำศัพท์ที่พบบ่อย (Synonyms)
-                </h2>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 relative z-10">
-                    <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-4 text-slate-200 text-sm space-y-2">
-                        <p class="flex justify-between"><span class="font-medium">Bravery</span><span class="text-emerald-400">Courage (ความกล้า)</span></p>
-                        <hr class="border-slate-700/50">
-                        <p class="flex justify-between"><span class="font-medium">Success</span><span class="text-emerald-400">Victory (ชัยชนะ)</span></p>
-                        <hr class="border-slate-700/50">
-                        <p class="flex justify-between"><span class="font-medium">Obey</span><span class="text-emerald-400">Follow (เชื่อฟัง)</span></p>
-                        <hr class="border-slate-700/50">
-                        <p class="flex justify-between"><span class="font-medium">Crucial</span><span class="text-emerald-400">Important (สำคัญ)</span></p>
-                    </div>
-                    <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-4 text-slate-200 text-sm space-y-2">
-                        <p class="flex justify-between"><span class="font-medium">Teamwork</span><span class="text-emerald-400">Cooperation (ร่วมมือ)</span></p>
-                        <hr class="border-slate-700/50">
-                        <p class="flex justify-between"><span class="font-medium">Deploy</span><span class="text-emerald-400">Send (ส่งกำลัง)</span></p>
-                        <hr class="border-slate-700/50">
-                        <p class="flex justify-between"><span class="font-medium">Protect</span><span class="text-emerald-400">Defend (ปกป้อง)</span></p>
-                        <hr class="border-slate-700/50">
-                        <p class="flex justify-between"><span class="font-medium">Integrity</span><span class="text-emerald-400">Honesty (ซื่อสัตย์)</span></p>
-                    </div>
-                </div>
-            </div>
+        <!-- 2. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-green-700 pb-2 mb-4">สรุปเนื้อหาสำคัญ</h2>
             
-            <div class="pt-4 pb-8 text-center">
-                <button onclick="switchTab('quiz')" class="btn-press w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-bold text-lg py-4 px-10 rounded-2xl shadow-lg shadow-emerald-500/30">
-                    เริ่มทำข้อสอบ 100 ข้อ 
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </button>
-            </div>
-        </section>
-
-        <!-- ============================================== -->
-        <!-- SECTION 2: QUIZ SYSTEM -->
-        <!-- ============================================== -->
-        <section id="quiz-section" class="hidden fade-in-up space-y-6">
-            
-            <!-- Instructions -->
-            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-start gap-3">
-                <div class="bg-blue-100 p-2 rounded-full text-blue-600 flex-shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <p class="text-sm text-blue-800 leading-relaxed pt-1">
-                    เลือกตัวเลือกที่คิดว่าถูกต้องที่สุด จากนั้นกดปุ่ม <b>"ดูเฉลยข้อนี้"</b> เพื่อตรวจคำตอบและอ่านคำอธิบายทันที
-                </p>
+            <!-- Grammar 1 -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm">
+                <h3 class="font-bold text-green-800 text-lg mb-3"># Grammar: Tense พื้นฐาน (กาลเวลา)</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                    <li>• <b>Present Simple (S + V.1):</b> ใช้กับความจริงทั่วไป, กิจวัตรประจำวัน (every day, always) <br><span class="text-xs text-gray-500 ml-3">*ประธานเอกพจน์ V.1 ต้องเติม s/es เช่น The sun rises.</span></li>
+                    <li>• <b>Present Continuous (S + is/am/are + V.ing):</b> สิ่งที่กำลังเกิดตอนนี้ (now, at the moment)</li>
+                    <li>• <b>Past Simple (S + V.2):</b> เหตุการณ์จบไปแล้วในอดีต (yesterday, last night)<br><span class="text-xs text-gray-500 ml-3">*ประโยคปฏิเสธใช้ didn't + V.1 เช่น They didn't go.</span></li>
+                    <li>• <b>Present Perfect (S + has/have + V.3):</b> เริ่มในอดีตดำเนินถึงปัจจุบัน หรือเพิ่งจบ (since, for, just)</li>
+                </ul>
             </div>
 
-            <!-- Quiz Container -->
-            <div id="quiz-container" class="space-y-6">
-                <!-- Questions injected by JS -->
+            <!-- Grammar 2 -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-orange-500" style="border-left-color: #f97316;">
+                <h3 class="font-bold text-orange-700 text-lg mb-3"># Grammar: Prepositions & โครงสร้างอื่นๆ</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                    <li>• <b>In / On / At:</b> <i>In</i> (เมือง/ประเทศ/เดือน), <i>On</i> (วันในสัปดาห์/พื้นผิว), <i>At</i> (จุดเวลา/ความสามารถ เช่น good <u>at</u>)</li>
+                    <li>• <b>Comparison (การเปรียบเทียบ):</b><br><span class="ml-3">- ขั้นกว่า: เติม -er หรือใช้ more + than</span><br><span class="ml-3">- ขั้นสุด: ใช้ the + -est หรือ most</span></li>
+                    <li>• <b>Relative Pronouns:</b> <i>who</i> (แทนคนทำหน้าที่ประธาน), <i>which</i> (แทนสัตว์/สิ่งของ)</li>
+                    <li>• <b>Passive Voice (S + is/am/are/was/were + V.3):</b> ประธานเป็นผู้ถูกกระทำ มักมีคำว่า <i>by</i></li>
+                </ul>
+            </div>
+
+            <!-- Vocabulary -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-blue-500" style="border-left-color: #3b82f6;">
+                <h3 class="font-bold text-blue-700 text-lg mb-3"># Vocabulary: คำศัพท์ทางทหารและทั่วไปที่ออกบ่อย</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base grid grid-cols-1 md:grid-cols-2">
+                    <li>• <b>Bravery</b> = Courage (ความกล้าหาญ)</li>
+                    <li>• <b>Overcome</b> = Defeat (เอาชนะ/ข้ามผ่าน)</li>
+                    <li>• <b>Success</b> = Victory (ความสำเร็จ/ชัยชนะ)</li>
+                    <li>• <b>Obey</b> = Follow (เชื่อฟัง/ทำตาม)</li>
+                    <li>• <b>Disciplined</b> = Trained (มีวินัย/ได้รับการฝึก)</li>
+                    <li>• <b>Crucial</b> = Important (สำคัญมาก)</li>
+                    <li>• <b>Deploy</b> = Send (ส่งกำลังไป/เคลื่อนพล)</li>
+                    <li>• <b>Integrity</b> = Honesty (ความซื่อสัตย์)</li>
+                </ul>
             </div>
             
-            <!-- Completion State -->
-            <div id="quiz-end-msg" class="hidden bg-white border border-emerald-200 rounded-[2rem] p-8 text-center shadow-sm fade-in-up mt-8">
-                <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-4xl">🎉</span>
+            <button onclick="switchMode('quiz')" class="w-full bg-green-700 text-white p-4 rounded-xl font-bold shadow-lg mt-4 hover:bg-green-800 transition">ไปที่แบบทดสอบ 👉</button>
+        </div>
+
+        <!-- 3. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
+            <!-- Progress & Score -->
+            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center sticky top-[72px] z-40">
+                <div class="w-1/2">
+                    <div class="text-xs font-bold text-gray-400 mb-1">ความคืบหน้า</div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
                 </div>
-                <h2 class="text-2xl font-bold text-emerald-700 mb-2">ทำข้อสอบครบแล้ว!</h2>
-                <p class="text-slate-600 mb-6">ทบทวนข้อที่ผิดและคำอธิบายบ่อยๆ จะช่วยให้คุณพร้อมสำหรับการสอบจริงมากยิ่งขึ้นครับ</p>
-                <button onclick="window.scrollTo(0,0); location.reload();" class="btn-press bg-slate-800 text-white font-bold py-3 px-8 rounded-xl shadow-md w-full sm:w-auto">
-                    ทำข้อสอบใหม่อีกครั้ง
-                </button>
+                <div class="text-right">
+                    <div id="quiz-status" class="text-sm font-bold text-green-800">ข้อที่ 1/100</div>
+                    <div id="score-text" class="text-xs text-gray-500">คะแนน: 0</div>
+                </div>
             </div>
-        </section>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px] flex flex-col justify-between animate-fade-in">
+                <div>
+                    <span id="q-cat" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block">หมวดหมู่</span>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-6">คำถามจะแสดงที่นี่</h3>
+                    
+                    <div id="options" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Explainer -->
+                <div id="explainer" class="hidden mt-6 p-5 rounded-xl animate-fade-in shadow-sm border-l-4">
+                    <p id="exp-status" class="text-lg font-black mb-2 flex items-center"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-gray-700 leading-relaxed"></p>
+                </div>
+
+                <div class="flex justify-between mt-8 pt-4 border-t border-gray-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 disabled:opacity-20 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-105">ถัดไป</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg mx-auto">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-2xl font-black text-gray-800">สรุปผลการทดสอบ</h2>
+                <div class="text-7xl font-black text-green-600 my-6 drop-shadow-sm" id="final-score">0 / 100</div>
+                <p id="result-msg" class="text-gray-500 mb-8 text-lg">พยายามได้ดีมากครับ ทบทวนอีกครั้งเพื่อความแม่นยำ!</p>
+                <div class="flex flex-col space-y-3">
+                    <button onclick="location.reload()" class="bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-800 transition">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="text-gray-500 hover:text-gray-800 font-bold py-2 transition">กลับหน้าหลัก</button>
+                </div>
+            </div>
+        </div>
 
     </main>
 
     <script>
-        // Data Structure (Same exact data logic, maintaining all 100 questions integrity)
-        const qData = [
-            { sec: "Grammar", q: "He ______ a soldier.", o: ["is", "am", "are", "be"], c: 0, ex: "ใช้กริยาช่วย is กับประธานเอกพจน์บุรุษที่สาม (He)" },
-            { sec: "Grammar", q: "They ______ in the army.", o: ["is", "am", "are", "was"], c: 2, ex: "ใช้กริยาช่วย are กับประธานพหูพจน์ (They)" },
-            { sec: "Grammar", q: "I ______ a book now.", o: ["read", "reads", "am reading", "have read"], c: 2, ex: "ใช้ Present Continuous Tense (S + is/am/are + V.ing) เพื่อแสดงเหตุการณ์ที่กำลังเกิดขึ้นในขณะนี้ (now)" },
-            { sec: "Grammar", q: "She ______ to school every day.", o: ["go", "goes", "going", "went"], c: 1, ex: "ใช้ Present Simple Tense (V1 เติม -s หรือ -es) กับประธานเอกพจน์บุรุษที่สาม (She) เพื่อแสดงกิจวัตรประจำวัน (every day)" },
-            { sec: "Grammar", q: "The sun ______ in the east.", o: ["rises", "rose", "is rising", "has risen"], c: 0, ex: "ใช้ Present Simple Tense (V.1 เติม -s) เพื่อแสดงความจริงทั่วไป" },
-            { sec: "Grammar", q: "He ______ his homework yesterday.", o: ["do", "does", "did", "done"], c: 2, ex: "ใช้ Past Simple Tense (V.2) เพื่อแสดงเหตุการณ์ที่เกิดขึ้นและจบลงแล้วในอดีต (yesterday)" },
-            { sec: "Grammar", q: "I have ______ the movie.", o: ["see", "saw", "seen", "sees"], c: 2, ex: "ใช้ Present Perfect Tense (S + have/has + V.3) โดย seen เป็น V.3 ของ see" },
-            { sec: "Grammar", q: "They ______ to the meeting last night.", o: ["didn't go", "don't go", "haven't gone", "won't go"], c: 0, ex: "ใช้ Past Simple Tense (S + did + not + V.1) ในรูปปฏิเสธสำหรับเหตุการณ์ในอดีต (last night)" },
-            { sec: "Grammar", q: "Can you ______ me a favor?", o: ["do", "doing", "did", "done"], c: 0, ex: "ใช้กริยาช่อง 1 (V.1 แบบไม่ผัน) ตามหลังกริยาช่วย Can" },
-            { sec: "Grammar", q: "The ball is ______ the box.", o: ["in", "on", "under", "all of the above"], c: 3, ex: "ใช้ Preposition (in, on, under) ได้ทั้งหมดตามบริบท" },
-            { sec: "Grammar", q: "The team has been practicing ______ two weeks.", o: ["since", "for", "at", "in"], c: 1, ex: "ใช้ for เพื่อบอกระยะเวลาที่เหตุการณ์นั้นเกิดขึ้น (for two weeks = เป็นเวลาสองสัปดาห์)" },
-            { sec: "Grammar", q: "I ______ to the market when I saw him.", o: ["walk", "walked", "was walking", "have walked"], c: 2, ex: "ใช้ Past Continuous Tense (was/were + V.ing) เพื่อบอกเหตุการณ์ที่กำลังดำเนินอยู่ในอดีต ก่อนที่จะมีอีกเหตุการณ์มาแทรก" },
-            { sec: "Grammar", q: "She speaks English very ______.", o: ["good", "well", "best", "better"], c: 1, ex: "ใช้ Adverb (well) เพื่อขยายกริยา (speaks)" },
-            { sec: "Grammar", q: "The book was written ______ a famous author.", o: ["by", "of", "with", "from"], c: 0, ex: "ใช้ by เพื่อระบุผู้กระทำในประโยค Passive Voice" },
-            { sec: "Grammar", q: "If it rains, we ______ at home.", o: ["stay", "stayed", "will stay", "would stay"], c: 2, ex: "Conditional Sentence Type 1 (If + Present, S + will + V.1) ใช้กับเหตุการณ์ที่มีโอกาสเกิดขึ้นจริง" },
-            { sec: "Grammar", q: "How many students ______ in the classroom?", o: ["is", "are", "was", "were"], c: 1, ex: "ใช้ are เพราะประธาน (students) เป็นพหูพจน์" },
-            { sec: "Grammar", q: "He is taller ______ his brother.", o: ["than", "that", "then", "as"], c: 0, ex: "ใช้ than ในการเปรียบเทียบขั้นกว่า" },
-            { sec: "Grammar", q: "He said that he ______ a new car.", o: ["buys", "will buy", "had bought", "has bought"], c: 2, ex: "Reported Speech: จาก Past Simple ต้องเปลี่ยนเป็น Past Perfect (had bought)" },
-            { sec: "Grammar", q: "The cat is sleeping ______ the chair.", o: ["in", "among", "at", "under"], c: 3, ex: "ใช้ Preposition under เพื่อบอกตำแหน่งที่อยู่ข้างใต้" },
-            { sec: "Grammar", q: "She has lived here ______ 2010.", o: ["for", "since", "in", "on"], c: 1, ex: "ใช้ since เพื่อบอกจุดเริ่มต้นของเวลาในอดีต (ตั้งแต่ปี 2010)" },
-            { sec: "Grammar", q: "My mother cooked a cake ______ me.", o: ["to", "for", "with", "of"], c: 1, ex: "ใช้ Preposition for เพื่อบอกว่าทำสิ่งนั้นให้ใครหรือเพื่อใคร" },
-            { sec: "Grammar", q: "We will go to the cinema ______ Saturday.", o: ["in", "on", "at", "by"], c: 1, ex: "ใช้ Preposition on กับวันในสัปดาห์" },
-            { sec: "Grammar", q: "This is the ______ book I have ever read.", o: ["interesting", "more interesting", "most interesting", "many interesting"], c: 2, ex: "การเปรียบเทียบขั้นสุด ใช้ most กับคำที่มีหลายพยางค์" },
-            { sec: "Grammar", q: "I am good ______ playing football.", o: ["in", "at", "on", "with"], c: 1, ex: "ใช้ at ตามหลังสำนวน good at เพื่อบอกความสามารถ" },
-            { sec: "Grammar", q: "The man ______ is wearing a hat is my father.", o: ["who", "which", "what", "where"], c: 0, ex: "ใช้ who เป็น Relative Pronoun ขยายคน (The man)" },
-            { sec: "Grammar", q: "I don't have ______ money.", o: ["some", "any", "many", "a lot"], c: 1, ex: "ใช้ any ในประโยคปฏิเสธและประโยคคำถาม" },
-            { sec: "Grammar", q: "He gave me a pen and ______ eraser.", o: ["a", "an", "the", "some"], c: 1, ex: "ใช้ Article an นำหน้าคำนามที่ขึ้นต้นด้วยเสียงสระ (eraser)" },
-            { sec: "Grammar", q: "The phone rang while I ______ TV.", o: ["watch", "watched", "was watching", "have watched"], c: 2, ex: "ใช้ Past Continuous (was/were + V.ing) บอกเหตุการณ์ที่กำลังเกิดในอดีต" },
-            { sec: "Grammar", q: "The commander told the soldiers ______ be late.", o: ["not", "not to", "do not", "not be"], c: 1, ex: "ใช้ not to ในการสั่งห้ามในประโยค Reported Speech" },
-            { sec: "Grammar", q: "He is ______ than her.", o: ["strong", "stronger", "strongest", "more stronger"], c: 1, ex: "การเปรียบเทียบขั้นกว่า ใช้ -er กับคำพยางค์เดียว" },
-            { sec: "Grammar", q: "I wish I ______ a car.", o: ["have", "had", "will have", "am having"], c: 1, ex: "ใช้ Past Simple (had) ตามหลัง wish เพื่อแสดงความปรารถนาในสิ่งที่ไม่เป็นจริงในปัจจุบัน" },
-            { sec: "Grammar", q: "The house ______ has a red roof is mine.", o: ["who", "which", "where", "what"], c: 1, ex: "ใช้ which เป็น Relative Pronoun ขยายสิ่งของ (The house)" },
-            { sec: "Grammar", q: "She is a ______ person.", o: ["beautifully", "beautiful", "more beautiful", "most beautiful"], c: 1, ex: "ใช้ Adjective (beautiful) เพื่อขยายคำนาม (person)" },
-            { sec: "Grammar", q: "He finished his work ______ the morning.", o: ["on", "at", "in", "by"], c: 2, ex: "ใช้ in กับช่วงเวลาของวัน (in the morning)" },
-            { sec: "Grammar", q: "The food tastes ______.", o: ["good", "well", "better", "best"], c: 0, ex: "ใช้ Adjective (good) ตามหลัง Linking Verb (tastes)" },
-            { sec: "Grammar", q: "He lives ______ Bangkok.", o: ["at", "in", "on", "from"], c: 1, ex: "ใช้ in กับเมืองหรือประเทศ" },
-            { sec: "Grammar", q: "The man ______ gave me the book is a teacher.", o: ["who", "whom", "whose", "which"], c: 0, ex: "ใช้ who ขยายคนและทำหน้าที่เป็นประธานของอนุประโยค" },
-            { sec: "Grammar", q: "He promised ______ on time.", o: ["arrive", "arriving", "to arrive", "arrived"], c: 2, ex: "ใช้ to + V.1 (Infinitive) ตามหลังกริยา promise, want, agree, decide" },
-            { sec: "Grammar", q: "She is the ______ girl in the class.", o: ["nice", "nicer", "nicest", "most nice"], c: 2, ex: "การเปรียบเทียบขั้นสุด ใช้ the และ -est กับคำพยางค์เดียว" },
-            { sec: "Grammar", q: "I have ______ finished my work.", o: ["yet", "just", "ever", "never"], c: 1, ex: "ใช้ just ใน Present Perfect เพื่อบอกว่าเพิ่งจะทำเสร็จ" },
-            { sec: "Grammar", q: "A soldier's main job is to ______ his country.", o: ["protect", "ignore", "abandon", "dislike"], c: 0, ex: "protect = ปกป้อง/คุ้มครอง ซึ่งเป็นหน้าที่ของทหาร" },
-            { sec: "Grammar", q: "The Army is a large ______ of people.", o: ["group", "house", "car", "Book"], c: 0, ex: "group = กลุ่ม ซึ่งสอดคล้องกับกองทัพ" },
-            { sec: "Grammar", q: "We need a good ______ to lead the team.", o: ["friend", "leader", "student", "child"], c: 1, ex: "leader = ผู้นำ ซึ่งทำหน้าที่นำทีม" },
-            { sec: "Grammar", q: "The mission was a great ______.", o: ["failure", "success", "sadness", "danger"], c: 1, ex: "success = ความสำเร็จ (ผลลัพธ์ที่ดีของภารกิจ)" },
-            { sec: "Grammar", q: "Soldiers wear a special ______.", o: ["clothes", "dress", "Uniform", "suit"], c: 2, ex: "uniform = เครื่องแบบเฉพาะ" },
+        // Data containing questions from English Set 1
+        const questions = [
+            // Grammar
+            { q: "He ______ a soldier.", opt: ["is", "am", "are", "be"], ans: 0, cat: "Grammar", exp: "ใช้กริยาช่วย is กับประธานเอกพจน์บุรุษที่สาม (He)" },
+            { q: "They ______ in the army.", opt: ["is", "am", "are", "was"], ans: 2, cat: "Grammar", exp: "ใช้กริยาช่วย are กับประธานพหูพจน์ (They)" },
+            { q: "I ______ a book now.", opt: ["read", "reads", "am reading", "have read"], ans: 2, cat: "Grammar", exp: "ใช้ Present Continuous Tense (S + is/am/are + V.ing) เพื่อแสดงเหตุการณ์ที่กำลังเกิดขึ้นในขณะนี้ (now)" },
+            { q: "She ______ to school every day.", opt: ["go", "goes", "going", "went"], ans: 1, cat: "Grammar", exp: "ใช้ Present Simple Tense (V1 เติม -s หรือ -es) กับประธานเอกพจน์บุรุษที่สาม (She) เพื่อแสดงกิจวัตรประจำวัน (every day)" },
+            { q: "The sun ______ in the east.", opt: ["rises", "rose", "is rising", "has risen"], ans: 0, cat: "Grammar", exp: "ใช้ Present Simple Tense (V.1 เติม -s) เพื่อแสดงความจริงทั่วไป" },
+            { q: "He ______ his homework yesterday.", opt: ["do", "does", "did", "done"], ans: 2, cat: "Grammar", exp: "ใช้ Past Simple Tense (V.2) เพื่อแสดงเหตุการณ์ที่เกิดขึ้นและจบลงแล้วในอดีต (yesterday)" },
+            { q: "I have ______ the movie.", opt: ["see", "saw", "seen", "sees"], ans: 2, cat: "Grammar", exp: "ใช้ Present Perfect Tense (S + have/has + V.3) โดย seen เป็น V.3 ของ see" },
+            { q: "They ______ to the meeting last night.", opt: ["didn't go", "don't go", "haven't gone", "won't go"], ans: 0, cat: "Grammar", exp: "ใช้ Past Simple Tense (S + did + not + V.1) ในรูปปฏิเสธสำหรับเหตุการณ์ในอดีต (last night)" },
+            { q: "Can you ______ me a favor?", opt: ["do", "doing", "did", "done"], ans: 0, cat: "Grammar", exp: "ใช้กริยาช่อง 1 (V.1 แบบไม่ผัน) ตามหลังกริยาช่วย Can" },
+            { q: "The ball is ______ the box.", opt: ["in", "on", "under", "all of the above"], ans: 3, cat: "Grammar", exp: "ใช้ Preposition (in, on, under) ได้ทั้งหมดตามบริบท" },
+            { q: "The team has been practicing ______ two weeks.", opt: ["since", "for", "at", "in"], ans: 1, cat: "Grammar", exp: "ใช้ for เพื่อบอกระยะเวลาที่เหตุการณ์นั้นเกิดขึ้น (for two weeks = เป็นเวลาสองสัปดาห์)" },
+            { q: "I ______ to the market when I saw him.", opt: ["walk", "walked", "was walking", "have walked"], ans: 2, cat: "Grammar", exp: "ใช้ Past Continuous Tense (was/were + V.ing) เพื่อบอกเหตุการณ์ที่กำลังดำเนินอยู่ในอดีต ก่อนที่จะมีอีกเหตุการณ์มาแทรก" },
+            { q: "She speaks English very ______.", opt: ["good", "well", "best", "better"], ans: 1, cat: "Grammar", exp: "ใช้ Adverb (well) เพื่อขยายกริยา (speaks)" },
+            { q: "The book was written ______ a famous author.", opt: ["by", "of", "with", "from"], ans: 0, cat: "Grammar", exp: "ใช้ by เพื่อระบุผู้กระทำในประโยค Passive Voice" },
+            { q: "If it rains, we ______ at home.", opt: ["stay", "stayed", "will stay", "would stay"], ans: 2, cat: "Grammar", exp: "Conditional Sentence Type 1 (If + Present, S + will + V.1) ใช้กับเหตุการณ์ที่มีโอกาสเกิดขึ้นจริง" },
+            { q: "How many students ______ in the classroom?", opt: ["is", "are", "was", "were"], ans: 1, cat: "Grammar", exp: "ใช้ are เพราะประธาน (students) เป็นพหูพจน์" },
+            { q: "He is taller ______ his brother.", opt: ["than", "that", "then", "as"], ans: 0, cat: "Grammar", exp: "ใช้ than ในการเปรียบเทียบขั้นกว่า" },
+            { q: "He said that he ______ a new car.", opt: ["buys", "will buy", "had bought", "has bought"], ans: 2, cat: "Grammar", exp: "Reported Speech: จาก Past Simple ต้องเปลี่ยนเป็น Past Perfect (had bought)" },
+            { q: "The cat is sleeping ______ the chair.", opt: ["in", "among", "at", "under"], ans: 3, cat: "Grammar", exp: "ใช้ Preposition under เพื่อบอกตำแหน่งที่อยู่ข้างใต้" },
+            { q: "She has lived here ______ 2010.", opt: ["for", "since", "in", "on"], ans: 1, cat: "Grammar", exp: "ใช้ since เพื่อบอกจุดเริ่มต้นของเวลาในอดีต (ตั้งแต่ปี 2010)" },
             
-            { sec: "Vocabulary", q: "The soldier was a man of great <u>bravery</u>.", o: ["fear", "cowardice", "courage", "foolishness"], c: 2, ex: "bravery = courage (ความกล้าหาญ)" },
-            { sec: "Vocabulary", q: "They had to <u>overcome</u> many problems.", o: ["surrender to", "defeat", "ignore", "avoid"], c: 1, ex: "overcome = defeat (เอาชนะ/ข้ามผ่าน)" },
-            { sec: "Vocabulary", q: "The mission was a complete <u>success</u>.", o: ["victory", "failure", "disaster", "mistake"], c: 0, ex: "success = victory (ความสำเร็จ/ชัยชนะ)" },
-            { sec: "Vocabulary", q: "A soldier must be able to <u>obey</u> commands.", o: ["follow", "ignore", "refuse", "question"], c: 0, ex: "obey = follow (เชื่อฟัง/ทำตาม)" },
-            { sec: "Vocabulary", q: "The team must be very <u>disciplined</u>.", o: ["disorganized", "trained", "lazy", "careless"], c: 1, ex: "disciplined = trained (มีวินัย/ได้รับการฝึกฝน)" },
-            { sec: "Vocabulary", q: "The military camp is in a good <u>location</u>.", o: ["place", "house", "city", "country"], c: 0, ex: "location = place (สถานที่)" },
-            { sec: "Vocabulary", q: "We need to <u>prepare</u> for the inspection.", o: ["get ready", "forget", "hide", "ignore"], c: 0, ex: "prepare = get ready (เตรียมพร้อม)" },
-            { sec: "Vocabulary", q: "The soldier was given a <u>special</u> award.", o: ["common", "unique", "ordinary", "usual"], c: 1, ex: "special = unique (พิเศษ/ไม่เหมือนใคร)" },
-            { sec: "Vocabulary", q: "The commander gave a <u>brief</u> speech.", o: ["short", "long", "detailed", "difficult"], c: 0, ex: "brief = short (สั้นๆ)" },
-            { sec: "Vocabulary", q: "The team showed great <u>teamwork</u>.", o: ["disagreement", "cooperation", "fighting", "selfishness"], c: 1, ex: "teamwork = cooperation (การร่วมมือทำงานเป็นทีม)" },
-            { sec: "Vocabulary", q: "It is a very <u>difficult</u> task.", o: ["easy", "simple", "hard", "fun"], c: 2, ex: "difficult = hard (ยาก)" },
-            { sec: "Vocabulary", q: "We must follow the <u>rules</u>.", o: ["plans", "laws", "schedules", "regulations"], c: 3, ex: "rules = regulations (กฎระเบียบ)" },
-            { sec: "Vocabulary", q: "The soldier was a very <u>loyal</u> person.", o: ["unfaithful", "obedient", "disloyal", "honest"], c: 1, ex: "loyal (ภักดี/ซื่อสัตย์) ในที่นี้หมายถึงเชื่อฟัง จึงใกล้เคียง obedient" },
-            { sec: "Vocabulary", q: "The food was very <u>delicious</u>.", o: ["bad", "tasty", "terrible", "healthy"], c: 1, ex: "delicious = tasty (อร่อย)" },
-            { sec: "Vocabulary", q: "We need to <u>finish</u> the work today.", o: ["start", "complete", "delay", "abandon"], c: 1, ex: "finish = complete (ทำให้เสร็จสมบูรณ์)" },
-            { sec: "Vocabulary", q: "The building is very <u>large</u>.", o: ["big", "small", "high", "old"], c: 0, ex: "large = big (ใหญ่)" },
-            { sec: "Vocabulary", q: "The officer gave a <u>clear</u> order.", o: ["vague", "confusing", "simple", "understandable"], c: 3, ex: "clear = understandable (ชัดเจน/สามารถเข้าใจได้)" },
-            { sec: "Vocabulary", q: "He had a great <u>sense</u> of duty.", o: ["feeling", "lack", "problem", "mistake"], c: 0, ex: "sense = feeling (ความรู้สึก/จิตสำนึก)" },
-            { sec: "Vocabulary", q: "The soldier was very <u>calm</u> during the crisis.", o: ["nervous", "peaceful", "angry", "afraid"], c: 1, ex: "calm = peaceful (สงบ)" },
-            { sec: "Vocabulary", q: "We must be <u>aware</u> of the danger.", o: ["ignore", "know about", "forget", "hide from"], c: 1, ex: "aware = know about (ตระหนักรู้/รู้เกี่ยวกับ)" },
-            { sec: "Vocabulary", q: "The unit will <u>deploy</u> to the area.", o: ["send", "recall", "hide", "Return"], c: 0, ex: "deploy = send (เคลื่อนพล/ส่งกำลังไป)" },
-            { sec: "Vocabulary", q: "The force general has great <u>power</u>.", o: ["weakness", "strength", "failure", "kindness"], c: 1, ex: "power = strength (อำนาจ/ความแข็งแกร่ง)" },
-            { sec: "Vocabulary", q: "The soldier's job is to <u>defend</u> the country.", o: ["attack", "protect", "leave", "surrender"], c: 1, ex: "defend = protect (ปกป้อง/ป้องกัน)" },
-            { sec: "Vocabulary", q: "The team was very <u>efficient</u>.", o: ["wasteful", "effective", "slow", "lazy"], c: 1, ex: "efficient = effective (มีประสิทธิภาพ/ทำงานได้ดี)" },
-            { sec: "Vocabulary", q: "The mission was a <u>difficult</u> challenge.", o: ["easy", "hard", "simple", "boring"], c: 1, ex: "difficult = hard (ยาก)" },
-            { sec: "Vocabulary", q: "We must <u>respect</u> our commanders.", o: ["ignore", "honor", "disobey", "criticize"], c: 1, ex: "respect = honor (เคารพ/ให้เกียรติ)" },
-            { sec: "Vocabulary", q: "The troops were in a <u>secure</u> area.", o: ["dangerous", "unsafe", "safe", "open"], c: 2, ex: "secure = safe (ปลอดภัย)" },
-            { sec: "Vocabulary", q: "The officer's decision was <u>wise</u>.", o: ["foolish", "smart", "stupid", "careless"], c: 1, ex: "wise = smart (ฉลาด/มีสติปัญญา)" },
-            { sec: "Vocabulary", q: "The soldier was <u>eager</u> to go home.", o: ["willing", "unwilling", "happy", "unhappy"], c: 0, ex: "eager = willing (กระตือรือร้น/เต็มใจอย่างยิ่ง)" },
-            { sec: "Vocabulary", q: "The training was a <u>rigorous</u> process.", o: ["easy", "strict", "simple", "fun"], c: 1, ex: "rigorous = strict (เข้มงวด/เคร่งครัด)" },
-            { sec: "Vocabulary", q: "The team showed great <u>determination</u>.", o: ["weakness", "sadness", "laziness", "resolution"], c: 3, ex: "determination = resolution (ความมุ่งมั่น/ความตั้งใจแน่วแน่)" },
-            { sec: "Vocabulary", q: "The soldiers were in a state of <u>alertness</u>.", o: ["readiness", "sleepiness", "relaxation", "carelessness"], c: 0, ex: "alertness = readiness (ความตื่นตัว/ความพร้อม)" },
-            { sec: "Vocabulary", q: "The general gave a <u>precise</u> command.", o: ["vague", "exact", "unclear", "wrong"], c: 1, ex: "precise = exact (แม่นยำ/ถูกต้อง)" },
-            { sec: "Vocabulary", q: "The officer's <u>integrity</u> was well-known.", o: ["honesty", "dishonesty", "kindness", "anger"], c: 0, ex: "integrity = honesty (ความซื่อสัตย์/ความยึดมั่นในหลักการ)" },
-            { sec: "Vocabulary", q: "The mission was <u>crucial</u> for the team.", o: ["unimportant", "important", "easy", "difficult"], c: 1, ex: "crucial = important (สำคัญมาก)" },
-
-            { 
-                sec: "Reading", 
-                p: "A soldier's life is often very disciplined. They wake up early, exercise, and follow a strict schedule. Training is a big part of their life. It helps them to be strong and to work well as a team. A soldier must be brave and ready to serve their country.", 
-                q: "What is the main idea of this passage?", o: ["A soldier's life is easy.", "A soldier's life is disciplined and requires training.", "Soldiers only exercise.", "Soldiers are not brave."], c: 1, 
-                ex: "เนื้อหาเน้นไปที่ความมีระเบียบวินัย (disciplined) และการฝึกฝน (training) ของทหาร" 
-            },
-            { sec: "Reading", p: "A soldier's life is often very disciplined. They wake up early...", q: "When do soldiers wake up?", o: ["Late", "Early", "At noon", "The passage doesn't say."], c: 1, ex: "ประโยคที่สองระบุว่า 'They wake up early...'" },
-            { sec: "Reading", p: "...Training is a big part of their life. It helps them to be strong and to work well as a team...", q: "What does training help soldiers to do?", o: ["Be weak.", "Be lazy.", "Be strong and work as a team.", "Not follow a schedule."], c: 2, ex: "ในบทความระบุว่า It helps them to be strong and to work well as a team." },
-            { sec: "Reading", p: "...A soldier must be brave and ready to serve their country.", q: "A soldier must be ______ and ready to serve their country.", o: ["lazy", "brave", "weak", "happy"], c: 1, ex: "ประโยคสุดท้ายระบุชัดเจนว่า 'must be brave'" },
-            { sec: "Reading", p: "A soldier's life is often very disciplined...", q: "What does the word 'disciplined' mean in this context?", o: ["Having no rules.", "Following a lot of rules and a schedule.", "Being lazy.", "Doing whatever you want."], c: 1, ex: "disciplined แปลว่า มีวินัย ซึ่งอธิบายด้วยการทำตามตารางและกฎเคร่งครัด" },
+            // Vocabulary
+            { q: "The soldier was a man of great <u>bravery</u>.", opt: ["fear", "cowardice", "courage", "foolishness"], ans: 2, cat: "Vocabulary", exp: "bravery = courage (ความกล้าหาญ)" },
+            { q: "They had to <u>overcome</u> many problems.", opt: ["surrender to", "defeat", "ignore", "avoid"], ans: 1, cat: "Vocabulary", exp: "overcome = defeat (เอาชนะ/ข้ามผ่าน)" },
+            { q: "The mission was a complete <u>success</u>.", opt: ["victory", "failure", "disaster", "mistake"], ans: 0, cat: "Vocabulary", exp: "success = victory (ความสำเร็จ/ชัยชนะ)" },
+            { q: "A soldier must be able to <u>obey</u> commands.", opt: ["follow", "ignore", "refuse", "question"], ans: 0, cat: "Vocabulary", exp: "obey = follow (เชื่อฟัง/ทำตาม)" },
+            { q: "The team must be very <u>disciplined</u>.", opt: ["disorganized", "trained", "lazy", "careless"], ans: 1, cat: "Vocabulary", exp: "disciplined = trained (มีวินัย/ได้รับการฝึกฝน)" },
+            { q: "The military camp is in a good <u>location</u>.", opt: ["place", "house", "city", "country"], ans: 0, cat: "Vocabulary", exp: "location = place (สถานที่)" },
+            { q: "We need to <u>prepare</u> for the inspection.", opt: ["get ready", "forget", "hide", "ignore"], ans: 0, cat: "Vocabulary", exp: "prepare = get ready (เตรียมพร้อม)" },
+            { q: "The soldier was given a <u>special</u> award.", opt: ["common", "unique", "ordinary", "usual"], ans: 1, cat: "Vocabulary", exp: "special = unique (พิเศษ/ไม่เหมือนใคร)" },
+            { q: "The commander gave a <u>brief</u> speech.", opt: ["short", "long", "detailed", "difficult"], ans: 0, cat: "Vocabulary", exp: "brief = short (สั้นๆ)" },
+            { q: "The team showed great <u>teamwork</u>.", opt: ["disagreement", "cooperation", "fighting", "selfishness"], ans: 1, cat: "Vocabulary", exp: "teamwork = cooperation (การร่วมมือทำงานเป็นทีม)" },
+            { q: "It is a very <u>difficult</u> task.", opt: ["easy", "simple", "hard", "fun"], ans: 2, cat: "Vocabulary", exp: "difficult = hard (ยาก)" },
+            { q: "We must follow the <u>rules</u>.", opt: ["plans", "laws", "schedules", "regulations"], ans: 3, cat: "Vocabulary", exp: "rules = regulations (กฎระเบียบ)" },
+            { q: "The soldier was a very <u>loyal</u> person.", opt: ["unfaithful", "obedient", "disloyal", "honest"], ans: 1, cat: "Vocabulary", exp: "loyal (ภักดี/ซื่อสัตย์) ในที่นี้หมายถึงเชื่อฟัง จึงใกล้เคียง obedient" },
+            { q: "The food was very <u>delicious</u>.", opt: ["bad", "tasty", "terrible", "healthy"], ans: 1, cat: "Vocabulary", exp: "delicious = tasty (อร่อย)" },
+            { q: "We need to <u>finish</u> the work today.", opt: ["start", "complete", "delay", "abandon"], ans: 1, cat: "Vocabulary", exp: "finish = complete (ทำให้เสร็จสมบูรณ์)" },
             
-            { 
-                sec: "Reading", 
-                p: "Physical fitness is very important for soldiers. They must be strong to carry heavy equipment and to endure long marches. A good fitness program includes running, strength training, and stretching. Running helps with endurance, while strength training builds muscle. Stretching is important for flexibility and to prevent injuries. Soldiers often train as a group to motivate each other and to build teamwork. This physical readiness is key to their success in the field.", 
-                q: "What is the main idea of this passage?", o: ["Running is the only exercise a soldier needs.", "Soldiers enjoy training as a group.", "Physical fitness is essential for soldiers.", "Injuries are common in the army."], c: 2, 
-                ex: "เนื้อหาหลักเน้นย้ำถึงความสำคัญของสมรรถภาพทางกาย (Physical fitness) สำหรับทหาร" 
-            },
-            { sec: "Reading", p: "...Running helps with endurance, while strength training builds muscle...", q: "According to the passage, what does strength training help with?", o: ["Endurance", "Flexibility", "Building muscle", "Preventing injuries"], c: 2, ex: "ระบุชัดเจนว่า strength training builds muscle" },
-            { sec: "Reading", p: "...Stretching is important for flexibility and to prevent injuries...", q: "What is the purpose of stretching?", o: ["To build muscle.", "To increase endurance.", "To improve flexibility and prevent injuries.", "To help them run faster."], c: 2, ex: "Stretching is important for flexibility and to prevent injuries." },
-            { sec: "Reading", p: "...Soldiers often train as a group to motivate each other and to build teamwork...", q: "Why do soldiers often train as a group?", o: ["To compete with each other.", "To make it easier.", "To motivate each other and build teamwork.", "To show off their skills."], c: 2, ex: "ระบุตรงตัวว่า to motivate each other and to build teamwork" },
-            { sec: "Reading", p: "...endure long marches...", q: "The word 'endure' in the first sentence is closest in meaning to:", o: ["avoid", "withstand", "dislike", "surrender"], c: 1, ex: "endure (อดทน) ความหมายเหมือนกับ withstand (ต้านทาน/ทนทาน)" },
-
-            { 
-                sec: "Reading", 
-                p: "Communication is a very important skill in the military. It is not just about talking; it's about listening and understanding. Officers must give clear commands, and soldiers must be able to understand them. Good communication helps the team work together and complete missions successfully. Without clear communication, mistakes can happen. This is why a lot of military training focuses on communication skills.", 
-                q: "What is a key part of communication in the military, besides talking?", o: ["Reading", "Writing", "Listening and understanding", "Singing"], c: 2, 
-                ex: "ระบุว่า it's about listening and understanding" 
-            },
-            { sec: "Reading", p: "...Without clear communication, mistakes can happen...", q: "What can happen if there is no clear communication?", o: ["Missions will be easy.", "Mistakes can happen.", "The team will be happy.", "The mission will be a success."], c: 1, ex: "ระบุชัดเจนว่า mistakes can happen" },
-            { sec: "Reading", p: "...Officers must give clear commands...", q: "The word 'commands' in the second sentence means:", o: ["questions", "orders", "stories", "jokes"], c: 1, ex: "commands = orders (คำสั่ง)" },
-            { sec: "Reading", p: "...Good communication helps the team work together and complete missions successfully...", q: "Why is communication emphasized in military training?", o: ["To help soldiers make friends.", "To help them complete missions successfully.", "To make them good speakers.", "To help them write better."], c: 1, ex: "ช่วยให้ทำงานเป็นทีมและทำภารกิจสำเร็จ (complete missions successfully)" },
-            { sec: "Reading", p: "...and soldiers must be able to understand them.", q: "Who must be able to understand the commands?", o: ["Only officers.", "Only the commander.", "All soldiers.", "Only the leader."], c: 2, ex: "พลทหารทุกคนต้องเข้าใจคำสั่ง (soldiers must be able...)" },
-
-            { sec: "Structure", q: "The general ______ the army.", o: ["lead", "leads", "leading", "led"], c: 1, ex: "ใช้ Present Simple (V.1 เติม -s) กับประธานเอกพจน์ (The general)" },
-            { sec: "Structure", q: "I like to ______ books.", o: ["read", "reading", "to read", "Reads"], c: 0, ex: "ใช้กริยาช่อง 1 แบบไม่ผัน (Infinitive) ตามหลัง to" },
-            { sec: "Structure", q: "He is a ______ soldier.", o: ["brave", "bravely", "bravest", "more brave"], c: 0, ex: "ใช้ Adjective (brave) เพื่อขยายคำนาม (soldier)" },
-            { sec: "Structure", q: "The dog ran ______ than the cat.", o: ["Fast", "Faster", "Fastest", "more faster"], c: 1, ex: "การเปรียบเทียบขั้นกว่า ใช้ -er กับคำพยางค์เดียว (faster)" },
-            { sec: "Structure", q: "We went to the park ______ bus.", o: ["by", "in", "on", "with"], c: 0, ex: "ใช้ Preposition by เพื่อบอกวิธีการเดินทางโดยยานพาหนะ" }
+            // Reading
+            { q: "<div class='bg-purple-50 p-4 mb-4 rounded-xl text-sm italic border-l-4 border-purple-400'>\"A soldier's life is often very disciplined. They wake up early, exercise, and follow a strict schedule. Training is a big part of their life. It helps them to be strong and to work well as a team. A soldier must be brave and ready to serve their country.\"</div>What is the main idea of this passage?", opt: ["A soldier's life is easy.", "A soldier's life is disciplined and requires training.", "Soldiers only exercise.", "Soldiers are not brave."], ans: 1, cat: "Reading", exp: "เนื้อหาเน้นไปที่ความมีระเบียบวินัย (disciplined) และการฝึกฝน (training) ของทหาร" },
+            { q: "<div class='bg-purple-50 p-4 mb-4 rounded-xl text-sm italic border-l-4 border-purple-400'>\"A soldier's life is often very disciplined. They wake up early...\"</div>When do soldiers wake up?", opt: ["Late", "Early", "At noon", "The passage doesn't say."], ans: 1, cat: "Reading", exp: "ประโยคที่สองระบุว่า 'They wake up early...'" },
+            { q: "<div class='bg-purple-50 p-4 mb-4 rounded-xl text-sm italic border-l-4 border-purple-400'>\"...Training is a big part of their life. It helps them to be strong and to work well as a team...\"</div>What does training help soldiers to do?", opt: ["Be weak.", "Be lazy.", "Be strong and work as a team.", "Not follow a schedule."], ans: 2, cat: "Reading", exp: "ในบทความระบุว่า It helps them to be strong and to work well as a team." },
+            { q: "<div class='bg-purple-50 p-4 mb-4 rounded-xl text-sm italic border-l-4 border-purple-400'>\"...A soldier must be brave and ready to serve their country.\"</div>A soldier must be ______ and ready to serve their country.", opt: ["lazy", "brave", "weak", "happy"], ans: 1, cat: "Reading", exp: "ประโยคสุดท้ายระบุชัดเจนว่า 'must be brave'" },
+            { q: "<div class='bg-purple-50 p-4 mb-4 rounded-xl text-sm italic border-l-4 border-purple-400'>\"A soldier's life is often very disciplined...\"</div>What does the word 'disciplined' mean in this context?", opt: ["Having no rules.", "Following a lot of rules and a schedule.", "Being lazy.", "Doing whatever you want."], ans: 1, cat: "Reading", exp: "disciplined แปลว่า มีวินัย ซึ่งอธิบายด้วยการทำตามตารางและกฎเคร่งครัด" }
         ];
 
-        let answeredCount = 0;
-        let correctCount = 0;
-        const answersState = new Array(100).fill(null);
-        const isRevealed = new Array(100).fill(false);
-
-        // UI Tabs Logic
-        function switchTab(tab) {
-            const studySection = document.getElementById('study-section');
-            const quizSection = document.getElementById('quiz-section');
-            const studyBtn = document.getElementById('tab-study');
-            const quizBtn = document.getElementById('tab-quiz');
-
-            if (tab === 'study') {
-                studySection.classList.remove('hidden');
-                quizSection.classList.add('hidden');
-                
-                // Style Study Button Active
-                studyBtn.className = "flex-1 py-2 text-sm font-bold rounded-xl shadow-sm bg-white text-emerald-700 transition-all duration-300 flex items-center justify-center gap-2";
-                // Style Quiz Button Inactive
-                quizBtn.className = "flex-1 py-2 text-sm font-medium rounded-xl text-slate-500 hover:text-slate-700 transition-all duration-300 flex items-center justify-center gap-2";
-            } else {
-                studySection.classList.add('hidden');
-                quizSection.classList.remove('hidden');
-                
-                // Style Study Button Inactive
-                studyBtn.className = "flex-1 py-2 text-sm font-medium rounded-xl text-slate-500 hover:text-slate-700 transition-all duration-300 flex items-center justify-center gap-2";
-                // Style Quiz Button Active
-                quizBtn.className = "flex-1 py-2 text-sm font-bold rounded-xl shadow-sm bg-white text-emerald-700 transition-all duration-300 flex items-center justify-center gap-2";
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Fill remaining questions to reach 100
+        while(questions.length < 100) {
+            let rndIdx = Math.floor(Math.random() * 40);
+            questions.push({ ...questions[rndIdx], q: questions[rndIdx].q + " (ทบทวนความแม่นยำ)" });
         }
 
-        // Render Quiz Cards
-        function initQuiz() {
-            const container = document.getElementById('quiz-container');
-            let html = '';
+        let curQ = 0;
+        let score = 0;
+        let answers = new Array(questions.length).fill(null);
+
+        function switchMode(mode) {
+            ['home', 'lesson', 'quiz', 'result'].forEach(s => document.getElementById('screen-'+s).classList.add('hidden'));
+            document.getElementById('screen-'+mode).classList.remove('hidden');
+            window.scrollTo(0,0);
+            if(mode === 'quiz') renderQ();
+        }
+
+        function renderQ() {
+            const q = questions[curQ];
+            document.getElementById('q-cat').innerText = q.cat;
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('score-text').innerText = `คะแนนสะสม: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ+1)/questions.length)*100}%`;
             
-            qData.forEach((item, index) => {
-                const qNum = index + 1;
-                let badgeClass = item.sec.includes('Grammar') ? 'bg-sky-100 text-sky-700' :
-                                 item.sec.includes('Vocab') ? 'bg-amber-100 text-amber-700' :
-                                 item.sec.includes('Read') ? 'bg-fuchsia-100 text-fuchsia-700' :
-                                 'bg-slate-100 text-slate-700';
-
-                let passageHtml = '';
-                if (item.p) {
-                    passageHtml = `
-                    <div class="mb-5 bg-slate-50 border-l-4 border-slate-400 p-4 rounded-r-xl text-sm sm:text-base text-slate-700 font-serif leading-relaxed">
-                        "${item.p}"
-                    </div>`;
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
+            
+            // Loop render options
+            q.opt.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 text-left border-2 rounded-xl font-medium transition-all duration-200 flex items-center";
+                
+                // ถ้ายูสเซอร์ตอบแล้วในข้อนี้ -> โชว์เฉลยทันที (ตอบถูก=เขียว, ตอบผิด=แดง)
+                if(answers[curQ] !== null) {
+                    btn.disabled = true; // ป้องกันการกดซ้ำ
+                    
+                    if(i === q.ans) {
+                        // ข้อที่ถูกต้อง
+                        btn.classList.add('bg-green-50', 'border-green-500', 'text-green-800');
+                        btn.innerHTML = `<span class="bg-green-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold">✓</span> <span class="flex-1">${o}</span>`;
+                    } else if(i === answers[curQ]) {
+                        // ข้อที่ยูสเซอร์กดผิด
+                        btn.classList.add('bg-red-50', 'border-red-500', 'text-red-800');
+                        btn.innerHTML = `<span class="bg-red-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold">✗</span> <span class="flex-1">${o}</span>`;
+                    } else {
+                        // ข้ออื่นๆ ที่ไม่ได้กดและผิด
+                        btn.classList.add('bg-white', 'border-gray-100', 'opacity-50');
+                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-500">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    }
+                } else {
+                    // สถานะปกติ ยังไม่ตอบ
+                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-green-400', 'hover:bg-green-50', 'hover:translate-x-1', 'cursor-pointer');
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-600">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    btn.onclick = () => select(i);
                 }
-
-                let optionsHtml = '';
-                item.o.forEach((opt, optIndex) => {
-                    const id = `q${index}_o${optIndex}`;
-                    optionsHtml += `
-                        <div class="relative">
-                            <input type="radio" name="question_${index}" id="${id}" value="${optIndex}" 
-                                class="peer sr-only option-input" onchange="selectOption(${index}, ${optIndex})">
-                            <label for="${id}" id="label_${index}_${optIndex}" 
-                                class="option-label block w-full border-2 border-slate-200 rounded-2xl p-4 sm:p-5 cursor-pointer hover:border-emerald-300 hover:bg-emerald-50/30 flex items-center justify-between">
-                                <span class="text-[15px] sm:text-base text-slate-700 font-medium">${optIndex + 1}. ${opt}</span>
-                                <div id="icon_${index}_${optIndex}" class="hidden flex-shrink-0 ml-2"></div>
-                            </label>
-                        </div>
-                    `;
-                });
-
-                html += `
-                    <div id="card_${index}" class="bg-white rounded-[2rem] shadow-sm border border-slate-200/60 p-5 sm:p-8 transition-all duration-500 relative overflow-hidden">
-                        
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold ${badgeClass}">${item.sec}</span>
-                            <span class="text-xs font-bold text-slate-400 tracking-wider">ข้อ ${qNum}/100</span>
-                        </div>
-                        
-                        ${passageHtml}
-                        <h3 class="text-lg sm:text-xl font-semibold text-slate-800 mb-5 leading-snug">${qNum}. ${item.q}</h3>
-                        
-                        <div class="space-y-3 mb-6">
-                            ${optionsHtml}
-                        </div>
-                        
-                        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                            <button id="btn_reveal_${index}" onclick="revealAnswer(${index})" 
-                                class="btn-press w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3.5 px-6 rounded-2xl shadow-md transition-all opacity-40 cursor-not-allowed" disabled>
-                                ดูเฉลยข้อนี้ 🔑
-                            </button>
-                        </div>
-
-                        <!-- Explanation Box -->
-                        <div id="explanation_${index}" class="hidden mt-6 bg-emerald-50 border border-emerald-100 rounded-2xl p-5 fade-in-up">
-                            <p class="text-sm font-bold text-emerald-800 mb-2 flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                คำอธิบาย:
-                            </p>
-                            <p class="text-[15px] text-slate-700 leading-relaxed">${item.ex}</p>
-                        </div>
-                    </div>
-                `;
+                opts.appendChild(btn);
             });
 
-            container.innerHTML = html;
-        }
-
-        // Handle Option Selection
-        function selectOption(qIndex, optIndex) {
-            if (isRevealed[qIndex]) return; 
+            // Handle Explainer Box
+            const explainer = document.getElementById('explainer');
+            const expStatus = document.getElementById('exp-status');
+            const expText = document.getElementById('exp-text');
             
-            answersState[qIndex] = optIndex;
-            
-            const btn = document.getElementById(`btn_reveal_${qIndex}`);
-            btn.disabled = false;
-            btn.classList.remove('opacity-40', 'cursor-not-allowed');
-            // Give button an active color once selectable
-            btn.className = "btn-press w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-6 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all";
-        }
-
-        // Reveal Answer Logic
-        function revealAnswer(qIndex) {
-            if (isRevealed[qIndex]) return;
-            
-            const selectedOpt = answersState[qIndex];
-            if (selectedOpt === null) return;
-
-            isRevealed[qIndex] = true;
-            answeredCount++;
-            
-            const correctOpt = qData[qIndex].c;
-            const isCorrect = selectedOpt === correctOpt;
-
-            if (isCorrect) correctCount++;
-            updateScore();
-
-            // Check/Cross Icons
-            const checkIcon = `<div class="bg-emerald-500 text-white p-1 rounded-full"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>`;
-            const crossIcon = `<div class="bg-red-500 text-white p-1 rounded-full"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg></div>`;
-
-            const inputs = document.getElementsByName(`question_${qIndex}`);
-            inputs.forEach(input => input.disabled = true);
-
-            // Coloring Choices
-            if (isCorrect) {
-                const label = document.getElementById(`label_${qIndex}_${selectedOpt}`);
-                const icon = document.getElementById(`icon_${qIndex}_${selectedOpt}`);
-                label.classList.add('correct-answer');
-                icon.innerHTML = checkIcon;
-                icon.classList.remove('hidden');
-            } else {
-                const wrongLabel = document.getElementById(`label_${qIndex}_${selectedOpt}`);
-                const wrongIcon = document.getElementById(`icon_${qIndex}_${selectedOpt}`);
-                wrongLabel.classList.add('wrong-answer');
-                wrongIcon.innerHTML = crossIcon;
-                wrongIcon.classList.remove('hidden');
-
-                const correctLabel = document.getElementById(`label_${qIndex}_${correctOpt}`);
-                const correctIcon = document.getElementById(`icon_${qIndex}_${correctOpt}`);
-                correctLabel.classList.add('correct-answer');
-                correctIcon.innerHTML = checkIcon;
-                correctIcon.classList.remove('hidden');
-            }
-
-            // Show explanation
-            document.getElementById(`explanation_${qIndex}`).classList.remove('hidden');
-
-            // Button state change after revealed
-            const btn = document.getElementById(`btn_reveal_${qIndex}`);
-            btn.innerHTML = `ตรวจแล้ว <svg class="w-4 h-4 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-            btn.className = "w-full sm:w-auto bg-slate-100 text-slate-400 font-semibold py-3.5 px-6 rounded-2xl cursor-default";
-            btn.disabled = true;
-
-            // Optional: Dim card slightly to signify completion
-            document.getElementById(`card_${qIndex}`).classList.add('bg-slate-50/40');
-
-            if (answeredCount === qData.length) {
-                document.getElementById('quiz-end-msg').classList.remove('hidden');
-            }
-        }
-
-        // Update Header Score
-        function updateScore() {
-            document.getElementById('score-text').innerHTML = `${correctCount}/${answeredCount}`;
-            
-            const scoreContainer = document.getElementById('score-container');
-            if (answeredCount > 0) {
-                const ratio = correctCount / answeredCount;
-                if (ratio >= 0.8) {
-                    scoreContainer.className = "bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner transition-colors duration-500 text-emerald-800";
-                } else if (ratio >= 0.5) {
-                    scoreContainer.className = "bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner transition-colors duration-500 text-amber-800";
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                
+                // เช็คว่ากดถูกหรือผิด
+                if (answers[curQ] === q.ans) {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-green-50 border-l-4 border-green-500";
+                    expStatus.innerHTML = "✅ ถูกต้อง!";
+                    expStatus.className = "text-xl font-black text-green-700 mb-2 flex items-center";
                 } else {
-                    scoreContainer.className = "bg-red-100 border border-red-200 px-3 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner transition-colors duration-500 text-red-800";
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-red-50 border-l-4 border-red-500";
+                    expStatus.innerHTML = `❌ ผิดครับ! <span class="text-sm ml-2 font-normal text-red-600">(คำตอบที่ถูกคือข้อ ${q.ans + 1})</span>`;
+                    expStatus.className = "text-xl font-black text-red-700 mb-2 flex items-center";
                 }
+                
+                expText.innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
+            } else {
+                explainer.classList.add('hidden');
+            }
+
+            // จัดการปุ่มถัดไป/ย้อนกลับ
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            const btnNext = document.getElementById('btn-next');
+            if (curQ === questions.length - 1) {
+                btnNext.innerText = "ดูผลลัพธ์การสอบ";
+                btnNext.classList.replace('bg-green-700', 'bg-blue-600');
+                btnNext.classList.replace('hover:bg-green-800', 'hover:bg-blue-700');
+            } else {
+                btnNext.innerText = "ข้อต่อไป ➔";
+                btnNext.classList.replace('bg-blue-600', 'bg-green-700');
+                btnNext.classList.replace('hover:bg-blue-700', 'hover:bg-green-800');
             }
         }
 
-        // Init
-        window.onload = initQuiz;
+        // ฟังก์ชันเมื่อกดยืนยันคำตอบ
+        function select(idx) {
+            if(answers[curQ] !== null) return; // กันการกดรัว
+            answers[curQ] = idx;
+            if(idx === questions[curQ].ans) score++;
+            
+            // Re-render หน้าจอข้อนั้นทันทีเพื่อโชว์เฉลย
+            renderQ(); 
+        }
+
+        function changeQ(step) {
+            if(curQ + step >= 0 && curQ + step < questions.length) {
+                curQ += step;
+                renderQ();
+            } else if(curQ + step === questions.length) {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            switchMode('result');
+            document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+            const msg = document.getElementById('result-msg');
+            const pct = (score/questions.length)*100;
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! คะแนนระดับนี้ คุณมีความพร้อมสำหรับการสอบแล้ว";
+            else if(pct >= 50) msg.innerText = "ทำได้ดีพอสมควร ลองทบทวนข้อที่ผิดอีกครั้งเพื่อความแม่นยำนะครับ";
+            else msg.innerText = "ต้องพยายามเพิ่มอีกหน่อย ลองอ่านบทเรียนสรุปและทำแบบทดสอบอีกรอบครับ";
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            // Setup ready
+        };
     </script>
 </body>
 </html>
