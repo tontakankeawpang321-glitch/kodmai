@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - วิชาคอมพิวเตอร์</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            900: '#0f172a', /* Slate 900 / Dark background */
+                            800: '#1e293b', /* Slate 800 */
+                            700: '#334155', /* Slate 700 */
+                            600: '#475569', /* Slate 600 */
+                            50: '#f8fafc',  /* Slate 50 */
+                        },
+                        accent: {
+                            500: '#0ea5e9', /* Sky 500 / Cyber Blue */
+                            400: '#38bdf8', /* Sky 400 */
+                            300: '#7dd3fc', /* Sky 300 */
+                            100: '#e0f2fe', /* Sky 100 */
+                            50: '#f0f9ff',  /* Sky 50 */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f1f5f9; }
+        .cyber-gradient { background: linear-gradient(135deg, #0f172a 0%, #0369a1 100%); }
+        .content-wrap { overflow-x: auto; padding-bottom: 0.5rem; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .hover-lift { transition: all 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.3); border-color: #0ea5e9; }
+        /* Custom Scrollbar for options */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="min-h-screen pb-10 text-slate-800 font-sans">
+
+    <!-- Navigation Bar -->
+    <nav class="cyber-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent-500">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
+                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
+                    <i class="fa-solid fa-microchip text-accent-400 text-xl md:text-2xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-accent-400 uppercase">Police Tech Academy</span>
+                    <span class="text-[10px] md:text-xs text-gray-300 font-medium">ติวสอบ นายสิบตำรวจ วิชาคอมพิวเตอร์</span>
+                </div>
+            </div>
+            <div class="flex space-x-2 items-center">
+                <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
+                <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-accent-500 hover:bg-accent-400 text-white rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 mt-2">
+        
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+                <div class="relative cyber-gradient p-10 md:p-14 text-center text-white overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-accent-500/20 text-accent-400 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-accent-500/30">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white drop-shadow-md">ติวเข้มวิชาคอมพิวเตอร์</h1>
+                        <h2 class="text-xl md:text-2xl font-bold text-accent-400 mb-6 drop-shadow-sm">นายสิบตำรวจ (สายอำนวยการ/ปราบปราม)</h2>
+                        <p class="text-gray-200 max-w-lg mx-auto font-medium">แบบทดสอบอัปเดตใหม่ <span class="font-bold text-accent-400">100</span> ข้อ ครอบคลุมทุกเนื้อหาการสอบ</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
+                    <div class="bg-white p-8 border-2 border-slate-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
+                        <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-cyber-700 text-3xl mb-5 group-hover:bg-cyber-800 group-hover:text-accent-400 transition-colors">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-cyber-900 mb-2">สรุปเนื้อหาสำคัญ</h3>
+                        <p class="text-slate-500 text-sm">ฮาร์ดแวร์ ซอฟต์แวร์ เครือข่าย และความปลอดภัยทางไซเบอร์ที่ออกสอบบ่อย</p>
+                    </div>
+                    <div class="bg-white p-8 border-2 border-slate-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
+                        <div class="w-16 h-16 bg-accent-50 rounded-2xl flex items-center justify-center text-accent-500 text-3xl mb-5 group-hover:bg-accent-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-keyboard"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-cyber-900 mb-2">เริ่มทำแบบทดสอบ</h3>
+                        <p class="text-slate-500 text-sm">จำลองการสอบจริง 100 ข้อ รู้ผลทันทีพร้อมเฉลยอธิบายละเอียด</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-center sticky top-[72px] z-40">
+                <h2 class="text-xl font-bold text-cyber-900"><i class="fa-solid fa-book mr-2 text-accent-500"></i> สรุปเนื้อหาคอมพิวเตอร์เบื้องต้น</h2>
+                <button onclick="switchMode('quiz')" class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-bold text-sm transition">ไปทำข้อสอบ</button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-cyber-800">
+                    <h3 class="font-bold text-cyber-800 mb-3 text-lg"><i class="fa-solid fa-server mr-2"></i> 1. ฮาร์ดแวร์ (Hardware) และซอฟต์แวร์ (Software)</h3>
+                    <div class="content-wrap text-sm md:text-base space-y-2 text-slate-700">
+                        <p>• <b>CPU (Central Processing Unit):</b> หน่วยประมวลผลกลาง เปรียบเสมือนสมองของคอมพิวเตอร์ มีหน้าที่คำนวณและประมวลผลคำสั่ง</p>
+                        <p>• <b>RAM (Random Access Memory):</b> หน่วยความจำหลักแบบชั่วคราว ข้อมูลจะหายไปเมื่อปิดเครื่อง (Volatile Memory)</p>
+                        <p>• <b>ROM (Read Only Memory):</b> หน่วยความจำหลักแบบถาวร อ่านได้อย่างเดียว ข้อมูลไม่หายเมื่อไฟดับ มักเก็บ BIOS</p>
+                        <p>• <b>หน่วยความจุ:</b> 1 Byte = 8 bits, 1 KB = 1024 Bytes, 1 MB = 1024 KB, 1 GB = 1024 MB</p>
+                        <p>• <b>Software:</b> แบ่งเป็น 1. ซอฟต์แวร์ระบบ (OS เช่น Windows, Linux, iOS) 2. ซอฟต์แวร์ประยุกต์ (โปรแกรมใช้งาน เช่น Word, Excel, Line)</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-accent-500">
+                    <h3 class="font-bold text-cyber-800 mb-3 text-lg"><i class="fa-solid fa-network-wired mr-2"></i> 2. ระบบเครือข่ายและอินเทอร์เน็ต (Network & Internet)</h3>
+                    <div class="content-wrap text-sm md:text-base space-y-2 text-slate-700">
+                        <p>• <b>LAN (Local Area Network):</b> เครือข่ายระยะใกล้ เช่น ภายในตึก ห้องเรียนสำนักงานเดียวกัน</p>
+                        <p>• <b>WAN (Wide Area Network):</b> เครือข่ายระยะไกลระดับประเทศหรือทั่วโลก (อินเทอร์เน็ตคือ WAN ชนิดหนึ่ง)</p>
+                        <p>• <b>IP Address:</b> หมายเลขประจำเครื่องคอมพิวเตอร์ในระบบเครือข่าย เปรียบเสมือนบ้านเลขที่</p>
+                        <p>• <b>DNS (Domain Name System):</b> ระบบแปลงชื่อเว็บไซต์ (Domain) ให้เป็น IP Address เพื่อให้มนุษย์จำง่ายขึ้น</p>
+                        <p>• <b>HTTP vs HTTPS:</b> HTTPS มีตัว 'S' (Secure) หมายถึงมีการเข้ารหัสข้อมูล ปลอดภัยกว่า HTTP ธรรมดา</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-500">
+                    <h3 class="font-bold text-cyber-800 mb-3 text-lg"><i class="fa-solid fa-shield-halved mr-2"></i> 3. โปรแกรมสำนักงานและความปลอดภัยทางไซเบอร์</h3>
+                    <div class="content-wrap text-sm md:text-base space-y-2 text-slate-700">
+                        <p>• <b>MS Word:</b> นามสกุล .docx | คีย์ลัด: Ctrl+C (Copy), Ctrl+V (Paste), Ctrl+Z (Undo), Ctrl+P (Print)</p>
+                        <p>• <b>MS Excel:</b> นามสกุล .xlsx | ฟังก์ชัน: SUM (หาผลรวม), AVERAGE (หาค่าเฉลี่ย), MAX (ค่าสูงสุด), MIN (ค่าต่ำสุด)</p>
+                        <p>• <b>Malware:</b> คำเรียกซอฟต์แวร์ประสงค์ร้ายทุกชนิด (ไวรัส, โทรจัน, สปายแวร์)</p>
+                        <p>• <b>Phishing:</b> การหลอกลวงทางอินเทอร์เน็ต มักส่งลิงก์ปลอมให้กรอกรหัสผ่านหรือข้อมูลบัตรเครดิต</p>
+                        <p>• <b>Ransomware (มัลแวร์เรียกค่าไถ่):</b> ไวรัสที่ทำการเข้ารหัสไฟล์ในเครื่อง แล้วเรียกร้องเงินเพื่อปลดล็อค</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
+            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
+                <div class="w-full md:w-2/3">
+                    <div class="flex justify-between items-end mb-2">
+                        <span id="quiz-status" class="text-sm font-bold text-cyber-700">ข้อที่ 1/100</span>
+                        <span id="score-text" class="text-sm font-bold text-accent-600">คะแนน: 0</span>
+                    </div>
+                    <div class="bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-accent-500 h-2.5 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(14,165,233,0.5)]" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-slate-200">
+                <div>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-slate-800 leading-relaxed mb-8 content-wrap">คำถาม</h3>
+                    <div id="options" class="space-y-3"></div>
+                </div>
+
+                <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
+                    <p id="exp-status" class="text-lg font-black mb-2"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-slate-700 content-wrap"></p>
+                </div>
+
+                <div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-slate-500 font-bold px-5 py-2.5 rounded-xl hover:bg-slate-100 disabled:opacity-30 transition"><i class="fa-solid fa-chevron-left mr-1"></i> ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="cyber-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5 transition">ถัดไป <i class="fa-solid fa-chevron-right ml-1"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-accent-500 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 text-slate-100 text-9xl z-0 opacity-50"><i class="fa-solid fa-ranking-star"></i></div>
+                <div class="relative z-10">
+                    <div class="w-24 h-24 bg-accent-50 text-accent-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-accent-100">
+                        <i class="fa-solid fa-trophy text-5xl drop-shadow-sm"></i>
+                    </div>
+                    <h2 class="text-3xl font-black text-cyber-900 mb-2">สรุปผลการสอบ</h2>
+                    <p class="text-slate-500 font-medium mb-2">วิชาคอมพิวเตอร์และเทคโนโลยีสารสนเทศ</p>
+                    <div class="text-7xl font-black text-accent-500 my-6 drop-shadow-md" id="final-score">0/100</div>
+                    <p id="result-msg" class="text-cyber-700 mb-8 font-bold text-lg bg-slate-50 py-3 rounded-lg border border-slate-100">ทำได้ดีมาก!</p>
+                    <div class="flex flex-col space-y-3">
+                        <button onclick="switchMode('quiz')" class="cyber-gradient text-white py-4 rounded-xl font-bold text-lg hover-lift shadow-lg">ทำข้อสอบใหม่อีกครั้ง</button>
+                        <button onclick="switchMode('home')" class="bg-white text-slate-600 border-2 border-slate-200 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition">กลับหน้าหลัก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ข้อมูลข้อสอบวิชาคอมพิวเตอร์ จำนวน 100 ข้อ
+        const computerData = [
+            // Part 1: Hardware & Basic Concepts (1-15)
+            { q: "อุปกรณ์ใดทำหน้าที่เปรียบเสมือน 'สมอง' ของคอมพิวเตอร์?", opt: ["RAM", "Hard Disk", "CPU", "Motherboard"], ans: 2, exp: "CPU (Central Processing Unit) ทำหน้าที่ประมวลผลข้อมูลและควบคุมการทำงาน เปรียบเหมือนสมองของคอมพิวเตอร์" },
+            { q: "หน่วยความจำประเภทใดที่ข้อมูลจะสูญหายทันทีเมื่อปิดเครื่อง (Volatile Memory)?", opt: ["ROM", "RAM", "Flash Drive", "Hard Disk"], ans: 1, exp: "RAM (Random Access Memory) เป็นหน่วยความจำหลักแบบชั่วคราว ต้องมีกระแสไฟฟ้าหล่อเลี้ยง ข้อมูลจะหายไปเมื่อไฟดับหรือปิดเครื่อง" },
+            { q: "ข้อใดคือหน่วยความจำหลักแบบอ่านได้อย่างเดียว ข้อมูลไม่สูญหายเมื่อไฟดับ?", opt: ["RAM", "ROM", "SSD", "Cache"], ans: 1, exp: "ROM (Read Only Memory) เป็นหน่วยความจำถาวรที่มาจากโรงงาน ใช้เก็บโปรแกรมที่สำคัญเช่น BIOS" },
+            { q: "หน่วยที่เล็กที่สุดของข้อมูลในระบบคอมพิวเตอร์คือข้อใด?", opt: ["Bit", "Byte", "Kilobyte", "Record"], ans: 0, exp: "Bit (บิต) ย่อมาจาก Binary Digit เป็นหน่วยข้อมูลที่เล็กที่สุด มีค่าเป็น 0 หรือ 1 เท่านั้น (8 Bit = 1 Byte)" },
+            { q: "ความจุ 1 Gigabyte (GB) มีค่าเท่ากับข้อใด?", opt: ["1000 Megabytes", "1024 Megabytes", "1024 Kilobytes", "1000 Kilobytes"], ans: 1, exp: "1 GB = 1024 MB (ตามหลักเลขฐานสองของคอมพิวเตอร์)" },
+            { q: "อุปกรณ์ใดจัดเป็นอุปกรณ์รับข้อมูล (Input Unit) ทั้งหมด?", opt: ["Keyboard, Mouse, Scanner", "Monitor, Printer, Speaker", "Mouse, Monitor, CPU", "Scanner, Printer, Keyboard"], ans: 0, exp: "คีย์บอร์ด เมาส์ และสแกนเนอร์ ทำหน้าที่นำข้อมูลเข้าสู่เครื่องคอมพิวเตอร์ (Input)" },
+            { q: "ข้อใดคืออุปกรณ์แสดงผล (Output Unit) แบบ Hard Copy?", opt: ["Monitor (จอภาพ)", "Speaker (ลำโพง)", "Projector (เครื่องฉายภาพ)", "Printer (เครื่องพิมพ์)"], ans: 3, exp: "Printer แสดงผลออกมาในรูปแบบกระดาษหรือสิ่งที่จับต้องได้ เรียกว่า Hard copy ส่วนจอภาพเรียก Soft copy" },
+            { q: "อุปกรณ์ชิ้นใดบนเมนบอร์ดที่ใช้เก็บค่าเวลาของระบบและตั้งค่า BIOS พื้นฐาน?", opt: ["CPU", "CMOS Battery", "RAM", "Power Supply"], ans: 1, exp: "ถ่าน CMOS ทำหน้าที่จ่ายไฟเลี้ยงเพื่อให้เมนบอร์ดจำค่าเวลาและค่าพื้นฐานของ BIOS ได้แม้จะถอดปลั๊ก" },
+            { q: "การประมวลผลของคอมพิวเตอร์มีลำดับขั้นตอนตามข้อใด?", opt: ["Output -> Process -> Input", "Input -> Process -> Output", "Process -> Input -> Output", "Input -> Output -> Process"], ans: 1, exp: "วงจรการทำงานพื้นฐานของคอมพิวเตอร์ (IPO Cycle) คือ รับข้อมูล (Input) -> ประมวลผล (Process) -> แสดงผล (Output)" },
+            { q: "พอร์ต (Port) แบบใดที่นิยมใช้เชื่อมต่อแฟลชไดรฟ์ เมาส์ และคีย์บอร์ดในปัจจุบันมากที่สุด?", opt: ["VGA", "HDMI", "USB", "PS/2"], ans: 2, exp: "USB (Universal Serial Bus) เป็นพอร์ตมาตรฐานสากลที่ใช้เชื่อมต่ออุปกรณ์ต่อพ่วงหลากหลายชนิด" },
+            { q: "จอภาพแบบใดที่มีลักษณะบาง น้ำหนักเบา และประหยัดพลังงานมากที่สุดในปัจจุบัน?", opt: ["CRT", "LCD", "LED", "Plasma"], ans: 2, exp: "จอ LED พัฒนาต่อจาก LCD โดยใช้หลอดไฟ LED ให้แสงสว่าง ทำให้ภาพคมชัดขึ้น บางลง และประหยัดไฟมากกว่า" },
+            { q: "ฮาร์ดดิสก์แบบใดที่ไม่มีชิ้นส่วนกลไกเคลื่อนไหว ทำให้ทำงานได้เร็วและทนทานต่อแรงกระแทก?", opt: ["HDD", "SSD", "FDD", "CD-ROM"], ans: 1, exp: "SSD (Solid State Drive) ใช้ชิปหน่วยความจำ Flash ในการเก็บข้อมูล ไม่มีจานหมุน จึงอ่านเขียนข้อมูลได้เร็วกว่า HDD มาก" },
+            { q: "Motherboard (เมนบอร์ด) ทำหน้าที่อะไร?", opt: ["จ่ายไฟให้ระบบ", "ประมวลผลกราฟิก", "เป็นศูนย์กลางเชื่อมต่ออุปกรณ์ทุกชิ้น", "ป้องกันไวรัส"], ans: 2, exp: "เมนบอร์ดหรือแผงวงจรหลัก ทำหน้าที่เป็นโครงข่ายเชื่อมต่อและควบคุมการทำงานของอุปกรณ์คอมพิวเตอร์ทั้งหมด" },
+            { q: "อุปกรณ์ใดใช้สำหรับแปลงสัญญาณดิจิทัลเป็นอนาล็อก และอนาล็อกเป็นดิจิทัล เพื่อเชื่อมต่ออินเทอร์เน็ตผ่านสายโทรศัพท์?", opt: ["Switch", "Router", "Modem", "Hub"], ans: 2, exp: "Modem ย่อมาจาก Modulator-Demodulator ทำหน้าที่แปลงสัญญาณข้อมูลเพื่อส่งผ่านสายโทรศัพท์" },
+            { q: "รหัสมาตรฐานที่ใช้แทนตัวอักษรและสัญลักษณ์ในคอมพิวเตอร์คือข้อใด?", opt: ["HTTP", "HTML", "ASCII", "TCP"], ans: 2, exp: "ASCII (American Standard Code for Information Interchange) คือรหัสมาตรฐานที่ใช้แทนตัวอักขระในคอมพิวเตอร์" },
+
+            // Part 2: Software & Operating Systems (16-30)
+            { q: "ซอฟต์แวร์แบ่งออกเป็นกี่ประเภทหลัก อะไรบ้าง?", opt: ["2 ประเภท: ซอฟต์แวร์ระบบ และ ซอฟต์แวร์ประยุกต์", "2 ประเภท: ซอฟต์แวร์แชร์แวร์ และ ฟรีแวร์", "3 ประเภท: ระบบปฏิบัติการ, โปรแกรม, แอปพลิเคชัน", "3 ประเภท: Windows, Mac, Linux"], ans: 0, exp: "ซอฟต์แวร์แบ่งเป็น 2 ประเภทใหญ่ๆ คือ System Software (ควบคุมเครื่อง) และ Application Software (ใช้งานเฉพาะด้าน)" },
+            { q: "ข้อใดจัดเป็นซอฟต์แวร์ระบบ (System Software)?", opt: ["Microsoft Word", "Adobe Photoshop", "Microsoft Windows", "Google Chrome"], ans: 2, exp: "Microsoft Windows เป็นระบบปฏิบัติการ (OS) ซึ่งจัดอยู่ในหมวดซอฟต์แวร์ระบบ ทำหน้าที่ควบคุมฮาร์ดแวร์" },
+            { q: "โปรแกรมใดจัดเป็นโปรแกรมประยุกต์ (Application Software)?", opt: ["Linux", "Android", "Microsoft Excel", "iOS"], ans: 2, exp: "Microsoft Excel เป็นโปรแกรมประยุกต์ที่สร้างขึ้นมาเพื่อทำงานด้านตารางคำนวณ ส่วนข้ออื่นเป็นระบบปฏิบัติการ" },
+            { q: "ระบบปฏิบัติการใดที่พัฒนาแบบรหัสเปิด (Open Source) ซึ่งอนุญาตให้ผู้อื่นนำไปพัฒนาต่อได้ฟรี?", opt: ["Windows", "macOS", "Linux", "iOS"], ans: 2, exp: "Linux เป็นระบบปฏิบัติการแบบ Open Source ที่แจกจ่ายให้ใช้งานและปรับปรุงแก้ไขซอร์สโค้ดได้ฟรี" },
+            { q: "ระบบปฏิบัติการยอดนิยมสำหรับสมาร์ทโฟนของบริษัท Google คืออะไร?", opt: ["Symbian", "Android", "iOS", "Windows Mobile"], ans: 1, exp: "Android เป็นระบบปฏิบัติการสำหรับอุปกรณ์พกพาที่พัฒนาโดย Google" },
+            { q: "ซอฟต์แวร์ที่ให้ทดลองใช้งานก่อน หากพอใจจึงค่อยจ่ายเงินซื้อ เรียกว่าอะไร?", opt: ["Freeware", "Shareware", "Open Source", "Firmware"], ans: 1, exp: "Shareware คือซอฟต์แวร์ที่ให้ทดลองใช้ฟรีในระยะเวลาหรือฟังก์ชันที่จำกัด หากต้องการใช้เต็มรูปแบบต้องเสียเงิน" },
+            { q: "ซอฟต์แวร์ที่แจกให้ใช้งานฟรีโดยไม่ต้องเสียค่าใช้จ่าย เรียกว่าอะไร?", opt: ["Freeware", "Shareware", "Commercial Software", "Malware"], ans: 0, exp: "Freeware คือซอฟต์แวร์ที่ผู้สร้างเปิดให้ดาวน์โหลดและนำไปใช้งานได้ฟรี" },
+            { q: "โปรแกรมแปลภาษาคอมพิวเตอร์ที่แปลคำสั่งทั้งโปรแกรมรวดเดียวคือข้อใด?", opt: ["Compiler", "Interpreter", "Assembler", "Browser"], ans: 0, exp: "Compiler ทำหน้าที่แปล Source Code ทั้งหมดให้เป็นภาษาเครื่องในครั้งเดียว หากมีข้อผิดพลาดจะแจ้งทีหลัง" },
+            { q: "ข้อใดคือระบบปฏิบัติการของบริษัท Apple ที่ใช้กับเครื่องคอมพิวเตอร์ Mac?", opt: ["iOS", "macOS", "Safari", "Linux"], ans: 1, exp: "macOS คือระบบปฏิบัติการสำหรับคอมพิวเตอร์ของ Apple ส่วน iOS ใช้สำหรับ iPhone" },
+            { q: "โปรแกรมอรรถประโยชน์ (Utility Program) มีหน้าที่อะไร?", opt: ["พิมพ์เอกสารและคำนวณ", "ตกแต่งรูปภาพ", "ดูแลรักษาและเพิ่มประสิทธิภาพให้เครื่องคอมพิวเตอร์", "เชื่อมต่ออินเทอร์เน็ต"], ans: 2, exp: "Utility Program เป็นโปรแกรมเสริมที่ช่วยจัดการ ดูแล และบำรุงรักษาระบบคอมพิวเตอร์ เช่น โปรแกรมสแกนดิสก์ โปรแกรมบีบอัดไฟล์" },
+            { q: "หากต้องการบีบอัดไฟล์ให้มีขนาดเล็กลง ควรใช้โปรแกรมใด?", opt: ["Acrobat Reader", "WinRAR", "Notepad", "VLC Media Player"], ans: 1, exp: "WinRAR และ WinZip เป็นโปรแกรมประเภท Utility สำหรับบีบอัดไฟล์ (File Compression)" },
+            { q: "GUI (Graphical User Interface) หมายถึงข้อใด?", opt: ["การติดต่อกับผู้ใช้ด้วยการพิมพ์คำสั่ง", "การติดต่อกับผู้ใช้ด้วยภาพกราฟิก ไอคอน และเมาส์", "ระบบเครือข่ายความเร็วสูง", "ภาษาคอมพิวเตอร์ชนิดหนึ่ง"], ans: 1, exp: "GUI คือรูปแบบการโต้ตอบกับผู้ใช้งานโดยใช้รูปภาพ ไอคอน และหน้าต่าง เพื่อความสะดวกในการใช้งาน" },
+            { q: "Driver ในระบบคอมพิวเตอร์หมายถึงอะไร?", opt: ["คนขับรถส่งคอมพิวเตอร์", "อุปกรณ์จัดเก็บข้อมูล", "โปรแกรมที่ทำให้ระบบปฏิบัติการรู้จักและสั่งงานฮาร์ดแวร์ได้", "แผ่นซีดีที่แถมมากับเครื่อง"], ans: 2, exp: "Device Driver คือซอฟต์แวร์ที่ทำหน้าที่เป็นตัวกลางให้ระบบปฏิบัติการสามารถสื่อสารและสั่งงานอุปกรณ์ฮาร์ดแวร์ต่างๆ ได้ถูกต้อง" },
+            { q: "การรีบูต (Reboot) เครื่องคอมพิวเตอร์โดยการกดปุ่ม Ctrl + Alt + Delete พร้อมกัน เรียกว่าอะไร?", opt: ["Cold Boot", "Warm Boot", "Safe Mode", "Hibernation"], ans: 1, exp: "Warm Boot คือการรีสตาร์ทเครื่องขณะที่เครื่องยังเปิดอยู่โดยใช้ปุ่มบนคีย์บอร์ดหรือซอฟต์แวร์ (Cold Boot คือการกดปุ่ม Power ตอนเครื่องปิด)" },
+            { q: "โปรแกรมสำหรับดูเว็บไซต์บนอินเทอร์เน็ต เรียกว่าอะไร?", opt: ["Web Server", "Search Engine", "Web Browser", "Social Media"], ans: 2, exp: "Web Browser คือโปรแกรมที่ใช้เปิดดูข้อมูลบนหน้าเว็บ เช่น Google Chrome, Microsoft Edge, Safari" },
+
+            // Part 3: Network & Internet (31-50)
+            { q: "เครือข่ายคอมพิวเตอร์ที่ครอบคลุมพื้นที่ระยะใกล้ เช่น ภายในอาคารสำนักงาน เรียกว่าอะไร?", opt: ["LAN", "MAN", "WAN", "PAN"], ans: 0, exp: "LAN (Local Area Network) คือเครือข่ายระยะใกล้เชื่อมต่อคอมพิวเตอร์ในพื้นที่เดียวกัน" },
+            { q: "เครือข่ายอินเทอร์เน็ตจัดเป็นเครือข่ายประเภทใด?", opt: ["LAN", "MAN", "WAN", "CAN"], ans: 2, exp: "WAN (Wide Area Network) เป็นเครือข่ายระยะไกลระดับประเทศหรือทั่วโลก ซึ่งอินเทอร์เน็ตคือ WAN ที่ใหญ่ที่สุด" },
+            { q: "อุปกรณ์ใดทำหน้าที่เลือกเส้นทางและส่งข้อมูลข้ามเครือข่ายอินเทอร์เน็ต?", opt: ["Switch", "Hub", "Router", "Modem"], ans: 2, exp: "Router ทำหน้าที่หาเส้นทางที่เหมาะสมที่สุดในการส่ง Packet ข้อมูลระหว่างเครือข่ายที่ต่างกัน" },
+            { q: "ข้อใดคือหมายเลขประจำเครื่องคอมพิวเตอร์ที่เชื่อมต่ออยู่ในระบบเครือข่าย?", opt: ["MAC Address", "IP Address", "URL", "DNS"], ans: 1, exp: "IP Address เปรียบเสมือนบ้านเลขที่ของคอมพิวเตอร์หรืออุปกรณ์ในเครือข่าย เพื่อให้ส่งข้อมูลหากันได้ถูกต้อง" },
+            { q: "DNS (Domain Name System) มีหน้าที่ทำอะไร?", opt: ["ป้องกันไวรัส", "แจก IP ให้เครื่องในวง LAN", "แปลงชื่อเว็บไซต์ (Domain) ให้เป็น IP Address", "เข้ารหัสข้อมูลเพื่อความปลอดภัย"], ans: 2, exp: "คอมพิวเตอร์สื่อสารด้วย IP (ตัวเลข) แต่คนจำชื่อโดเมน (ตัวอักษร) DNS จึงทำหน้าที่แปลงชื่อโดเมนเป็น IP" },
+            { q: "ข้อใดคือรูปแบบการเชื่อมต่อเครือข่าย (Topology) ที่หากสายเคเบิลหลักขาด ระบบจะล่มทั้งหมด?", opt: ["Star Topology", "Ring Topology", "Bus Topology", "Mesh Topology"], ans: 2, exp: "Bus Topology ใช้สายเคเบิลเส้นหลัก (Backbone) เส้นเดียว หากสายนี้ขาด เครือข่ายจะทำงานไม่ได้เลย" },
+            { q: "โครงสร้างเครือข่ายแบบใดที่นิยมใช้ในบ้านและสำนักงานปัจจุบันมากที่สุด โดยมี Switch หรือ Hub เป็นศูนย์กลาง?", opt: ["Star Topology", "Ring Topology", "Bus Topology", "Mesh Topology"], ans: 0, exp: "Star Topology เป็นแบบดาว มีอุปกรณ์สวิตช์อยู่ตรงกลาง หากสายของเครื่องใดขาด เครื่องอื่นยังทำงานได้ปกติ" },
+            { q: "โปรโตคอล (Protocol) มาตรฐานที่ใช้ในการรับส่งข้อมูลบนอินเทอร์เน็ตคือข้อใด?", opt: ["FTP", "TCP/IP", "HTTP", "SMTP"], ans: 1, exp: "TCP/IP (Transmission Control Protocol/Internet Protocol) เป็นโปรโตคอลหลักที่เป็นมาตรฐานของอินเทอร์เน็ต" },
+            { q: "โปรโตคอลใดใช้สำหรับให้บริการเว็บไซต์ (World Wide Web)?", opt: ["FTP", "SMTP", "HTTP", "POP3"], ans: 2, exp: "HTTP (Hypertext Transfer Protocol) ใช้สำหรับเรียกดูข้อมูลและแสดงผลหน้าเว็บเพจ" },
+            { q: "HTTPS ต่างจาก HTTP อย่างไร?", opt: ["HTTPS เร็วกว่า", "HTTPS มีการเข้ารหัสข้อมูลเพื่อความปลอดภัย", "HTTPS โหลดรูปภาพได้ดีกว่า", "HTTPS ใช้ได้เฉพาะมือถือ"], ans: 1, exp: "ตัว S ย่อมาจาก Secure หมายถึงมีการเข้ารหัสข้อมูล (SSL/TLS) ป้องกันการถูกดักจับข้อมูลระหว่างทาง เหมาะกับเว็บทำธุรกรรมการเงิน" },
+            { q: "URL (Uniform Resource Locator) หมายถึงอะไร?", opt: ["ชื่อของโปรโตคอล", "ที่อยู่ของเว็บไซต์บนอินเทอร์เน็ต", "รหัสผ่านในการเข้าเว็บ", "โปรแกรมสำหรับเปิดเว็บ"], ans: 1, exp: "URL คือที่อยู่แบบเต็มของทรัพยากรบนอินเทอร์เน็ต เช่น https://www.google.com" },
+            { q: "การดาวน์โหลด (Download) หมายถึงอะไร?", opt: ["การส่งข้อมูลจากเครื่องเราไปอินเทอร์เน็ต", "การเปิดดูวิดีโอบนยูทูป", "การรับหรือสำเนาข้อมูลจากอินเทอร์เน็ตมาเก็บไว้ในเครื่อง", "การลบข้อมูลทิ้ง"], ans: 2, exp: "Download คือการดึงข้อมูลจาก Server มาเก็บไว้ที่เครื่อง Client ส่วนการส่งข้อมูลขึ้นไปเรียกว่า Upload" },
+            { q: "โปรโตคอลใดใช้สำหรับการส่งจดหมายอิเล็กทรอนิกส์ (E-mail)?", opt: ["HTTP", "FTP", "SMTP", "DHCP"], ans: 2, exp: "SMTP (Simple Mail Transfer Protocol) ใช้สำหรับ 'ส่ง' อีเมล ส่วน POP3/IMAP ใช้สำหรับ 'รับ' อีเมล" },
+            { q: "Wi-Fi เป็นเทคโนโลยีเครือข่ายไร้สายที่ทำงานตามมาตรฐานใดของ IEEE?", opt: ["IEEE 802.3", "IEEE 802.11", "IEEE 802.15", "IEEE 802.16"], ans: 1, exp: "มาตรฐาน IEEE 802.11 คือมาตรฐานของเครือข่ายไร้สาย (WLAN) หรือที่รู้จักกันในชื่อ Wi-Fi" },
+            { q: "WWW ย่อมาจากอะไร?", opt: ["World Wide Web", "World Web Wide", "Wide World Web", "Web World Wide"], ans: 0, exp: "WWW (World Wide Web) คือเครือข่ายที่เชื่อมโยงข้อมูลสารสนเทศทั่วโลกเข้าด้วยกันผ่านไฮเปอร์เท็กซ์" },
+            { q: "สายนำสัญญาณชนิดใดที่สามารถส่งข้อมูลได้เร็วที่สุดและป้องกันสัญญาณรบกวนได้ดีที่สุด?", opt: ["สายโทรศัพท์ (Telephone line)", "สายคู่ตีเกลียว (Twisted pair)", "สายโคแอกเซียล (Coaxial)", "สายใยแก้วนำแสง (Fiber Optic)"], ans: 3, exp: "Fiber Optic ใช้แสงในการส่งข้อมูล ทำให้ส่งได้ระยะทางไกล ความเร็วสูงมาก และไม่ถูกรบกวนจากคลื่นแม่เหล็กไฟฟ้า" },
+            { q: "เครื่องให้บริการที่ทำหน้าที่เก็บหน้าเว็บไซต์เพื่อให้ผู้อื่นเข้ามาดู เรียกว่าอะไร?", opt: ["Web Browser", "Web Server", "Web Client", "Web Master"], ans: 1, exp: "Web Server คือเครื่องคอมพิวเตอร์ที่ทำหน้าที่เก็บและให้บริการข้อมูลหน้าเว็บแก่เครื่องลูกข่าย (Client)" },
+            { q: "ISP (Internet Service Provider) คืออะไร?", opt: ["โปรแกรมป้องกันไวรัส", "ผู้ให้บริการเชื่อมต่ออินเทอร์เน็ต", "ผู้สร้างเว็บไซต์", "ชื่อโปรโตคอลเครือข่าย"], ans: 1, exp: "ISP คือบริษัทที่ให้บริการอินเทอร์เน็ตแก่ลูกค้า เช่น 3BB, TRUE, AIS" },
+            { q: "เว็บไซต์ที่ให้บริการค้นหาข้อมูลบนอินเทอร์เน็ต เช่น Google, Yahoo เรียกว่าอะไร?", opt: ["Web Directory", "Social Network", "Search Engine", "Web Portal"], ans: 2, exp: "Search Engine (โปรแกรมค้นหา) คือเครื่องมือสำหรับค้นหาข้อมูลบนอินเทอร์เน็ตโดยใช้คำค้น (Keyword)" },
+            { q: "โดเมนเนม (Domain name) นามสกุล .go.th หมายถึงหน่วยงานใด?", opt: ["หน่วยงานการศึกษา", "บริษัทเอกชน", "หน่วยงานทหาร", "หน่วยงานรัฐบาลของไทย"], ans: 3, exp: "go ย่อมาจาก Government (รัฐบาล) และ th หมายถึง Thailand" },
+
+            // Part 4: Microsoft Office & Basic Programs (51-75)
+            { q: "โปรแกรมใดเหมาะสมที่สุดสำหรับการพิมพ์รายงานหรือเอกสารราชการ?", opt: ["Microsoft Excel", "Microsoft PowerPoint", "Microsoft Word", "Microsoft Access"], ans: 2, exp: "Microsoft Word เป็นโปรแกรมประมวลผลคำ (Word Processor) ที่ออกแบบมาเพื่องานพิมพ์เอกสาร" },
+            { q: "ไฟล์เอกสารที่บันทึกจาก Microsoft Word 2007 ขึ้นไป จะมีนามสกุลไฟล์ตรงกับข้อใด?", opt: [" .doc", " .docx", " .txt", " .pdf"], ans: 1, exp: "เวอร์ชัน 2007 ขึ้นไปใช้ .docx (ตัว x ย่อมาจาก XML) ส่วนเวอร์ชันเก่าใช้ .doc" },
+            { q: "แป้นพิมพ์ลัด (Shortcut Key) ใดใช้สำหรับการ 'คัดลอก (Copy)' ข้อมูล?", opt: ["Ctrl + C", "Ctrl + X", "Ctrl + V", "Ctrl + Z"], ans: 0, exp: "Ctrl+C = Copy (คัดลอก), Ctrl+X = Cut (ตัด), Ctrl+V = Paste (วาง), Ctrl+Z = Undo (เลิกทำ)" },
+            { q: "หากต้องการ 'บันทึก (Save)' เอกสารอย่างรวดเร็ว ควรใช้แป้นพิมพ์ลัดข้อใด?", opt: ["Ctrl + P", "Ctrl + S", "Ctrl + O", "Ctrl + N"], ans: 1, exp: "Ctrl + S ย่อมาจาก Save ใช้สำหรับบันทึกข้อมูล" },
+            { q: "แป้นพิมพ์ลัด Ctrl + A ทำหน้าที่อะไร?", opt: ["เปิดไฟล์ใหม่", "พิมพ์เอกสาร", "เลือกข้อความหรือวัตถุทั้งหมด (Select All)", "ทำตัวอักษรให้เป็นตัวหนา"], ans: 2, exp: "Ctrl + A ย่อมาจาก Select All ใช้สำหรับคลุมดำหรือเลือกข้อมูลทั้งหมดในหน้าต่างนั้น" },
+            { q: "ในโปรแกรม MS Word แป้นพิมพ์ใดใช้ในการลบตัวอักษรที่อยู่ 'ด้านหน้า' เคอร์เซอร์?", opt: ["Delete", "Backspace", "Spacebar", "Enter"], ans: 1, exp: "Backspace ลบอักษรข้างหน้า(ซ้าย) ส่วน Delete ลบอักษรข้างหลัง(ขวา)เคอร์เซอร์" },
+            { q: "โปรแกรมใดเหมาะสมที่สุดสำหรับงานสร้างตาราง คำนวณรายรับรายจ่าย และทำกราฟสถิติ?", opt: ["Microsoft Word", "Microsoft Excel", "Microsoft Access", "Microsoft Publisher"], ans: 1, exp: "Microsoft Excel เป็นโปรแกรมตารางทำงาน (Spreadsheet) เก่งเรื่องการคำนวณและวิเคราะห์ข้อมูล" },
+            { q: "ไฟล์เอกสารที่บันทึกจาก Microsoft Excel จะมีนามสกุลไฟล์คือข้อใด?", opt: [" .docx", " .pptx", " .xlsx", " .exl"], ans: 2, exp: "นามสกุลไฟล์ของ Excel ในเวอร์ชันปัจจุบันคือ .xlsx" },
+            { q: "การพิมพ์สูตรคำนวณใน MS Excel ต้องเริ่มต้นด้วยเครื่องหมายใดเสมอ?", opt: ["+", "-", "@", "="], ans: 3, exp: "ใน Excel การพิมพ์สูตรหรือฟังก์ชันทุกครั้งต้องนำหน้าด้วยเครื่องหมายเท่ากับ (=) เสมอ" },
+            { q: "ฟังก์ชันใดใน MS Excel ใช้สำหรับหา 'ผลรวม' ของชุดข้อมูล?", opt: ["AVERAGE()", "MAX()", "MIN()", "SUM()"], ans: 3, exp: "SUM() ใช้หาผลรวม, AVERAGE() หาค่าเฉลี่ย, MAX() หาค่ามากสุด, MIN() หาค่าน้อยสุด" },
+            { q: "หากต้องการหา 'ค่าเฉลี่ย' ของตัวเลขในตาราง Excel ต้องใช้ฟังก์ชันใด?", opt: ["COUNT()", "SUM()", "AVERAGE()", "IF()"], ans: 2, exp: "AVERAGE() คือฟังก์ชันสำหรับคำนวณหาค่าเฉลี่ยเลขคณิต" },
+            { q: "เซลล์ (Cell) ใน MS Excel เกิดจากการตัดกันของสิ่งใด?", opt: ["แถว (Row) กับ แถว (Row)", "คอลัมน์ (Column) กับ คอลัมน์ (Column)", "คอลัมน์ (Column) กับ แถว (Row)", "สูตร (Formula) กับ ข้อมูล (Data)"], ans: 2, exp: "Cell คือช่องสี่เหลี่ยมในตาราง Excel เกิดจากแนวตั้ง (Column) ตัดกับ แนวนอน (Row) เช่น Cell A1" },
+            { q: "โปรแกรมใดเหมาะสมที่สุดสำหรับการนำเสนอข้อมูล (Presentation) ในที่ประชุม?", opt: ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint", "Microsoft Outlook"], ans: 2, exp: "Microsoft PowerPoint ออกแบบมาเพื่อสร้างสไลด์สำหรับการนำเสนองาน" },
+            { q: "ไฟล์เอกสารที่บันทึกจาก Microsoft PowerPoint จะมีนามสกุลไฟล์คือข้อใด?", opt: [" .docx", " .xlsx", " .pptx", " .ptx"], ans: 2, exp: "นามสกุลไฟล์ของ PowerPoint ในปัจจุบันคือ .pptx" },
+            { q: "ใน MS PowerPoint หากต้องการเริ่มฉายสไลด์ (Slide Show) ตั้งแต่หน้าแรกอย่างรวดเร็ว ต้องกดปุ่มใด?", opt: ["F1", "F2", "F5", "F7"], ans: 2, exp: "การกด F5 เป็นคีย์ลัดสำหรับเริ่มเล่น Presentation ตั้งแต่สไลด์หน้าแรก (ส่วน Shift+F5 เริ่มหน้าปัจจุบัน)" },
+            { q: "คำสั่งใดใน PowerPoint ที่ใช้ใส่เอฟเฟกต์การเคลื่อนไหวให้กับ 'วัตถุ หรือ ข้อความ' ในหน้าสไลด์?", opt: ["Transition", "Animation", "Design", "Slide Master"], ans: 1, exp: "Animation ใช้ทำให้วัตถุเคลื่อนไหว ส่วน Transition ใช้ทำเอฟเฟกต์ตอนเปลี่ยนหน้าสไลด์" },
+            { q: "การส่งอีเมลแบบ CC (Carbon Copy) และ BCC (Blind Carbon Copy) ต่างกันอย่างไร?", opt: ["CC ส่งแนบไฟล์ได้ BCC ส่งไม่ได้", "CC ผู้รับทุกคนจะเห็นชื่อกันและกัน แต่ BCC ผู้รับอื่นจะไม่เห็นชื่อคนในช่องนี้", "CC ใช้ส่งในบริษัท BCC ใช้ส่งนอกบริษัท", "CC ส่งได้ทีละคน BCC ส่งได้หลายคน"], ans: 1, exp: "BCC ใช้เมื่อต้องการส่งสำเนาให้ผู้อื่นรู้เรื่องด้วย แต่ไม่อยากให้ผู้รับหลักทราบว่าเราส่งให้ใครบ้าง (ซ่อนอีเมลผู้รับในช่อง BCC)" },
+            { q: "เอกสารแบบใดที่ไม่สามารถแก้ไขข้อมูลได้โดยง่ายและนิยมใช้ส่งเป็นเอกสารทางการผ่านเน็ต?", opt: [" .doc", " .xls", " .txt", " .pdf"], ans: 3, exp: "PDF (Portable Document Format) เป็นรูปแบบไฟล์ที่ล็อคการจัดหน้าและแก้ไขยาก เพื่อรักษาความถูกต้องของเอกสารต้นฉบับ" },
+            { q: "ปุ่ม F1 บนคีย์บอร์ดมักถูกตั้งค่าไว้สำหรับฟังก์ชันใดในโปรแกรมส่วนใหญ่?", opt: ["บันทึกงาน (Save)", "ค้นหาคำ (Find)", "เปิดหน้าต่างช่วยเหลือ (Help)", "ปิดโปรแกรม (Close)"], ans: 2, exp: "F1 เป็นมาตรฐานของแทบทุกโปรแกรมสำหรับเรียกดูคู่มือการใช้งานหรือการขอความช่วยเหลือ (Help)" },
+            { q: "แป้นพิมพ์ลัด Ctrl + F ในโปรแกรม Word หรือ Browser ใช้ทำอะไร?", opt: ["ค้นหาข้อความ (Find)", "จัดหน้ากระดาษ", "บันทึกไฟล์", "ปรับตัวอักษรใหญ่ขึ้น"], ans: 0, exp: "Ctrl + F (Find) เปิดกล่องสำหรับค้นหาคำหรือข้อความที่ต้องการ" },
+            { q: "ข้อใดคือโปรแกรมระบบจัดการฐานข้อมูล (Database Management System) ของไมโครซอฟท์?", opt: ["MS Word", "MS Excel", "MS Access", "MS Outlook"], ans: 2, exp: "Microsoft Access เป็นโปรแกรมสำหรับสร้างและจัดการฐานข้อมูล (Database)" },
+            { q: "ใน Excel หากปรากฏข้อความ #VALUE! ในเซลล์ หมายความว่าอย่างไร?", opt: ["ความกว้างของคอลัมน์ไม่พอ", "หารด้วยศูนย์", "พิมพ์ชื่อฟังก์ชันผิด", "มีการนำข้อมูลต่างชนิดมาคำนวณ (เช่น ตัวเลข + ตัวอักษร)"], ans: 3, exp: "#VALUE! เป็น Error ที่เกิดจากการอ้างอิงชนิดข้อมูลที่ไม่สามารถคำนวณร่วมกันได้" },
+            { q: "ใน Excel เครื่องหมายดอลลาร์ ($) ที่อยู่ในสูตร เช่น $A$1 ทำหน้าที่อะไร?", opt: ["เปลี่ยนสกุลเงิน", "ตรึงเซลล์อ้างอิงไม่ให้เปลี่ยนตำแหน่งเมื่อคัดลอกสูตร (Absolute Reference)", "ทำให้ตัวหนังสือเป็นสีแดง", "สร้างตัวแปรรับค่าพิมพ์"], ans: 1, exp: "เครื่องหมาย $ ใช้ล็อคคอลัมน์หรือแถว (Absolute Reference) ทำให้เวลาลากก๊อปปี้สูตร ตำแหน่งเซลล์จะไม่เคลื่อน" },
+            { q: "หากต้องการเปลี่ยนชื่อไฟล์ (Rename) หรือโฟลเดอร์ใน Windows อย่างรวดเร็ว ให้คลิกเลือกไฟล์แล้วกดปุ่มใด?", opt: ["F2", "F3", "F4", "F5"], ans: 0, exp: "F2 คือคีย์ลัดในการ Rename ของระบบปฏิบัติการ Windows" },
+            { q: "MS Outlook เป็นโปรแกรมสำหรับใช้งานด้านใด?", opt: ["ตัดต่อวิดีโอ", "บริหารจัดการอีเมล ปฏิทิน และการนัดหมาย", "ออกแบบกราฟิก", "ทำบัญชี"], ans: 1, exp: "Microsoft Outlook นิยมใช้ในองค์กรสำหรับการรับส่งอีเมล บันทึกปฏิทิน และจัดการการนัดหมาย" },
+
+            // Part 5: Cyber Security, Ethics, and Law (76-90)
+            { q: "ซอฟต์แวร์ประสงค์ร้ายที่แฝงตัวมากับโปรแกรมอื่นเพื่อแอบขโมยข้อมูลหรือเปิดหลังบ้านให้แฮกเกอร์ เรียกว่าอะไร?", opt: ["Virus", "Worm (หนอนอินเทอร์เน็ต)", "Trojan (ม้าโทรจัน)", "Spyware"], ans: 2, exp: "ม้าโทรจัน (Trojan Horse) จะหลอกผู้ใช้ว่าเป็นโปรแกรมที่มีประโยชน์ แต่แฝงโค้ดอันตรายไว้เพื่อขโมยข้อมูล (ต่างจากไวรัสตรงที่โทรจันไม่จำลองตัวเองกระจายไปไฟล์อื่น)" },
+            { q: "มัลแวร์ประเภทใดที่ทำการ 'เข้ารหัสลับ' ไฟล์ข้อมูลของเหยื่อ แล้วเรียกร้องเงินเพื่อแลกกับรหัสปลดล็อค?", opt: ["Ransomware (มัลแวร์เรียกค่าไถ่)", "Spyware (สปายแวร์)", "Adware (แอดแวร์)", "Worm (หนอนคอมพิวเตอร์)"], ans: 0, exp: "Ransomware (มัลแวร์เรียกค่าไถ่) เป็นภัยคุกคามร้ายแรง โดยจะเข้ารหัสไฟล์ในเครื่อง ทำให้เปิดไม่ได้ จนกว่าจะจ่ายเงินให้แฮกเกอร์" },
+            { q: "การหลอกลวงผ่านอีเมลหรือหน้าเว็บไซต์ปลอมเพื่อให้เหยื่อกรอกรหัสผ่าน หรือข้อมูลบัตรเครดิต เรียกว่าอะไร?", opt: ["Hacking", "Phishing (ฟิชชิง)", "Spamming", "Spoofing"], ans: 1, exp: "Phishing มาจากการพ้องเสียงคำว่า Fishing (ตกปลา) คือการหว่านเหยื่อล่อให้คนหลงเชื่อกรอกข้อมูลสำคัญลงในเว็บปลอม" },
+            { q: "ข้อใดคือระบบรักษาความปลอดภัยที่ช่วยคัดกรอง ป้องกันไม่ให้บุคคลภายนอกบุกรุกเข้าสู่เครือข่ายภายในได้?", opt: ["Antivirus", "Backup System", "Firewall (ไฟร์วอลล์)", "UPS"], ans: 2, exp: "Firewall เปรียบเสมือนกำแพงกรองข้อมูล ทำหน้าที่ตรวจสอบและอนุญาต/ไม่อนุญาต ให้ข้อมูลผ่านเข้าออกเครือข่าย" },
+            { q: "การกระทำใดถือเป็นความผิดตาม พ.ร.บ. ว่าด้วยการกระทำความผิดเกี่ยวกับคอมพิวเตอร์?", opt: ["การโพสต์ด่าทอผู้อื่นด้วยข้อความอันเป็นเท็จบน Facebook", "การแชร์ภาพโป๊เปลือยของผู้อื่นลงในกลุ่ม Line", "การนำรหัสผ่านของเพื่อนไปใช้เข้าสู่ระบบโดยที่เพื่อนไม่รู้", "ผิดทุกข้อ"], ans: 3, exp: "ทั้งสามข้อเป็นการกระทำที่ผิด พ.ร.บ. คอมพิวเตอร์ (หมิ่นประมาทด้วยข้อมูลเท็จ, นำเข้าข้อมูลลามกอนาจาร, เข้าถึงระบบคอมพิวเตอร์ของผู้อื่นโดยมิชอบ)" },
+            { q: "พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) มุ่งเน้นเรื่องใดมากที่สุด?", opt: ["การเก็บภาษีคนขายของออนไลน์", "การป้องกันและปราบปรามไวรัสคอมพิวเตอร์", "การคุ้มครองสิทธิในการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของประชาชน", "การควบคุมเนื้อหาที่ไม่เหมาะสมบนอินเทอร์เน็ต"], ans: 2, exp: "PDPA (Personal Data Protection Act) เป็นกฎหมายที่คุ้มครองข้อมูลส่วนบุคคลของประชาชน ป้องกันไม่ให้หน่วยงานนำไปใช้โดยไม่ได้รับความยินยอม" },
+            { q: "การกำหนดรหัสผ่าน (Password) ที่ปลอดภัย ควรมีลักษณะตามข้อใด?", opt: ["ใช้ชื่อเล่นหรือวันเกิดเพื่อให้จำง่าย", "ใช้รหัสผ่านเดียวกันในทุกบัญชีเพื่อป้องกันการลืม", "ประกอบด้วยตัวอักษรพิมพ์ใหญ่ พิมพ์เล็ก ตัวเลข และอักขระพิเศษ รวมกันอย่างน้อย 8 ตัว", "จดรหัสผ่านไว้ในกระดาษแปะหน้าจอคอมพิวเตอร์"], ans: 2, exp: "รหัสผ่านที่แข็งแรง (Strong Password) ต้องมีความยาวพอสมควรและเดายาก โดยผสมอักขระหลายประเภท" },
+            { q: "ข้อใดคือวิธีป้องกันปัญหาข้อมูลสูญหายจากเหตุสุดวิสัย (เช่น ฮาร์ดดิสก์พัง, โดน Ransomware) ที่ดีที่สุด?", opt: ["ลงโปรแกรมแอนตี้ไวรัสหลายๆ ตัว", "การสำรองข้อมูล (Data Backup) เก็บไว้ที่อื่นอย่างสม่ำเสมอ", "การไม่เชื่อมต่ออินเทอร์เน็ตเลย", "การเปลี่ยนรหัสผ่านทุกเดือน"], ans: 1, exp: "การทำ Data Backup (เช่น เก็บใน External HDD หรือ Cloud) คือทางรอดเดียวที่รับประกันว่าจะมีข้อมูลใช้เมื่อไฟล์ต้นฉบับเสียหาย" },
+            { q: "หากได้รับอีเมลแนบไฟล์ .exe จากคนที่ไม่รู้จัก ควรทำอย่างไร?", opt: ["รีบเปิดดูเพื่อความอยากรู้", "ส่งต่อ (Forward) ให้เพื่อนช่วยดู", "ลบทิ้งทันทีโดยไม่ต้องเปิด เพราะอาจเป็นมัลแวร์", "บันทึกไว้ในเครื่องก่อนแล้วค่อยเปิดปีหน้า"], ans: 2, exp: "ไฟล์นามสกุล .exe เป็นไฟล์โปรแกรมปฏิบัติการ มักถูกใช้แฝงไวรัสหรือมัลแวร์มากับอีเมลหลอกลวง ห้ามคลิกเปิดเด็ดขาด" },
+            { q: "Spam Mail หมายถึงอะไร?", opt: ["อีเมลที่แถมไวรัสเสมอ", "อีเมลขยะ หรืออีเมลส่งเสริมการขายที่ถูกส่งหว่านไปจำนวนมากโดยที่ผู้รับไม่ต้องการ", "อีเมลทางการจากธนาคาร", "จดหมายอิเล็กทรอนิกส์ที่มีความสำคัญระดับสูง"], ans: 1, exp: "Spam คือข้อความกวนใจที่ส่งมาโดยเราไม่ต้องการ มักเป็นการโฆษณา" },
+            { q: "ข้อใดคือสิทธิบัตรและลิขสิทธิ์ซอฟต์แวร์?", opt: ["ทรัพย์สินทางปัญญา (Intellectual Property)", "ฮาร์ดแวร์ประยุกต์", "ระบบเครือข่าย", "ความปลอดภัยทางไซเบอร์"], ans: 0, exp: "ลิขสิทธิ์ (Copyright) ของซอฟต์แวร์ ถือเป็นทรัพย์สินทางปัญญาประเภทหนึ่ง ผู้สร้างสรรค์มีสิทธิ์แต่เพียงผู้เดียว" },
+            { q: "การ 'Crack' โปรแกรม หรือใช้โปรแกรมเถื่อน มีความเสี่ยงในเรื่องใดมากที่สุด?", opt: ["เครื่องคอมพิวเตอร์จะระเบิด", "จอภาพจะเสื่อมสภาพเร็ว", "เสี่ยงต่อการติดมัลแวร์ที่แฝงมากับตัว Crack และผิดกฎหมายลิขสิทธิ์", "แป้นพิมพ์จะใช้งานไม่ได้"], ans: 2, exp: "โปรแกรมเถื่อนและตัว Crack มักจะถูกผู้ไม่หวังดีแฝงโทรจันหรือไวรัสมาด้วย และเป็นการละเมิดลิขสิทธิ์" },
+            { q: "OTP (One Time Password) ที่ส่งมาทาง SMS มีวัตถุประสงค์เพื่ออะไร?", opt: ["เพื่อเก็บค่าบริการโทรศัพท์เพิ่ม", "เพื่อใช้ยืนยันตัวตนแบบสองชั้น (2-Factor Authentication) เพิ่มความปลอดภัย", "เพื่อปลดล็อคโปรแกรม Office", "เพื่อเร่งความเร็วอินเทอร์เน็ต"], ans: 1, exp: "OTP ใช้ในการทำ 2FA (Two-Factor Authentication) เพื่อยืนยันว่าเป็นผู้ใช้งานตัวจริง ป้องกันแฮกเกอร์แม้จะรู้รหัสผ่านหลัก" },
+            { q: "Hacker แบบใดที่ทำการเจาะระบบเพื่อหาช่องโหว่และแจ้งให้เจ้าของระบบทราบเพื่อแก้ไข (แฮกเกอร์สายขาว)?", opt: ["Black Hat Hacker", "White Hat Hacker", "Script Kid", "Cracker"], ans: 1, exp: "White Hat Hacker คือนักเจาะระบบที่มีจริยธรรม ทำเพื่อตรวจสอบความปลอดภัย ส่วน Black Hat ทำเพื่อหวังผลประโยชน์หรือทำลาย" },
+            { q: "พฤติกรรมใดจัดเป็นการกลั่นแกล้งบนโลกไซเบอร์ (Cyberbullying)?", opt: ["การแท็กเพื่อนในรูปภาพรวมรุ่น", "การส่งข้อความข่มขู่ หรือโพสต์ประจานผู้อื่นบนโซเชียลมีเดีย", "การวิจารณ์ภาพยนตร์ในเว็บบอร์ด", "การบล็อคคนที่ไม่รู้จักบนเฟซบุ๊ก"], ans: 1, exp: "Cyberbullying คือการรังแก คุกคาม หรือประจานผู้อื่นผ่านสื่อดิจิทัล ทำให้ผู้ถูกกระทำอับอายหรือเจ็บปวดทางจิตใจ" },
+
+            // Part 6: New Technologies & Advanced Concepts (91-100)
+            { q: "เทคโนโลยี Cloud Computing (คลาวด์คอมพิวติ้ง) หมายถึงอะไร?", opt: ["ระบบพยากรณ์อากาศ", "การประมวลผลและเก็บข้อมูลบนเซิร์ฟเวอร์ผ่านอินเทอร์เน็ต โดยผู้ใช้ไม่ต้องลงทุนเซิร์ฟเวอร์เอง", "การเชื่อมต่อไร้สายผ่านดาวเทียม", "ฮาร์ดดิสก์แบบพกพาขนาดเล็ก"], ans: 1, exp: "Cloud Computing คือบริการให้เช่าระบบคอมพิวเตอร์หรือพื้นที่เก็บข้อมูลบนเน็ต เช่น Google Drive, iCloud, AWS" },
+            { q: "เทคโนโลยี AI (Artificial Intelligence) มีความหมายตรงกับข้อใด?", opt: ["อินเทอร์เน็ตความเร็วสูง", "เทคโนโลยีเสมือนจริง", "ปัญญาประดิษฐ์", "ระบบอัตโนมัติในโรงงาน"], ans: 2, exp: "AI หรือ ปัญญาประดิษฐ์ คือการทำให้คอมพิวเตอร์มีความสามารถในการคิด วิเคราะห์ และเรียนรู้คล้ายมนุษย์" },
+            { q: "IoT (Internet of Things) หมายถึงเทคโนโลยีใด?", opt: ["อินเทอร์เน็ตสำหรับคอมพิวเตอร์เท่านั้น", "เทคโนโลยีที่ทำให้อุปกรณ์ต่างๆ (เช่น แอร์, หลอดไฟ, รถยนต์) เชื่อมต่ออินเทอร์เน็ตและสั่งการได้", "สกุลเงินดิจิทัล", "แอพพลิเคชันแชท"], ans: 1, exp: "IoT คืออินเทอร์เน็ตของสรรพสิ่ง การที่อุปกรณ์อิเล็กทรอนิกส์ต่างๆ สามารถเชื่อมต่อและสื่อสารกันผ่านอินเทอร์เน็ตได้" },
+            { q: "สกุลเงินดิจิทัลอย่าง Bitcoin ใช้เทคโนโลยีใดเป็นรากฐานในการบันทึกข้อมูลและรักษาความปลอดภัยแบบกระจายศูนย์?", opt: ["Cloud Computing", "Blockchain (บล็อกเชน)", "Big Data", "Virtual Reality (VR)"], ans: 1, exp: "Blockchain เป็นเทคโนโลยีเก็บข้อมูลที่กระจายศูนย์ (Decentralized) โปร่งใส และปลอมแปลงได้ยาก เป็นพื้นฐานของคริปโตเคอร์เรนซี" },
+            { q: "Big Data หมายถึงอะไร?", opt: ["เซิร์ฟเวอร์ขนาดใหญ่พิเศษ", "แฟลชไดรฟ์ที่มีความจุสูง", "กลุ่มข้อมูลขนาดใหญ่และซับซ้อนมากจนไม่สามารถใช้ซอฟต์แวร์ทั่วไปประมวลผลได้", "ไวรัสชนิดใหม่ที่ลบข้อมูล"], ans: 2, exp: "Big Data คือเทคโนโลยีที่ใช้จัดการ วิเคราะห์ ข้อมูลที่มีปริมาณมหาศาล มีความหลากหลาย และเปลี่ยนแปลงอย่างรวดเร็ว เพื่อนำไปใช้ประโยชน์" },
+            { q: "ChatGPT จัดเป็นเทคโนโลยีด้านใด?", opt: ["Generative AI (ปัญญาประดิษฐ์เชิงสร้างสรรค์)", "Cryptocurrency (สกุลเงินดิจิทัล)", "IoT (อินเทอร์เน็ตของสรรพสิ่ง)", "Hardware (ฮาร์ดแวร์คอมพิวเตอร์)"], ans: 0, exp: "ChatGPT เป็นโมเดลภาษาขนาดใหญ่ที่เป็น Generative AI สามารถโต้ตอบและสร้างข้อความตามคำสั่งมนุษย์ได้" },
+            { q: "เทคโนโลยีที่ผสานโลกเสมือนจริงเข้าไปในโลกแห่งความเป็นจริงผ่านกล้องสมาร์ทโฟน (เช่น เกม Pokemon Go) เรียกว่าอะไร?", opt: ["VR (Virtual Reality)", "AR (Augmented Reality)", "MR (Mixed Reality)", "AI (Artificial Intelligence)"], ans: 1, exp: "AR (Augmented Reality) คือการนำภาพ 3 มิติมาซ้อนทับกับภาพจริงผ่านกล้อง ส่วน VR คือการสวมแว่นตาตัดขาดจากโลกจริงไปอยู่ในโลกเสมือน" },
+            { q: "5G เป็นมาตรฐานเครือข่ายโทรศัพท์มือถือที่มีจุดเด่นเรื่องใดมากที่สุดเมื่อเทียบกับ 4G?", opt: ["ทำให้อุปกรณ์มีราคาถูกลง", "แบตเตอรี่โทรศัพท์ใช้งานได้นานขึ้น 10 เท่า", "ความเร็วสูงมาก และมีความหน่วงต่ำ (Low Latency) รองรับ IoT และรถยนต์ไร้คนขับ", "รับสัญญาณได้ใต้น้ำลึก"], ans: 2, exp: "5G มีจุดเด่นที่ความเร็วรับส่งข้อมูลสูงมากและความหน่วง (Latency) ต่ำมาก ทำให้สั่งงานระยะไกลแบบเรียลไทม์ได้แม่นยำ" },
+            { q: "Biometrics (ไบโอเมตริกซ์) ในระบบคอมพิวเตอร์ มักใช้ทำสิ่งใด?", opt: ["แปลงไฟล์เสียงเป็นตัวอักษร", "วัดอุณหภูมิซีพียู", "ตรวจสอบและยืนยันตัวบุคคลด้วยลักษณะทางชีวภาพ (เช่น สแกนนิ้ว, สแกนใบหน้า)", "กำจัดไวรัสในระบบ"], ans: 2, exp: "Biometrics คือการนำเทคโนโลยีมาใช้วัดและวิเคราะห์ลักษณะทางกายภาพของบุคคลเพื่อยืนยันตัวตน เช่น ลายนิ้วมือ ม่านตา ใบหน้า" },
+            { q: "คำว่า 'Cyber Security' หมายถึงสิ่งใด?", opt: ["บริษัทผลิตคอมพิวเตอร์สำหรับตำรวจ", "การรักษาความมั่นคงปลอดภัยทางไซเบอร์ ปกป้องระบบและข้อมูลจากการโจมตีของแฮกเกอร์", "เกมจำลองการเป็นแฮกเกอร์", "มาตรฐานความเร็วของอินเทอร์เน็ตไฟเบอร์"], ans: 1, exp: "Cyber Security คือกระบวนการและเทคโนโลยีที่ออกแบบมาเพื่อปกป้องคอมพิวเตอร์ เครือข่าย และข้อมูล จากการโจมตีหรือการเข้าถึงโดยไม่ได้รับอนุญาต" }
+        ];
+
+        // Ensure variables
+        const questions = [...computerData];
+        let curQ = 0, score = 0, answers = [];
+
+        function switchMode(mode) {
+            ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById('screen-' + mode).classList.remove('hidden');
+            if(mode === 'quiz') { 
+                curQ = 0; 
+                score = 0; 
+                answers = new Array(questions.length).fill(null); 
+                renderQ(); 
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderQ() {
+            const q = questions[curQ];
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ)/questions.length)*100}%`;
+            
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
+            
+            q.opt.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center mb-2 content-wrap shadow-sm";
+                if(answers[curQ] !== null) {
+                    btn.disabled = true;
+                    if(i === q.ans) {
+                        btn.classList.add('bg-accent-50', 'border-accent-500', 'text-cyber-900');
+                        btn.innerHTML = `<div class="bg-accent-500 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-white shrink-0"><i class="fa-solid fa-check"></i></div> <span>${o}</span>`;
+                    } else if(i === answers[curQ]) {
+                        btn.classList.add('bg-red-50', 'border-red-400', 'text-red-900');
+                        btn.innerHTML = `<div class="bg-red-500 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-white shrink-0"><i class="fa-solid fa-xmark"></i></div> <span class="line-through opacity-70">${o}</span>`;
+                    } else { 
+                        btn.classList.add('opacity-50', 'bg-white', 'border-slate-200'); 
+                        btn.innerHTML = `<div class="bg-slate-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-slate-400 shrink-0">${i+1}</div> <span>${o}</span>`; 
+                    }
+                } else {
+                    btn.classList.add('bg-white', 'border-slate-200', 'hover:border-accent-500', 'hover:bg-slate-50', 'hover:shadow-md');
+                    btn.innerHTML = `<div class="bg-slate-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-slate-500 shrink-0 group-hover:bg-accent-100 group-hover:text-accent-600 transition">${i+1}</div> <span>${o}</span>`;
+                    btn.onclick = () => selectOpt(i);
+                }
+                opts.appendChild(btn);
+            });
+
+            const explainer = document.getElementById('explainer');
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                if (answers[curQ] === q.ans) {
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-emerald-50 border-emerald-200 text-emerald-900";
+                    document.getElementById('exp-status').innerHTML = "<i class='fa-solid fa-circle-check text-emerald-500 mr-2'></i> ถูกต้อง!";
+                } else {
+                    explainer.className = "mt-8 p-5 rounded-2xl bg-red-50 border-red-200 text-red-900";
+                    document.getElementById('exp-status').innerHTML = `<i class='fa-solid fa-circle-xmark text-red-500 mr-2'></i> ผิดครับ! (คำตอบที่ถูกคือข้อ ${q.ans+1})`;
+                }
+                document.getElementById('exp-text').innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
+            } else { explainer.classList.add('hidden'); }
+            
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            if (curQ === questions.length - 1) document.getElementById('btn-next').innerHTML = "ดูผลลัพธ์ <i class='fa-solid fa-flag-checkered ml-1'></i>";
+            else document.getElementById('btn-next').innerHTML = "ถัดไป <i class='fa-solid fa-chevron-right ml-1'></i>";
+        }
+
+        function selectOpt(idx) {
+            if(answers[curQ] !== null) return;
+            answers[curQ] = idx;
+            if(idx === questions[curQ].ans) score++;
+            renderQ();
+        }
+
+        function changeQ(step) {
+            if(curQ + step >= 0 && curQ + step < questions.length) { curQ += step; renderQ(); }
+            else if(curQ + step === questions.length) showFinal();
+        }
+
+        function showFinal() {
+            switchMode('result');
+            document.getElementById('final-score').innerText = `${score}/100`;
+            const msg = document.getElementById('result-msg');
+            const pct = (score/questions.length)*100;
+            
+            if(pct >= 80) {
+                msg.innerText = "ยอดเยี่ยมมาก! ความรู้วิชาคอมพิวเตอร์ของคุณแน่นพอที่จะลงสนามสอบแล้ว";
+                msg.className = "text-emerald-700 mb-8 font-bold text-lg bg-emerald-50 py-3 px-4 rounded-lg border border-emerald-200 inline-block";
+            }
+            else if(pct >= 50) {
+                msg.innerText = "ทำได้ดี! แต่ควรทบทวนเรื่องระบบเครือข่ายและซอฟต์แวร์เพิ่มอีกนิดเพื่อความชัวร์";
+                msg.className = "text-amber-700 mb-8 font-bold text-lg bg-amber-50 py-3 px-4 rounded-lg border border-amber-200 inline-block";
+            }
+            else {
+                msg.innerText = "พยายามอีกหน่อยนะครับ ลองกลับไปอ่านหน้า 'สรุปบทเรียน' แล้วมาทดสอบใหม่";
+                msg.className = "text-red-700 mb-8 font-bold text-lg bg-red-50 py-3 px-4 rounded-lg border border-red-200 inline-block";
+            }
+        }
+    </script>
+</body>
+</html>
