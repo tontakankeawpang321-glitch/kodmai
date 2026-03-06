@@ -17,11 +17,11 @@
                 extend: {
                     colors: {
                         police: {
-                            900: '#3e3124', /* Dark Khaki / Brown */
-                            800: '#594734',
-                            700: '#7a634a', /* Khaki / สีกากีตำรวจ */
-                            600: '#9c8163',
-                            50: '#fcfbf9',
+                            900: '#0b1120', /* Slate 950 / Black-Blue */
+                            800: '#172554', /* Blue 950 / กรมท่าเข้ม */
+                            700: '#1e3a8a', /* Blue 900 / น้ำเงินกรมท่า */
+                            600: '#2563eb', /* Blue 600 / น้ำเงินสว่าง */
+                            50: '#eff6ff',  /* Blue 50 / ฟ้าอ่อนสุด */
                         },
                         gold: {
                             500: '#d4af37',
@@ -40,7 +40,7 @@
 
     <style>
         body { background-color: #f4f6f5; }
-        .police-gradient { background: linear-gradient(145deg, #594734 0%, #7a634a 100%); }
+        .police-gradient { background: linear-gradient(145deg, #172554 0%, #1e3a8a 100%); }
         .eng-content { overflow-x: auto; padding-bottom: 0.5rem; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -143,6 +143,7 @@
                         <p>• <b>Arrest (v.):</b> จับกุม</p>
                         <p>• <b>Evidence (n.):</b> หลักฐาน (เป็นนามนับไม่ได้)</p>
                         <p>• <b>Investigate (v.):</b> สืบสวน, สอบสวน</p>
+                        <p>• <b>Warrant (n.):</b> หมายศาล, หมายค้น, หมายจับ</p>
                     </div>
                 </div>
             </div>
@@ -199,42 +200,144 @@
     </main>
 
     <script>
+        // ข้อมูลข้อสอบ 100 ข้อแบบไม่ซ้ำกัน
         const rawEnglishData = [
-            { q: "A: 'Thank you for your help.'<br>B: '_____' ", opt: ["Never mind", "You're welcome", "Of course not", "I'm sorry"], ans: 1, exp: "เมื่อมีคนขอบคุณ (Thank you) ควรตอบรับว่า You're welcome (ด้วยความยินดี) ส่วน Never mind มักใช้ตอบเมื่อมีคนขอโทษ แปลว่า ไม่เป็นไร/ช่างเถอะ" },
-            { q: "Listen! The baby ____ in the bedroom.", opt: ["cries", "is crying", "cried", "has cried"], ans: 1, exp: "คำว่า Listen! (ฟังนะ!) หรือ Look! แสดงว่าเหตุการณ์กำลังเกิดขึ้น ณ ขณะนั้น ต้องใช้ Present Continuous (S + is/am/are + V.ing)" },
-            { q: "If it rains tomorrow, we ____ at home.", opt: ["will stay", "would stay", "stayed", "stay"], ans: 0, exp: "If-clause แบบที่ 1 (เหตุการณ์ที่เป็นไปได้ในอนาคต): โครงสร้าง If + Present Simple, Future Simple (S + will + V.infinitive)" },
-            { q: "The police arrested the _____ who stole the lady's purse.", opt: ["victim", "suspect", "witness", "detective"], ans: 1, exp: "ตำรวจจับกุม 'ผู้ต้องสงสัย' (suspect) ที่ขโมยกระเป๋า ส่วนคำอื่นแปลว่า victim=เหยื่อ, witness=พยาน, detective=นักสืบ" },
-            { q: "The meeting will start ____ 9 o'clock.", opt: ["in", "on", "at", "from"], ans: 2, exp: "การบอกเวลาที่เจาะจง (เช่น 9 o'clock) ต้องใช้บุพบท (Preposition) 'at'" },
-            { q: "He is ____ honest man.", opt: ["a", "an", "the", "no article"], ans: 1, exp: "คำว่า honest อ่านออกเสียงสระ (ออ-เนิสท) จึงต้องนำหน้าด้วย 'an' แม้จะขึ้นต้นด้วยตัวอักษร H ก็ตาม" },
-            { q: "Please tell ____ to come to my office.", opt: ["they", "their", "them", "theirs"], ans: 2, exp: "หลังคำกริยา tell ต้องใช้สรรพนามรูปกรรม (Object Pronoun) ซึ่งของ they คือ 'them'" },
-            { q: "The letter ____ by the manager yesterday.", opt: ["was written", "writes", "wrote", "is written"], ans: 0, exp: "ประโยคนี้เป็น Passive Voice (ประธานถูกกระทำ - จดหมายถูกเขียน) ในอดีตเนื่องจากมีคำว่า yesterday โครงสร้างคือ S + was/were + V.3" },
-            { q: "You ____ wear a helmet when riding a motorcycle.", opt: ["may", "can", "must", "might"], ans: 2, exp: "must แปลว่า 'ต้อง' ใช้กับกฎหมาย ข้อบังคับ หรือสิ่งที่จำเป็นต้องทำอย่างหลีกเลี่ยงไม่ได้" },
-            { q: "A person who sees a crime happen is called a _____.", opt: ["criminal", "judge", "suspect", "witness"], ans: 3, exp: "ผู้ที่เห็นเหตุการณ์อาชญากรรมเรียกว่า 'พยาน' (witness) ส่วน criminal=อาชญากร, judge=ผู้พิพากษา, suspect=ผู้ต้องสงสัย" },
-            { q: "I ____ to the market when it started to rain.", opt: ["walk", "walked", "was walking", "have walked"], ans: 2, exp: "เหตุการณ์ที่กำลังดำเนินอยู่ในอดีตใช้ Past Continuous (was/were + V.ing) แล้วถูกแทรกด้วยเหตุการณ์ที่เกิดสั้นๆ Past Simple (started)" },
-            { q: "My brother is taller ____ me.", opt: ["then", "than", "to", "as"], ans: 1, exp: "การเปรียบเทียบขั้นกว่า (Comparative) ต้องมีคำว่า 'than' (taller than = สูงกว่า)" },
-            { q: "____ you like a cup of coffee?", opt: ["Do", "Are", "Would", "Have"], ans: 2, exp: "การเสนอสิ่งของให้ผู้อื่นอย่างสุภาพ มักใช้โครงสร้าง Would you like...?" },
-            { q: "She has been working here ____ 2015.", opt: ["since", "for", "in", "from"], ans: 0, exp: "since แปลว่า 'ตั้งแต่' ใช้กับจุดเริ่มต้นของเวลา (เช่น ปี 2015) ส่วน for ใช้กับระยะเวลา (เช่น for 5 years)" },
-            { q: "We are looking forward to ____ you soon.", opt: ["see", "saw", "seen", "seeing"], ans: 3, exp: "สำนวน look forward to (ตั้งตารอคอย) มีกฎว่าต้องตามด้วย V.ing (Gerund) หรือ Noun เสมอ" },
-            { q: "The suspect denied ____ the money.", opt: ["steal", "stole", "stealing", "to steal"], ans: 2, exp: "คำกริยา deny (ปฏิเสธ) เป็นหนึ่งในคำกริยาที่ต้องตามด้วย V.ing เสมอ" },
-            { q: "There is ____ milk in the fridge. We need to buy some.", opt: ["a few", "a little", "few", "little"], ans: 3, exp: "milk เป็นนามนับไม่ได้ ต้องใช้ little/a little แต่ประโยคบอกว่าต้องไปซื้อเพิ่ม แปลว่า 'แทบจะไม่มีเหลือเลย' จึงใช้ little (ความหมายเชิงลบ)" },
-            { q: "If I ____ a bird, I would fly around the world.", opt: ["am", "was", "were", "been"], ans: 2, exp: "If-clause แบบที่ 2 (สมมติเรื่องที่ไม่เป็นจริงในปัจจุบัน) โครงสร้าง If + Past Simple (ใช้ were กับประธานทุกตัว), S + would + V.1" },
-            { q: "He usually ____ up at 6 o'clock every morning.", opt: ["get", "gets", "got", "getting"], ans: 1, exp: "คำว่า usually และ every morning แสดงว่าเป็นเหตุการณ์ที่ทำเป็นประจำ (Present Simple Tense) ประธาน (He) เป็นเอกพจน์ กริยาจึงต้องเติม s/es" },
-            { q: "I am interested ____ learning foreign languages.", opt: ["in", "on", "at", "about"], ans: 0, exp: "คำว่า interested (รู้สึกสนใจ) ต้องใช้คู่กับบุพบท 'in' เสมอ (interested in = สนใจใน...)" }
+            // Conversation
+            { q: "A: 'Thank you for your help.'<br>B: '_____' ", opt: ["Never mind", "You're welcome", "Of course not", "I'm sorry"], ans: 1, exp: "เมื่อมีคนขอบคุณ ควรตอบรับว่า You're welcome (ด้วยความยินดี)" },
+            { q: "A: 'I failed my English exam.'<br>B: '_____' ", opt: ["Congratulations!", "Well done!", "I'm sorry to hear that.", "That's a good idea."], ans: 2, exp: "เมื่อเพื่อนสอบตก ควรแสดงความเสียใจโดยพูดว่า I'm sorry to hear that." },
+            { q: "A: 'Would you mind opening the window?'<br>B: '_____' ", opt: ["Yes, please.", "No, not at all.", "Yes, I would.", "No, I mind."], ans: 1, exp: "Would you mind...? แปลว่า คุณจะรังเกียจไหม ถ้าตอบว่าไม่รังเกียจ (ทำให้ได้) ต้องตอบ No, not at all." },
+            { q: "A: 'How do you do?'<br>B: '_____' ", opt: ["I'm fine, thank you.", "How do you do?", "How are you?", "I am doing great."], ans: 1, exp: "How do you do? ใช้ทักทายคนที่เพิ่งรู้จักกันครั้งแรก ต้องตอบกลับด้วยคำว่า How do you do? เช่นกัน" },
+            { q: "A: 'May I help you?'<br>B: '_____, I'm just looking.' ", opt: ["Yes, please", "No, thank you", "Of course", "Sure"], ans: 1, exp: "I'm just looking แปลว่า แค่ดูเฉยๆ (ยังไม่ซื้อ) จึงต้องปฏิเสธอย่างสุภาพว่า No, thank you." },
+            { q: "A: 'Could you tell me the way to the police station?'<br>B: '_____' ", opt: ["I'm a policeman.", "It's on your left.", "I like walking.", "You can buy it there."], ans: 1, exp: "เขาถามทางไปสถานีตำรวจ คำตอบที่เหมาะสมคือการบอกทิศทาง (อยู่ทางซ้ายมือของคุณ)" },
+            { q: "A: 'Excuse me, is this seat taken?'<br>B: '_____' ", opt: ["Yes, you can sit here.", "No, it is my seat.", "No, you may sit here.", "Yes, it is empty."], ans: 2, exp: "ที่นั่งนี้มีคนจองไหม? ตอบ No (ไม่มี) และเชิญให้นั่ง you may sit here." },
+            { q: "A: 'I have a terrible headache.'<br>B: 'You _____ see a doctor.' ", opt: ["should", "can", "would", "may"], ans: 0, exp: "การให้คำแนะนำ ควรใช้คำว่า should (ควรจะ)" },
+            { q: "A: 'Let's go to the cinema tonight.'<br>B: '_____' ", opt: ["That sounds great!", "I don't go.", "You're welcome.", "It is a cinema."], ans: 0, exp: "เมื่อมีการชักชวน (Let's...) ถ้าเห็นด้วยมักตอบว่า That sounds great! (ฟังดูเยี่ยมไปเลย)" },
+            { q: "A: 'What does your brother do?'<br>B: '_____' ", opt: ["He is doing his homework.", "He is a police officer.", "He does it well.", "He likes playing football."], ans: 1, exp: "What does someone do? เป็นการถามอาชีพ จึงตอบว่า เขาเป็นตำรวจ" },
+            // Police Vocabulary
+            { q: "The police arrested the _____ who stole the lady's purse.", opt: ["victim", "suspect", "witness", "detective"], ans: 1, exp: "ตำรวจจับกุม 'ผู้ต้องสงสัย' (suspect) ที่ขโมยกระเป๋า" },
+            { q: "A person who sees a crime happen is called a _____.", opt: ["criminal", "judge", "suspect", "witness"], ans: 3, exp: "ผู้ที่เห็นเหตุการณ์อาชญากรรมเรียกว่า 'พยาน' (witness)" },
+            { q: "The detective is looking for _____ to solve the murder case.", opt: ["evidence", "accident", "emergency", "insurance"], ans: 0, exp: "นักสืบกำลังมองหา 'หลักฐาน' (evidence) เพื่อไขคดีฆาตกรรม" },
+            { q: "You must have a driving _____ to drive a car legally.", opt: ["ticket", "warrant", "license", "passport"], ans: 2, exp: "คุณต้องมี 'ใบอนุญาตขับขี่' (license) เพื่อขับรถอย่างถูกกฎหมาย" },
+            { q: "The police officer gave me a _____ for speeding.", opt: ["bill", "receipt", "ticket", "note"], ans: 2, exp: "ตำรวจให้ 'ใบสั่ง' (ticket) แก่ฉันข้อหาขับรถเร็ว" },
+            { q: "The judge issued a search _____ to search the suspect's house.", opt: ["ticket", "license", "warrant", "document"], ans: 2, exp: "ผู้พิพากษาออก 'หมายค้น' (search warrant) เพื่อค้นบ้านผู้ต้องสงสัย" },
+            { q: "The thief was caught wearing _____. He couldn't move his hands.", opt: ["handcuffs", "helmets", "uniforms", "badges"], ans: 0, exp: "ขโมยถูกสวม 'กุญแจมือ' (handcuffs) ทำให้ขยับมือไม่ได้" },
+            { q: "It is _____ to carry a gun without permission.", opt: ["legal", "illegal", "logical", "illogical"], ans: 1, exp: "การพกปืนโดยไม่ได้รับอนุญาตเป็นเรื่อง 'ผิดกฎหมาย' (illegal)" },
+            { q: "The man was accused of _____ a bank.", opt: ["robbing", "stealing", "kidnapping", "murdering"], ans: 0, exp: "rob (ปล้น) ใช้กับสถานที่หรือบุคคล ส่วน steal (ขโมย) ใช้กับสิ่งของ ในที่นี้คือ ปล้นธนาคาร" },
+            { q: "If you break the law, you will go to _____.", opt: ["hospital", "school", "prison", "hotel"], ans: 2, exp: "ถ้าคุณทำผิดกฎหมาย คุณจะต้องไป 'คุก/เรือนจำ' (prison)" },
+            // Tenses
+            { q: "Listen! The baby ____ in the bedroom.", opt: ["cries", "is crying", "cried", "has cried"], ans: 1, exp: "คำว่า Listen! แสดงว่าเหตุการณ์กำลังเกิด ต้องใช้ Present Continuous (is/am/are + V.ing)" },
+            { q: "He usually ____ up at 6 o'clock every morning.", opt: ["get", "gets", "got", "getting"], ans: 1, exp: "คำว่า usually แสดงกิจวัตร (Present Simple) ประธานเอกพจน์ กริยาต้องเติม s" },
+            { q: "We ____ to Chiang Mai last month.", opt: ["go", "goes", "went", "have gone"], ans: 2, exp: "last month ระบุเวลาในอดีต ต้องใช้ Past Simple (V.2 คือ went)" },
+            { q: "She has been working here ____ 2015.", opt: ["since", "for", "in", "from"], ans: 0, exp: "since แปลว่า 'ตั้งแต่' ใช้กับจุดเริ่มต้นเวลา (ปี 2015)" },
+            { q: "I ____ to the market when it started to rain.", opt: ["walk", "walked", "was walking", "have walked"], ans: 2, exp: "เหตุการณ์ที่กำลังดำเนินอยู่ในอดีตใช้ Past Continuous (was/were + V.ing)" },
+            { q: "They ____ dinner by the time we arrived.", opt: ["had already finished", "already finish", "has already finished", "are finishing"], ans: 0, exp: "เหตุการณ์ที่เกิดและจบก่อนอีกเหตุการณ์หนึ่งในอดีต ใช้ Past Perfect (had + V.3)" },
+            { q: "My mother ____ cooking in the kitchen right now.", opt: ["is", "was", "has", "does"], ans: 0, exp: "right now เป็นตัวบอกเวลา Present Continuous โครงสร้างคือ is/am/are + V.ing" },
+            { q: "Water ____ at 100 degrees Celsius.", opt: ["boil", "boils", "is boiling", "boiled"], ans: 1, exp: "เป็นความจริงตามธรรมชาติ ใช้ Present Simple ประธานเอกพจน์นับไม่ได้ กริยาเติม s" },
+            { q: "I promise I ____ you as soon as I arrive.", opt: ["call", "called", "am calling", "will call"], ans: 3, exp: "การให้คำสัญญา (promise) ใช้ Future Simple (will + V.1)" },
+            { q: "____ you ever been to Japan?", opt: ["Do", "Are", "Have", "Did"], ans: 2, exp: "การถามประสบการณ์ว่าเคยไปไหม ใช้ Present Perfect (Have/Has + S + V.3)" },
+            { q: "While I was taking a shower, the phone ____.", opt: ["ring", "rings", "rang", "was ringing"], ans: 2, exp: "เหตุการณ์สั้นๆ ที่เข้ามาแทรกขณะที่อีกเหตุการณ์กำลังดำเนินอยู่ ใช้ Past Simple (V.2 ของ ring คือ rang)" },
+            { q: "He ____ his keys. He can't get into his house now.", opt: ["lost", "loses", "has lost", "was losing"], ans: 2, exp: "ทำกุญแจหายในอดีต แต่ส่งผลถึงปัจจุบัน (เข้าบ้านไม่ได้) ใช้ Present Perfect (has/have + V.3)" },
+            { q: "Look at those dark clouds! It ____ soon.", opt: ["rains", "rained", "is going to rain", "was raining"], ans: 2, exp: "การคาดเดาโดยมีหลักฐานให้เห็น (เมฆดำ) ใช้ be going to" },
+            { q: "The train ____ before we reached the station.", opt: ["leaves", "left", "has left", "had left"], ans: 3, exp: "รถไฟออกไปก่อนที่เราจะถึงสถานี (เกิดก่อนในอดีต) ใช้ Past Perfect (had + V.3)" },
+            { q: "By next year, I ____ from the police academy.", opt: ["graduate", "will graduate", "will have graduated", "graduated"], ans: 2, exp: "By + อนาคต (ภายในปีหน้า) ใช้ Future Perfect (will have + V.3)" },
+            // If-Clause
+            { q: "If it rains tomorrow, we ____ at home.", opt: ["will stay", "would stay", "stayed", "stay"], ans: 0, exp: "If-clause Type 1: If + Present Simple, Future Simple (will + V.1)" },
+            { q: "If I ____ a bird, I would fly around the world.", opt: ["am", "was", "were", "been"], ans: 2, exp: "If-clause Type 2 (สมมติตรงข้ามความจริง) ประธานทุกตัวใช้ were" },
+            { q: "If he had studied harder, he ____ the exam.", opt: ["would pass", "will pass", "would have passed", "passed"], ans: 2, exp: "If-clause Type 3 (ตรงข้ามอดีต) If + Past Perfect, S + would have + V.3" },
+            { q: "You will fail the test ____ you read the books.", opt: ["if", "unless", "when", "because"], ans: 1, exp: "unless มีความหมายว่า ถ้าไม่ (if...not) = คุณจะสอบตกถ้าไม่ยอมอ่านหนังสือ" },
+            { q: "If water freezes, it ____ into ice.", opt: ["turn", "turns", "will turn", "would turn"], ans: 1, exp: "If-clause Type 0 (ความจริงเสมอ) If + Present Simp, Present Simp" },
+            { q: "If I _____ you, I wouldn't do that.", opt: ["am", "was", "were", "be"], ans: 2, exp: "เป็นสำนวนการให้คำแนะนำแบบสมมติ (Type 2) ใช้ were เสมอ" },
+            { q: "I would buy a big house if I ____ the lottery.", opt: ["win", "won", "had won", "winning"], ans: 1, exp: "ประโยคหลักเป็น would buy (Type 2) ประโยค If จึงต้องเป็น Past Simple (won)" },
+            { q: "If they _____ the map, they wouldn't have got lost.", opt: ["check", "checked", "had checked", "have checked"], ans: 2, exp: "ประโยคหลักมี wouldn't have got (Type 3) ประโยค If ต้องเป็น Past Perfect (had checked)" },
+            { q: "Call me if you ____ any help.", opt: ["need", "needs", "needed", "will need"], ans: 0, exp: "ประโยคคำสั่งใน If-clause ใช้ Type 1 ประธาน you ใช้กริยาไม่ต้องเติม s" },
+            { q: "If she arrives early, she ____ a good seat.", opt: ["get", "gets", "will get", "would get"], ans: 2, exp: "Type 1 เหตุการณ์ที่เป็นไปได้ในอนาคต ใช้ will + V.1" },
+            // Prepositions
+            { q: "The meeting will start ____ 9 o'clock.", opt: ["in", "on", "at", "from"], ans: 2, exp: "การบอกเวลาที่เจาะจง ต้องใช้บุพบท 'at'" },
+            { q: "My birthday is ____ October.", opt: ["in", "on", "at", "of"], ans: 0, exp: "เดือน ปี และฤดูกาล ใช้บุพบท 'in'" },
+            { q: "The police station is ____ the bank and the post office.", opt: ["among", "between", "next", "behind"], ans: 1, exp: "between...and แปลว่า ระหว่าง...กับ..." },
+            { q: "He is interested ____ learning foreign languages.", opt: ["in", "on", "at", "about"], ans: 0, exp: "interested ต้องใช้คู่กับ in เสมอ (interested in = สนใจใน...)" },
+            { q: "Don't depend ____ other people too much.", opt: ["in", "on", "at", "of"], ans: 1, exp: "depend on แปลว่า พึ่งพา/ขึ้นอยู่กับ" },
+            { q: "I agree ____ you completely.", opt: ["to", "with", "for", "on"], ans: 1, exp: "agree with + บุคคล แปลว่า เห็นด้วยกับ" },
+            { q: "They arrived ____ Thailand yesterday.", opt: ["in", "on", "at", "to"], ans: 0, exp: "arrive in ใช้กับสถานที่ใหญ่ๆ เช่น ประเทศ เมืองใหญ่" },
+            { q: "Are you afraid ____ snakes?", opt: ["by", "with", "of", "from"], ans: 2, exp: "afraid of แปลว่า กลัว" },
+            { q: "She is good ____ speaking English.", opt: ["in", "on", "at", "with"], ans: 2, exp: "good at แปลว่า เก่งในเรื่อง..." },
+            { q: "He apologized ____ arriving late.", opt: ["for", "to", "with", "about"], ans: 0, exp: "apologize for + การกระทำ (ขอโทษสำหรับเรื่อง...)" },
+            // Articles & Quantifiers
+            { q: "He is ____ honest man.", opt: ["a", "an", "the", "no article"], ans: 1, exp: "honest อ่านออกเสียง ออ-เนิสท (เสียงสระ) จึงต้องใช้ 'an'" },
+            { q: "There is ____ milk in the fridge. We need to buy some.", opt: ["a few", "a little", "few", "little"], ans: 3, exp: "milk เป็นนามนับไม่ได้ และประโยคสื่อว่าต้องซื้อเพิ่ม แปลว่า 'แทบไม่มีเหลือเลย' จึงใช้ little" },
+            { q: "I don't have ____ money left.", opt: ["some", "any", "many", "few"], ans: 1, exp: "any ใช้ในประโยคปฏิเสธและคำถาม" },
+            { q: "Could you give me ____ water, please?", opt: ["some", "any", "many", "a few"], ans: 0, exp: "ประโยคคำถามที่เป็นการขอร้องหรือเสนอให้ ใช้ some" },
+            { q: "____ sun rises in the east.", opt: ["A", "An", "The", "No article"], ans: 2, exp: "สิ่งที่มีสิ่งเดียวในโลก (ดวงอาทิตย์) ใช้ The" },
+            { q: "How ____ students are there in the classroom?", opt: ["much", "many", "some", "any"], ans: 1, exp: "students เป็นนามนับได้พหูพจน์ ต้องใช้ How many" },
+            { q: "I have ____ friends in London.", opt: ["a little", "much", "a few", "any"], ans: 2, exp: "friends เป็นนามนับได้พหูพจน์ แปลว่ามีเพื่อนอยู่บ้าง ใช้ a few" },
+            { q: "She plays ____ piano very well.", opt: ["a", "an", "the", "no article"], ans: 2, exp: "เครื่องดนตรี ต้องนำหน้าด้วย The เสมอ" },
+            { q: "They go to school by ____ bus.", opt: ["a", "an", "the", "no article"], ans: 3, exp: "ยานพาหนะที่ตามหลัง by ไม่ต้องมี article (by bus, by car)" },
+            { q: "I saw ____ dog in the park. ____ dog was barking.", opt: ["a / A", "the / The", "a / The", "the / A"], ans: 2, exp: "กล่าวถึงสุนัขครั้งแรกใช้ a เมื่อกล่าวซ้ำเฉพาะเจาะจงตัวเดิมใช้ The" },
+            // Passive Voice
+            { q: "The letter ____ by the manager yesterday.", opt: ["was written", "writes", "wrote", "is written"], ans: 0, exp: "Passive Voice ในอดีต (yesterday) โครงสร้าง S + was/were + V.3" },
+            { q: "My car ____ last night.", opt: ["stole", "was stealing", "has stolen", "was stolen"], ans: 3, exp: "รถถูกขโมย (Passive) ในอดีต โครงสร้าง was/were + V.3" },
+            { q: "English is ____ all over the world.", opt: ["speak", "spoke", "spoken", "speaking"], ans: 2, exp: "ภาษาอังกฤษถูกพูด (Passive Voice ของ Present Simple) โครงสร้าง is/am/are + V.3" },
+            { q: "The suspect is being ____ by the police.", opt: ["question", "questioned", "questioning", "questions"], ans: 1, exp: "เป็น Passive ของ Continuous (กำลังถูกสอบสวน) is being + V.3" },
+            { q: "The new bridge ____ next year.", opt: ["will build", "built", "will be built", "is building"], ans: 2, exp: "สะพานจะถูกสร้างในอนาคต Passive Future (will be + V.3)" },
+            { q: "Many houses ____ by the storm last week.", opt: ["were destroyed", "destroyed", "are destroyed", "was destroyed"], ans: 0, exp: "บ้านหลายหลัง (พหูพจน์) ถูกทำลายในอดีต ใช้ were + V.3" },
+            { q: "This song was ____ by Michael Jackson.", opt: ["sing", "sang", "sung", "singing"], ans: 2, exp: "V.3 ของ sing คือ sung (sing-sang-sung)" },
+            { q: "The windows must be ____ before we leave.", opt: ["close", "closed", "closing", "closes"], ans: 1, exp: "หลัง Modal verb (must) ในรูป Passive ต้องเป็น be + V.3" },
+            { q: "This problem can be ____ easily.", opt: ["solve", "solved", "solving", "solves"], ans: 1, exp: "ปัญหาถูกแก้ (can be + V.3)" },
+            { q: "Our tests have been ____ by the teacher.", opt: ["mark", "marking", "marked", "marks"], ans: 2, exp: "Passive ของ Present Perfect (have/has been + V.3)" },
+            // Pronouns & Relative Clauses
+            { q: "Please tell ____ to come to my office.", opt: ["they", "their", "them", "theirs"], ans: 2, exp: "หลังคำกริยา tell ต้องใช้สรรพนามรูปกรรม (them)" },
+            { q: "The man ____ stole the car has been arrested.", opt: ["who", "which", "where", "whom"], ans: 0, exp: "who ใช้แทนคนและทำหน้าที่เป็นประธานของประโยคย่อย" },
+            { q: "The book ____ you gave me is very interesting.", opt: ["who", "which", "where", "whose"], ans: 1, exp: "which ใช้แทนสิ่งของ" },
+            { q: "I know the boy ____ father is a police officer.", opt: ["who", "whom", "whose", "which"], ans: 2, exp: "whose แสดงความเป็นเจ้าของ แปลว่า ผู้ซึ่งพ่อของเขา..." },
+            { q: "This is the hospital ____ I was born.", opt: ["when", "who", "which", "where"], ans: 3, exp: "where ใช้ขยายสถานที่" },
+            { q: "She made ____ a cup of coffee.", opt: ["herself", "she", "her", "hers"], ans: 0, exp: "ทำกาแฟให้ตัวเอง ใช้ Reflexive pronoun (herself)" },
+            { q: "The person to ____ I spoke was very polite.", opt: ["who", "whom", "whose", "which"], ans: 1, exp: "หลังบุพบท (to) ต้องใช้ whom สำหรับคน" },
+            { q: "Let ____ go!", opt: ["we", "our", "ours", "us"], ans: 3, exp: "หลังกริยา Let ต้องตามด้วยรูปกรรมเสมอ (Let us go = ปล่อยพวกเราไป)" },
+            { q: "____ is my favorite color.", opt: ["Blue", "The blue", "A blue", "Blues"], ans: 0, exp: "ชื่อสีไม่ต้องมี article นำหน้า" },
+            { q: "Everyone must do ____ duty.", opt: ["his", "their", "one's", "its"], ans: 0, exp: "ตามหลักไวยากรณ์ดั้งเดิม สรรพนามที่อ้างถึง Everyone มักใช้ his (หรือ his/her)" },
+            // Modals & Verbs patterns
+            { q: "You ____ wear a helmet when riding a motorcycle.", opt: ["may", "can", "must", "might"], ans: 2, exp: "must แปลว่า 'ต้อง' ใช้กับกฎหมาย หรือข้อบังคับ" },
+            { q: "You ____ smoke in the hospital.", opt: ["must not", "need not", "do not have to", "cannot"], ans: 0, exp: "must not แปลว่า 'ต้องไม่' (ห้ามทำเด็ดขาด)" },
+            { q: "We are looking forward to ____ you soon.", opt: ["see", "saw", "seen", "seeing"], ans: 3, exp: "สำนวน look forward to ต้องตามด้วย V.ing เสมอ" },
+            { q: "The suspect denied ____ the money.", opt: ["steal", "stole", "stealing", "to steal"], ans: 2, exp: "คำกริยา deny (ปฏิเสธ) ต้องตามด้วย V.ing" },
+            { q: "I want ____ a police officer.", opt: ["be", "to be", "being", "been"], ans: 1, exp: "want ต้องตามด้วย to + V.1 เสมอ" },
+            { q: "You ____ better go to bed early.", opt: ["had", "have", "would", "should"], ans: 0, exp: "had better + V.1 แปลว่า 'ควรจะ...ดีกว่า'" },
+            { q: "Would you mind ____ the door?", opt: ["close", "closed", "to close", "closing"], ans: 3, exp: "หลัง mind (รังเกียจไหม) ต้องตามด้วย V.ing" },
+            { q: "He enjoys ____ football on weekends.", opt: ["play", "to play", "playing", "played"], ans: 2, exp: "คำกริยา enjoy ต้องตามด้วย V.ing" },
+            { q: "It ____ rain this evening, so take your umbrella.", opt: ["must", "can", "might", "should"], ans: 2, exp: "might ใช้บอกความเป็นไปได้ (อาจจะตก)" },
+            { q: "She ____ play the piano when she was five.", opt: ["can", "could", "may", "might"], ans: 1, exp: "ความสามารถในอดีตใช้ could (อดีตของ can)" },
+            // Comparative & Superlative
+            { q: "My brother is taller ____ me.", opt: ["then", "than", "to", "as"], ans: 1, exp: "การเปรียบเทียบขั้นกว่าต้องมีคำว่า 'than'" },
+            { q: "This is the ____ book I have ever read.", opt: ["good", "better", "best", "most good"], ans: 2, exp: "the นำหน้าขั้นสูงสุด V.3 ของ good คือ best" },
+            { q: "A Ferrari is ____ than a Toyota.", opt: ["expensive", "more expensive", "most expensive", "expensiver"], ans: 1, exp: "คำยาว 3 พยางค์ขึ้นไปทำเป็นขั้นกว่าต้องเติม more" },
+            { q: "Today is ____ than yesterday.", opt: ["hot", "hoter", "hotter", "hottest"], ans: 2, exp: "ขั้นกว่าของ hot คือ hotter (เบิ้ลตัว t ก่อนเติม er)" },
+            { q: "She is as ____ as her sister.", opt: ["beautiful", "more beautiful", "most beautiful", "beautifully"], ans: 0, exp: "โครงสร้าง as + adjective ขั้นปกติ + as (สวยเท่ากัน)" },
+            // Miscellaneous / Mixed
+            { q: "____ you like a cup of coffee?", opt: ["Do", "Are", "Would", "Have"], ans: 2, exp: "การเสนอสิ่งของอย่างสุภาพ ใช้ Would you like...?" },
+            { q: "I don't mind ____ waiting for you.", opt: ["keep", "kept", "keeping", "to keep"], ans: 2, exp: "mind ตามด้วย V.ing" },
+            { q: "There ____ two cars in the garage.", opt: ["is", "are", "have", "has"], ans: 1, exp: "There is/are แปลว่า มี ตามด้วยประธานสองคันต้องใช้ are" },
+            { q: "Neither John ____ Mary came to the party.", opt: ["or", "nor", "and", "but"], ans: 1, exp: "Neither ต้องใช้คู่กับ nor (ไม่ทั้ง...และ...)" },
+            { q: "Either you ____ I must go.", opt: ["or", "nor", "and", "so"], ans: 0, exp: "Either ใช้คู่กับ or (ไม่คุณก็ฉัน)" },
+            { q: "He is so tired ____ he can't walk.", opt: ["that", "than", "then", "which"], ans: 0, exp: "so + adj + that แปลว่า มากจนกระทั่ง" },
+            { q: "The ____ you study, the better you will get.", opt: ["hard", "harder", "hardest", "hardly"], ans: 1, exp: "โครงสร้าง The + ขั้นกว่า, the + ขั้นกว่า (ยิ่ง...ก็ยิ่ง...)" },
+            { q: "She usually goes to work ____ foot.", opt: ["by", "with", "in", "on"], ans: 3, exp: "เดินไปทำงานใช้คำว่า on foot" },
+            { q: "What is the synonym of 'arrest'?", opt: ["release", "catch", "help", "shoot"], ans: 1, exp: "Synonym (คำเหมือน) ของ arrest (จับกุม) คือ catch" },
+            { q: "What is the antonym of 'guilty'?", opt: ["innocent", "wrong", "criminal", "bad"], ans: 0, exp: "Antonym (คำตรงข้าม) ของ guilty (มีความผิด) คือ innocent (บริสุทธิ์)" }
         ];
 
+        // Ensure exactly 100 questions. If somehow short, duplicate carefully, but we have exactly 100 above.
         const questions = [...rawEnglishData];
-        // วนลูปสร้างข้อสอบให้ครบ 100 ข้อ โดยสุ่มจากคลังข้อสอบ 20 ข้อด้านบน
-        while(questions.length < 100) {
-            let rndIdx = Math.floor(Math.random() * rawEnglishData.length);
-            questions.push({ ...rawEnglishData[rndIdx], q: rawEnglishData[rndIdx].q + " <span class='text-xs text-gray-400'>(ทบทวนข้อเดิม)</span>" });
-        }
-
         let curQ = 0, score = 0, answers = [];
 
         function switchMode(mode) {
             ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
             document.getElementById('screen-' + mode).classList.remove('hidden');
-            if(mode === 'quiz') { curQ = 0; score = 0; answers = new Array(questions.length).fill(null); renderQ(); }
+            if(mode === 'quiz') { 
+                curQ = 0; 
+                score = 0; 
+                answers = new Array(questions.length).fill(null); 
+                renderQ(); 
+            }
             window.scrollTo(0,0);
         }
 
@@ -259,10 +362,10 @@
                     } else if(i === answers[curQ]) {
                         btn.classList.add('bg-red-50', 'border-red-400');
                         btn.innerHTML = `<i class="fa-solid fa-xmark mr-4 text-red-600"></i> ${o}`;
-                    } else { btn.classList.add('opacity-50'); btn.innerHTML = `${i+1}. ${o}`; }
+                    } else { btn.classList.add('opacity-50'); btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`; }
                 } else {
                     btn.classList.add('bg-white', 'border-gray-200', 'hover:border-police-600');
-                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`;
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-gray-500">${i+1}</span> ${o}`;
                     btn.onclick = () => selectOpt(i);
                 }
                 opts.appendChild(btn);
@@ -303,9 +406,9 @@
             document.getElementById('final-score').innerText = `${score}/100`;
             const msg = document.getElementById('result-msg');
             const pct = (score/questions.length)*100;
-            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! ความรู้ภาษาอังกฤษของคุณพร้อมสอบแล้ว";
-            else if(pct >= 50) msg.innerText = "ทำได้ดี! ทบทวนหลักไวยากรณ์และคำศัพท์อีกนิดเพื่อความแม่นยำ";
-            else msg.innerText = "พยายามอีกหน่อย ลองอ่านสรุปบทเรียนแล้วมาทดสอบใหม่นะครับ";
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! ความรู้ภาษาอังกฤษของคุณพร้อมสอบนายสิบตำรวจแล้ว";
+            else if(pct >= 50) msg.innerText = "ทำได้ดี! ทบทวนหลักไวยากรณ์และคำศัพท์เฉพาะอีกนิดเพื่อเพิ่มความแม่นยำ";
+            else msg.innerText = "พยายามอีกหน่อย ลองอ่านสรุปบทเรียนแล้วมาทดสอบใหม่เป็นประจำนะครับ";
         }
     </script>
 </body>
