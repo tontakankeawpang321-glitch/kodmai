@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังความรู้ วิชาภาษาไทย ชุดที่ 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8fafc; }
+        .correct { background-color: #10b981 !important; color: white !important; border-color: #059669 !important; }
+        .wrong { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+        .option-btn:hover:not(:disabled) { transform: translateX(5px); background-color: #f1f5f9; }
+        .lesson-card { border-left: 4px solid #15803d; }
+    </style>
+</head>
+<body class="min-h-screen pb-10">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-green-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                </svg>
+                <span class="font-bold text-sm md:text-base">ติวภาษาไทย นายสิบทหารบก</span>
+            </div>
+            <div class="flex space-x-1 md:space-x-4">
+                <button onclick="switchMode('home')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm">หน้าหลัก</button>
+                <button onclick="switchMode('lesson')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-2 py-1 bg-white text-green-800 rounded font-bold text-xs md:text-sm shadow">เริ่มสอบ</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4">
+        
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-green-700 p-8 text-center text-white">
+                    <h1 class="text-3xl font-black mb-2">ภาษาไทย ชุดที่ 1</h1>
+                    <p class="opacity-90">คลังความรู้และแบบทดสอบ 100 ข้อ เพื่อความพร้อมสูงสุด</p>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('lesson')">
+                        <div class="text-green-700 text-4xl mb-2">📖</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดบทเรียน</h3>
+                        <p class="text-gray-500 text-sm">สรุปเนื้อหาสำคัญ หลักภาษา การใช้ภาษา</p>
+                    </div>
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('quiz')">
+                        <div class="text-orange-500 text-4xl mb-2">✍️</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดทดสอบ</h3>
+                        <p class="text-gray-500 text-sm">จำลองการสอบ 100 ข้อ พร้อมเฉลยละเอียด</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6">
+            <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-green-700 pb-2 mb-4">สรุปเนื้อหาสำคัญ</h2>
+            
+            <!-- การสร้างคำ -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm">
+                <h3 class="font-bold text-green-800 text-lg mb-3"># หลักภาษา (การสร้างคำ)</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                    <li>• <b>คำประสม:</b> นำคำมูล 2 คำขึ้นไปที่มีความหมายต่างกันมารวมกัน เกิดความหมายใหม่ (เช่น แม่น้ำ, ตู้เย็น, ลูกน้อง)</li>
+                    <li>• <b>คำซ้อน:</b> นำคำที่มีความหมายเหมือนกัน คล้ายกัน หรือตรงข้ามกันมาซ้อนกัน (เช่น ใหญ่โต, ถ้วยชาม, สูงต่ำ)</li>
+                    <li>• <b>คำสมาส:</b> นำคำบาลี-สันสกฤตมารวมกัน อ่านออกเสียงสระต่อเนื่อง และแปลความหมายจากหลังไปหน้า (เช่น ประวัติศาสตร์, อุบัติเหตุ)</li>
+                    <li>• <b>คำสนธิ:</b> สมาสแบบมีการเชื่อมเสียงกลืนกัน (เช่น วิทยา + อาลัย = วิทยาลัย, ธนู + อาคม = ธันวาคม)</li>
+                </ul>
+            </div>
+
+            <!-- ชนิดประโยค -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-orange-500" style="border-left-color: #f97316;">
+                <h3 class="font-bold text-orange-700 text-lg mb-3"># การใช้ภาษา (ชนิดของประโยค)</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                    <li>• <b>ประโยคความเดียว:</b> มีใจความสำคัญเดียว มีประธานและกริยาหลักเพียงชุดเดียว (เช่น หลานสาวตัวน้อยเดินไปโรงเรียน)</li>
+                    <li>• <b>ประโยคความรวม:</b> ประโยคความเดียว 2 ประโยคขึ้นไปเชื่อมกันด้วยคำสันธาน (และ, แต่, หรือ, จึง)</li>
+                    <li>• <b>ประโยคความซ้อน:</b> มีประโยคหลักและประโยคย่อยซ้อนกันอยู่ มักมีคำเชื่อม "ที่, ซึ่ง, อัน, ว่า, ให้"</li>
+                </ul>
+            </div>
+
+            <!-- สำนวนไทย -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-blue-500" style="border-left-color: #3b82f6;">
+                <h3 class="font-bold text-blue-700 text-lg mb-3"># สำนวน สุภาษิต คำพังเพย</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base">
+                    <li>• <b>กงเกวียนกำเกวียน:</b> กรรมสนองกรรม หรือเวรสนองเวร ทำอะไรไว้ก็ได้อย่างนั้น</li>
+                    <li>• <b>มือถือสาก ปากถือศีล:</b> ปากบอกว่าเป็นคนดีมีศีลธรรม แต่แท้จริงแล้วกลับประพฤติชั่ว</li>
+                    <li>• <b>แกว่งเท้าหาเสี้ยน:</b> หาเรื่องเดือดร้อนใส่ตัวทั้งที่อยู่ดีๆ ก็ไม่เป็นไร</li>
+                    <li>• <b>ชักหน้าไม่ถึงหลัง:</b> รายได้ไม่พอกับรายจ่าย</li>
+                    <li>• <b>ตำน้ำพริกละลายแม่น้ำ:</b> ลงทุนไปมากแต่ได้ผลประโยชน์กลับมาน้อย ไม่คุ้มค่า</li>
+                </ul>
+            </div>
+            
+            <button onclick="switchMode('quiz')" class="w-full bg-green-700 text-white p-4 rounded-xl font-bold shadow-lg mt-4">ไปที่แบบทดสอบ 👉</button>
+        </div>
+
+        <!-- 3. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4">
+            <!-- Progress & Score -->
+            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center sticky top-[72px] z-40">
+                <div class="w-1/2">
+                    <div class="text-xs font-bold text-gray-400 mb-1">ความคืบหน้า</div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-green-600 h-2 rounded-full transition-all" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div id="quiz-status" class="text-sm font-bold text-green-800">ข้อที่ 1/100</div>
+                    <div id="score-text" class="text-xs text-gray-500">คะแนน: 0</div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px] flex flex-col justify-between">
+                <div>
+                    <span id="q-cat" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block">ภาษาไทย</span>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-6">คำถามจะแสดงที่นี่</h3>
+                    
+                    <div id="options" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Explainer -->
+                <div id="explainer" class="hidden mt-6 p-4 rounded-lg">
+                    <p id="exp-title" class="text-base font-bold">💡 เฉลยและคำอธิบาย:</p>
+                    <p id="exp-text" class="text-sm text-gray-700 mt-2"></p>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-400 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 disabled:opacity-20">ก่อนหน้า</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="bg-green-700 text-white font-bold px-8 py-2 rounded-xl shadow-lg hover:bg-green-800">ถัดไป</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10">
+            <div class="bg-white p-10 rounded-3xl shadow-2xl">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-2xl font-black text-gray-800">สรุปผลการทดสอบ</h2>
+                <div class="text-7xl font-black text-green-600 my-6" id="final-score">0 / 100</div>
+                <p id="result-msg" class="text-gray-500 mb-8">พยายามได้ดีมากครับ ทบทวนอีกครั้งเพื่อความแม่นยำ!</p>
+                <div class="flex flex-col space-y-3">
+                    <button onclick="location.reload()" class="bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="text-gray-500 font-bold py-2">กลับหน้าหลัก</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Data containing questions extracted from Thai Exam PDF
+        const questions = [
+            { q: "ข้อใดคือลักษณะทั่วไปของภาษา", opt: ["ไม่มีเสียงวรรณยุกต์", "มีคำเกิดใหม่ คงอยู่ และตายไป", "แปรและเปลี่ยนไม่ได้", "มีจำนวนเสียงไม่จำกัด"], ans: 1, cat: "หลักภาษา", exp: "ภาษามีการเปลี่ยนแปลง เมื่อมีสิ่งใหม่ๆ เกิดขึ้นกระบวนการคิดแบบใหม่ก็เกิดขึ้นเป็นสาเหตุให้มีคำใหม่ ๆ เกิดขึ้นมา ในขณะเดียวกันคำที่เคยใช้ก็อาจสูญหายไปตามกาลเวลาเช่นกัน" },
+            { q: "คำภาษาไทยในข้อใดได้รับอิทธิพลมาจากภาษาจีน", opt: ["กษัตริย์ อาทิตย์", "เกม การ์ตูน", "ตึก เก้าอี้", "สนุก ถนน"], ans: 2, cat: "คำยืมต่างประเทศ", exp: "คำว่า ตึก, เก้าอี้ เป็นคำที่เกี่ยวกับสิ่งของเครื่องใช้ที่ไทยรับมาจากชาวจีน (ส่วนใหญ่มาจากภาษาพูด)" },
+            { q: "ข้อใดมีคำซ้ำที่แสดงความหมายต่างจากข้ออื่น", opt: ["อยู่ ๆ เขาก็ไป ไม่ทันได้ร่ำลา", "สวย ๆ แบบนี้เป็นดาราแน่นอน", "ตาเธอแดง ๆ เหมือนเพิ่งร้องไห้มา", "ปิดเทอมแล้ว คิดถึงเพื่อน ๆ จัง"], ans: 0, cat: "การสร้างคำ", exp: "คำว่า 'อยู่ ๆ' ซ้ำแล้วมีความหมายเปลี่ยนแปลงไป (หมายถึง เกิดขึ้นโดยไม่รู้ตัว) ส่วนข้ออื่นซ้ำเพื่อเน้นพหูพจน์หรือลักษณะให้เด่นชัดขึ้น" },
+            { q: "ข้อใดต่อไปนี้เป็นคำซ้อนทุกคำ", opt: ["ปัดกวาด ขัดถู แม่บ้าน", "โง่เขลา หมอดู เข็มทิศ", "ใหญ่โต ทรัพย์สิน ข้าทาส", "ถูกผิด สูญหาย ของเล่น"], ans: 2, cat: "การสร้างคำ", exp: "ใหญ่โต, ทรัพย์สิน, ข้าทาส เป็นคำซ้อนทุกคำ (เกิดจากการนำคำที่มีความหมายเหมือน/ใกล้เคียงมารวมกัน)" },
+            { q: "คำในข้อใดมีความหมายมากกว่าหนึ่งความหมาย", opt: ["นางฟ้า ยางลบ", "ปากตลาด โรงรับจำนำ", "ผู้ใหญ่ เกลียดชัง", "เรือจ้าง แกะดำ"], ans: 3, cat: "ความหมายของคำ", exp: "เรือจ้าง (หมายถึง เรือรับจ้าง หรือ ครู), แกะดำ (หมายถึง แกะสีดำ หรือ คนที่แปลกแยก) มีทั้งความหมายตรงและอุปมา" },
+            { q: "ข้อใดเป็นคำสมาสทุกคำ", opt: ["อุบัติเหตุ วีรบุรุษ ประวัติศาสตร์", "สมาคม นโยบาย คุณภาพ", "วรรณคดี อักษรศาสตร์ ธันวาคม", "ราชการ สัญจร พิธีกร"], ans: 0, cat: "การสร้างคำ", exp: "อุบัติเหตุ, วีรบุรุษ, ประวัติศาสตร์ เป็นคำสมาสทุกคำ มีการอ่านเสียงสระต่อเนื่องคำและแปลจากหลังไปหน้า" },
+            { q: "ข้อใดไม่ใช่ประโยคความรวม", opt: ["ประชาชนไม่ใช้สะพานลอย ตำรวจจึงต้องตักเตือน", "ทางการประกาศว่าแถวสีลมอากาศเป็นพิษ", "คนไทยรักสงบ แต่ยามรบก็ไม่ขลาด", "พอฝนจะตก เราก็รีบกลับบ้านทันที"], ans: 1, cat: "ชนิดของประโยค", exp: "เป็นประโยคความซ้อน ประโยคหลัก คือ 'ทางการประกาศ' ประโยคย่อย คือ 'แถวสีลมอากาศเป็นพิษ' โดยมีคำเชื่อมคือ 'ว่า'" },
+            { q: "ข้อใดไม่ใช่ประโยคความเดียว", opt: ["วิถีชีวิตของคนในชนบทเปลี่ยนแปลงไปตามกาลเวลา", "บ้านเป็นเสมือนโรงเรียนแห่งแรกของทุกคน", "พระวิหารวัดสุทัศนเทพวรารามเป็นที่รวมของศิลปกรรมเกือบทุกสาขา", "วิชาการสร้างเรือนไทยสืบทอดมาเป็นมรดกของชาวไทย"], ans: 3, cat: "ชนิดของประโยค", exp: "มี 2 ใจความเชื่อมกัน (สืบทอดมา + เป็นมรดกของชาวไทย) ไม่ใช่ความเดียว แต่เป็นประโยคความรวม" },
+            { q: "ประโยคในข้อใดไม่มีกรรมรอง", opt: ["รถชน", "แม่ให้นมน้อง", "แม่ซื้อของขวัญให้น้อง", "ฉันเขียนจดหมายถึงเพื่อน"], ans: 0, cat: "โครงสร้างประโยค", exp: "รถชน คำว่า ชน เป็นอกรรมกริยา คือกริยาที่ไม่ต้องมีกรรมมารองรับ มีความสมบูรณ์ในตัวเอง" },
+            { q: "ข้อใดไม่มีการโน้มน้าวใจ", opt: ["กระทะไฟฟ้าราคามิตรภาพ", "กว่า 1 ล้านคน เลือกใช้ผลิตภัณฑ์ของเรา", "ศูนย์อาหารของโรงพยาบาลเปิดให้บริการ เวลา 08.00 น.", "รองเท้าเบาสบาย ใส่แล้วไม่กัดเท้า"], ans: 2, cat: "เจตนาในการส่งสาร", exp: "เป็นเพียงประโยคแจ้งให้ทราบข้อมูลเฉยๆ ไม่ได้มุ่งโน้มน้าวใจผู้ฟังเหมือนข้ออื่นๆ" },
+            { q: "สำนวนไทยในข้อใดไม่มีความหมายว่า 'หาเรื่องเดือดร้อนใส่ตัวเอง'", opt: ["แกว่งเท้าหาเสี้ยน", "ฝากเนื้อไว้กับเสือ", "เอามือซุกหีบ", "หาเหาใส่หัว"], ans: 1, cat: "สำนวนไทย", exp: "ฝากเนื้อไว้กับเสือ หมายถึง ไว้ใจคนที่ไม่ควรไว้ใจ (ข้ออื่นหมายถึงหาเรื่องเดือดร้อนใส่ตัวทั้งหมด)" },
+            { q: "ข้อใดใช้สำนวนไทยได้ถูกต้องเหมาะสม", opt: ["ทำอะไรคล่องแคล่วเหมือนกระต่ายตื่นตูม", "สิ่งที่เขาทำร้ายเด็กๆ ในวันนี้ วันหน้าจะเกิดกับเขาเป็นกงเกวียนกำเกวียน", "คู่รักคู่นี้ดูรักกันหวานชื่น สมกับขิงก็รา ข่าก็แรง", "เธอตัวเล็กเหมือนเตี้ยอุ้มค่อม ดูน่ารัก"], ans: 1, cat: "สำนวนไทย", exp: "กงเกวียนกำเกวียน = กรรมสนองกรรม หรือเวรสนองเวร ใช้ได้ถูกต้องตามบริบท" },
+            { q: "อดีตเป็นที่รัก พอได้ตำแหน่งใหญ่กลับไม่ฟังเสียงพนักงาน ตรงกับสำนวนใด", opt: ["ความรู้ท่วมหัว เอาตัวไม่รอด", "เงาตามตัว", "เขียนด้วยมือ ลบด้วยเท้า", "ชักใบให้เรือเสีย"], ans: 2, cat: "สำนวนไทย", exp: "เขียนด้วยมือ ลบด้วยเท้า หมายถึง ทำความดีไว้แล้วแต่กลับทำลายความดีนั้นเสียเองด้วยการกระทำภายหลัง" },
+            { q: "ข้อใดใช้สำนวนไม่ถูกต้อง", opt: ["ลูกชายเรียนเก่งเหมือนพ่อ ลูกไม้หล่นไม่ไกลต้น", "เหมาะสมกัน ราวกับกิ่งทองใบหยก", "ยอมใช้ชีวิตกัดก้อนเกลือกินกับเขา", "กว่าจะจัดห้องเสร็จก็เหมือนจับปูใส่กระด้ง"], ans: 3, cat: "สำนวนไทย", exp: "จับปูใส่กระด้ง หมายความว่า ซุกซนมาก ยากที่จะทำให้อยู่นิ่งๆ ไม่ได้แปลว่าของเยอะหรือจัดยาก" },
+            { q: "ข้อใดอ่านผิด", opt: ["โฆษณา อ่านว่า โคด-สะ-นา", "รอมร่อ อ่านว่า รอม-มะ-ร่อ", "สัดบุรุษ อ่านว่า สัด-ตะ-บุ-หรุด", "จักจั่น อ่านว่า จัก-กะ-จั่น"], ans: 2, cat: "การอ่านคำ", exp: "สัดบุรุษ ต้องอ่านว่า สัด-บุ-หรุด แปลว่า คนดีน่านับถือ มีคุณธรรม ประพฤติอยู่ในศีลในธรรม (ไม่อ่านแบบมี ตะ)" },
+            { q: "ข้อใดสะกดถูกทุกคำ", opt: ["สูญสิ้น ทศกัณฑ์ มะปราง", "แดงก่ำ อภิวันท์ สูงชลูด", "พิษฐาน พิศวาส พิศวง", "จาระนัย เจตจำนง ปณิธาน"], ans: 2, cat: "การสะกดคำ", exp: "ข้อ 1 ผิด ทศกัณฐ์, ข้อ 2 ผิด สูงชะลูด, ข้อ 4 ผิด จาระไน ดังนั้นข้อ 3 จึงสะกดถูกทุกคำ" },
+            { q: "จับคู่คำราชาศัพท์กับคำสามัญ ข้อใดไม่ถูกต้อง", opt: ["พระเจ้า = ศีรษะ", "พระปรางค์ = แก้ม", "พระอุระ = อก", "พระอุทร = ท้อง"], ans: 0, cat: "ราชาศัพท์", exp: "พระเจ้า ไม่ได้แปลว่าศีรษะ ที่ถูกต้องคือ 'พระเศียร' หมายถึง ศีรษะ" },
+            { q: "สำนวนไทยข้อใดมีความหมายเหมือนกับ 'ขี่ช้างจับตั๊กแตน'", opt: ["เข็นครกขึ้นภูเขา", "ฝนทั่งให้เป็นเข็ม", "รีดเลือดกับปู", "ตำน้ำพริกละลายแม่น้ำ"], ans: 3, cat: "สำนวนไทย", exp: "ตำน้ำพริกละลายแม่น้ำ = ลงแรงหรือลงทุนไปมากแต่สูญเปล่า ได้ผลประโยชน์กลับมาน้อย ไม่คุ้มค่า" },
+            { q: "ข้อใดเรียงลำดับคำตามพจนานุกรมได้ถูกต้อง", opt: ["กระทู้ กระนั้น กฤตยา กลาบาต กวางตุ้ง", "กระทู้ กระนั้น กลาบาต กวางตุ้ง กฤตยา", "กระทู้ กระนั้น กวางตุ้ง กลาบาต กฤตยา", "กระนั้น กระทู้ กลาบาต กฤตยา กวางตุ้ง"], ans: 0, cat: "หลักภาษา", exp: "เรียงตามพยัญชนะ ก-ฮ และตามรูปสระ กฤตยา (ฤ ถือเป็นสระที่อยู่หลัง ร)" },
+            { q: "เสียงพยัญชนะในภาษาไทยมีกี่เสียง", opt: ["44 เสียง", "31 เสียง", "21 เสียง", "11 เสียง"], ans: 2, cat: "หลักภาษา", exp: "ภาษาไทยมีพยัญชนะ 44 รูป แต่มีเสียงพยัญชนะซ้ำกัน เช่น ข ฃ ค ฅ ฆ ออกเสียงเหมือนกัน ทำให้มีเสียงจริงๆ เพียง 21 เสียง" },
+            { q: "การฟังอย่างมีประสิทธิภาพ คือการฟังข้อใด", opt: ["จับสาระสำคัญได้", "จดบันทึกได้ทัน", "ปราศจากอคติ", "มีสมาธิในการฟัง"], ans: 0, cat: "ทักษะภาษา", exp: "จุดประสงค์สูงสุดและผลลัพธ์ของการฟังอย่างมีประสิทธิภาพคือ สามารถจับใจความและสาระสำคัญของเรื่องได้" },
+            { q: "ข้อใดจัดเป็นสระเกิน ตามตำราของพระยาอุปกิตศิลปสาร", opt: ["อำ ไอ เอา ฤ", "เอีย อัว เอือ เอียะ", "อา อี อู โอ", "โอะ ออ อือ เออ"], ans: 0, cat: "หลักภาษา", exp: "สระเกิน คือสระที่มีเสียงพยัญชนะประสมอยู่ ได้แก่ อำ ใอ ไอ เอา ฤ ฤๅ ฦ ฦๅ" },
+            { q: "คำว่า 'ความกตัญญู' เป็นคำนามประเภทใด", opt: ["สามานยนาม", "วิสามานยนาม", "ลักษณะนาม", "อาการนาม"], ans: 3, cat: "ชนิดของคำ", exp: "อาการนาม คือคำนามที่ได้จากคำกริยาหรือคุณศัพท์ โดยเติม การ- หรือ ความ- นำหน้า เพื่อทำให้เป็นนาม" },
+            { q: "ข้อใดเขียนประโยคถูกต้อง", opt: ["วันนี้ฝนตก, หนักมาก", "วันนี้ฝนตกหนักมาก", "วันนี้ฝนตก หนักมาก", "วันนี้ฝนตก/หนักมาก"], ans: 1, cat: "การเขียน", exp: "ภาษาไทยไม่ใช้เครื่องหมายจุลภาค (,) คั่นระหว่างคำขยายแบบภาษาอังกฤษ ควรเขียนติดกันเลย" },
+            { q: "'สินสมุทร' เป็นบุตรของใครในวรรณคดีเรื่อง พระอภัยมณี", opt: ["พระอภัยมณีกับนางเงือก", "พระอภัยมณีกับนางผีเสื้อสมุทร", "พระอภัยมณีกับนางละเวงวัณฬา", "พระอภัยมณีกับนางสุวรรณมาลี"], ans: 1, cat: "วรรณคดี", exp: "สินสมุทรเป็นบุตรที่เกิดจากพระอภัยมณีและนางผีเสื้อสมุทร (ส่วนสุดสาครเกิดจากนางเงือก)" },
+            { q: "จงเลือกคำที่สะกดผิด", opt: ["อสนีบาต", "บิณฑบาตร", "ปาณาติปาตา", "ตักบาตร"], ans: 1, cat: "การสะกดคำ", exp: "คำที่ถูกต้องคือ บิณฑบาต (ไม่มี ร) หมายถึง การออกไปรับอาหารของพระสงฆ์ (ส่วน ตักบาตร มี ร ถูกต้องแล้ว)" },
+            { q: "การนับวันทางสุริยคติ ถ้าปีใดมีวันที่ 29 กุมภาพันธ์ เรียกว่าปีนั้นมีอะไร", opt: ["อธิกสุรทิน", "อธิกดิถี", "อธิกวาร", "อธิกมาส"], ans: 0, cat: "ความรู้ทั่วไป", exp: "ปีที่มี 366 วัน (เดือนกุมภาพันธ์มี 29 วัน) เรียกว่าปี อธิกสุรทิน" },
+            { q: "สำนวน 'ตีตนไปก่อนไข้' หมายถึงอะไร", opt: ["ห่วงสุขภาพมากไป", "รีบกินยาก่อนป่วย", "กังวลเรื่องที่ยังไม่เกิด", "ชอบคิดว่าตัวเองป่วย"], ans: 2, cat: "สำนวนไทย", exp: "หมายถึง การวิตกกังวล หวาดกลัวกับเรื่องที่ยังมาไม่ถึง หรือการทุกข์ใจไปล่วงหน้า" },
+            { q: "สำนวนในข้อใดถูกต้อง", opt: ["กงกำกงเกวียน", "กวนน้ำขุ่น ๆ", "กาคาบพริกแดง", "เกลียดตัวกินไข่"], ans: 3, cat: "สำนวนไทย", exp: "เกลียดตัวกินไข่ ถูกต้อง (เกลียดตัวกินไข่ เกลียดปลาไหลกินน้ำแกง) ส่วนข้ออื่นที่ถูกคือ กงเกวียนกำเกวียน, กวนน้ำให้ขุ่น, กาคาบพริก" },
+            { q: "วรรณคดีเรื่องใดเป็นพระราชนิพนธ์ในรัชกาลที่ 6", opt: ["มัทนะพาธา", "ขุนช้างขุนแผน", "พระอภัยมณี", "รามเกียรติ์"], ans: 0, cat: "วรรณคดี", exp: "มัทนะพาธา (ตำนานแห่งดอกกุหลาบ) เป็นบทละครพูดคำฉันท์ พระราชนิพนธ์ในพระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว (ร.6)" }
+        ];
+
+        // Fill remaining questions to reach 100 for simulation
+        // (This will duplicate the above 30 questions randomly to complete the 100 question set)
+        const baseLength = questions.length;
+        while(questions.length < 100) {
+            let template = questions[Math.floor(Math.random() * baseLength)];
+            questions.push({ ...template, q: template.q + " (ทบทวนซ้ำ ข้อ " + (questions.length + 1) + ")" });
+        }
+
+        let curQ = 0;
+        let score = 0;
+        let answers = new Array(questions.length).fill(null);
+
+        function switchMode(mode) {
+            ['home', 'lesson', 'quiz', 'result'].forEach(s => document.getElementById('screen-'+s).classList.add('hidden'));
+            document.getElementById('screen-'+mode).classList.remove('hidden');
+            window.scrollTo(0,0);
+            if(mode === 'quiz') renderQ();
+        }
+
+        function renderQ() {
+            const q = questions[curQ];
+            document.getElementById('q-cat').innerText = q.cat;
+            document.getElementById('q-text').innerHTML = q.q;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ+1)/questions.length)*100}%`;
+            
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
+            q.opt.forEach((o, i) => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn w-full p-4 text-left border-2 border-gray-100 rounded-xl font-medium transition flex items-center";
+                btn.innerHTML = `<span class="bg-gray-100 min-w-[32px] w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-500">${i+1}</span> <span>${o}</span>`;
+                
+                if(answers[curQ] !== null) {
+                    btn.disabled = true;
+                    if(i === q.ans) btn.classList.add('correct');
+                    else if(i === answers[curQ]) btn.classList.add('wrong');
+                } else {
+                    btn.onclick = () => select(i);
+                }
+                opts.appendChild(btn);
+            });
+
+            const explainer = document.getElementById('explainer');
+            const expTitle = document.getElementById('exp-title');
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                const isCorrect = (answers[curQ] === q.ans);
+                
+                if(isCorrect) {
+                    // กรณีตอบถูก: กล่องสีเขียว
+                    explainer.className = "mt-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg";
+                    expTitle.className = "text-base font-bold text-green-800";
+                    expTitle.innerHTML = "✅ ถูกต้อง!";
+                } else {
+                    // กรณีตอบผิด: กล่องสีแดง
+                    explainer.className = "mt-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg";
+                    expTitle.className = "text-base font-bold text-red-800";
+                    expTitle.innerHTML = "❌ ผิดครับ! (คำตอบที่ถูกต้องคือข้อ " + (q.ans + 1) + ")";
+                }
+                
+                document.getElementById('exp-text').innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
+            } else {
+                explainer.className = "hidden mt-6 p-4 rounded-lg";
+            }
+
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            document.getElementById('btn-next').innerText = curQ === questions.length - 1 ? "ดูผลลัพธ์" : "ข้อต่อไป";
+        }
+
+        function select(idx) {
+            answers[curQ] = idx;
+            if(idx === questions[curQ].ans) score++;
+            renderQ();
+            
+            // Auto scroll to explanation for mobile UX
+            setTimeout(() => {
+                document.getElementById('explainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function changeQ(step) {
+            if(curQ + step >= 0 && curQ + step < questions.length) {
+                curQ += step;
+                renderQ();
+                window.scrollTo(0,0);
+            } else if(curQ + step === questions.length) {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            switchMode('result');
+            document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+            const msg = document.getElementById('result-msg');
+            const pct = (score/questions.length)*100;
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! คุณพร้อมสำหรับการสอบแล้ว";
+            else if(pct >= 50) msg.innerText = "ดีพอสมควร ลองทบทวนข้อที่ผิดอีกครั้งนะ";
+            else msg.innerText = "ต้องพยายามเพิ่มอีกหน่อย ลองอ่านบทเรียนสรุปข้างต้นดูครับ";
+        }
+
+    </script>
+</body>
+</html>
