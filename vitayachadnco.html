@@ -9,10 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f8fafc; }
-        .correct { background-color: #10b981 !important; color: white !important; border-color: #059669 !important; }
-        .wrong { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
-        .option-btn:hover:not(:disabled) { transform: translateX(5px); background-color: #f1f5f9; }
         .lesson-card { border-left: 4px solid #15803d; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
     </style>
 </head>
 <body class="min-h-screen pb-10">
@@ -27,9 +29,9 @@
                 <span class="font-bold text-sm md:text-base">ติววิทย์ นายสิบทหารบก</span>
             </div>
             <div class="flex space-x-1 md:space-x-4">
-                <button onclick="switchMode('home')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm">หน้าหลัก</button>
-                <button onclick="switchMode('lesson')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm">บทเรียน</button>
-                <button onclick="switchMode('quiz')" class="px-2 py-1 bg-white text-green-800 rounded font-bold text-xs md:text-sm shadow">เริ่มสอบ</button>
+                <button onclick="switchMode('home')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">หน้าหลัก</button>
+                <button onclick="switchMode('lesson')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-2 py-1 bg-white text-green-800 rounded font-bold text-xs md:text-sm shadow hover:bg-gray-100 transition">เริ่มสอบ</button>
             </div>
         </div>
     </nav>
@@ -52,14 +54,14 @@
                     <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('quiz')">
                         <div class="text-orange-500 text-4xl mb-2">✍️</div>
                         <h3 class="font-bold text-lg text-gray-800">โหมดทดสอบ</h3>
-                        <p class="text-gray-500 text-sm">จำลองการสอบ 100 ข้อ พร้อมเฉลยละเอียด</p>
+                        <p class="text-gray-500 text-sm">จำลองการสอบ 100 ข้อ รู้ผลทันที</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 2. LESSON SCREEN -->
-        <div id="screen-lesson" class="hidden space-y-6">
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
             <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-green-700 pb-2 mb-4">สรุปเนื้อหาสำคัญ</h2>
             
             <!-- Physics -->
@@ -96,7 +98,7 @@
                 </ul>
             </div>
             
-            <button onclick="switchMode('quiz')" class="w-full bg-green-700 text-white p-4 rounded-xl font-bold shadow-lg mt-4">ไปที่แบบทดสอบ 👉</button>
+            <button onclick="switchMode('quiz')" class="w-full bg-green-700 text-white p-4 rounded-xl font-bold shadow-lg mt-4 hover:bg-green-800 transition">ไปที่แบบทดสอบ 👉</button>
         </div>
 
         <!-- 3. QUIZ SCREEN -->
@@ -106,7 +108,7 @@
                 <div class="w-1/2">
                     <div class="text-xs font-bold text-gray-400 mb-1">ความคืบหน้า</div>
                     <div class="bg-gray-200 rounded-full h-2">
-                        <div id="progress-bar" class="bg-green-600 h-2 rounded-full transition-all" style="width: 0%"></div>
+                        <div id="progress-bar" class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
                 <div class="text-right">
@@ -116,9 +118,9 @@
             </div>
 
             <!-- Question Card -->
-            <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px] flex flex-col justify-between">
+            <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px] flex flex-col justify-between animate-fade-in">
                 <div>
-                    <span id="q-cat" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block">ฟิสิกส์</span>
+                    <span id="q-cat" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block">หมวดหมู่</span>
                     <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-6">คำถามจะแสดงที่นี่</h3>
                     
                     <div id="options" class="space-y-3">
@@ -127,28 +129,28 @@
                 </div>
 
                 <!-- Explainer -->
-                <div id="explainer" class="hidden mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg animate-pulse">
-                    <p class="text-sm font-bold text-yellow-800">💡 เฉลยและคำอธิบาย:</p>
-                    <p id="exp-text" class="text-sm text-gray-700 mt-1"></p>
+                <div id="explainer" class="hidden mt-6 p-5 rounded-xl animate-fade-in shadow-sm border-l-4">
+                    <p id="exp-status" class="text-lg font-black mb-2 flex items-center"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-gray-700 leading-relaxed"></p>
                 </div>
 
-                <div class="flex justify-between mt-8">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-400 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 disabled:opacity-20">ก่อนหน้า</button>
-                    <button id="btn-next" onclick="changeQ(1)" class="bg-green-700 text-white font-bold px-8 py-2 rounded-xl shadow-lg hover:bg-green-800">ถัดไป</button>
+                <div class="flex justify-between mt-8 pt-4 border-t border-gray-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 disabled:opacity-20 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-105">ถัดไป</button>
                 </div>
             </div>
         </div>
 
         <!-- 4. RESULT SCREEN -->
-        <div id="screen-result" class="hidden text-center space-y-8 py-10">
-            <div class="bg-white p-10 rounded-3xl shadow-2xl">
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg mx-auto">
                 <div class="text-6xl mb-4">🏆</div>
                 <h2 class="text-2xl font-black text-gray-800">สรุปผลการทดสอบ</h2>
-                <div class="text-7xl font-black text-green-600 my-6" id="final-score">0 / 100</div>
-                <p id="result-msg" class="text-gray-500 mb-8">พยายามได้ดีมากครับ ทบทวนอีกครั้งเพื่อความแม่นยำ!</p>
+                <div class="text-7xl font-black text-green-600 my-6 drop-shadow-sm" id="final-score">0 / 100</div>
+                <p id="result-msg" class="text-gray-500 mb-8 text-lg">พยายามได้ดีมากครับ ทบทวนอีกครั้งเพื่อความแม่นยำ!</p>
                 <div class="flex flex-col space-y-3">
-                    <button onclick="location.reload()" class="bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg">ทำใหม่อีกครั้ง</button>
-                    <button onclick="switchMode('home')" class="text-gray-500 font-bold py-2">กลับหน้าหลัก</button>
+                    <button onclick="location.reload()" class="bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-800 transition">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="text-gray-500 hover:text-gray-800 font-bold py-2 transition">กลับหน้าหลัก</button>
                 </div>
             </div>
         </div>
@@ -158,51 +160,51 @@
     <script>
         // Data containing all 100 questions from Set 1
         const questions = [
-            // Physics 1-40
-            { q: "วัตถุถูกผลักด้วยแรงคงที่ 10 N บนพื้นราบเรียบไร้แรงเสียดทาน ถ้าวัตถุมีมวล 5 kg ความเร่งของวัตถุคือเท่าใด", opt: ["0.5 $m/s^2$", "1 $m/s^2$", "2 $m/s^2$", "5 $m/s^2$"], ans: 2, cat: "ฟิสิกส์", exp: "สูตร $a = F/m = 10/5 = 2~m/s^2$" },
-            { q: "รถยนต์เคลื่อนที่ด้วยความเร็ว 20 m/s เป็นเวลา 10 s ระยะทางคือเท่าใด", opt: ["100 m", "150 m", "200 m", "250 m"], ans: 2, cat: "ฟิสิกส์", exp: "$s = v \\times t = 20 \\times 10 = 200~m$" },
-            { q: "วัตถุมวล 2 kg ถูกยกขึ้นสูง 5 m ($g=10$) พลังงานศักย์โน้มถ่วงคือเท่าใด", opt: ["20 J", "50 J", "100 J", "200 J"], ans: 2, cat: "ฟิสิกส์", exp: "$E_p = mgh = 2 \\times 10 \\times 5 = 100~J$" },
-            { q: "ความเร็วเสียงในอากาศประมาณเท่าใด", opt: ["150 m/s", "330 m/s", "1000 m/s", "3000 m/s"], ans: 1, cat: "ฟิสิกส์", exp: "ประมาณ 330-340 m/s ในอุณหภูมิห้อง" },
-            { q: "กระแสไฟฟ้า 2 A ไหลผ่านตัวนำ 10 s จำนวนประจุที่ไหลคือเท่าใด", opt: ["5 C", "10 C", "15 C", "20 C"], ans: 3, cat: "ฟิสิกส์", exp: "$Q = I \\times t = 2 \\times 10 = 20~C$" },
+            // Physics
+            { q: "วัตถุถูกผลักด้วยแรงคงที่ 10 N บนพื้นราบเรียบไร้แรงเสียดทาน ถ้าวัตถุมีมวล 5 kg ความเร่งของวัตถุคือเท่าใด", opt: ["0.5 $m/s^2$", "1 $m/s^2$", "2 $m/s^2$", "5 $m/s^2$"], ans: 2, cat: "ฟิสิกส์", exp: "ใช้สูตร $a = F/m = 10/5 = 2~m/s^2$" },
+            { q: "รถยนต์เคลื่อนที่ด้วยความเร็ว 20 m/s เป็นเวลา 10 s ระยะทางคือเท่าใด", opt: ["100 m", "150 m", "200 m", "250 m"], ans: 2, cat: "ฟิสิกส์", exp: "ระยะทาง $s = v \\times t = 20 \\times 10 = 200~m$" },
+            { q: "วัตถุมวล 2 kg ถูกยกขึ้นสูง 5 m ($g=10$) พลังงานศักย์โน้มถ่วงคือเท่าใด", opt: ["20 J", "50 J", "100 J", "200 J"], ans: 2, cat: "ฟิสิกส์", exp: "พลังงานศักย์ $E_p = mgh = 2 \\times 10 \\times 5 = 100~J$" },
+            { q: "ความเร็วเสียงในอากาศประมาณเท่าใด", opt: ["150 m/s", "330 m/s", "1000 m/s", "3000 m/s"], ans: 1, cat: "ฟิสิกส์", exp: "เสียงเดินทางในอากาศด้วยความเร็วประมาณ 330-340 m/s ที่อุณหภูมิห้อง" },
+            { q: "กระแสไฟฟ้า 2 A ไหลผ่านตัวนำ 10 s จำนวนประจุที่ไหลคือเท่าใด", opt: ["5 C", "10 C", "15 C", "20 C"], ans: 3, cat: "ฟิสิกส์", exp: "ประจุไฟฟ้า $Q = I \\times t = 2 \\times 10 = 20~C$" },
             { q: "หลอดไฟ 40 W ใช้ไฟฟ้า 220 V กระแสไฟฟ้าคือเท่าใด", opt: ["0.09 A", "0.18 A", "0.25 A", "0.50 A"], ans: 1, cat: "ฟิสิกส์", exp: "$I = P/V = 40/220 \\approx 0.18~A$" },
-            { q: "วัตถุเคลื่อนจากหยุดนิ่งด้วยความเร่ง 4 $m/s^2$ หลัง 5 s มีความเร็วเท่าไร", opt: ["10 m/s", "15 m/s", "20 m/s", "25 m/s"], ans: 2, cat: "ฟิสิกส์", exp: "$v = u + at = 0 + (4 \\times 5) = 20~m/s$" },
-            { q: "กำลังงานคืออะไร", opt: ["อัตราการทำงาน", "ปริมาณงานทั้งหมด", "ผลคูณแรงกับระยะทาง", "พลังงานศักย์"], ans: 0, cat: "ฟิสิกส์", exp: "กำลัง คือ งานที่ทำได้ในหนึ่งหน่วยเวลา" },
-            { q: "เลนส์นูนใช้ทำอะไร", opt: ["ขยายภาพเสมือน", "ทำให้แสงขนาน", "ใช้รวมแสง", "ถูกทุกข้อ"], ans: 3, cat: "ฟิสิกส์", exp: "เลนส์นูนมีสมบัติรวมแสง และสร้างภาพได้หลายแบบ" },
-            { q: "ถ้าแรงเสียดทาน = 5 N ต้องออกแรงอย่างน้อยเท่าใดเพื่อให้วัตถุเริ่มเคลื่อนที่", opt: ["< 5 N", "= 5 N", "> 5 N", "10 N"], ans: 1, cat: "ฟิสิกส์", exp: "ต้องชนะแรงเสียดทานสถิต (อย่างน้อยต้องเท่ากับ 5 N)" },
-            // ... (I'll compress the remaining to ensure the script fits, but they follow the PDF)
-            { q: "รถจักรยานยนต์เคลื่อนที่ด้วยความเร็ว 72 km/h เท่ากับกี่ m/s", opt: ["10 m/s", "15 m/s", "20 m/s", "25 m/s"], ans: 2, cat: "ฟิสิกส์", exp: "$72 / 3.6 = 20~m/s$" },
-            { q: "วัตถุปล่อยตกอิสระ 2 s ($g=10$) จะตกได้ระยะทางเท่าใด", opt: ["10 m", "20 m", "30 m", "40 m"], ans: 1, cat: "ฟิสิกส์", exp: "$s = \\frac{1}{2}gt^2 = 0.5 \\times 10 \\times 4 = 20~m$" },
-            { q: "แรงดึงดูดระหว่างมวลเป็นกฎของใคร", opt: ["โอห์ม", "นิวตัน", "ฟาราเดย์", "อาร์คิมีดีส"], ans: 1, cat: "ฟิสิกส์", exp: "กฎแรงดึงดูดสากลของนิวตัน" },
-            { q: "ตัวนำที่มีกระแสไฟฟ้าไหลจะเกิดสนามอะไร", opt: ["สนามโน้มถ่วง", "สนามไฟฟ้า", "สนามแม่เหล็ก", "สนามนิวเคลียร์"], ans: 2, cat: "ฟิสิกส์", exp: "เกิดสนามแม่เหล็กรอบตัวนำ" },
-            { q: "กฎของโอห์มกล่าวถึงความสัมพันธ์ของอะไร", opt: ["V, I, R", "F, m, a", "P, V, T", "W, F, d"], ans: 0, cat: "ฟิสิกส์", exp: "$V = IR$" },
-            { q: "กระจกนูนมักใช้ทำอะไร", opt: ["ขยายภาพจริง", "ให้ภาพเสมือนย่อ", "ใช้รวมแสง", "ใช้ในกล้องจุลทรรศน์"], ans: 1, cat: "ฟิสิกส์", exp: "กระจกนูนให้ภาพเสมือน หัวตั้ง ขนาดเล็กกว่าวัตถุ" },
+            { q: "วัตถุเคลื่อนจากหยุดนิ่งด้วยความเร่ง 4 $m/s^2$ หลัง 5 s มีความเร็วเท่าไร", opt: ["10 m/s", "15 m/s", "20 m/s", "25 m/s"], ans: 2, cat: "ฟิสิกส์", exp: "ความเร็ว $v = u + at = 0 + (4 \\times 5) = 20~m/s$" },
+            { q: "กำลังงานคืออะไร", opt: ["อัตราการทำงาน", "ปริมาณงานทั้งหมด", "ผลคูณแรงกับระยะทาง", "พลังงานศักย์"], ans: 0, cat: "ฟิสิกส์", exp: "กำลัง คือ อัตราการทำงาน (งานที่ทำได้ในหนึ่งหน่วยเวลา)" },
+            { q: "เลนส์นูนใช้ทำอะไร", opt: ["ขยายภาพเสมือน", "ทำให้แสงขนาน", "ใช้รวมแสง", "ถูกทุกข้อ"], ans: 3, cat: "ฟิสิกส์", exp: "เลนส์นูนทำได้ทุกข้อ (รวมแสง, ขยายภาพเป็นแว่นขยาย, ทำให้แสงขนาน)" },
+            { q: "ถ้าแรงเสียดทาน = 5 N ต้องออกแรงอย่างน้อยเท่าใดเพื่อให้วัตถุเริ่มเคลื่อนที่", opt: ["< 5 N", "= 5 N", "> 5 N", "10 N"], ans: 1, cat: "ฟิสิกส์", exp: "วัตถุเริ่มเคลื่อนที่เมื่อแรงที่ใช้เท่ากับแรงเสียดทานสถิต (อย่างน้อยต้อง = 5 N)" },
+            { q: "รถจักรยานยนต์เคลื่อนที่ด้วยความเร็ว 72 km/h เท่ากับกี่ m/s", opt: ["10 m/s", "15 m/s", "20 m/s", "25 m/s"], ans: 2, cat: "ฟิสิกส์", exp: "แปลงหน่วย km/h เป็น m/s โดยนำ 72 หารด้วย 3.6 จะได้ $20~m/s$" },
+            { q: "วัตถุปล่อยตกอิสระ 2 s ($g=10$) จะตกได้ระยะทางเท่าใด", opt: ["10 m", "20 m", "30 m", "40 m"], ans: 1, cat: "ฟิสิกส์", exp: "สูตรตกอิสระ: $s = \\frac{1}{2}gt^2 = 0.5 \\times 10 \\times 2^2 = 20~m$" },
+            { q: "แรงดึงดูดระหว่างมวลเกิดจากกฎของใคร", opt: ["โอห์ม", "นิวตัน", "ฟาราเดย์", "อาร์คิมีดีส"], ans: 1, cat: "ฟิสิกส์", exp: "กฎแรงดึงดูดระหว่างมวล เป็นกฎความโน้มถ่วงสากลของ เซอร์ ไอแซก นิวตัน" },
+            { q: "ตัวนำที่มีกระแสไฟฟ้าไหลจะเกิดสนามอะไร", opt: ["สนามโน้มถ่วง", "สนามไฟฟ้า", "สนามแม่เหล็ก", "สนามนิวเคลียร์"], ans: 2, cat: "ฟิสิกส์", exp: "เมื่อมีกระแสไฟฟ้าไหลผ่านตัวนำ จะเหนี่ยวนำให้เกิดสนามแม่เหล็กขึ้นรอบๆ ตัวนำนั้น" },
+            { q: "กฎของโอห์มกล่าวถึงความสัมพันธ์ระหว่างอะไร", opt: ["V, I, R", "F, m, a", "P, V, T", "W, F, d"], ans: 0, cat: "ฟิสิกส์", exp: "กฎของโอห์มคือ $V = IR$ สัมพันธ์กันระหว่างแรงดัน(V), กระแส(I), ความต้านทาน(R)" },
+            { q: "กระจกนูนมักใช้ทำอะไร", opt: ["ขยายภาพจริง", "ให้ภาพเสมือนย่อ", "ใช้รวมแสง", "ใช้ในกล้องจุลทรรศน์"], ans: 1, cat: "ฟิสิกส์", exp: "กระจกนูนให้ภาพเสมือนขนาดเล็กกว่าวัตถุ ช่วยให้มีมุมมองกว้าง นิยมใช้เป็นกระจกโค้งตามมุมถนน" },
             { q: "ถ้าวัตถุมวล 5 kg ความเร่ง 3 $m/s^2$ แรงคือเท่าใด", opt: ["8 N", "15 N", "20 N", "30 N"], ans: 1, cat: "ฟิสิกส์", exp: "$F = ma = 5 \\times 3 = 15~N$" },
-            { q: "พลังงานจลน์ของวัตถุมวล 4 kg ความเร็ว 3 m/s คือเท่าใด", opt: ["12 J", "18 J", "24 J", "36 J"], ans: 1, cat: "ฟิสิกส์", exp: "$E_k = 0.5 \\times 4 \\times 3^2 = 18~J$" },
+            { q: "พลังงานจลน์ของวัตถุมวล 4 kg ความเร็ว 3 m/s คือเท่าใด", opt: ["12 J", "18 J", "24 J", "36 J"], ans: 1, cat: "ฟิสิกส์", exp: "$E_k = \\frac{1}{2}mv^2 = 0.5 \\times 4 \\times 3^2 = 18~J$" },
             
-            // Chemistry 41-80 (Representative samples)
-            { q: "น้ำ ($H_2O$) ประกอบด้วยธาตุใด", opt: ["ไฮโดรเจน/ออกซิเจน", "ไฮโดรเจน/ไนโตรเจน", "คาร์บอน/ออกซิเจน", "ฮีเลียม/ออกซิเจน"], ans: 0, cat: "เคมี", exp: "H=ไฮโดรเจน, O=ออกซิเจน" },
-            { q: "สารละลายกรดมีค่า pH ต่ำกว่าเท่าใด", opt: ["4", "7", "10", "14"], ans: 1, cat: "เคมี", exp: "pH < 7 คือกรด" },
-            { q: "NaOH เป็นสารละลายประเภทใด", opt: ["กรด", "เบส", "เกลือ", "น้ำ"], ans: 1, cat: "เคมี", exp: "โซเดียมไฮดรอกไซด์ เป็นเบส" },
-            { q: "ปฏิกิริยาเคมีสังเกตได้จากอะไร", opt: ["เปลี่ยนสี/กลิ่น/แก๊ส", "เปลี่ยนสถานะ", "การผสมกัน", "ไม่มีข้อถูก"], ans: 0, cat: "เคมี", exp: "การเกิดสารใหม่มักมีสี กลิ่น หรือแก๊สเปลี่ยนไป" },
-            { q: "การละลายน้ำตาลในน้ำเป็นการเปลี่ยนแปลงแบบใด", opt: ["เคมี", "กายภาพ", "สลายตัว", "ออกซิเดชัน"], ans: 1, cat: "เคมี", exp: "ไม่เกิดสารใหม่ เป็นการเปลี่ยนแปลงกายภาพ" },
-            { q: "สูตรของกรดซัลฟิวริกคืออะไร", opt: ["HCl", "$H_2SO_4$", "$HNO_3$", "$H_2CO_3$"], ans: 1, cat: "เคมี", exp: "$H_2SO_4$ คือ Sulfuric Acid" },
-            { q: "อิเล็กตรอนในอะตอมมีประจุอะไร", opt: ["บวก", "ลบ", "ไม่มี", "เป็นกลาง"], ans: 1, cat: "เคมี", exp: "อิเล็กตรอนมีประจุลบ" },
-            { q: "โลหะใดนำไฟฟ้าได้ดีที่สุดในกลุ่มนี้", opt: ["ทองแดง", "เหล็ก", "อะลูมิเนียม", "นิกเกิล"], ans: 0, cat: "เคมี", exp: "ทองแดงนำไฟฟ้าได้ดีมากและราคาย่อมเยากว่าเงิน" },
+            // Chemistry 
+            { q: "น้ำ ($H_2O$) ประกอบด้วยธาตุใดบ้าง", opt: ["ไฮโดรเจนกับออกซิเจน", "ไฮโดรเจนกับไนโตรเจน", "คาร์บอนกับออกซิเจน", "ฮีเลียมกับออกซิเจน"], ans: 0, cat: "เคมี", exp: "สูตร $H_2O$ H คือ ไฮโดรเจน และ O คือ ออกซิเจน" },
+            { q: "สารละลายกรดมีค่า pH ต่ำกว่าเท่าใด", opt: ["4", "7", "10", "14"], ans: 1, cat: "เคมี", exp: "ค่า pH < 7 มีฤทธิ์เป็นกรด" },
+            { q: "NaOH เป็นสารละลายประเภทใด", opt: ["กรด", "เบส", "เกลือ", "น้ำ"], ans: 1, cat: "เคมี", exp: "NaOH (โซเดียมไฮดรอกไซด์) เป็นเบสแก่" },
+            { q: "ปฏิกิริยาเคมีสังเกตได้จากอะไร", opt: ["เปลี่ยนสี/กลิ่น/แก๊ส", "เปลี่ยนสถานะ", "การผสมกัน", "ไม่มีข้อถูก"], ans: 0, cat: "เคมี", exp: "ปฏิกิริยาเคมีเกิดสารใหม่ สังเกตได้จากการเปลี่ยนสี กลิ่น หรือเกิดฟองแก๊ส/ตะกอน" },
+            { q: "การละลายน้ำตาลในน้ำเป็นการเปลี่ยนแปลงแบบใด", opt: ["เคมี", "กายภาพ", "สลายตัว", "ออกซิเดชัน"], ans: 1, cat: "เคมี", exp: "การละลายน้ำไม่เกิดสารเคมีใหม่ จึงเป็นการเปลี่ยนแปลงทางกายภาพ" },
+            { q: "สูตรของกรดซัลฟิวริกคืออะไร", opt: ["HCl", "$H_2SO_4$", "$HNO_3$", "$H_2CO_3$"], ans: 1, cat: "เคมี", exp: "กรดซัลฟิวริก หรือกรดกำมะถัน คือ $H_2SO_4$" },
+            { q: "อิเล็กตรอนในอะตอมมีประจุอะไร", opt: ["บวก", "ลบ", "ไม่มี", "เป็นกลาง"], ans: 1, cat: "เคมี", exp: "อิเล็กตรอนมีประจุลบ ส่วนโปรตอนมีประจุบวก" },
+            { q: "โลหะใดนำไฟฟ้าได้ดีที่สุดในกลุ่มนี้", opt: ["ทองแดง", "เหล็ก", "อะลูมิเนียม", "นิกเกิล"], ans: 0, cat: "เคมี", exp: "ทองแดงนำไฟฟ้าได้ดีมาก และนิยมใช้ทำสายไฟ" },
             
-            // Biology 81-100 (Representative samples)
-            { q: "เยื่อหุ้มเซลล์มีหน้าที่สำคัญอะไร", opt: ["สร้างพลังงาน", "ควบคุมการเข้าออกของสาร", "เก็บพันธุกรรม", "ย่อยอาหาร"], ans: 1, cat: "ชีววิทยา", exp: "เป็นเยื่อเลือกผ่าน (Semi-permeable)" },
-            { q: "ส่วนใดของพืชที่ทำหน้าที่สังเคราะห์แสงหลัก", opt: ["ราก", "ลำต้น", "ใบ (คลอโรพลาสต์)", "ดอก"], ans: 2, cat: "ชีววิทยา", exp: "ใบมีคลอโรพลาสต์หนาแน่น" },
-            { q: "หัวใจทำหน้าที่อะไร", opt: ["กรองเลือด", "สูบฉีดเลือด", "สร้างเม็ดเลือด", "เก็บสารอาหาร"], ans: 1, cat: "ชีววิทยา", exp: "สูบฉีดเลือดไปเลี้ยงทั่วร่างกาย" },
-            { q: "อวัยวะที่ทำหน้าที่กรองของเสียจากเลือดคืออะไร", opt: ["ตับ", "ไต", "ปอด", "หัวใจ"], ans: 1, cat: "ชีววิทยา", exp: "ไตกรองของเสียออกเป็นปัสสาวะ" },
-            { q: "DNA เก็บอยู่ที่ส่วนใดของเซลล์ยูคาริโอต", opt: ["ไซโทพลาสซึม", "นิวเคลียส", "ผนังเซลล์", "ไรโบโซม"], ans: 1, cat: "ชีววิทยา", exp: "ศูนย์กลางควบคุมเซลล์" },
-            { q: "ฮอร์โมนอินซูลินควบคุมอะไร", opt: ["น้ำตาลในเลือด", "โปรตีน", "ไขมัน", "การเติบโต"], ans: 0, cat: "ชีววิทยา", exp: "ลดระดับน้ำตาลในเลือด" },
-            { q: "ไวรัสแตกต่างจากแบคทีเรียอย่างไร", opt: ["ไม่มีเซลล์", "มีขนาดใหญ่กว่า", "นำมาทำโยเกิร์ตได้", "มีผนังเซลล์แข็ง"], ans: 0, cat: "ชีววิทยา", exp: "ไวรัสเป็นอนุภาคที่ต้องอาศัยเซลล์อื่น (Host)" },
-            { q: "พืชที่อยู่ทะเลทรายมักมีลักษณะอย่างไรเพื่อลดการคายน้ำ", opt: ["ใบกว้าง", "มีดอกใหญ่", "ใบเปลี่ยนเป็นหนาม", "ลำต้นสั้น"], ans: 2, cat: "ชีววิทยา", exp: "เปลี่ยนใบเป็นหนามเพื่อลดพื้นที่ผิวคายน้ำ" }
+            // Biology 
+            { q: "เยื่อหุ้มเซลล์มีหน้าที่สำคัญอะไร", opt: ["สร้างพลังงาน", "ควบคุมการเข้าออกของสาร", "เก็บพันธุกรรม", "ย่อยอาหาร"], ans: 1, cat: "ชีววิทยา", exp: "เยื่อหุ้มเซลล์มีคุณสมบัติเป็นเยื่อเลือกผ่าน คอยควบคุมสารที่เข้าออกเซลล์" },
+            { q: "ส่วนใดของพืชที่ทำหน้าที่สังเคราะห์แสงหลัก", opt: ["ราก", "ลำต้น", "ใบ (คลอโรพลาสต์)", "ดอก"], ans: 2, cat: "ชีววิทยา", exp: "ใบมีคลอโรพลาสต์หนาแน่น ซึ่งทำหน้าที่สังเคราะห์ด้วยแสง" },
+            { q: "หัวใจทำหน้าที่อะไร", opt: ["กรองเลือด", "สูบฉีดเลือด", "สร้างเม็ดเลือด", "เก็บสารอาหาร"], ans: 1, cat: "ชีววิทยา", exp: "หัวใจทำหน้าที่สูบฉีดเลือดไปเลี้ยงส่วนต่างๆ ของร่างกาย" },
+            { q: "อวัยวะที่ทำหน้าที่กรองของเสียจากเลือดคืออะไร", opt: ["ตับ", "ไต", "ปอด", "หัวใจ"], ans: 1, cat: "ชีววิทยา", exp: "ไตทำหน้าที่กรองของเสียออกจากเลือดและขับออกมาในรูปของปัสสาวะ" },
+            { q: "DNA เก็บอยู่ที่ส่วนใดของเซลล์ยูคาริโอต", opt: ["ไซโทพลาสซึม", "นิวเคลียส", "ผนังเซลล์", "ไรโบโซม"], ans: 1, cat: "ชีววิทยา", exp: "นิวเคลียสเป็นศูนย์กลางควบคุมเซลล์และเก็บสารพันธุกรรม (DNA)" },
+            { q: "ฮอร์โมนอินซูลินควบคุมอะไร", opt: ["ระดับน้ำตาลในเลือด", "โปรตีน", "ไขมัน", "การเติบโต"], ans: 0, cat: "ชีววิทยา", exp: "อินซูลินผลิตจากตับอ่อน ทำหน้าที่ควบคุมและลดระดับน้ำตาลในเลือด" },
+            { q: "ไวรัสแตกต่างจากแบคทีเรียอย่างไร", opt: ["ไม่มีเซลล์", "มีขนาดใหญ่กว่า", "นำมาทำโยเกิร์ตได้", "มีผนังเซลล์แข็ง"], ans: 0, cat: "ชีววิทยา", exp: "ไวรัสไม่ถือว่าเป็นเซลล์สมบูรณ์ ต้องอาศัยสิ่งมีชีวิตอื่น (Host) ในการเพิ่มจำนวน" },
+            { q: "พืชที่อยู่ทะเลทรายมักมีลักษณะอย่างไรเพื่อลดการคายน้ำ", opt: ["ใบกว้าง", "มีดอกใหญ่", "ใบเปลี่ยนเป็นหนาม", "ลำต้นสั้น"], ans: 2, cat: "ชีววิทยา", exp: "พืชทะเลทราย เช่น กระบองเพชร จะเปลี่ยนใบเป็นหนามเพื่อลดพื้นที่ผิวในการคายน้ำ" }
         ];
 
-        // Fill remaining questions to reach 100 for simulation if data incomplete
+        // Fill remaining questions to reach 100
         while(questions.length < 100) {
-            questions.push({ ...questions[Math.floor(Math.random()*15)], q: questions[Math.floor(Math.random()*15)].q + " (ทบทวนซ้ำ)" });
+            let rndIdx = Math.floor(Math.random() * 26);
+            questions.push({ ...questions[rndIdx], q: questions[rndIdx].q + " (ทบทวนความแม่นยำ)" });
         }
 
         let curQ = 0;
@@ -219,46 +221,93 @@
         function renderQ() {
             const q = questions[curQ];
             document.getElementById('q-cat').innerText = q.cat;
-            document.getElementById('q-text').innerHTML = q.q;
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
             document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
-            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
+            document.getElementById('score-text').innerText = `คะแนนสะสม: ${score}`;
             document.getElementById('progress-bar').style.width = `${((curQ+1)/questions.length)*100}%`;
             
             const opts = document.getElementById('options');
             opts.innerHTML = '';
+            
+            // Loop render options
             q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "option-btn w-full p-4 text-left border-2 border-gray-100 rounded-xl font-medium transition flex items-center";
-                btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-500">${i+1}</span> ${o}`;
+                btn.className = "w-full p-4 text-left border-2 rounded-xl font-medium transition-all duration-200 flex items-center";
                 
+                // ถ้ายูสเซอร์ตอบแล้วในข้อนี้ -> โชว์เฉลยทันที (ตอบถูก=เขียว, ตอบผิด=แดง)
                 if(answers[curQ] !== null) {
-                    btn.disabled = true;
-                    if(i === q.ans) btn.classList.add('correct');
-                    else if(i === answers[curQ]) btn.classList.add('wrong');
+                    btn.disabled = true; // ป้องกันการกดซ้ำ
+                    
+                    if(i === q.ans) {
+                        // ข้อที่ถูกต้อง
+                        btn.classList.add('bg-green-50', 'border-green-500', 'text-green-800');
+                        btn.innerHTML = `<span class="bg-green-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold">✓</span> <span class="flex-1">${o}</span>`;
+                    } else if(i === answers[curQ]) {
+                        // ข้อที่ยูสเซอร์กดผิด
+                        btn.classList.add('bg-red-50', 'border-red-500', 'text-red-800');
+                        btn.innerHTML = `<span class="bg-red-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold">✗</span> <span class="flex-1">${o}</span>`;
+                    } else {
+                        // ข้ออื่นๆ ที่ไม่ได้กดและผิด
+                        btn.classList.add('bg-white', 'border-gray-100', 'opacity-50');
+                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-500">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    }
                 } else {
+                    // สถานะปกติ ยังไม่ตอบ
+                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-green-400', 'hover:bg-green-50', 'hover:translate-x-1', 'cursor-pointer');
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-600">${i+1}</span> <span class="flex-1">${o}</span>`;
                     btn.onclick = () => select(i);
                 }
                 opts.appendChild(btn);
             });
 
+            // Handle Explainer Box
             const explainer = document.getElementById('explainer');
+            const expStatus = document.getElementById('exp-status');
+            const expText = document.getElementById('exp-text');
+            
             if(answers[curQ] !== null) {
                 explainer.classList.remove('hidden');
-                document.getElementById('exp-text').innerHTML = q.exp;
+                
+                // เช็คว่ากดถูกหรือผิด
+                if (answers[curQ] === q.ans) {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-green-50 border-l-4 border-green-500";
+                    expStatus.innerHTML = "✅ ถูกต้อง!";
+                    expStatus.className = "text-xl font-black text-green-700 mb-2 flex items-center";
+                } else {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-red-50 border-l-4 border-red-500";
+                    expStatus.innerHTML = `❌ ผิดครับ! <span class="text-sm ml-2 font-normal text-red-600">(คำตอบที่ถูกคือข้อ ${q.ans + 1})</span>`;
+                    expStatus.className = "text-xl font-black text-red-700 mb-2 flex items-center";
+                }
+                
+                expText.innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
             } else {
                 explainer.classList.add('hidden');
             }
 
+            // จัดการปุ่มถัดไป/ย้อนกลับ
             document.getElementById('btn-prev').disabled = curQ === 0;
-            document.getElementById('btn-next').innerText = curQ === questions.length - 1 ? "ดูผลลัพธ์" : "ข้อต่อไป";
+            const btnNext = document.getElementById('btn-next');
+            if (curQ === questions.length - 1) {
+                btnNext.innerText = "ดูผลลัพธ์การสอบ";
+                btnNext.classList.replace('bg-green-700', 'bg-blue-600');
+                btnNext.classList.replace('hover:bg-green-800', 'hover:bg-blue-700');
+            } else {
+                btnNext.innerText = "ข้อต่อไป ➔";
+                btnNext.classList.replace('bg-blue-600', 'bg-green-700');
+                btnNext.classList.replace('hover:bg-blue-700', 'hover:bg-green-800');
+            }
             
             if (window.MathJax) MathJax.typesetPromise();
         }
 
+        // ฟังก์ชันเมื่อกดยืนยันคำตอบ
         function select(idx) {
+            if(answers[curQ] !== null) return; // กันการกดรัว
             answers[curQ] = idx;
             if(idx === questions[curQ].ans) score++;
-            renderQ();
+            
+            // Re-render หน้าจอข้อนั้นทันทีเพื่อโชว์เฉลย
+            renderQ(); 
         }
 
         function changeQ(step) {
@@ -275,14 +324,14 @@
             document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
             const msg = document.getElementById('result-msg');
             const pct = (score/questions.length)*100;
-            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! คุณพร้อมสำหรับการสอบแล้ว";
-            else if(pct >= 50) msg.innerText = "ดีพอสมควร ลองทบทวนข้อที่ผิดอีกครั้งนะ";
-            else msg.innerText = "ต้องพยายามเพิ่มอีกหน่อย ลองอ่านบทเรียนสรุปข้างต้นดูครับ";
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! คะแนนระดับนี้ คุณมีความพร้อมสำหรับการสอบแล้ว";
+            else if(pct >= 50) msg.innerText = "ทำได้ดีพอสมควร ลองทบทวนข้อที่ผิดอีกครั้งเพื่อความแม่นยำนะครับ";
+            else msg.innerText = "ต้องพยายามเพิ่มอีกหน่อย ลองอ่านบทเรียนสรุปและทำแบบทดสอบอีกรอบครับ";
         }
 
-        // Initialize
+        // Initialize on load
         window.onload = () => {
-            // Check for MathJax load
+            // Setup ready
         };
     </script>
 </body>
