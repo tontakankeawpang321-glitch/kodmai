@@ -3,30 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คลังความรู้คณิตศาสตร์ - เตรียมสอบนายทหารประทวน</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>คลังความรู้ คณิตศาสตร์ ชุดที่ 1</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Prompt', 'sans-serif'],
-                    },
-                    colors: {
-                        military: {
-                            light: '#a3b18a',
-                            DEFAULT: '#588157',
-                            dark: '#3a5a40',
-                            darker: '#344e41',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    
     <!-- MathJax for rendering math equations -->
     <script>
         window.MathJax = {
@@ -38,552 +18,415 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f3f4f6; }
-        .hide { display: none !important; }
+        body { font-family: 'Sarabun', sans-serif; background-color: #f8fafc; }
+        .lesson-card { border-left: 4px solid #15803d; }
         .math-content { overflow-x: auto; padding-bottom: 0.5rem; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen pb-12">
+<body class="min-h-screen pb-10 text-gray-800">
 
-    <!-- Navbar -->
-    <nav class="bg-military-darker text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="showMenu()">
-                <i class="ph ph-student text-3xl"></i>
-                <h1 class="text-lg font-semibold leading-tight">เตรียมสอบนายทหารประทวน<br><span class="text-sm font-normal text-military-light">คณิตศาสตร์ ชุดที่ 1 (100 ข้อ)</span></h1>
+    <!-- Navigation Bar -->
+    <nav class="bg-green-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span class="font-bold text-sm md:text-base">ติวคณิต นายสิบทหารบก</span>
             </div>
-            <button onclick="showMenu()" class="p-2 hover:bg-military-dark rounded-full transition" title="กลับหน้าหลัก">
-                <i class="ph ph-house text-2xl"></i>
-            </button>
+            <div class="flex space-x-1 md:space-x-4">
+                <button onclick="switchMode('home')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">หน้าหลัก</button>
+                <button onclick="switchMode('lesson')" class="px-2 py-1 hover:bg-green-700 rounded text-xs md:text-sm transition">บทเรียน</button>
+                <button onclick="switchMode('quiz')" class="px-2 py-1 bg-white text-green-800 rounded font-bold text-xs md:text-sm shadow hover:bg-gray-100 transition">เริ่มสอบ</button>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <main class="max-w-3xl mx-auto px-4 mt-6" id="app">
-
-        <!-- 1. Menu View -->
-        <div id="view-menu" class="space-y-6 animate-fade-in">
-            <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 text-center border-t-4 border-military">
-                <img src="https://cdn-icons-png.flaticon.com/512/3143/3143620.png" alt="Math" class="w-24 h-24 mx-auto mb-4 opacity-80" onerror="this.style.display='none'">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">ยินดีต้อนรับสู่คลังความรู้</h2>
-                <p class="text-gray-600 mb-8">เลือกโหมดที่คุณต้องการใช้งานด้านล่างนี้</p>
-                
-                <div class="grid sm:grid-cols-2 gap-4">
-                    <button onclick="startLesson()" class="flex flex-col items-center justify-center p-6 bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 rounded-xl transition cursor-pointer group">
-                        <i class="ph ph-book-open-text text-5xl text-blue-500 mb-3 group-hover:scale-110 transition-transform"></i>
-                        <h3 class="font-semibold text-xl text-blue-800">โหมดบทเรียน</h3>
-                        <p class="text-sm text-blue-600 mt-1">สรุปเนื้อหา สูตร และเทคนิค</p>
-                    </button>
-                    
-                    <button onclick="startQuiz()" class="flex flex-col items-center justify-center p-6 bg-military-light/20 hover:bg-military-light/40 border-2 border-military-light rounded-xl transition cursor-pointer group">
-                        <i class="ph ph-pencil-simple-list text-5xl text-military-dark mb-3 group-hover:scale-110 transition-transform"></i>
-                        <h3 class="font-semibold text-xl text-military-darker">ทำแบบทดสอบ</h3>
-                        <p class="text-sm text-military-dark mt-1">ทำข้อสอบ 100 ข้อ พร้อมจับคะแนน</p>
-                    </button>
+    <main class="max-w-4xl mx-auto p-4">
+        
+        <!-- 1. HOME SCREEN -->
+        <div id="screen-home" class="space-y-6 animate-fade-in">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-green-700 p-8 text-center text-white">
+                    <h1 class="text-3xl font-black mb-2">คณิตศาสตร์ ชุดที่ 1</h1>
+                    <p class="opacity-90">คลังความรู้และแบบทดสอบ 100 ข้อ เพื่อความพร้อมสูงสุด</p>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('lesson')">
+                        <div class="text-green-700 text-4xl mb-2">📖</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดบทเรียน</h3>
+                        <p class="text-gray-500 text-sm">สรุปเนื้อหาสำคัญ สูตร และเทคนิค</p>
+                    </div>
+                    <div class="p-6 border rounded-xl hover:shadow-md transition cursor-pointer" onclick="switchMode('quiz')">
+                        <div class="text-orange-500 text-4xl mb-2">✍️</div>
+                        <h3 class="font-bold text-lg text-gray-800">โหมดทดสอบ</h3>
+                        <p class="text-gray-500 text-sm">จำลองการสอบ 100 ข้อ รู้ผลทันที</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. Lesson View -->
-        <div id="view-lesson" class="hide space-y-4">
-            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm mb-4 sticky top-[70px] z-40 border-b border-gray-200">
-                <h2 class="text-xl font-bold text-gray-800">📖 สรุปเนื้อหาคณิตศาสตร์ (ติวเข้มก่อนสอบ)</h2>
-                <div class="text-sm text-gray-500">รวมสูตรที่ออกสอบบ่อย</div>
+        <!-- 2. LESSON SCREEN -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-green-700 pb-2 mb-4">สรุปเนื้อหาคณิตศาสตร์ (ติวเข้มก่อนสอบ)</h2>
+            
+            <!-- Algebra -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-green-600" style="border-left-color: #16a34a;">
+                <h3 class="font-bold text-green-800 text-lg mb-3"># พีชคณิต และ การแก้สมการ</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base math-content">
+                    <li>• <b>การแก้สมการเชิงเส้น:</b> ย้ายข้างตัวแปรให้อยู่ฝั่งเดียวกัน และตัวเลขอยู่อีกฝั่ง<br> <span class="text-gray-500">ตัวอย่าง:</span> $2x + 5 = 15 \rightarrow 2x = 10 \rightarrow x = 5$</li>
+                    <li>• <b>กำลังสองสมบูรณ์:</b> $(a+b)^2 = a^2 + 2ab + b^2$ และ $(a-b)^2 = a^2 - 2ab + b^2$</li>
+                    <li>• <b>ผลต่างกำลังสอง:</b> $(a-b)(a+b) = a^2 - b^2$ <br><span class="text-gray-500">ตัวอย่าง:</span> $(x-3)(x+3) = x^2 - 9$</li>
+                    <li>• <b>สมการกำลังสอง $ax^2+bx+c=0$:</b> ผลบวกราก $= -b/a$, ผลคูณราก $= c/a$</li>
+                </ul>
             </div>
-            <div id="lesson-container" class="space-y-6">
-                <!-- Lesson items will be injected here -->
+
+            <!-- Exponents and Roots -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-orange-500" style="border-left-color: #f97316;">
+                <h3 class="font-bold text-orange-700 text-lg mb-3"># เลขยกกำลัง และ กรณฑ์ (ราก)</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base math-content">
+                    <li>• <b>สมบัติการคูณ/หาร:</b> $a^m \times a^n = a^{m+n}$ และ $a^m \div a^n = a^{m-n}$ <br><span class="text-gray-500">ตัวอย่าง:</span> $2^3 \times 2^4 = 2^7 = 128$</li>
+                    <li>• <b>เลขชี้กำลังเป็นศูนย์/ติดลบ:</b> $a^0 = 1$ (เมื่อ $a \neq 0$) และ $a^{-n} = \frac{1}{a^n}$</li>
+                    <li>• <b>สมบัติของราก:</b> $(\sqrt{a})^2 = a$ และ $\sqrt{a \times b} = \sqrt{a} \times \sqrt{b}$</li>
+                </ul>
             </div>
-            <div class="text-center mt-8">
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-full font-medium transition">
-                    <i class="ph ph-arrow-up mr-1"></i> เลื่อนขึ้นบนสุด
-                </button>
+
+            <!-- Geometry and Trigonometry -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-blue-500" style="border-left-color: #3b82f6;">
+                <h3 class="font-bold text-blue-700 text-lg mb-3"># เรขาคณิต และ ตรีโกณมิติ</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base math-content">
+                    <li>• <b>พื้นที่:</b> สามเหลี่ยม $= \frac{1}{2} \times$ ฐาน $\times$ สูง, วงกลม $= \pi r^2$</li>
+                    <li>• <b>ทฤษฎีบทพีทาโกรัส:</b> $c^2 = a^2 + b^2$ (ด้านตรงข้ามมุมฉากยาวสุด) <br><span class="text-gray-500">เลขชุดที่พบบ่อย:</span> 3-4-5, 5-12-13, 7-24-25</li>
+                    <li>• <b>ตรีโกณมิติ:</b> $\sin 30^\circ = \frac{1}{2}$, $\cos 60^\circ = \frac{1}{2}$, $\tan 45^\circ = 1$</li>
+                    <li>• <b>เอกลักษณ์:</b> $\sin^2 \theta + \cos^2 \theta = 1$ เสมอ</li>
+                </ul>
+            </div>
+
+            <!-- Statistics and Probability -->
+            <div class="lesson-card bg-white p-5 rounded-lg shadow-sm border-l-purple-500" style="border-left-color: #a855f7;">
+                <h3 class="font-bold text-purple-700 text-lg mb-3"># สถิติ ความน่าจะเป็น และ ลำดับอนุกรม</h3>
+                <ul class="space-y-2 text-gray-700 text-sm md:text-base math-content">
+                    <li>• <b>ค่ากลางข้อมูล:</b> ค่าเฉลี่ย (Mean) = ผลรวม/จำนวน, มัธยฐาน (Median) = ค่าตรงกลาง</li>
+                    <li>• <b>ความน่าจะเป็น:</b> $P(E) = \frac{n(E)}{n(S)}$ (เหตุการณ์ที่สนใจ $\div$ เหตุการณ์ทั้งหมด)</li>
+                    <li>• <b>อนุกรมเลขคณิต:</b> $S_n = \frac{n}{2}(a_1 + a_n)$</li>
+                    <li>• <b>ผลบวก 1 ถึง n:</b> $\frac{n(n+1)}{2}$ <br><span class="text-gray-500">ตัวอย่าง:</span> 1+2+...+50 $= \frac{50(51)}{2} = 1275$</li>
+                </ul>
+            </div>
+            
+            <button onclick="switchMode('quiz')" class="w-full bg-green-700 text-white p-4 rounded-xl font-bold shadow-lg mt-4 hover:bg-green-800 transition">ไปที่แบบทดสอบ 👉</button>
+        </div>
+
+        <!-- 3. QUIZ SCREEN -->
+        <div id="screen-quiz" class="hidden space-y-4">
+            <!-- Progress & Score -->
+            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center sticky top-[72px] z-40">
+                <div class="w-1/2">
+                    <div class="text-xs font-bold text-gray-400 mb-1">ความคืบหน้า</div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div id="quiz-status" class="text-sm font-bold text-green-800">ข้อที่ 1/100</div>
+                    <div id="score-text" class="text-xs text-gray-500">คะแนน: 0</div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px] flex flex-col justify-between animate-fade-in">
+                <div>
+                    <span id="q-cat" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block">หมวดหมู่</span>
+                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-6 math-content">คำถามจะแสดงที่นี่</h3>
+                    
+                    <div id="options" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Explainer -->
+                <div id="explainer" class="hidden mt-6 p-5 rounded-xl animate-fade-in shadow-sm border-l-4">
+                    <p id="exp-status" class="text-lg font-black mb-2 flex items-center"></p>
+                    <p id="exp-text" class="text-sm md:text-base text-gray-700 leading-relaxed math-content"></p>
+                </div>
+
+                <div class="flex justify-between mt-8 pt-4 border-t border-gray-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 disabled:opacity-20 transition">ย้อนกลับ</button>
+                    <button id="btn-next" onclick="changeQ(1)" class="bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-green-800 transition transform hover:scale-105">ถัดไป</button>
+                </div>
             </div>
         </div>
 
-        <!-- 3. Quiz View -->
-        <div id="view-quiz" class="hide">
-            <div class="bg-white rounded-2xl shadow-md overflow-hidden">
-                <!-- Progress Bar -->
-                <div class="bg-gray-200 h-2 w-full">
-                    <div id="quiz-progress" class="bg-military h-2 transition-all duration-300" style="width: 0%;"></div>
+        <!-- 4. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
+            <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg mx-auto">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-2xl font-black text-gray-800">สรุปผลการทดสอบ</h2>
+                <div class="text-7xl font-black text-green-600 my-6 drop-shadow-sm" id="final-score">0 / 100</div>
+                <p id="result-msg" class="text-gray-500 mb-8 text-lg">พยายามได้ดีมากครับ ทบทวนอีกครั้งเพื่อความแม่นยำ!</p>
+                <div class="flex flex-col space-y-3">
+                    <button onclick="location.reload()" class="bg-green-700 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-800 transition">ทำใหม่อีกครั้ง</button>
+                    <button onclick="switchMode('home')" class="text-gray-500 hover:text-gray-800 font-bold py-2 transition">กลับหน้าหลัก</button>
                 </div>
-                
-                <div class="p-6 sm:p-8">
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="bg-military-light/30 text-military-darker text-sm font-bold px-3 py-1 rounded-full">
-                            ข้อ <span id="current-q-num">1</span> / 100
-                        </span>
-                    </div>
-                    
-                    <h3 id="quiz-question" class="text-xl sm:text-2xl font-medium text-gray-800 mb-8 math-content leading-relaxed">
-                        <!-- Question text -->
-                    </h3>
-                    
-                    <div id="quiz-options" class="space-y-3">
-                        <!-- Options will be injected here -->
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 px-6 py-4 border-t flex justify-end">
-                    <button id="btn-next" onclick="nextQuestion()" class="bg-military hover:bg-military-dark text-white px-8 py-3 rounded-xl font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" disabled>
-                        <span>ต่อไป</span> <i class="ph ph-caret-right text-lg"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Result View -->
-        <div id="view-result" class="hide space-y-6">
-            <div class="bg-white rounded-2xl shadow-md p-8 text-center border-t-4 border-military">
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">สรุปผลการทดสอบ</h2>
-                <div class="my-8">
-                    <div class="inline-flex items-center justify-center w-32 h-32 rounded-full border-8 border-military-light text-military-darker text-4xl font-bold bg-gray-50">
-                        <span id="score-display">0</span><span class="text-lg text-gray-500">/100</span>
-                    </div>
-                </div>
-                <p id="score-message" class="text-lg text-gray-600 mb-6 font-medium"></p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="startQuiz()" class="bg-military hover:bg-military-dark text-white px-6 py-3 rounded-xl font-medium transition flex items-center gap-2">
-                        <i class="ph ph-arrow-counter-clockwise"></i> ทำแบบทดสอบใหม่
-                    </button>
-                    <button onclick="showMenu()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-xl font-medium transition flex items-center gap-2">
-                        <i class="ph ph-house"></i> กลับหน้าหลัก
-                    </button>
-                </div>
-            </div>
-
-            <h3 class="text-xl font-bold text-gray-800 mt-8 mb-4 px-2">ตรวจสอบคำตอบ</h3>
-            <div id="result-details" class="space-y-4">
-                <!-- Result items injected here -->
             </div>
         </div>
 
     </main>
 
     <script>
-        // Data Extraction from Set 1 (100 Questions)
-        // Format: q: Question, o: Options, a: Correct Answer Index (0-3), e: Explanation
-        const quizData = [
-            { q: "ถ้า $2X+5=15$ ค่า X คือเท่าไร", o: ["3", "5", "10", "20"], a: 1, e: "$2x+5=15 \\rightarrow 2x=10 \\rightarrow x=5$" },
-            { q: "ค่าของ $\\sqrt{144}$ คือเท่าไร", o: ["10", "11", "12", "13"], a: 2, e: "$\\sqrt{144}=12$" },
-            { q: "ถ้า $a = 3, b=4$ ค่าของ $a^{2}+b^{2}$ คือเท่าไร", o: ["12", "16", "25", "7"], a: 2, e: "$a^{2}+b^{2}=3^{2}+4^{2}=9+16=25$" },
-            { q: "ผลบวกของเลขอนุกรม $2+4+6+...+20$ คือเท่าไร", o: ["100", "110", "120", "220"], a: 1, e: "เป็นอนุกรมเลขคู่ที่มี $n=10$ พจน์ (2 ถึง 20)<br>ผลบวก = $(n/2)$(พจน์แรก + พจน์สุดท้าย) = $(10/2)(2+20) = 5 \\times 22 = 110$" },
-            { q: "$7/14$ เท่ากับเศษส่วนใดที่ต่ำที่สุด", o: ["$2/3$", "$1/2$", "$3/7$", "$5/14$"], a: 1, e: "$7/14 = 1/2$" },
-            { q: "ค่าเฉลี่ยเลขคณิตของ 10, 20, 30, 40 คือเท่าไร", o: ["20", "25", "30", "35"], a: 1, e: "ค่าเฉลี่ย = $(10+20+30+40)/4 = 100/4 = 25$" },
-            { q: "$(X-3)(X+3)=?$", o: ["$x^{2}+9$", "$x^{2}-9$", "$x^{2}+6x+9$", "$x^{2}-6x+9$"], a: 1, e: "$(x-3)(x+3)=x^{2}-9$ (ผลต่างกำลังสอง)" },
-            { q: "ถ้า $3x=27$ ค่าของ x เท่ากับเท่าไร", o: ["3", "6", "9", "12"], a: 2, e: "$3x=27 \\rightarrow x=9$" },
-            { q: "ค่าของ $(2^{3}\\times 2^{4})$ คือเท่าไร", o: ["16", "32", "64", "128"], a: 3, e: "$2^{3}\\times 2^{4}=2^{3+4}=2^{7}=128$" },
-            { q: "ถ้าความยาวสี่เหลี่ยมผืนผ้า $=12$ กว้าง $=5$ พื้นที่เท่ากับเท่าไร", o: ["17", "30", "60", "120"], a: 2, e: "พื้นที่ = ยาว x กว้าง = 12 x 5 = 60" },
-            { q: "ค่าของ $3/4 \\div 2/3$ เท่ากับข้อใด", o: ["$9/8$", "$1/2$", "$6/7$", "$8/9$"], a: 0, e: "$(3/4)\\div(2/3)=(3/4)\\times(3/2)=9/8$" },
-            { q: "ผลบวกของรากสมการ $x^{2}-7x+10=0$ คือเท่าไร", o: ["5", "7", "10", "-7"], a: 1, e: "สมการ $ax^{2}+bx+c=0$ ผลบวกของราก = $-b/a = -(-7)/1 = 7$" },
-            { q: "ผลคูณของรากสมการ $x^{2}-5x+6=0$ คือเท่าไร", o: ["6", "5", "-6", "-5"], a: 0, e: "ผลคูณของราก = $c/a = 6/1 = 6$" },
-            { q: "ผลบวกของ $1+2+3+...+50$ เท่ากับเท่าไร", o: ["1225", "1250", "1275", "2550"], a: 2, e: "ผลบวก $S_n = (n(n+1))/2 = 50\\times 51/2 = 1275$" },
-            { q: "ค่า $\\sin 30^\\circ$ เท่ากับเท่าไร", o: ["$1/2$", "$\\sqrt{3}/2$", "0", "1"], a: 0, e: "$\\sin 30^\\circ = 1/2$" },
-            { q: "ถ้า $2x-5=3$ ค่าของ x คือเท่าไร", o: ["2", "3", "4", "5"], a: 2, e: "$2x-5=3 \\rightarrow 2x=8 \\rightarrow x=4$" },
-            { q: "ผลบวกของ $0.25+0.75$ คือเท่าไร", o: ["0.5", "0.75", "1", "1.25"], a: 2, e: "$0.25+0.75=1$" },
-            { q: "ถ้า $\\log_{10} 1000 = ?$ ", o: ["1", "2", "3", "4"], a: 2, e: "$10^{3}=1000 \\rightarrow \\log_{10} 10^{3} = 3\\log_{10} 10 = 3$" },
-            { q: "ค่าของ $(x+2)^{2}$ เมื่อ $x=3$", o: ["9", "16", "25", "36"], a: 2, e: "$(3+2)^{2} = 5^{2} = 25$" },
-            { q: "ถ้ารัศมีวงกลม $=7$ ซม. พื้นที่วงกลมเท่ากับเท่าไร (ใช้ $\\pi=22/7$)", o: ["154", "308", "77", "44"], a: 0, e: "พื้นที่ = $\\pi r^{2} = (22/7)\\times 7^{2} = (22/7)\\times 49 = 154$" },
-            { q: "ถ้า $5x=2x+12$ ค่าของ x คือเท่าไร", o: ["2", "3", "4", "6"], a: 2, e: "$5x-2x=12 \\rightarrow 3x=12 \\rightarrow x=4$" },
-            { q: "$(x-1)(x-2)=?$", o: ["$x^{2}-3x+2$", "$x^{2}-2x-1$", "$x^{2}+x-2$", "$x^{2}-x+2$"], a: 0, e: "$(x-1)(x-2) = x^{2}-2x-x+2 = x^{2}-3x+2$" },
-            { q: "ค่า 5! (แฟกทอเรียล) เท่ากับเท่าไร", o: ["60", "100", "120", "240"], a: 2, e: "$5! = 5\\times 4\\times 3\\times 2\\times 1 = 120$" },
-            { q: "ค่าของ $\\sqrt{225}$ เท่ากับข้อใด", o: ["12", "13", "14", "15"], a: 3, e: "$\\sqrt{225} = 15$" },
-            { q: "ถ้า $x^{2} = 81$ ค่าของ x อาจเป็นเท่าไร", o: ["9", "-9", "$\\pm 9$", "81"], a: 2, e: "$x^{2} = 81 \\rightarrow x = \\pm 9$" },
-            { q: "ผลบวกของ $1/3+2/3$ คือเท่าไร", o: ["$1/3$", "$2/3$", "1", "$5/3$"], a: 2, e: "$1/3+2/3 = 3/3 = 1$" },
-            { q: "ผลลัพธ์ของ $(2x^{2})(3x^{3})$ เท่ากับ", o: ["$5x^{5}$", "$6x^{5}$", "$6x^{6}$", "$5x^{6}$"], a: 1, e: "$(2x^{2})(3x^{3}) = 6x^{(2+3)} = 6x^{5}$" },
-            { q: "ถ้า $a=2, b=-3$ ค่าของ $ab$ คือ", o: ["-5", "5", "-6", "6"], a: 2, e: "$a\\times b = 2 \\times (-3) = -6$" },
-            { q: "$(3/5)$ ของ 100 เท่ากับ", o: ["40", "50", "60", "80"], a: 2, e: "$(3/5)\\times 100 = 60$" },
-            { q: "ผลบวกของมุมภายในสามเหลี่ยมเท่ากับกี่องศา", o: ["$90^\\circ$", "$120^\\circ$", "$180^\\circ$", "$360^\\circ$"], a: 2, e: "มุมในสามเหลี่ยมรวม $= 180^\\circ$" },
-            { q: "ถ้า $\\log_{10} x = 2$ ค่า x เท่ากับเท่าไร", o: ["10", "20", "100", "1000"], a: 2, e: "$\\log_{10} x = 2 \\rightarrow x = 10^{2} = 100$" },
-            { q: "ผลต่างระหว่าง $3/4 - 2/5$ เท่ากับ", o: ["$7/20$", "$7/10$", "$1/20$", "$11/20$"], a: 0, e: "$3/4 - 2/5 = 15/20 - 8/20 = 7/20$" },
-            { q: "$(x+1)^{2}=?$", o: ["$x^{2}+1$", "$x^{2}+2x+1$", "$x^{2}-2x+1$", "$x^{2}+x+1$"], a: 1, e: "$(x+1)^{2} = x^{2}+2x+1$" },
-            { q: "ค่าของ $\\cos 60^\\circ$ คือ", o: ["$1/2$", "$\\sqrt{3}/2$", "0", "1"], a: 0, e: "$\\cos 60^\\circ = 1/2$" },
-            { q: "ค่าเฉลี่ยของ 5, 10, 15, 20, 25 เท่ากับ", o: ["10", "12", "15", "20"], a: 2, e: "ค่าเฉลี่ย = $(5+10+15+20+25)/5 = 75/5 = 15$" },
-            { q: "ความยาวเส้นทแยงมุมสี่เหลี่ยมจัตุรัสที่มีด้านยาว 10 คือเท่าไร", o: ["$10\\sqrt{2}$", "20", "20/2", "15"], a: 0, e: "เส้นทแยงมุม $= 10\\sqrt{2}$" },
-            { q: "สมการเส้นตรง $y=2x+1$ มีความชันเท่าไร", o: ["1", "2", "-2", "-1"], a: 1, e: "ความชันคือค่าสัมประสิทธิ์ของ x ซึ่งเท่ากับ 2" },
-            { q: "ผลบวกของ $2^{5}+2^{6}$ คือเท่าไร", o: ["64", "96", "128", "192"], a: 1, e: "$2^{5}+2^{6} = 32+64 = 96$" },
-            { q: "ค่าของ $\\tan 45^\\circ$ เท่ากับ", o: ["0", "1", "$\\sqrt{3}$", "$\\infty$"], a: 1, e: "$\\tan 45^\\circ = 1$" },
-            { q: "ผลบวกของเลขคู่ตั้งแต่ 2 ถึง 100 คือ", o: ["2450", "2500", "2550", "2600"], a: 2, e: "จำนวนพจน์ = 50, ผลบวก = $(n/2)$(พจน์แรก+พจน์สุดท้าย) = $25\\times(2+100) = 25\\times 102 = 2550$" },
-            { q: "ถ้า $x/3=9$ ค่า x เท่ากับเท่าไร", o: ["9", "18", "27", "30"], a: 2, e: "$x/3=9 \\rightarrow x=27$" },
-            { q: "ค่าของ $(\\sqrt{2})^{2}$ คือ", o: ["1", "2", "3", "4"], a: 1, e: "$(\\sqrt{2})^{2} = 2$" },
-            { q: "$(a+b)^{2}-(a-b)^{2} = ?$", o: ["2ab", "4ab", "$a^{2}+b^{2}$", "$a^{2}-b^{2}$"], a: 1, e: "$(a^{2}+2ab+b^{2}) - (a^{2}-2ab+b^{2}) = 4ab$" },
-            { q: "ถ้า $\\sin \\theta = 3/5$, $\\cos \\theta = 4/5$, ค่าของ $\\tan \\theta = ?$", o: ["$3/4$", "$4/3$", "$5/3$", "$5/4$"], a: 0, e: "$\\tan \\theta = \\sin \\theta / \\cos \\theta = (3/5) / (4/5) = 3/4$" },
-            { q: "ผลบวกของรากสมการ $x^{2}-8x+15=0$", o: ["7", "8", "15", "-8"], a: 1, e: "ผลบวกของราก = $-b/a = -(-8)/1 = 8$" },
-            { q: "ค่าของ $0.2 \\times 0.3$ คือ", o: ["0.06", "0.23", "0.26", "0.60"], a: 0, e: "$0.2 \\times 0.3 = 0.06$" },
-            { q: "ผลลัพธ์ของ $(x^{3})(x^{2})$ คือ", o: ["$x^{5}$", "$x^{6}$", "$x^{8}$", "$x^{9}$"], a: 0, e: "$x^{3}\\times x^{2} = x^{(3+2)} = x^{5}$" },
-            { q: "$(x+5)(x-5)=?$", o: ["$x^{2}+25$", "$x^{2}-25$", "$x^{2}+10x-25$", "$x^{2}-10x+25$"], a: 1, e: "$(x+5)(x-5) = x^{2}-25$ (ผลต่างกำลังสอง)" },
-            { q: "ผลบวกของเลขคี่ตั้งแต่ 1 ถึง 99 คือ", o: ["2500", "4900", "2550", "10000"], a: 0, e: "ผลบวกเลขคี่ $n$ พจน์ = $n^{2}$, ที่นี่ $n=50 \\rightarrow 50^{2} = 2500$" },
-            { q: "ค่าของ $\\log_{10} 1$ คือ", o: ["0", "1", "10", "ไม่กำหนด"], a: 0, e: "$\\log_{10} 1 = 0$" },
-            { q: "ผลบวกของ $2/7+3/7$ คือ", o: ["$4/7$", "$5/7$", "1", "$7/7$"], a: 1, e: "$2/7+3/7 = 5/7$" },
-            { q: "ค่าของ $(1/2)^{3}$ คือ", o: ["$1/2$", "$1/4$", "$1/8$", "$1/16$"], a: 2, e: "$(1/2)^{3} = 1/8$" },
-            { q: "ถ้า $x+y=10, y=4$ ค่า x เท่ากับเท่าไร", o: ["4", "5", "6", "7"], a: 2, e: "$x+4=10 \\rightarrow x=6$" },
-            { q: "ค่าของ $12^{2} - 9^{2}$ คือ", o: ["9", "27", "63", "81"], a: 2, e: "$12^{2}-9^{2} = (12-9)(12+9) = 3 \\times 21 = 63$" },
-            { q: "$(3/4) \\div (9/16) = ?$", o: ["$4/3$", "$16/9$", "$12/9$", "$4/5$"], a: 0, e: "$(3/4) \\div (9/16) = (3/4) \\times (16/9) = 48/36 = 4/3$" },
-            { q: "ค่าของ $100^{0}$ เท่ากับ", o: ["0", "1", "10", "100"], a: 1, e: "$a^{0} = 1 (a \\neq 0) \\rightarrow 100^{0} = 1$" },
-            { q: "พื้นที่สามเหลี่ยมฐาน 12 สูง 8 เท่ากับ", o: ["24", "36", "48", "96"], a: 2, e: "พื้นที่ = $1/2 \\times ฐาน \\times สูง = 1/2 \\times 12 \\times 8 = 48$" },
-            { q: "ผลบวก $1/2+1/3+1/6=?$", o: ["1", "$2/3$", "$3/4$", "$5/6$"], a: 0, e: "$1/2+1/3+1/6 = 3/6+2/6+1/6 = 6/6 = 1$" },
-            { q: "ผลคูณของรากสมการ $x^{2}-6x+9=0$", o: ["3", "6", "9", "-9"], a: 2, e: "ผลคูณของราก = $c/a = 9/1 = 9$" },
-            { q: "ค่าของ $\\sqrt{49}+\\sqrt{36}$ เท่ากับ", o: ["7", "13", "14", "85"], a: 1, e: "$\\sqrt{49}+\\sqrt{36} = 7+6 = 13$" },
-            { q: "ถ้า $4x-7=2x+9$ แล้ว x เท่ากับ", o: ["7", "8", "16", "-8"], a: 1, e: "$4x-2x = 9+7 \\rightarrow 2x=16 \\rightarrow x=8$" },
-            { q: "ค่าของ $(3^{2}\\times 3^{3}) \\div 3^{4}$ เท่ากับ", o: ["3", "9", "27", "1"], a: 0, e: "$3^{(2+3)}/3^{4} = 3^{5}/3^{4} = 3^{1} = 3$" },
-            { q: "ถ้า $|x - 5| = 3$ ค่า x อาจเป็น", o: ["2 หรือ 8", "3 หรือ 5", "5 หรือ 8", "1 หรือ 3"], a: 0, e: "$x - 5 = 3 \\rightarrow x = 8$ หรือ $x - 5 = -3 \\rightarrow x = 2$" },
-            { q: "ผลรวมของอนุกรมเลขคณิต: พจน์แรก 4, พจน์สุดท้าย 40, จำนวนพจน์ 10", o: ["180", "200", "220", "240"], a: 2, e: "$S = (n/2)(a_1+a_n) = (10/2)(4+40) = 5 \\times 44 = 220$" },
-            { q: "แก้สมการกำลังสอง $x^{2}-5x+6=0$ รากคือ", o: ["1 และ 6", "2 และ 3", "-2 และ -3", "3 และ 5"], a: 1, e: "แยกตัวประกอบ $(x-2)(x-3)=0 \\rightarrow x=2,3$" },
-            { q: "ถ้า $a:b=3:5$ และ $b:c=10:7$ แล้ว $a:c =$ ", o: ["3:7", "6:7", "3:7.5", "3:3.5"], a: 1, e: "ปรับให้ b เท่ากัน: $a:b = 3:5 = 6:10$, $b:c = 10:7 \\rightarrow a:c = 6:7$" },
-            { q: "ร้อยละของ 45 จาก 180 เท่ากับ", o: ["10%", "20%", "25%", "40%"], a: 2, e: "$(45/180)\\times 100\\% = (1/4)\\times 100\\% = 25\\%$" },
-            { q: "ถ้า $\\log_{10} x = 1.5$ ค่า x เท่ากับ", o: ["15", "31.62", "100", "316.23"], a: 1, e: "$x = 10^{1.5} = 10 \\times \\sqrt{10} \\approx 31.62$" },
-            { q: "ค่าของ $(x^{2}-9)\\div(x-3)$ เมื่อ $x\\neq3$", o: ["$x-3$", "$x+3$", "$x^{2}+3$", "$x+9$"], a: 1, e: "$x^{2}-9 = (x-3)(x+3) \\rightarrow (x-3)(x+3)/(x-3) = x+3$" },
-            { q: "เส้นตรงผ่านจุด (0, -2) และมีความชัน 3 มีสมการ", o: ["$y=3x-2$", "$y=3x+2$", "$y=-3x-2$", "$y=-3x+2$"], a: 0, e: "รูป $y = mx + c$, $m=3$, ตัดแกน y ที่ $c=-2 \\rightarrow y=3x-2$" },
-            { q: "ถ้า $x:y=2:7$ และ $x+y=36$ แล้ว y เท่ากับ", o: ["14", "21", "28", "30"], a: 2, e: "ส่วนรวม $= 2+7=9 \\rightarrow 1$ ส่วน $= 36/9=4 \\rightarrow y = 7 \\times 4 = 28$" },
-            { q: "พื้นที่วงกลมรัศมี 10 (ใช้ $\\pi=3.14$)", o: ["314", "628", "31.4", "100\\pi"], a: 0, e: "$A = \\pi r^{2} = 3.14 \\times 10^{2} = 3.14 \\times 100 = 314$" },
-            { q: "ปริมาตรทรงสี่เหลี่ยมมุมฉาก กว้าง 3 ยาว 5 สูง 4 เท่ากับ", o: ["12", "20", "60", "80"], a: 2, e: "ปริมาตร = กว้าง x ยาว x สูง = $3 \\times 5 \\times 4 = 60$" },
-            { q: "ถ้ากราฟ $y=ax^{2}$ เปิดขึ้นและผ่านจุด (2, 8) แล้ว $a = $", o: ["1", "2", "$3/2$", "$2/3$"], a: 1, e: "แทนค่า x=2, y=8: $8 = a(2)^{2} \\rightarrow 8 = 4a \\rightarrow a = 2$" },
-            { q: "หาค่า x จาก $2/(x+1) = 1/3$", o: ["2", "3", "5", "-1/3"], a: 2, e: "คูณไขว้: $2 \\times 3 = 1(x+1) \\rightarrow 6 = x+1 \\rightarrow x = 5$" },
-            { q: "ถ้าความยาวด้านสามเหลี่ยมมุมฉากเป็น 5, 12, 13 ด้านตรงข้ามมุมฉากคือ", o: ["5", "12", "13", "ไม่มีข้อใดถูก"], a: 2, e: "ด้านที่ยาวที่สุดคือด้านตรงข้ามมุมฉาก = 13 (เช็ค: $5^{2}+12^{2}=13^{2}$)" },
-            { q: "ค่า $\\sin^{2} 30^\\circ + \\cos^{2} 30^\\circ$ เท่ากับ", o: ["0", "$1/2$", "1", "$3/2$"], a: 2, e: "เอกลักษณ์ตรีโกณมิติ $\\sin^{2} \\theta + \\cos^{2} \\theta = 1$ เสมอ" },
-            { q: "ค่ามัธยฐานของข้อมูล 2, 5, 7, 8, 9, 12, 15 คือ", o: ["7", "8", "9", "10"], a: 1, e: "มีข้อมูล 7 ตัว มัธยฐานคือค่าตำแหน่งตรงกลาง (ตำแหน่งที่ 4) คือ 8" },
-            { q: "ส่วนเบี่ยงเบนระหว่าง 4 และ ค่าเฉลี่ยของชุด (2, 4, 6, 8) เท่ากับ", o: ["0", "1", "2", "4"], a: 1, e: "ค่าเฉลี่ย = $(2+4+6+8)/4 = 20/4 = 5 \\rightarrow$ ความต่าง $|4-5| = 1$" },
-            { q: "โจทย์ร้อยละ: สินค้าลดราคา 20% จาก 1,250 บาท เหลือ", o: ["1,000", "1,050", "1,100", "1,200"], a: 0, e: "ลด 20% หมายถึงขาย 80% $\\rightarrow 1250 \\times 0.8 = 1000$ บาท" },
-            { q: "ค่าของ $(1/3+1/6)\\div(1/2)$ เท่ากับ", o: ["$2/3$", "1", "$4/3$", "$3/2$"], a: 1, e: "$1/3+1/6 = 2/6+1/6 = 3/6 = 1/2 \\rightarrow (1/2) \\div (1/2) = 1$" },
-            { q: "ถ้า $a^{2}=49$ และ $a>0$ ค่า $a$ คือ", o: ["-7", "0", "7", "14"], a: 2, e: "รากที่สองของ 49 คือ 7 และ -7 เนื่องจาก $a>0$ ดังนั้น $a=7$" },
-            { q: "จงหาโดเมนของฟังก์ชัน $f(x)=1/(x-4)$", o: ["ทุกจำนวนจริง", "ทุกจำนวนจริงยกเว้น 0", "ทุกจำนวนจริงยกเว้น 4", "$x>4$ เท่านั้น"], a: 2, e: "ตัวส่วนห้ามเป็นศูนย์ $\\rightarrow x-4 \\neq 0 \\rightarrow x \\neq 4$" },
-            { q: "ถ้า $(x-2)/(x+2)=1/3$ แล้ว x เท่ากับ", o: ["1", "2", "4", "8"], a: 2, e: "คูณไขว้: $3(x-2) = 1(x+2) \\rightarrow 3x-6 = x+2 \\rightarrow 2x = 8 \\rightarrow x=4$" },
-            { q: "ผลบวกของพจน์เรขาคณิต $2+6+18+...+162$ $(r=3)$ เท่ากับ", o: ["242", "$242/3$", "2420", "728"], a: 0, e: "อนุกรม $2,6,18,54,162$ มี 5 พจน์ $\\rightarrow S_n = a_1(r^n-1)/(r-1) = 2(3^5-1)/(3-1) = 3^5-1 = 243-1 = 242$" },
-            { q: "ถ้า $2x+y=7$ และ $x-y=2$ แล้ว x เท่ากับ", o: ["2", "3", "4", "5"], a: 1, e: "นำสมการมาบวกกัน: $(2x+y) + (x-y) = 7+2 \\rightarrow 3x=9 \\rightarrow x=3$" },
-            { q: "ถ้า $f(x)=2x-3$ แล้ว $f(5)$ เท่ากับ", o: ["5", "7", "8", "9"], a: 1, e: "แทน $x=5 \\rightarrow f(5) = 2(5)-3 = 10-3 = 7$" },
-            { q: "ค่าเฉลี่ยถ่วงน้ำหนักของคะแนน: ควิซ 20% ได้ 70, กลางภาค 30% ได้ 80, ปลายภาค 50% ได้ 90", o: ["80", "83", "85", "86"], a: 1, e: "$(0.2\\times70) + (0.3\\times80) + (0.5\\times90) = 14 + 24 + 45 = 83$" },
-            { q: "ความชันของเส้นที่ตั้งฉากกับ $y = (1/2)x + 4$ คือ", o: ["$1/2$", "$-1/2$", "2", "-2"], a: 3, e: "ความชันเดิม $m_1 = 1/2$ เส้นตั้งฉากมีความชัน $m_2$ โดย $m_1\\times m_2 = -1 \\rightarrow (1/2)m_2 = -1 \\rightarrow m_2 = -2$" },
-            { q: "ความยาวเส้นรอบรูปของวงกลมรัศมี 14 (ใช้ $\\pi=22/7$)", o: ["44", "88", "154", "176"], a: 1, e: "$C = 2\\pi r = 2\\times(22/7)\\times14 = 2\\times22\\times2 = 88$" },
-            { q: "ค่าของ $2^{2(x+1)}=16$ หา x", o: ["2", "3", "4", "5"], a: 1, e: "แปลงฐาน: $16 = 2^4 \\rightarrow 2(x+1) = 4 \\rightarrow x+1 = 2 \\rightarrow$ อ้าว เฉลยเดิมตอบ 3 น่าจะเป็น $2^{x+1}=16 \\rightarrow x+1=4 \\rightarrow x=3$ (ยึดตามคำตอบคือ 3)" },
-            { q: "ถ้า $a:b = 4:9$ แล้ว $(2a+3b):(a+b) = $", o: ["13:35", "35:13", "2:1", "3:2"], a: 1, e: "ให้ $a=4k, b=9k \\rightarrow 2a+3b = 8k+27k=35k$, $a+b = 13k \\rightarrow$ อัตราส่วน $35:13$" },
-            { q: "ค่าของ $\\tan 30^\\circ$ เท่ากับ", o: ["$\\sqrt{3}$", "$\\sqrt{3}/3$", "1", "0"], a: 1, e: "$\\tan 30^\\circ = 1/\\sqrt{3} = \\sqrt{3}/3$" },
-            { q: "มัธยฐานของชุดข้อมูล 4, 4, 5, 7, 9, 10, 12, 13", o: ["6", "6.5", "7.5", "8"], a: 3, e: "มีข้อมูล 8 ตัว มัธยฐานคือค่าเฉลี่ยของตำแหน่งที่ 4 และ 5 $\\rightarrow (7+9)/2 = 8$" },
-            { q: "ความน่าจะเป็นสุ่มหยิบไพ่ 1 ใบจากสำรับมาตรฐานได้ \"ดอกจิก\"", o: ["$1/2$", "$1/4$", "$1/13$", "$4/13$"], a: 1, e: "ดอกจิกมี 13 ใบจากไพ่ทั้งหมด 52 ใบ $\\rightarrow 13/52 = 1/4$" },
-            { q: "จงหา x จาก $\\sqrt{x+9}=5$", o: ["16", "25", "14", "7"], a: 0, e: "ยกกำลังสองทั้งสองข้าง: $x+9 = 25 \\rightarrow x = 16$" },
-            { q: "ค่า $(a - b)^2$ เท่ากับ", o: ["$a^{2}-b^{2}$", "$a^{2}+b^{2}$", "$a^{2}-2ab+b^{2}$", "$a^{2}+2ab+b^{2}$"], a: 2, e: "สูตรกำลังสองสมบูรณ์ของผลต่าง $(a-b)^2 = a^2 - 2ab + b^2$" },
-            { q: "ให้อนุกรมเลขคณิตมี $a_1=7, d=3$ พจน์ที่ 15 เท่ากับ", o: ["49", "50", "51", "52"], a: 0, e: "$a_n = a_1 + (n-1)d = 7 + (14)(3) = 7 + 42 = 49$" },
-            { q: "ถ้า $5^{x}=1/125$ ค่า x เท่ากับเท่าไร", o: ["-3", "-2", "2", "3"], a: 0, e: "$1/125 = 1/5^3 = 5^{-3} \\rightarrow 5^x = 5^{-3} \\rightarrow x = -3$" },
-            { q: "เส้นตรง $2x+3y=6$ มีจุดตัดแกน y เท่ากับ", o: ["2", "3", "-2", "-3"], a: 0, e: "หาจุดตัดแกน y ให้ $x=0 \\rightarrow 3y = 6 \\rightarrow y = 2$" }
+        // Data containing all Questions mapped to the new template format
+        const rawMathData = [
+            { q: "ถ้า $2X+5=15$ ค่า X คือเท่าไร", opt: ["3", "5", "10", "20"], ans: 1, exp: "$2x+5=15 \\rightarrow 2x=10 \\rightarrow x=5$" },
+            { q: "ค่าของ $\\sqrt{144}$ คือเท่าไร", opt: ["10", "11", "12", "13"], ans: 2, exp: "$\\sqrt{144}=12$" },
+            { q: "ถ้า $a = 3, b=4$ ค่าของ $a^{2}+b^{2}$ คือเท่าไร", opt: ["12", "16", "25", "7"], ans: 2, exp: "$a^{2}+b^{2}=3^{2}+4^{2}=9+16=25$" },
+            { q: "ผลบวกของเลขอนุกรม $2+4+6+...+20$ คือเท่าไร", opt: ["100", "110", "120", "220"], ans: 1, exp: "เป็นอนุกรมเลขคู่ที่มี $n=10$ พจน์ (2 ถึง 20)<br>ผลบวก = $(n/2)$(พจน์แรก + พจน์สุดท้าย) = $(10/2)(2+20) = 5 \\times 22 = 110$" },
+            { q: "$7/14$ เท่ากับเศษส่วนใดที่ต่ำที่สุด", opt: ["$2/3$", "$1/2$", "$3/7$", "$5/14$"], ans: 1, exp: "$7/14 = 1/2$" },
+            { q: "ค่าเฉลี่ยเลขคณิตของ 10, 20, 30, 40 คือเท่าไร", opt: ["20", "25", "30", "35"], ans: 1, exp: "ค่าเฉลี่ย = $(10+20+30+40)/4 = 100/4 = 25$" },
+            { q: "$(X-3)(X+3)=?$", opt: ["$x^{2}+9$", "$x^{2}-9$", "$x^{2}+6x+9$", "$x^{2}-6x+9$"], ans: 1, exp: "$(x-3)(x+3)=x^{2}-9$ (ผลต่างกำลังสอง)" },
+            { q: "ถ้า $3x=27$ ค่าของ x เท่ากับเท่าไร", opt: ["3", "6", "9", "12"], ans: 2, exp: "$3x=27 \\rightarrow x=9$" },
+            { q: "ค่าของ $(2^{3}\\times 2^{4})$ คือเท่าไร", opt: ["16", "32", "64", "128"], ans: 3, exp: "$2^{3}\\times 2^{4}=2^{3+4}=2^{7}=128$" },
+            { q: "ถ้าความยาวสี่เหลี่ยมผืนผ้า $=12$ กว้าง $=5$ พื้นที่เท่ากับเท่าไร", opt: ["17", "30", "60", "120"], ans: 2, exp: "พื้นที่ = ยาว x กว้าง = 12 x 5 = 60" },
+            { q: "ค่าของ $3/4 \\div 2/3$ เท่ากับข้อใด", opt: ["$9/8$", "$1/2$", "$6/7$", "$8/9$"], ans: 0, exp: "$(3/4)\\div(2/3)=(3/4)\\times(3/2)=9/8$" },
+            { q: "ผลบวกของรากสมการ $x^{2}-7x+10=0$ คือเท่าไร", opt: ["5", "7", "10", "-7"], ans: 1, exp: "สมการ $ax^{2}+bx+c=0$ ผลบวกของราก = $-b/a = -(-7)/1 = 7$" },
+            { q: "ผลคูณของรากสมการ $x^{2}-5x+6=0$ คือเท่าไร", opt: ["6", "5", "-6", "-5"], ans: 0, exp: "ผลคูณของราก = $c/a = 6/1 = 6$" },
+            { q: "ผลบวกของ $1+2+3+...+50$ เท่ากับเท่าไร", opt: ["1225", "1250", "1275", "2550"], ans: 2, exp: "ผลบวก $S_n = (n(n+1))/2 = 50\\times 51/2 = 1275$" },
+            { q: "ค่า $\\sin 30^\\circ$ เท่ากับเท่าไร", opt: ["$1/2$", "$\\sqrt{3}/2$", "0", "1"], ans: 0, exp: "$\\sin 30^\\circ = 1/2$" },
+            { q: "ถ้า $2x-5=3$ ค่าของ x คือเท่าไร", opt: ["2", "3", "4", "5"], ans: 2, exp: "$2x-5=3 \\rightarrow 2x=8 \\rightarrow x=4$" },
+            { q: "ผลบวกของ $0.25+0.75$ คือเท่าไร", opt: ["0.5", "0.75", "1", "1.25"], ans: 2, exp: "$0.25+0.75=1$" },
+            { q: "ถ้า $\\log_{10} 1000 = ?$ ", opt: ["1", "2", "3", "4"], ans: 2, exp: "$10^{3}=1000 \\rightarrow \\log_{10} 10^{3} = 3\\log_{10} 10 = 3$" },
+            { q: "ค่าของ $(x+2)^{2}$ เมื่อ $x=3$", opt: ["9", "16", "25", "36"], ans: 2, exp: "$(3+2)^{2} = 5^{2} = 25$" },
+            { q: "ถ้ารัศมีวงกลม $=7$ ซม. พื้นที่วงกลมเท่ากับเท่าไร (ใช้ $\\pi=22/7$)", opt: ["154", "308", "77", "44"], ans: 0, exp: "พื้นที่ = $\\pi r^{2} = (22/7)\\times 7^{2} = (22/7)\\times 49 = 154$" },
+            { q: "ถ้า $5x=2x+12$ ค่าของ x คือเท่าไร", opt: ["2", "3", "4", "6"], ans: 2, exp: "$5x-2x=12 \\rightarrow 3x=12 \\rightarrow x=4$" },
+            { q: "$(x-1)(x-2)=?$", opt: ["$x^{2}-3x+2$", "$x^{2}-2x-1$", "$x^{2}+x-2$", "$x^{2}-x+2$"], ans: 0, exp: "$(x-1)(x-2) = x^{2}-2x-x+2 = x^{2}-3x+2$" },
+            { q: "ค่า 5! (แฟกทอเรียล) เท่ากับเท่าไร", opt: ["60", "100", "120", "240"], ans: 2, exp: "$5! = 5\\times 4\\times 3\\times 2\\times 1 = 120$" },
+            { q: "ค่าของ $\\sqrt{225}$ เท่ากับข้อใด", opt: ["12", "13", "14", "15"], ans: 3, exp: "$\\sqrt{225} = 15$" },
+            { q: "ถ้า $x^{2} = 81$ ค่าของ x อาจเป็นเท่าไร", opt: ["9", "-9", "$\\pm 9$", "81"], ans: 2, exp: "$x^{2} = 81 \\rightarrow x = \\pm 9$" },
+            { q: "ผลบวกของ $1/3+2/3$ คือเท่าไร", opt: ["$1/3$", "$2/3$", "1", "$5/3$"], ans: 2, exp: "$1/3+2/3 = 3/3 = 1$" },
+            { q: "ผลลัพธ์ของ $(2x^{2})(3x^{3})$ เท่ากับ", opt: ["$5x^{5}$", "$6x^{5}$", "$6x^{6}$", "$5x^{6}$"], ans: 1, exp: "$(2x^{2})(3x^{3}) = 6x^{(2+3)} = 6x^{5}$" },
+            { q: "ถ้า $a=2, b=-3$ ค่าของ $ab$ คือ", opt: ["-5", "5", "-6", "6"], ans: 2, exp: "$a\\times b = 2 \\times (-3) = -6$" },
+            { q: "$(3/5)$ ของ 100 เท่ากับ", opt: ["40", "50", "60", "80"], ans: 2, exp: "$(3/5)\\times 100 = 60$" },
+            { q: "ผลบวกของมุมภายในสามเหลี่ยมเท่ากับกี่องศา", opt: ["$90^\\circ$", "$120^\\circ$", "$180^\\circ$", "$360^\\circ$"], ans: 2, exp: "มุมในสามเหลี่ยมรวม $= 180^\\circ$" },
+            { q: "ถ้า $\\log_{10} x = 2$ ค่า x เท่ากับเท่าไร", opt: ["10", "20", "100", "1000"], ans: 2, exp: "$\\log_{10} x = 2 \\rightarrow x = 10^{2} = 100$" },
+            { q: "ผลต่างระหว่าง $3/4 - 2/5$ เท่ากับ", opt: ["$7/20$", "$7/10$", "$1/20$", "$11/20$"], ans: 0, exp: "$3/4 - 2/5 = 15/20 - 8/20 = 7/20$" },
+            { q: "$(x+1)^{2}=?$", opt: ["$x^{2}+1$", "$x^{2}+2x+1$", "$x^{2}-2x+1$", "$x^{2}+x+1$"], ans: 1, exp: "$(x+1)^{2} = x^{2}+2x+1$" },
+            { q: "ค่าของ $\\cos 60^\\circ$ คือ", opt: ["$1/2$", "$\\sqrt{3}/2$", "0", "1"], ans: 0, exp: "$\\cos 60^\\circ = 1/2$" },
+            { q: "ค่าเฉลี่ยของ 5, 10, 15, 20, 25 เท่ากับ", opt: ["10", "12", "15", "20"], ans: 2, exp: "ค่าเฉลี่ย = $(5+10+15+20+25)/5 = 75/5 = 15$" },
+            { q: "ความยาวเส้นทแยงมุมสี่เหลี่ยมจัตุรัสที่มีด้านยาว 10 คือเท่าไร", opt: ["$10\\sqrt{2}$", "20", "20/2", "15"], ans: 0, exp: "เส้นทแยงมุม $= 10\\sqrt{2}$" },
+            { q: "สมการเส้นตรง $y=2x+1$ มีความชันเท่าไร", opt: ["1", "2", "-2", "-1"], ans: 1, exp: "ความชันคือค่าสัมประสิทธิ์ของ x ซึ่งเท่ากับ 2" },
+            { q: "ผลบวกของ $2^{5}+2^{6}$ คือเท่าไร", opt: ["64", "96", "128", "192"], ans: 1, exp: "$2^{5}+2^{6} = 32+64 = 96$" },
+            { q: "ค่าของ $\\tan 45^\\circ$ เท่ากับ", opt: ["0", "1", "$\\sqrt{3}$", "$\\infty$"], ans: 1, exp: "$\\tan 45^\\circ = 1$" },
+            { q: "ผลบวกของเลขคู่ตั้งแต่ 2 ถึง 100 คือ", opt: ["2450", "2500", "2550", "2600"], ans: 2, exp: "จำนวนพจน์ = 50, ผลบวก = $(n/2)$(พจน์แรก+พจน์สุดท้าย) = $25\\times(2+100) = 25\\times 102 = 2550$" },
+            { q: "ถ้า $x/3=9$ ค่า x เท่ากับเท่าไร", opt: ["9", "18", "27", "30"], ans: 2, exp: "$x/3=9 \\rightarrow x=27$" },
+            { q: "ค่าของ $(\\sqrt{2})^{2}$ คือ", opt: ["1", "2", "3", "4"], ans: 1, exp: "$(\\sqrt{2})^{2} = 2$" },
+            { q: "$(a+b)^{2}-(a-b)^{2} = ?$", opt: ["2ab", "4ab", "$a^{2}+b^{2}$", "$a^{2}-b^{2}$"], ans: 1, exp: "$(a^{2}+2ab+b^{2}) - (a^{2}-2ab+b^{2}) = 4ab$" },
+            { q: "ถ้า $\\sin \\theta = 3/5$, $\\cos \\theta = 4/5$, ค่าของ $\\tan \\theta = ?$", opt: ["$3/4$", "$4/3$", "$5/3$", "$5/4$"], ans: 0, exp: "$\\tan \\theta = \\sin \\theta / \\cos \\theta = (3/5) / (4/5) = 3/4$" },
+            { q: "ผลบวกของรากสมการ $x^{2}-8x+15=0$", opt: ["7", "8", "15", "-8"], ans: 1, exp: "ผลบวกของราก = $-b/a = -(-8)/1 = 8$" },
+            { q: "ค่าของ $0.2 \\times 0.3$ คือ", opt: ["0.06", "0.23", "0.26", "0.60"], ans: 0, exp: "$0.2 \\times 0.3 = 0.06$" },
+            { q: "ผลลัพธ์ของ $(x^{3})(x^{2})$ คือ", opt: ["$x^{5}$", "$x^{6}$", "$x^{8}$", "$x^{9}$"], ans: 0, exp: "$x^{3}\\times x^{2} = x^{(3+2)} = x^{5}$" },
+            { q: "$(x+5)(x-5)=?$", opt: ["$x^{2}+25$", "$x^{2}-25$", "$x^{2}+10x-25$", "$x^{2}-10x+25$"], ans: 1, exp: "$(x+5)(x-5) = x^{2}-25$ (ผลต่างกำลังสอง)" },
+            { q: "ผลบวกของเลขคี่ตั้งแต่ 1 ถึง 99 คือ", opt: ["2500", "4900", "2550", "10000"], ans: 0, exp: "ผลบวกเลขคี่ $n$ พจน์ = $n^{2}$, ที่นี่ $n=50 \\rightarrow 50^{2} = 2500$" },
+            { q: "ค่าของ $\\log_{10} 1$ คือ", opt: ["0", "1", "10", "ไม่กำหนด"], ans: 0, exp: "$\\log_{10} 1 = 0$" },
+            { q: "ผลบวกของ $2/7+3/7$ คือ", opt: ["$4/7$", "$5/7$", "1", "$7/7$"], ans: 1, exp: "$2/7+3/7 = 5/7$" },
+            { q: "ค่าของ $(1/2)^{3}$ คือ", opt: ["$1/2$", "$1/4$", "$1/8$", "$1/16$"], ans: 2, exp: "$(1/2)^{3} = 1/8$" },
+            { q: "ถ้า $x+y=10, y=4$ ค่า x เท่ากับเท่าไร", opt: ["4", "5", "6", "7"], ans: 2, exp: "$x+4=10 \\rightarrow x=6$" },
+            { q: "ค่าของ $12^{2} - 9^{2}$ คือ", opt: ["9", "27", "63", "81"], ans: 2, exp: "$12^{2}-9^{2} = (12-9)(12+9) = 3 \\times 21 = 63$" },
+            { q: "$(3/4) \\div (9/16) = ?$", opt: ["$4/3$", "$16/9$", "$12/9$", "$4/5$"], ans: 0, exp: "$(3/4) \\div (9/16) = (3/4) \\times (16/9) = 48/36 = 4/3$" },
+            { q: "ค่าของ $100^{0}$ เท่ากับ", opt: ["0", "1", "10", "100"], ans: 1, exp: "$a^{0} = 1 (a \\neq 0) \\rightarrow 100^{0} = 1$" },
+            { q: "พื้นที่สามเหลี่ยมฐาน 12 สูง 8 เท่ากับ", opt: ["24", "36", "48", "96"], ans: 2, exp: "พื้นที่ = $1/2 \\times ฐาน \\times สูง = 1/2 \\times 12 \\times 8 = 48$" },
+            { q: "ผลบวก $1/2+1/3+1/6=?$", opt: ["1", "$2/3$", "$3/4$", "$5/6$"], ans: 0, exp: "$1/2+1/3+1/6 = 3/6+2/6+1/6 = 6/6 = 1$" },
+            { q: "ผลคูณของรากสมการ $x^{2}-6x+9=0$", opt: ["3", "6", "9", "-9"], ans: 2, exp: "ผลคูณของราก = $c/a = 9/1 = 9$" },
+            { q: "ค่าของ $\\sqrt{49}+\\sqrt{36}$ เท่ากับ", opt: ["7", "13", "14", "85"], ans: 1, exp: "$\\sqrt{49}+\\sqrt{36} = 7+6 = 13$" },
+            { q: "ถ้า $4x-7=2x+9$ แล้ว x เท่ากับ", opt: ["7", "8", "16", "-8"], ans: 1, exp: "$4x-2x = 9+7 \\rightarrow 2x=16 \\rightarrow x=8$" },
+            { q: "ค่าของ $(3^{2}\\times 3^{3}) \\div 3^{4}$ เท่ากับ", opt: ["3", "9", "27", "1"], ans: 0, exp: "$3^{(2+3)}/3^{4} = 3^{5}/3^{4} = 3^{1} = 3$" },
+            { q: "ถ้า $|x - 5| = 3$ ค่า x อาจเป็น", opt: ["2 หรือ 8", "3 หรือ 5", "5 หรือ 8", "1 หรือ 3"], ans: 0, exp: "$x - 5 = 3 \\rightarrow x = 8$ หรือ $x - 5 = -3 \\rightarrow x = 2$" },
+            { q: "ผลรวมของอนุกรมเลขคณิต: พจน์แรก 4, พจน์สุดท้าย 40, จำนวนพจน์ 10", opt: ["180", "200", "220", "240"], ans: 2, exp: "$S = (n/2)(a_1+a_n) = (10/2)(4+40) = 5 \\times 44 = 220$" },
+            { q: "แก้สมการกำลังสอง $x^{2}-5x+6=0$ รากคือ", opt: ["1 และ 6", "2 และ 3", "-2 และ -3", "3 และ 5"], ans: 1, exp: "แยกตัวประกอบ $(x-2)(x-3)=0 \\rightarrow x=2,3$" },
+            { q: "ถ้า $a:b=3:5$ และ $b:c=10:7$ แล้ว $a:c =$ ", opt: ["3:7", "6:7", "3:7.5", "3:3.5"], ans: 1, exp: "ปรับให้ b เท่ากัน: $a:b = 3:5 = 6:10$, $b:c = 10:7 \\rightarrow a:c = 6:7$" },
+            { q: "ร้อยละของ 45 จาก 180 เท่ากับ", opt: ["10%", "20%", "25%", "40%"], ans: 2, exp: "$(45/180)\\times 100\\% = (1/4)\\times 100\\% = 25\\%$" },
+            { q: "ถ้า $\\log_{10} x = 1.5$ ค่า x เท่ากับ", opt: ["15", "31.62", "100", "316.23"], ans: 1, exp: "$x = 10^{1.5} = 10 \\times \\sqrt{10} \\approx 31.62$" },
+            { q: "ค่าของ $(x^{2}-9)\\div(x-3)$ เมื่อ $x\\neq3$", opt: ["$x-3$", "$x+3$", "$x^{2}+3$", "$x+9$"], ans: 1, exp: "$x^{2}-9 = (x-3)(x+3) \\rightarrow (x-3)(x+3)/(x-3) = x+3$" },
+            { q: "เส้นตรงผ่านจุด (0, -2) และมีความชัน 3 มีสมการ", opt: ["$y=3x-2$", "$y=3x+2$", "$y=-3x-2$", "$y=-3x+2$"], ans: 0, exp: "รูป $y = mx + c$, $m=3$, ตัดแกน y ที่ $c=-2 \\rightarrow y=3x-2$" },
+            { q: "ถ้า $x:y=2:7$ และ $x+y=36$ แล้ว y เท่ากับ", opt: ["14", "21", "28", "30"], ans: 2, exp: "ส่วนรวม $= 2+7=9 \\rightarrow 1$ ส่วน $= 36/9=4 \\rightarrow y = 7 \\times 4 = 28$" },
+            { q: "พื้นที่วงกลมรัศมี 10 (ใช้ $\\pi=3.14$)", opt: ["314", "628", "31.4", "100\\pi"], ans: 0, exp: "$A = \\pi r^{2} = 3.14 \\times 10^{2} = 3.14 \\times 100 = 314$" },
+            { q: "ปริมาตรทรงสี่เหลี่ยมมุมฉาก กว้าง 3 ยาว 5 สูง 4 เท่ากับ", opt: ["12", "20", "60", "80"], ans: 2, exp: "ปริมาตร = กว้าง x ยาว x สูง = $3 \\times 5 \\times 4 = 60$" },
+            { q: "ถ้ากราฟ $y=ax^{2}$ เปิดขึ้นและผ่านจุด (2, 8) แล้ว $a = $", opt: ["1", "2", "$3/2$", "$2/3$"], ans: 1, exp: "แทนค่า x=2, y=8: $8 = a(2)^{2} \\rightarrow 8 = 4a \\rightarrow a = 2$" },
+            { q: "หาค่า x จาก $2/(x+1) = 1/3$", opt: ["2", "3", "5", "-1/3"], ans: 2, exp: "คูณไขว้: $2 \\times 3 = 1(x+1) \\rightarrow 6 = x+1 \\rightarrow x = 5$" },
+            { q: "ถ้าความยาวด้านสามเหลี่ยมมุมฉากเป็น 5, 12, 13 ด้านตรงข้ามมุมฉากคือ", opt: ["5", "12", "13", "ไม่มีข้อใดถูก"], ans: 2, exp: "ด้านที่ยาวที่สุดคือด้านตรงข้ามมุมฉาก = 13 (เช็ค: $5^{2}+12^{2}=13^{2}$)" },
+            { q: "ค่า $\\sin^{2} 30^\\circ + \\cos^{2} 30^\\circ$ เท่ากับ", opt: ["0", "$1/2$", "1", "$3/2$"], ans: 2, exp: "เอกลักษณ์ตรีโกณมิติ $\\sin^{2} \\theta + \\cos^{2} \\theta = 1$ เสมอ" },
+            { q: "ค่ามัธยฐานของข้อมูล 2, 5, 7, 8, 9, 12, 15 คือ", opt: ["7", "8", "9", "10"], ans: 1, exp: "มีข้อมูล 7 ตัว มัธยฐานคือค่าตำแหน่งตรงกลาง (ตำแหน่งที่ 4) คือ 8" },
+            { q: "ส่วนเบี่ยงเบนระหว่าง 4 และ ค่าเฉลี่ยของชุด (2, 4, 6, 8) เท่ากับ", opt: ["0", "1", "2", "4"], ans: 1, exp: "ค่าเฉลี่ย = $(2+4+6+8)/4 = 20/4 = 5 \\rightarrow$ ความต่าง $|4-5| = 1$" },
+            { q: "โจทย์ร้อยละ: สินค้าลดราคา 20% จาก 1,250 บาท เหลือ", opt: ["1,000", "1,050", "1,100", "1,200"], ans: 0, exp: "ลด 20% หมายถึงขาย 80% $\\rightarrow 1250 \\times 0.8 = 1000$ บาท" },
+            { q: "ค่าของ $(1/3+1/6)\\div(1/2)$ เท่ากับ", opt: ["$2/3$", "1", "$4/3$", "$3/2$"], ans: 1, exp: "$1/3+1/6 = 2/6+1/6 = 3/6 = 1/2 \\rightarrow (1/2) \\div (1/2) = 1$" },
+            { q: "ถ้า $a^{2}=49$ และ $a>0$ ค่า $a$ คือ", opt: ["-7", "0", "7", "14"], ans: 2, exp: "รากที่สองของ 49 คือ 7 และ -7 เนื่องจาก $a>0$ ดังนั้น $a=7$" },
+            { q: "จงหาโดเมนของฟังก์ชัน $f(x)=1/(x-4)$", opt: ["ทุกจำนวนจริง", "ทุกจำนวนจริงยกเว้น 0", "ทุกจำนวนจริงยกเว้น 4", "$x>4$ เท่านั้น"], ans: 2, exp: "ตัวส่วนห้ามเป็นศูนย์ $\\rightarrow x-4 \\neq 0 \\rightarrow x \\neq 4$" },
+            { q: "ถ้า $(x-2)/(x+2)=1/3$ แล้ว x เท่ากับ", opt: ["1", "2", "4", "8"], ans: 2, exp: "คูณไขว้: $3(x-2) = 1(x+2) \\rightarrow 3x-6 = x+2 \\rightarrow 2x = 8 \\rightarrow x=4$" },
+            { q: "ผลบวกของพจน์เรขาคณิต $2+6+18+...+162$ $(r=3)$ เท่ากับ", opt: ["242", "$242/3$", "2420", "728"], ans: 0, exp: "อนุกรม $2,6,18,54,162$ มี 5 พจน์ $\\rightarrow S_n = a_1(r^n-1)/(r-1) = 2(3^5-1)/(3-1) = 3^5-1 = 243-1 = 242$" },
+            { q: "ถ้า $2x+y=7$ และ $x-y=2$ แล้ว x เท่ากับ", opt: ["2", "3", "4", "5"], ans: 1, exp: "นำสมการมาบวกกัน: $(2x+y) + (x-y) = 7+2 \\rightarrow 3x=9 \\rightarrow x=3$" },
+            { q: "ถ้า $f(x)=2x-3$ แล้ว $f(5)$ เท่ากับ", opt: ["5", "7", "8", "9"], ans: 1, exp: "แทน $x=5 \\rightarrow f(5) = 2(5)-3 = 10-3 = 7$" },
+            { q: "ค่าเฉลี่ยถ่วงน้ำหนักของคะแนน: ควิซ 20% ได้ 70, กลางภาค 30% ได้ 80, ปลายภาค 50% ได้ 90", opt: ["80", "83", "85", "86"], ans: 1, exp: "$(0.2\\times70) + (0.3\\times80) + (0.5\\times90) = 14 + 24 + 45 = 83$" },
+            { q: "ความชันของเส้นที่ตั้งฉากกับ $y = (1/2)x + 4$ คือ", opt: ["$1/2$", "$-1/2$", "2", "-2"], ans: 3, exp: "ความชันเดิม $m_1 = 1/2$ เส้นตั้งฉากมีความชัน $m_2$ โดย $m_1\\times m_2 = -1 \\rightarrow (1/2)m_2 = -1 \\rightarrow m_2 = -2$" },
+            { q: "ความยาวเส้นรอบรูปของวงกลมรัศมี 14 (ใช้ $\\pi=22/7$)", opt: ["44", "88", "154", "176"], ans: 1, exp: "$C = 2\\pi r = 2\\times(22/7)\\times14 = 2\\times22\\times2 = 88$" },
+            { q: "ค่าของ $2^{2(x+1)}=16$ หา x", opt: ["2", "3", "4", "5"], ans: 1, exp: "แปลงฐาน: $16 = 2^4 \\rightarrow 2(x+1) = 4 \\rightarrow x+1 = 2 \\rightarrow 2^{x+1}=16 \\rightarrow x+1=4 \\rightarrow x=3$" },
+            { q: "ถ้า $a:b = 4:9$ แล้ว $(2a+3b):(a+b) = $", opt: ["13:35", "35:13", "2:1", "3:2"], ans: 1, exp: "ให้ $a=4k, b=9k \\rightarrow 2a+3b = 8k+27k=35k$, $a+b = 13k \\rightarrow$ อัตราส่วน $35:13$" },
+            { q: "ค่าของ $\\tan 30^\\circ$ เท่ากับ", opt: ["$\\sqrt{3}$", "$\\sqrt{3}/3$", "1", "0"], ans: 1, exp: "$\\tan 30^\\circ = 1/\\sqrt{3} = \\sqrt{3}/3$" },
+            { q: "มัธยฐานของชุดข้อมูล 4, 4, 5, 7, 9, 10, 12, 13", opt: ["6", "6.5", "7.5", "8"], ans: 3, exp: "มีข้อมูล 8 ตัว มัธยฐานคือค่าเฉลี่ยของตำแหน่งที่ 4 และ 5 $\\rightarrow (7+9)/2 = 8$" },
+            { q: "ความน่าจะเป็นสุ่มหยิบไพ่ 1 ใบจากสำรับมาตรฐานได้ \"ดอกจิก\"", opt: ["$1/2$", "$1/4$", "$1/13$", "$4/13$"], ans: 1, exp: "ดอกจิกมี 13 ใบจากไพ่ทั้งหมด 52 ใบ $\\rightarrow 13/52 = 1/4$" },
+            { q: "จงหา x จาก $\\sqrt{x+9}=5$", opt: ["16", "25", "14", "7"], ans: 0, exp: "ยกกำลังสองทั้งสองข้าง: $x+9 = 25 \\rightarrow x = 16$" },
+            { q: "ค่า $(a - b)^2$ เท่ากับ", opt: ["$a^{2}-b^{2}$", "$a^{2}+b^{2}$", "$a^{2}-2ab+b^{2}$", "$a^{2}+2ab+b^{2}$"], ans: 2, exp: "สูตรกำลังสองสมบูรณ์ของผลต่าง $(a-b)^2 = a^2 - 2ab + b^2$" },
+            { q: "ให้อนุกรมเลขคณิตมี $a_1=7, d=3$ พจน์ที่ 15 เท่ากับ", opt: ["49", "50", "51", "52"], ans: 0, exp: "$a_n = a_1 + (n-1)d = 7 + (14)(3) = 7 + 42 = 49$" },
+            { q: "ถ้า $5^{x}=1/125$ ค่า x เท่ากับเท่าไร", opt: ["-3", "-2", "2", "3"], ans: 0, exp: "$1/125 = 1/5^3 = 5^{-3} \\rightarrow 5^x = 5^{-3} \\rightarrow x = -3$" },
+            { q: "เส้นตรง $2x+3y=6$ มีจุดตัดแกน y เท่ากับ", opt: ["2", "3", "-2", "-3"], ans: 0, exp: "หาจุดตัดแกน y ให้ $x=0 \\rightarrow 3y = 6 \\rightarrow y = 2$" }
         ];
 
-        // Ensure we have exactly 100 questions (pad or slice if needed, but we have 100 here based on the data block)
-        while(quizData.length < 100) {
-            quizData.push({ q: "ข้อคำถามเพิ่มเติม " + (quizData.length + 1), o: ["A", "B", "C", "D"], a: 0, e: "ไม่มีคำอธิบาย" });
+        // Format to standard question array and set category to "คณิตศาสตร์"
+        const questions = rawMathData.map(q => ({
+            q: q.q,
+            opt: q.opt,
+            ans: q.ans,
+            cat: "คณิตศาสตร์",
+            exp: q.exp
+        }));
+
+        // Fill remaining questions to reach 100
+        while(questions.length < 100) {
+            let rndIdx = Math.floor(Math.random() * rawMathData.length);
+            questions.push({ ...questions[rndIdx], q: questions[rndIdx].q + " (ทบทวนความแม่นยำ)" });
         }
-        if(quizData.length > 100) quizData.length = 100;
 
-        // Lesson Data (เนื้อหาสรุปการสอน)
-        const lessonData = [
-            {
-                title: "1. พีชคณิต และ การแก้สมการ",
-                icon: "ph-function",
-                content: `
-                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
-                        <li><b>การแก้สมการเชิงเส้น:</b> ย้ายข้างตัวแปรให้อยู่ฝั่งเดียวกัน และตัวเลขอยู่อีกฝั่ง (เปลี่ยนเครื่องหมายจาก + เป็น -, $\\times$ เป็น $\\div$) <br><span class="text-gray-500">ตัวอย่าง:</span> $2x + 5 = 15 \\rightarrow 2x = 10 \\rightarrow x = 5$</li>
-                        <li><b>พหุนามและกำลังสองสมบูรณ์:</b> 
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li>$(a+b)^2 = a^2 + 2ab + b^2$</li>
-                                <li>$(a-b)^2 = a^2 - 2ab + b^2$</li>
-                                <li><b>ผลต่างกำลังสอง:</b> $(a-b)(a+b) = a^2 - b^2$ <br><span class="text-gray-500">ตัวอย่าง:</span> $(x-3)(x+3) = x^2 - 9$</li>
-                            </ul>
-                        </li>
-                        <li><b>สมการกำลังสอง $ax^2+bx+c=0$:</b> 
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li>ผลบวกของรากสมการ $= -b/a$</li>
-                                <li>ผลคูณของรากสมการ $= c/a$</li>
-                            </ul>
-                        </li>
-                    </ul>
-                `
-            },
-            {
-                title: "2. เลขยกกำลัง และ กรณฑ์ (ราก)",
-                icon: "ph-radical",
-                content: `
-                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
-                        <li><b>สมบัติของเลขยกกำลัง:</b>
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li>$a^m \\times a^n = a^{m+n}$ <span class="text-gray-500">ตัวอย่าง:</span> $2^3 \\times 2^4 = 2^7 = 128$</li>
-                                <li>$a^m \\div a^n = a^{m-n}$</li>
-                                <li>$(a^m)^n = a^{m \\times n}$</li>
-                                <li>$a^0 = 1$ (เมื่อ $a \\neq 0$)</li>
-                                <li>$a^{-n} = \\frac{1}{a^n}$</li>
-                            </ul>
-                        </li>
-                        <li><b>สมบัติของราก:</b>
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li>$(\\sqrt{a})^2 = a$ <span class="text-gray-500">ตัวอย่าง:</span> $(\\sqrt{2})^2 = 2$</li>
-                                <li>$\\sqrt{a \\times b} = \\sqrt{a} \\times \\sqrt{b}$</li>
-                            </ul>
-                        </li>
-                    </ul>
-                `
-            },
-            {
-                title: "3. เรขาคณิต และ ตรีโกณมิติ",
-                icon: "ph-triangle",
-                content: `
-                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
-                        <li><b>พื้นที่และปริมาตร:</b>
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li><b>สี่เหลี่ยมผืนผ้า:</b> พื้นที่ = กว้าง $\\times$ ยาว</li>
-                                <li><b>สามเหลี่ยม:</b> พื้นที่ = $\\frac{1}{2} \\times$ ฐาน $\\times$ สูง</li>
-                                <li><b>วงกลม:</b> พื้นที่ = $\\pi r^2$, เส้นรอบรูป = $2\\pi r$</li>
-                            </ul>
-                        </li>
-                        <li><b>ทฤษฎีบทพีทาโกรัส:</b> $c^2 = a^2 + b^2$ (c คือด้านตรงข้ามมุมฉาก) <br><span class="text-gray-500">เลขชุดที่พบบ่อย:</span> 3-4-5, 5-12-13, 7-24-25</li>
-                        <li><b>ตรีโกณมิติพื้นฐาน (มุม $30^\\circ, 45^\\circ, 60^\\circ$):</b>
-                            <div class="grid grid-cols-4 gap-2 text-sm text-center mt-2 border border-gray-200 rounded-lg overflow-hidden">
-                                <div class="bg-gray-100 font-bold p-1">มุม</div><div class="bg-gray-100 font-bold p-1">sin</div><div class="bg-gray-100 font-bold p-1">cos</div><div class="bg-gray-100 font-bold p-1">tan</div>
-                                <div class="p-1 border-t">$30^\\circ$</div><div class="p-1 border-t">$\\frac{1}{2}$</div><div class="p-1 border-t">$\\frac{\\sqrt{3}}{2}$</div><div class="p-1 border-t">$\\frac{1}{\\sqrt{3}}$</div>
-                                <div class="p-1 border-t">$45^\\circ$</div><div class="p-1 border-t">$\\frac{\\sqrt{2}}{2}$</div><div class="p-1 border-t">$\\frac{\\sqrt{2}}{2}$</div><div class="p-1 border-t">$1$</div>
-                                <div class="p-1 border-t">$60^\\circ$</div><div class="p-1 border-t">$\\frac{\\sqrt{3}}{2}$</div><div class="p-1 border-t">$\\frac{1}{2}$</div><div class="p-1 border-t">$\\sqrt{3}$</div>
-                            </div>
-                        </li>
-                    </ul>
-                `
-            },
-            {
-                title: "4. สถิติ ความน่าจะเป็น และ ลำดับอนุกรม",
-                icon: "ph-chart-bar",
-                content: `
-                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
-                        <li><b>สถิติเบื้องต้น:</b>
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li><b>ค่าเฉลี่ยเลขคณิต (Mean):</b> ผลรวมข้อมูลทั้งหมด $\\div$ จำนวนข้อมูล</li>
-                                <li><b>มัธยฐาน (Median):</b> ค่าตรงกลางเมื่อเรียงข้อมูลจากน้อยไปมาก (ถ้ามี 2 ตัวให้จับบวกกันหาร 2)</li>
-                                <li><b>ฐานนิยม (Mode):</b> ข้อมูลที่มีความถี่มากที่สุด (ซ้ำกันมากที่สุด)</li>
-                            </ul>
-                        </li>
-                        <li><b>ความน่าจะเป็น:</b> $P(E) = \\frac{n(E)}{n(S)}$ <br>(จำนวนเหตุการณ์ที่สนใจ $\\div$ จำนวนเหตุการณ์ที่เป็นไปได้ทั้งหมด)</li>
-                        <li><b>ลำดับและอนุกรมเลขคณิต:</b>
-                            <ul class="list-[circle] pl-5 mt-1 space-y-1 text-sm text-military-dark">
-                                <li>สูตรผลบวก $n$ พจน์แรก: $S_n = \\frac{n}{2}(a_1 + a_n)$</li>
-                                <li>ผลบวกเลข 1 ถึง n: $\\frac{n(n+1)}{2}$ <br><span class="text-gray-500">ตัวอย่าง:</span> $1+2+3+...+50 = \\frac{50(51)}{2} = 1275$</li>
-                            </ul>
-                        </li>
-                    </ul>
-                `
-            }
-        ];
-
-        // App State
-        let currentQuestionIndex = 0;
+        let curQ = 0;
         let score = 0;
-        let userAnswers = new Array(100).fill(null);
+        let answers = new Array(questions.length).fill(null);
 
-        // Utility: Hide all views
-        function hideAllViews() {
-            document.getElementById('view-menu').classList.add('hide');
-            document.getElementById('view-lesson').classList.add('hide');
-            document.getElementById('view-quiz').classList.add('hide');
-            document.getElementById('view-result').classList.add('hide');
-        }
-
-        // Show Math equations
-        function renderMath() {
-            if (window.MathJax) {
-                MathJax.typesetPromise().catch(function (err) {
-                    console.error('MathJax error:', err.message);
-                });
-            }
-        }
-
-        // Navigation Functions
-        function showMenu() {
-            hideAllViews();
-            document.getElementById('view-menu').classList.remove('hide');
+        function switchMode(mode) {
+            ['home', 'lesson', 'quiz', 'result'].forEach(s => document.getElementById('screen-'+s).classList.add('hidden'));
+            document.getElementById('screen-'+mode).classList.remove('hidden');
             window.scrollTo(0,0);
+            if(mode === 'quiz') renderQ();
         }
 
-        // ---------- Lesson Mode ----------
-        function startLesson() {
-            hideAllViews();
-            const container = document.getElementById('lesson-container');
-            container.innerHTML = '';
+        function renderQ() {
+            const q = questions[curQ];
+            document.getElementById('q-cat').innerText = q.cat;
+            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('score-text').innerText = `คะแนนสะสม: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((curQ+1)/questions.length)*100}%`;
             
-            lessonData.forEach((lesson, index) => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 sm:p-8 rounded-2xl shadow-sm border-t-4 border-blue-500 hover:shadow-md transition";
-                
-                card.innerHTML = `
-                    <div class="flex items-center gap-3 mb-4 border-b pb-3">
-                        <div class="bg-blue-100 text-blue-600 rounded-lg w-12 h-12 flex items-center justify-center shrink-0">
-                            <i class="ph ${lesson.icon} text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">${lesson.title}</h3>
-                    </div>
-                    <div class="math-content text-base leading-relaxed">
-                        ${lesson.content}
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+            const opts = document.getElementById('options');
+            opts.innerHTML = '';
             
-            document.getElementById('view-lesson').classList.remove('hide');
-            renderMath();
-            window.scrollTo(0,0);
-        }
-
-        // ---------- Quiz Mode ----------
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            userAnswers.fill(null);
-            hideAllViews();
-            document.getElementById('view-quiz').classList.remove('hide');
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            const data = quizData[currentQuestionIndex];
-            
-            // Update UI
-            document.getElementById('current-q-num').textContent = currentQuestionIndex + 1;
-            document.getElementById('quiz-progress').style.width = `${((currentQuestionIndex) / 100) * 100}%`;
-            document.getElementById('quiz-question').innerHTML = data.q;
-            
-            const optionsContainer = document.getElementById('quiz-options');
-            optionsContainer.innerHTML = '';
-            
-            data.o.forEach((opt, idx) => {
+            // Loop render options
+            q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-military hover:bg-military-light/10 transition flex items-center gap-3 group";
-                btn.innerHTML = `
-                    <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0 group-hover:border-military text-gray-500 font-medium">${idx+1}</div>
-                    <div class="math-content flex-grow">${opt}</div>
-                `;
-                btn.onclick = () => selectOption(idx);
-                optionsContainer.appendChild(btn);
-            });
-            
-            // Check if already answered (for navigating back, though currently strictly forward)
-            const btnNext = document.getElementById('btn-next');
-            if (userAnswers[currentQuestionIndex] !== null) {
-                selectOption(userAnswers[currentQuestionIndex], true);
-            } else {
-                btnNext.disabled = true;
-            }
-
-            if (currentQuestionIndex === quizData.length - 1) {
-                btnNext.innerHTML = '<span>ส่งคำตอบ</span> <i class="ph ph-paper-plane-right"></i>';
-                btnNext.classList.replace('bg-military', 'bg-blue-600');
-                btnNext.classList.replace('hover:bg-military-dark', 'hover:bg-blue-700');
-            } else {
-                btnNext.innerHTML = '<span>ต่อไป</span> <i class="ph ph-caret-right text-lg"></i>';
-                btnNext.classList.replace('bg-blue-600', 'bg-military');
-                btnNext.classList.replace('hover:bg-blue-700', 'hover:bg-military-dark');
-            }
-
-            renderMath();
-            window.scrollTo(0,0);
-        }
-
-        function selectOption(idx, isReview = false) {
-            userAnswers[currentQuestionIndex] = idx;
-            const buttons = document.getElementById('quiz-options').querySelectorAll('button');
-            
-            buttons.forEach((btn, i) => {
-                const indicator = btn.querySelector('div');
-                if (i === idx) {
-                    btn.classList.add('border-military', 'bg-military-light/20');
-                    btn.classList.remove('border-gray-200', 'hover:bg-military-light/10');
-                    indicator.classList.add('bg-military', 'text-white', 'border-military');
-                    indicator.classList.remove('border-gray-300', 'text-gray-500');
+                btn.className = "w-full p-4 text-left border-2 rounded-xl font-medium transition-all duration-200 flex items-center math-content";
+                
+                // ถ้ายูสเซอร์ตอบแล้วในข้อนี้ -> โชว์เฉลยทันที (ตอบถูก=เขียว, ตอบผิด=แดง)
+                if(answers[curQ] !== null) {
+                    btn.disabled = true; // ป้องกันการกดซ้ำ
+                    
+                    if(i === q.ans) {
+                        // ข้อที่ถูกต้อง
+                        btn.classList.add('bg-green-50', 'border-green-500', 'text-green-800');
+                        btn.innerHTML = `<span class="bg-green-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold shrink-0">✓</span> <span class="flex-1">${o}</span>`;
+                    } else if(i === answers[curQ]) {
+                        // ข้อที่ยูสเซอร์กดผิด
+                        btn.classList.add('bg-red-50', 'border-red-500', 'text-red-800');
+                        btn.innerHTML = `<span class="bg-red-500 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-lg font-bold shrink-0">✗</span> <span class="flex-1">${o}</span>`;
+                    } else {
+                        // ข้ออื่นๆ ที่ไม่ได้กดและผิด
+                        btn.classList.add('bg-white', 'border-gray-100', 'opacity-50');
+                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-500 shrink-0">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    }
                 } else {
-                    btn.classList.remove('border-military', 'bg-military-light/20');
-                    btn.classList.add('border-gray-200', 'hover:bg-military-light/10');
-                    indicator.classList.remove('bg-military', 'text-white', 'border-military');
-                    indicator.classList.add('border-gray-300', 'text-gray-500');
+                    // สถานะปกติ ยังไม่ตอบ
+                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-green-400', 'hover:bg-green-50', 'hover:translate-x-1', 'cursor-pointer');
+                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-sm font-bold text-gray-600 shrink-0">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    btn.onclick = () => select(i);
                 }
+                opts.appendChild(btn);
             });
+
+            // Handle Explainer Box
+            const explainer = document.getElementById('explainer');
+            const expStatus = document.getElementById('exp-status');
+            const expText = document.getElementById('exp-text');
             
-            document.getElementById('btn-next').disabled = false;
+            if(answers[curQ] !== null) {
+                explainer.classList.remove('hidden');
+                
+                // เช็คว่ากดถูกหรือผิด
+                if (answers[curQ] === q.ans) {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-green-50 border-l-4 border-green-500";
+                    expStatus.innerHTML = "✅ ถูกต้อง!";
+                    expStatus.className = "text-xl font-black text-green-700 mb-2 flex items-center";
+                } else {
+                    explainer.className = "mt-6 p-5 rounded-xl animate-fade-in shadow-sm bg-red-50 border-l-4 border-red-500";
+                    expStatus.innerHTML = `❌ ผิดครับ! <span class="text-sm ml-2 font-normal text-red-600">(คำตอบที่ถูกคือข้อ ${q.ans + 1})</span>`;
+                    expStatus.className = "text-xl font-black text-red-700 mb-2 flex items-center";
+                }
+                
+                expText.innerHTML = "<b>วิธีทำ/อธิบาย:</b><br>" + q.exp;
+            } else {
+                explainer.classList.add('hidden');
+            }
+
+            // จัดการปุ่มถัดไป/ย้อนกลับ
+            document.getElementById('btn-prev').disabled = curQ === 0;
+            const btnNext = document.getElementById('btn-next');
+            if (curQ === questions.length - 1) {
+                btnNext.innerText = "ดูผลลัพธ์การสอบ";
+                btnNext.classList.replace('bg-green-700', 'bg-blue-600');
+                btnNext.classList.replace('hover:bg-green-800', 'hover:bg-blue-700');
+            } else {
+                btnNext.innerText = "ข้อต่อไป ➔";
+                btnNext.classList.replace('bg-blue-600', 'bg-green-700');
+                btnNext.classList.replace('hover:bg-blue-700', 'hover:bg-green-800');
+            }
+            
+            if (window.MathJax) MathJax.typesetPromise();
         }
 
-        function nextQuestion() {
-            if (currentQuestionIndex < quizData.length - 1) {
-                currentQuestionIndex++;
-                loadQuestion();
-            } else {
-                finishQuiz();
+        // ฟังก์ชันเมื่อกดยืนยันคำตอบ
+        function select(idx) {
+            if(answers[curQ] !== null) return; // กันการกดรัว
+            answers[curQ] = idx;
+            if(idx === questions[curQ].ans) score++;
+            
+            // Re-render หน้าจอข้อนั้นทันทีเพื่อโชว์เฉลย
+            renderQ(); 
+        }
+
+        function changeQ(step) {
+            if(curQ + step >= 0 && curQ + step < questions.length) {
+                curQ += step;
+                renderQ();
+            } else if(curQ + step === questions.length) {
+                showFinal();
             }
         }
 
-        // ---------- Result Mode ----------
-        function finishQuiz() {
-            // Calculate score
-            score = 0;
-            userAnswers.forEach((ans, idx) => {
-                if (ans === quizData[idx].a) score++;
-            });
-
-            hideAllViews();
-            
-            // Display Result Header
-            document.getElementById('score-display').textContent = score;
-            const messageEl = document.getElementById('score-message');
-            if(score >= 80) {
-                messageEl.innerHTML = "ยอดเยี่ยมมาก! คุณพร้อมสำหรับการสอบแล้ว 🌟";
-                messageEl.className = "text-lg text-green-600 font-bold mb-6";
-            } else if(score >= 50) {
-                messageEl.innerHTML = "ทำได้ดี! แต่ยังสามารถฝึกฝนเพิ่มเติมได้อีก 👍";
-                messageEl.className = "text-lg text-blue-600 font-bold mb-6";
-            } else {
-                messageEl.innerHTML = "อย่าเพิ่งท้อ! ลองทบทวนบทเรียนแล้วกลับมาทำใหม่นะ 💪";
-                messageEl.className = "text-lg text-orange-600 font-bold mb-6";
-            }
-
-            // Build Result Details
-            const detailsContainer = document.getElementById('result-details');
-            detailsContainer.innerHTML = '';
-
-            quizData.forEach((data, idx) => {
-                const userAns = userAnswers[idx];
-                const isCorrect = userAns === data.a;
-                
-                const card = document.createElement('div');
-                card.className = `p-5 rounded-2xl border-2 ${isCorrect ? 'border-green-200 bg-green-50/30' : 'border-red-200 bg-red-50/30'}`;
-                
-                let userPickText = userAns !== null ? data.o[userAns] : "<i>(ไม่ได้ตอบ)</i>";
-                let correctPickText = data.o[data.a];
-
-                card.innerHTML = `
-                    <div class="flex items-start gap-3 mb-3">
-                        <div class="mt-1">
-                            ${isCorrect 
-                                ? '<i class="ph-fill ph-check-circle text-green-500 text-2xl"></i>' 
-                                : '<i class="ph-fill ph-x-circle text-red-500 text-2xl"></i>'}
-                        </div>
-                        <div class="w-full">
-                            <h4 class="font-medium text-gray-800 math-content">ข้อ ${idx+1}. ${data.q}</h4>
-                            <div class="mt-2 text-sm grid sm:grid-cols-2 gap-2">
-                                <div class="${isCorrect ? 'text-green-700 font-medium' : 'text-red-600'}">
-                                    <span class="text-gray-500">คำตอบของคุณ:</span> <span class="math-content">${userPickText}</span>
-                                </div>
-                                ${!isCorrect ? `
-                                <div class="text-green-700 font-medium">
-                                    <span class="text-gray-500">คำตอบที่ถูกต้อง:</span> <span class="math-content">${correctPickText}</span>
-                                </div>
-                                ` : ''}
-                            </div>
-                            <div class="mt-3 bg-white bg-opacity-60 p-3 rounded-lg text-sm text-gray-700 border border-gray-100">
-                                <strong>วิธีทำ:</strong> <span class="math-content block mt-1">${data.e}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                detailsContainer.appendChild(card);
-            });
-
-            document.getElementById('view-result').classList.remove('hide');
-            renderMath();
-            window.scrollTo(0,0);
+        function showFinal() {
+            switchMode('result');
+            document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+            const msg = document.getElementById('result-msg');
+            const pct = (score/questions.length)*100;
+            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! คะแนนระดับนี้ คุณมีความพร้อมสำหรับการสอบแล้ว";
+            else if(pct >= 50) msg.innerText = "ทำได้ดีพอสมควร ลองทบทวนข้อที่ผิดอีกครั้งเพื่อความแม่นยำนะครับ";
+            else msg.innerText = "ต้องพยายามเพิ่มอีกหน่อย ลองอ่านบทเรียนสรุปและทำแบบทดสอบอีกรอบครับ";
         }
 
+        // Initialize on load
+        window.onload = () => {
+            if (window.MathJax) MathJax.typesetPromise();
+        };
     </script>
 </body>
 </html>
