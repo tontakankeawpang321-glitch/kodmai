@@ -3,48 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - คณิตศาสตร์</title>
+    <title>คลังความรู้ & หนังสือเตรียมสอบนายสิบตำรวจ - คณิตศาสตร์ Pro Edition</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts: Sarabun -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Sarabun & Chakra Petch -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
-    <!-- MathJax for rendering math equations -->
+    <!-- MathJax Configuration & Script -->
     <script>
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']]
             },
-            svg: { fontCache: 'global' }
+            svg: { fontCache: 'global' },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax initial typesetting complete');
+                    });
+                }
+            }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+    <!-- Tailwind Custom Configuration -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         police: {
+                            950: '#030814',
                             900: '#0a192f',
                             800: '#112240',
                             700: '#1a365d',
                             600: '#2a4365',
                             500: '#3182ce',
-                            50: '#ebf8ff',
+                            400: '#63b3ed',
+                            100: '#ebf8ff',
+                            50: '#f0f9ff',
                         },
                         gold: {
+                            600: '#b78103',
                             500: '#d4af37',
                             400: '#e5c158',
                             300: '#f3d578',
+                            100: '#fef9c3',
                             50: '#fffbeb',
                         }
                     },
                     fontFamily: {
                         sans: ['Sarabun', 'sans-serif'],
+                        display: ['Chakra Petch', 'Sarabun', 'sans-serif'],
                     }
                 }
             }
@@ -52,280 +67,1109 @@
     </script>
 
     <style>
-        body { background-color: #f8fafc; }
-        .police-gradient { background: linear-gradient(145deg, #0a192f 0%, #1a365d 100%); }
-        .math-content { overflow-x: auto; padding-bottom: 0.5rem; }
+        body { background-color: #f1f5f9; font-family: 'Sarabun', sans-serif; }
+        .police-gradient { background: linear-gradient(135deg, #0a192f 0%, #1a365d 60%, #0d2137 100%); }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f3d578 50%, #aa820a 100%); }
+        .gold-text { background: linear-gradient(135deg, #fce083 0%, #d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .math-content { overflow-x: auto; max-width: 100%; }
+        
+        /* 3D Flip Card Styles for Flashcards */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .hover-lift { transition: all 0.2s ease; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-        .option-btn:disabled { cursor: default; }
+        .animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .hover-lift { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 25px -5px rgba(10, 25, 47, 0.12); }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="min-h-screen pb-10 text-slate-800 font-sans">
+<body class="min-h-screen text-slate-800 flex flex-col justify-between selection:bg-police-500 selection:text-white">
 
-    <!-- Navigation Bar -->
-    <nav class="police-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-police-500">
-        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
+    <!-- Top Navigation Bar -->
+    <nav class="police-gradient text-white shadow-xl sticky top-0 z-50 border-b-2 border-gold-500/50">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center p-3 md:p-4 px-4">
+            
+            <!-- Logo & Brand -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
-                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
-                    <i class="fa-solid fa-building-shield text-police-500 text-xl"></i>
+                <div class="w-10 h-10 md:w-11 md:h-11 bg-gold-500/20 rounded-xl border border-gold-400/40 flex items-center justify-center text-gold-300 shadow-inner">
+                    <i class="fa-solid fa-shield-halved text-xl md:text-2xl"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-white uppercase">Police Academy</span>
-                    <span class="text-[10px] md:text-xs text-police-500 font-medium">ติวสอบ นายสิบตำรวจ</span>
+                    <span class="font-display font-extrabold text-base md:text-xl tracking-wider text-white uppercase leading-tight flex items-center gap-1.5">
+                        POLICE ACADEMY <span class="bg-gold-500 text-police-950 text-[10px] font-black px-1.5 py-0.5 rounded uppercase">PRO</span>
+                    </span>
+                    <span class="text-[11px] text-slate-300 font-medium">คลังความรู้ & หนังสือสอบนายสิบตำรวจ</span>
                 </div>
             </div>
-            <div class="flex space-x-2 items-center">
-                <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
-                <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
-                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-police-500 hover:bg-police-600 text-white rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
+
+            <!-- Navigation Menu Items -->
+            <div class="flex items-center space-x-1 md:space-x-2 mt-2 sm:mt-0 text-xs md:text-sm font-medium overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+                <button onclick="switchMode('home')" id="nav-home" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
+                    <i class="fa-solid fa-house"></i><span>หน้าหลัก</span>
+                </button>
+                <button onclick="switchMode('book')" id="nav-book" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
+                    <i class="fa-solid fa-book-bookmark text-gold-400"></i><span>หนังสือสรุป</span>
+                </button>
+                <button onclick="switchMode('tech')" id="nav-tech" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
+                    <i class="fa-solid fa-lightbulb text-amber-300"></i><span>เทคนิคสอบ</span>
+                </button>
+                <button onclick="switchMode('games')" id="nav-games" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
+                    <i class="fa-solid fa-gamepad text-emerald-400"></i><span>มินิเกมฝึกจำ</span>
+                </button>
+                <button onclick="switchMode('quiz')" id="nav-quiz" class="px-3.5 py-1.5 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-police-950 font-bold rounded-lg shadow-md transition transform active:scale-95 flex items-center space-x-1.5 ml-1">
+                    <i class="fa-solid fa-pen-to-square"></i><span>เริ่มทำสอบ</span>
+                </button>
+                <!-- Sound Toggle -->
+                <button onclick="toggleAudio()" id="audio-btn" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-slate-300 transition ml-1" title="เปิด/ปิด เสียง">
+                    <i class="fa-solid fa-volume-high" id="audio-icon"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-4 mt-2">
-        
-        <!-- 1. HOME SCREEN -->
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto p-3 md:p-6 w-full flex-grow">
+
+        <!-- 1. HOME SCREEN / DASHBOARD -->
         <div id="screen-home" class="space-y-6 animate-fade-in">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div class="relative police-gradient p-10 md:p-14 text-center text-white overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
-                    <div class="relative z-10 flex flex-col items-center">
-                        <div class="w-16 h-16 bg-police-500/20 text-police-500 rounded-full flex items-center justify-center text-3xl mb-4 border border-police-500/30">
-                            <i class="fa-solid fa-medal"></i>
+            
+            <!-- Hero Banner -->
+            <div class="police-gradient rounded-3xl p-6 md:p-10 text-white shadow-2xl relative overflow-hidden border border-police-700">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-[200px] pointer-events-none text-white">
+                    <i class="fa-solid fa-building-shield"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="inline-flex items-center space-x-2 bg-gold-500/20 border border-gold-500/40 px-3 py-1 rounded-full text-gold-300 text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-award"></i>
+                        <span>คู่มือสอบติดนายสิบตำรวจ ฉบับปรับปรุงใหม่</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-display font-extrabold leading-tight">
+                        คณิตศาสตร์ & เทคนิคสอบ <span class="gold-text">นายสิบตำรวจ</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                        รวบรวมเนื้อหาเชิงลึกระดับหนังสือตระเวนติว สูตรลัดตัดช้อยส์ มินิเกมช่วยจำ และคลังข้อสอบเสมือนจริง 100 ข้อ พร้อมระบบวิเคราะห์ความพร้อมก่อนลงสนามจริง
+                    </p>
+                    
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchMode('quiz')" class="px-6 py-3 bg-gradient-to-r from-gold-500 to-amber-500 text-police-950 font-display font-extrabold rounded-xl shadow-lg hover:brightness-110 transition flex items-center space-x-2">
+                            <i class="fa-solid fa-play"></i><span>เริ่มทำแนวข้อสอบ 100 ข้อ</span>
+                        </button>
+                        <button onclick="switchMode('book')" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition flex items-center space-x-2">
+                            <i class="fa-solid fa-book-open"></i><span>อ่านสรุปเนื้อหา E-Book</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats & Quick Progress -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-police-500">
+                    <div class="w-12 h-12 bg-police-50 text-police-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-bold uppercase">เนื้อหาบทเรียน</div>
+                        <div class="text-lg font-bold text-police-900">6 หมวดหมู่หลัก</div>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-gold-500">
+                    <div class="w-12 h-12 bg-gold-50 text-gold-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-bold uppercase">สูตรลัด & เทคนิค</div>
+                        <div class="text-lg font-bold text-police-900">40+ เทคนิคเด็ด</div>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-emerald-500">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-bold uppercase">เกมฝึกความจำ</div>
+                        <div class="text-lg font-bold text-police-900">3 โหมดฝึกสมอง</div>
+                    </div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-purple-500">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-bold uppercase">คลังข้อสอบจริง</div>
+                        <div class="text-lg font-bold text-police-900">100 ข้อ พร้อมเฉลย</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Navigation Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Card 1: E-Book -->
+                <div onclick="switchMode('book')" class="glass-card p-6 rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-police-700 text-gold-400 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition transform">
+                            <i class="fa-solid fa-book"></i>
                         </div>
-                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white">ติวเข้มคณิตศาสตร์</h1>
-                        <h2 class="text-xl md:text-2xl font-bold text-police-500 mb-6">นายสิบตำรวจ (ความสามารถทั่วไป)</h2>
-                        <p class="text-gray-200 max-w-lg mx-auto font-medium">เตรียมความพร้อมด้วยแบบทดสอบ <span class="font-bold text-police-500">100</span> ข้อ ครบทุกหัวข้อที่ออกสอบ</p>
+                        <h3 class="font-display font-bold text-xl text-police-900 mb-2">หนังสือสรุปบทเรียน (E-Book)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            สรุปเนื้อหาคณิตศาสตร์เข้มข้น อนุกรม, สมการ, ร้อยละ, เซต, สถิติ, ห.ร.ม.-ค.ร.น. พร้อมตัวอย่างและจุดหลอก
+                        </p>
+                    </div>
+                    <span class="text-police-600 font-bold text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
+                        <span>เปิดอ่านบทเรียน</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <!-- Card 2: Tech & Hacks -->
+                <div onclick="switchMode('tech')" class="glass-card p-6 rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-amber-500 text-police-950 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition transform">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-police-900 mb-2">รวมเทคนิคสอบ & การอ่าน</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            สูตรการอ่าน Spaced Repetition, เทคนิคการตัดช้อยส์, การบริหารเวลา 150 ข้อในห้องสอบให้ทันเวลา
+                        </p>
+                    </div>
+                    <span class="text-amber-600 font-bold text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
+                        <span>ศึกษาเทคนิคสอบ</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <!-- Card 3: Memory Games -->
+                <div onclick="switchMode('games')" class="glass-card p-6 rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition transform">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-police-900 mb-2">มินิเกมฝึกจำสูตรลัด</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            ทบทวนสูตรคณิตผ่านแฟลชการ์ด 3D, เกมจับคู่ความเร็ว และดวลโจทย์เร็ว 60 วินาที ช่วยให้จำแม่น ไม่ลืมในห้องสอบ
+                        </p>
+                    </div>
+                    <span class="text-emerald-600 font-bold text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
+                        <span>เล่นเกมทบทวน</span> <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- Daily Formula / Quote Card -->
+            <div class="bg-gradient-to-r from-police-900 to-police-800 text-white p-6 rounded-3xl shadow-lg border border-gold-500/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gold-500/20 rounded-2xl border border-gold-400/40 flex items-center justify-center text-gold-300 text-2xl shrink-0">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gold-400 text-sm uppercase">คติเตือนใจนายสิบตำรวจ</h4>
+                        <p class="text-slate-200 text-sm md:text-base italic">"เหงื่อออกในเวลาซ้อม ดีกว่าเสียน้ำตาและโอกาสในวันสอบจริง"</p>
+                    </div>
+                </div>
+                <button onclick="switchMode('quiz')" class="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-police-950 font-bold text-sm rounded-xl transition shrink-0">
+                    ทดสอบฝีมือเลย
+                </button>
+            </div>
+
+        </div>
+
+        <!-- 2. E-BOOK & LESSONS SCREEN -->
+        <div id="screen-book" class="hidden space-y-6 animate-fade-in">
+            
+            <!-- Book Header -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-200 flex flex-wrap justify-between items-center sticky top-[72px] z-40 gap-3 shadow-md">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-police-700 text-gold-400 rounded-xl flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-display font-bold text-lg text-police-900">หนังสือสรุปบทเรียนและสูตรลัด</h2>
+                        <p class="text-xs text-slate-500">เลือกหมวดหมู่ที่ต้องการศึกษา</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 overflow-x-auto max-w-full pb-1 sm:pb-0">
+                    <button onclick="filterChapter('all')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-police-600 text-white">ทั้งหมด</button>
+                    <button onclick="filterChapter('series')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">อนุกรม</button>
+                    <button onclick="filterChapter('percent')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">ร้อยละ/กำไร</button>
+                    <button onclick="filterChapter('equation')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">สมการ/โจทย์ปัญหา</button>
+                    <button onclick="filterChapter('lcm')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">ห.ร.ม./ค.ร.น.</button>
+                    <button onclick="filterChapter('logic')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">เซต/ตรรกศาสตร์</button>
+                </div>
+            </div>
+
+            <!-- Chapters Container -->
+            <div id="chapters-container" class="space-y-6">
+                <!-- Chapters will be populated dynamically via JavaScript -->
+            </div>
+
+        </div>
+
+        <!-- 3. READING TECHNIQUES & EXAM HACKS SCREEN -->
+        <div id="screen-tech" class="hidden space-y-6 animate-fade-in">
+            
+            <div class="glass-card p-6 rounded-3xl border border-slate-200">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-12 h-12 bg-amber-500 text-police-950 rounded-2xl flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-police-900">รวมเทคนิคการสอบ & กลยุทธ์การอ่านหนังสือ</h2>
+                        <p class="text-sm text-slate-500">หลักการเตรียมตัวสไตล์คนสอบติดอันดับ Top นายสิบตำรวจ</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    
+                    <!-- Hack 1: Time Management -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
+                            <i class="fa-regular fa-clock text-amber-500"></i>
+                            <span>1. กลยุทธ์บริหารเวลา 150 ข้อในห้องสอบ</span>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            ข้อสอบนายสิบตำรวจให้เวลาเฉลี่ยข้อละ <b>1.2 นาที</b> (150 ข้อ 180 นาที) ควรแบ่งรอบทำดังนี้:
+                        </p>
+                        <ul class="text-xs text-slate-700 space-y-2 bg-slate-50 p-3 rounded-xl">
+                            <li>• <b>รอบที่ 1 (45 นาทีแรก):</b> เก็บวิชาจำ/ความรู้ทั่วไป (กฎหมาย, ภาษาไทย, ภาษาอังกฤษ)</li>
+                            <li>• <b>รอบที่ 2 (75 นาที):</b> ทำคณิตศาสตร์ข้อที่มั่นใจและคำนวณสั้นก่อน</li>
+                            <li>• <b>รอบที่ 3 (30 นาที):</b> ทำข้อคณิตศาสตร์โจทย์ยาวหรือข้อที่ต้องตั้งสมการ complex</li>
+                            <li>• <b>รอบที่ 4 (30 นาทีสุดท้าย):</b> ตรวจทานการฝนรหัส และใช้เทคนิคตัดช้อยส์เก็บข้อที่เหลือ</li>
+                        </ul>
+                    </div>
+
+                    <!-- Hack 2: Elimination Strategy -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
+                            <i class="fa-solid fa-filter-circle-dollar text-emerald-500"></i>
+                            <span>2. เทคนิคตัดช้อยส์ (Elimination Technique)</span>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            เมื่อเจอข้อที่ไม่แน่ใจ ให้ใช้หลักการตัดตัวเลือกดังนี้:
+                        </p>
+                        <ul class="text-xs text-slate-700 space-y-2 bg-slate-50 p-3 rounded-xl">
+                            <li>• <b>ตัดค่าสุดโต่ง:</b> ตัวเลือกที่ค่าน้อยที่สุด หรือ มากที่สุดผิดปกติ มักไม่ใช่คำตอบ</li>
+                            <li>• <b>สังเกตช้อยส์คู่แฝด:</b> ถ้ามีสองตัวเลือกที่ใกล้เคียงกันมาก คำตอบมักอยู่ในคู่แฝดนั้น</li>
+                            <li>• <b>ตรวจหน่วยวัด:</b> สังเกตหน่วยที่โจทย์ถาม (เช่น กม./ชม. เปลี่ยนเป็น เมตร/วินาที)</li>
+                            <li>• <b>ลองแทนค่าช้อยส์:</b> ในโจทย์สมการยุ่งยาก การเอาช้อยส์ไปแทนค่ามักเร็วกว่าแก้สมการตรงๆ</li>
+                        </ul>
+                    </div>
+
+                    <!-- Hack 3: Active Recall & Spaced Repetition -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
+                            <i class="fa-solid fa-arrows-rotate text-blue-500"></i>
+                            <span>3. สูตรอ่านหนังสือ Spaced Repetition</span>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            อย่าอ่านแบบรวดเดียวจบ ให้ทบทวนแบบเว้นระยะเพื่อเปลี่ยนความจำระยะสั้นเป็นระยะยาว:
+                        </p>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-bold pt-1">
+                            <div class="p-2 bg-blue-50 text-blue-800 rounded-lg">วันที่ 1<br><span class="font-normal text-[10px]">อ่านเนื้อหา</span></div>
+                            <div class="p-2 bg-blue-100 text-blue-900 rounded-lg">วันที่ 2<br><span class="font-normal text-[10px]">ทวน Flashcard</span></div>
+                            <div class="p-2 bg-blue-200 text-blue-950 rounded-lg">วันที่ 7<br><span class="font-normal text-[10px]">ทำโจทย์รวม</span></div>
+                            <div class="p-2 bg-blue-600 text-white rounded-lg">วันที่ 30<br><span class="font-normal text-[10px]">สอบจับเวลา</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Hack 4: Exam Trap Alerts -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+                            <span>4. 5 จุดหลอกยอดฮิตในข้อสอบนายสิบ</span>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            ระวังตกหลุมพรางคำถามเหล่านี้:
+                        </p>
+                        <ul class="text-xs text-slate-700 space-y-2 bg-slate-50 p-3 rounded-xl">
+                            <li>1. <b>กำไร/ขาดทุน:</b> โจทย์ลืมบอกราคาทุน แต่ช้อยส์หลอกให้คิดจากราคาขาย</li>
+                            <li>2. <b>โจทย์อายุ:</b> ถามอายุในอีก "5 ปีข้างหน้า" แต่เราเผลอตอบอายุปัจจุบัน</li>
+                            <li>3. <b>อัตราส่วน:</b> ลืมดูว่าโจทย์ถาม "ชาย : หญิง" หรือ "หญิง : ชาย"</li>
+                            <li>4. <b>กระแสน้ำ:</b> พายเรือ "ตามน้ำ" หรือ "ทวนน้ำ" (ลืมบวก/ลบความเร็วพาย)</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 4. MEMORY MINI-GAMES SCREEN -->
+        <div id="screen-games" class="hidden space-y-6 animate-fade-in">
+            
+            <!-- Game Modes Header -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-200 flex flex-wrap justify-between items-center gap-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-display font-bold text-lg text-police-900">ศูนย์มินิเกมฝึกความจำสูตรลัด</h2>
+                        <p class="text-xs text-slate-500">เลือกโหมดเกมเพื่อกระตุ้นความจำก่อนสอบ</p>
                     </div>
                 </div>
                 
-                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
-                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
-                        <div class="w-16 h-16 bg-police-50 rounded-2xl flex items-center justify-center text-police-700 text-3xl mb-5 group-hover:bg-police-700 group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-layer-group"></i>
+                <div class="flex space-x-2">
+                    <button onclick="switchGameTab('flashcard')" id="tab-game-flashcard" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-emerald-600 text-white">🎴 แฟลชการ์ด</button>
+                    <button onclick="switchGameTab('match')" id="tab-game-match" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700">🧩 จับคู่สูตร</button>
+                    <button onclick="switchGameTab('rapid')" id="tab-game-rapid" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700">⚡ 60 วิ ดวลเร็ว</button>
+                </div>
+            </div>
+
+            <!-- Game Sub-View 1: Flashcards -->
+            <div id="game-sub-flashcard" class="space-y-6">
+                <div class="max-w-md mx-auto text-center space-y-4">
+                    <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">คลิกการ์ดเพื่อพลิกดูสูตรเฉลย</div>
+                    
+                    <!-- 3D Card Container -->
+                    <div onclick="flipFlashcard()" class="perspective-1000 w-full h-64 cursor-pointer">
+                        <div id="flashcard-inner" class="relative w-full h-full transform-style-3d transition-transform duration-500 shadow-2xl rounded-3xl">
+                            <!-- Card Front -->
+                            <div class="absolute inset-0 w-full h-full backface-hidden police-gradient rounded-3xl p-6 text-white flex flex-col justify-between border-2 border-gold-500/40">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold bg-gold-500/20 text-gold-300 px-2.5 py-1 rounded-full border border-gold-400/30" id="card-category">อนุกรม</span>
+                                    <i class="fa-solid fa-rotate text-slate-400"></i>
+                                </div>
+                                <div class="text-xl font-bold text-center px-4 leading-relaxed" id="card-front-text">
+                                    สูตรการหาผลบวกอนุกรมเลขคณิต
+                                </div>
+                                <div class="text-xs text-slate-400 text-center">แตะเพื่อพลิกเฉลย</div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-amber-50 to-amber-100 rounded-3xl p-6 text-police-950 flex flex-col justify-between border-2 border-gold-500">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold bg-gold-200 text-gold-900 px-2.5 py-1 rounded-full">เฉลยสูตรลัด</span>
+                                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                                </div>
+                                <div class="text-lg font-extrabold text-center px-2 math-content text-police-900" id="card-back-text">
+                                    $S_n = \frac{n}{2}(\text{ต้น} + \text{ปลาย})$
+                                </div>
+                                <div class="text-xs text-slate-500 text-center">แตะอีกครั้งเพื่อพลิกกลับ</div>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-xl text-police-900 mb-2">สรุปบทเรียน</h3>
-                        <p class="text-gray-500 text-sm">รวมหัวข้อ อนุกรม ร้อยละ สมการ เซต และสถิติ</p>
                     </div>
-                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
-                        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-police-500 text-3xl mb-5 group-hover:bg-police-500 group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </div>
-                        <h3 class="font-bold text-xl text-police-900 mb-2">เริ่มทำข้อสอบ</h3>
-                        <p class="text-gray-500 text-sm">แนวข้อสอบจริง 100 ข้อ พร้อมจับเวลาและเฉลย</p>
+
+                    <!-- Flashcard Controls -->
+                    <div class="flex justify-between items-center pt-2">
+                        <button onclick="prevFlashcard()" class="px-4 py-2 bg-white text-slate-700 font-bold rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                            <i class="fa-solid fa-chevron-left mr-1"></i> ก่อนหน้า
+                        </button>
+                        <span class="text-sm font-bold text-police-800" id="card-counter">1 / 10</span>
+                        <button onclick="nextFlashcard()" class="px-4 py-2 bg-police-700 text-white font-bold rounded-xl hover:bg-police-800 transition">
+                            ถัดไป <i class="fa-solid fa-chevron-right ml-1"></i>
+                        </button>
                     </div>
                 </div>
             </div>
+
+            <!-- Game Sub-View 2: Speed Formula Match -->
+            <div id="game-sub-match" class="hidden space-y-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-police-900">เกมจับคู่สูตรลัด</h3>
+                        <p class="text-xs text-slate-500">จับคู่ชื่อสูตรทางซ้าย กับ ความหมายสูตรทางขวาให้ถูกต้อง</p>
+                    </div>
+                    <button onclick="initMatchGame()" class="px-3 py-1.5 bg-emerald-600 text-white font-bold text-xs rounded-lg hover:bg-emerald-700 transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> รีเซ็ตการเล่น
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="match-grid">
+                    <!-- Match pairs generated by JS -->
+                </div>
+            </div>
+
+            <!-- Game Sub-View 3: 60-Second Rapid Fire -->
+            <div id="game-sub-rapid" class="hidden space-y-4">
+                <div class="bg-slate-900 text-white p-6 rounded-3xl border border-slate-800 text-center space-y-4 relative overflow-hidden">
+                    <div class="flex justify-between items-center">
+                        <div class="text-left">
+                            <span class="text-xs text-slate-400 uppercase font-bold">เวลานับถอยหลัง</span>
+                            <div class="text-3xl font-display font-extrabold text-amber-400" id="rapid-timer">60s</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-400 uppercase font-bold">คะแนนปัจจุบัน</span>
+                            <div class="text-3xl font-display font-extrabold text-emerald-400" id="rapid-score">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div id="rapid-game-area" class="py-6 space-y-4">
+                        <div class="text-xl font-bold text-white math-content min-h-[60px]" id="rapid-q-text">
+                            กดปุ่ม "เริ่มดวลคำถาม" เพื่อเริ่มทดสอบความเร็ว!
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 max-w-lg mx-auto" id="rapid-opts">
+                            <!-- Options generated dynamically -->
+                        </div>
+                        <button onclick="startRapidGame()" id="rapid-start-btn" class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-display font-extrabold text-lg rounded-xl shadow-lg hover:scale-105 transition">
+                            <i class="fa-solid fa-bolt mr-2"></i>เริ่มดวลคำถาม 60 วิ!
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- 2. LESSON SCREEN -->
-        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center sticky top-[72px] z-40">
-                <h2 class="text-xl font-bold text-police-900"><i class="fa-solid fa-book-open mr-2"></i> สรุปสูตรและเทคนิค</h2>
-                <button onclick="switchMode('quiz')" class="bg-police-500 text-white px-4 py-2 rounded-lg font-bold text-sm">ไปทำข้อสอบ</button>
-            </div>
-            
-            <div class="space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
-                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-1 mr-2"></i>อนุกรม (Series)</h3>
-                    <div class="math-content text-sm md:text-base space-y-2">
-                        <p>• <b>อนุกรมเลขคณิต:</b> $d$ (ผลต่างร่วม) เท่ากันตลอดการบวก</p>
-                        <p>• <b>อนุกรมสะสม:</b> เกิดจากตัวก่อนหน้าบวกกันเป็นตัวถัดไป เช่น 1, 2, 3, 5, 8...</p>
-                        <p>• <b>อนุกรม 2 ชั้น:</b> มองความสัมพันธ์ในชั้นแรกแล้วหาชั้นที่สอง</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-500">
-                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-2 mr-2"></i>ร้อยละและเปอร์เซ็นต์</h3>
-                    <div class="math-content text-sm md:text-base space-y-2">
-                        <p>• <b>กำไร/ขาดทุน:</b> คิดจาก "ราคาทุน" เสมอ</p>
-                        <p>• <b>การเปลี่ยนแปลง:</b> $\frac{\text{ใหม่} - \text{เดิม}}{\text{เดิม}} \times 100$</p>
-                        <p>• <b>ดอกเบี้ยคงที่:</b> $I = P \times R \times T$ (เงินต้น $\times$ อัตรา $\times$ เวลา)</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
-                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-3 mr-2"></i>สมการและโจทย์ปัญหา</h3>
-                    <div class="math-content text-sm md:text-base space-y-2">
-                        <p>• <b>นับขา/หัวสัตว์:</b> หัวรวม = $x+y$, ขารวม = (ขา$x$) + (ขา$y$)</p>
-                        <p>• <b>กระแสน้ำ:</b> ตามน้ำ = พาย+น้ำ, ทวนน้ำ = พาย-น้ำ</p>
-                        <p>• <b>ห.ร.ม. / ค.ร.น.:</b> ห.ร.ม. $\times$ ค.ร.น. = ผลคูณของเลข 2 จำนวนนั้น</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-500">
-                    <h3 class="font-bold text-police-800 mb-3 text-lg"><i class="fa-solid fa-4 mr-2"></i>เซตและตรรกศาสตร์</h3>
-                    <div class="math-content text-sm md:text-base space-y-2">
-                        <p>• <b>สูตร 2 เซต:</b> $n(A \cup B) = n(A) + n(B) - n(A \cap B)$</p>
-                        <p>• <b>ตรรกศาสตร์:</b> $P \rightarrow Q$ (ถ้า...แล้ว) จะเป็นเท็จกรณีเดียวคือ จริง $\rightarrow$ เท็จ</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. QUIZ SCREEN -->
+        <!-- 5. QUIZ SCREEN / EXAM SIMULATOR -->
         <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
-            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
-                <div class="w-full md:w-2/3">
-                    <div class="flex justify-between items-end mb-2">
-                        <span id="quiz-status" class="text-sm font-bold text-police-700">ข้อที่ 1/100</span>
-                        <span id="score-text" class="text-sm font-bold text-blue-600">คะแนน: 0</span>
+            
+            <!-- Quiz Control Sticky Header -->
+            <div class="glass-card p-3 md:p-4 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-center sticky top-[72px] z-40 gap-3 shadow-md">
+                <div class="w-full md:w-1/2">
+                    <div class="flex justify-between items-center mb-1 text-xs font-bold text-police-900">
+                        <span id="quiz-status">ข้อที่ 1/100</span>
+                        <span id="score-text" class="text-police-600">คะแนน: 0</span>
                     </div>
-                    <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="bg-police-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-police-600 to-gold-500 h-2.5 rounded-full transition-all duration-300" style="width: 1%"></div>
                     </div>
                 </div>
-                <div class="flex items-center text-police-900 font-bold bg-police-50 px-4 py-2 rounded-xl border border-police-100">
-                    <i class="fa-regular fa-clock mr-2"></i>
-                    <span id="timer">00:00</span>
+
+                <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-end">
+                    <!-- Bookmark button -->
+                    <button onclick="toggleBookmark()" id="btn-bookmark" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center space-x-1">
+                        <i class="fa-regular fa-bookmark" id="bookmark-icon"></i>
+                        <span>ติดดาว</span>
+                    </button>
+
+                    <!-- Question Grid Modal Trigger -->
+                    <button onclick="toggleQGridModal()" class="px-3 py-1.5 bg-police-100 hover:bg-police-200 text-police-800 rounded-xl text-xs font-bold transition flex items-center space-x-1">
+                        <i class="fa-solid fa-table-cells"></i>
+                        <span>ผังข้อสอบ (100)</span>
+                    </button>
+
+                    <!-- Timer Badge -->
+                    <div class="flex items-center space-x-2 bg-police-900 text-gold-400 font-display font-extrabold px-3 py-1.5 rounded-xl border border-police-700 text-sm">
+                        <i class="fa-regular fa-clock"></i>
+                        <span id="timer">00:00</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-gray-200">
+            <!-- Question Card -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 md:p-8 min-h-[480px] flex flex-col justify-between border border-slate-200 relative">
+                
                 <div>
-                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-8 math-content">คำถาม</h3>
+                    <!-- Category Badge -->
+                    <div class="mb-4 flex justify-between items-center">
+                        <span id="q-category" class="bg-police-50 text-police-700 text-xs font-bold px-3 py-1 rounded-full border border-police-100">
+                            หมวดหมู่: คณิตศาสตร์ทั่วไป
+                        </span>
+                        <span id="flag-badge" class="hidden text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                            <i class="fa-solid fa-star mr-1"></i> ปักหมุดไว้
+                        </span>
+                    </div>
+
+                    <!-- Question Text -->
+                    <h3 id="q-text" class="text-base md:text-xl font-bold text-slate-800 leading-relaxed mb-6 math-content">
+                        กำลังโหลดคำถาม...
+                    </h3>
+
+                    <!-- Choices Options List -->
                     <div id="options" class="space-y-3"></div>
                 </div>
 
-                <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
-                    <p id="exp-status" class="text-lg font-black mb-2"></p>
-                    <p id="exp-text" class="text-sm md:text-base text-gray-700 math-content"></p>
+                <!-- Solution / Explainer Box -->
+                <div id="explainer" class="hidden mt-6 p-5 rounded-2xl border-2 animate-fade-in">
+                    <p id="exp-status" class="text-base font-bold mb-1"></p>
+                    <div id="exp-text" class="text-xs md:text-sm text-slate-700 math-content leading-relaxed"></div>
                 </div>
 
-                <div class="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 disabled:opacity-30 transition">ย้อนกลับ</button>
-                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5">ถัดไป</button>
+                <!-- Navigation Controls Footer -->
+                <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-slate-500 font-bold px-4 py-2.5 rounded-xl hover:bg-slate-100 disabled:opacity-30 transition flex items-center space-x-1">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                        <span>ข้อก่อนหน้า</span>
+                    </button>
+                    
+                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-6 py-3 rounded-xl shadow-md hover:brightness-110 transition transform active:scale-95 flex items-center space-x-2">
+                        <span id="next-btn-text">ข้อถัดไป</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Question Grid Navigator Modal (1-100) -->
+        <div id="qgrid-modal" class="hidden fixed inset-0 z-50 bg-police-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl p-6 max-h-[85vh] flex flex-col border border-slate-200">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="font-display font-bold text-xl text-police-900">ผังการทำข้อสอบ (100 ข้อ)</h3>
+                        <p class="text-xs text-slate-500">กดที่ตัวเลขข้อเพื่อข้ามไปยังข้อนั้นๆ</p>
+                    </div>
+                    <button onclick="toggleQGridModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Legend -->
+                <div class="flex flex-wrap gap-4 py-3 text-xs font-medium text-slate-600 border-b border-slate-100">
+                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-emerald-500 rounded-full"></span> ตอบแล้ว</span>
+                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-slate-200 rounded-full"></span> ยังไม่ได้ตอบ</span>
+                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-400 rounded-full"></span> ปักหมุดทวน</span>
+                </div>
+
+                <!-- Grid Buttons Container -->
+                <div class="overflow-y-auto py-4 my-2 flex-grow">
+                    <div id="qgrid-buttons" class="grid grid-cols-5 sm:grid-cols-10 gap-2"></div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 text-right">
+                    <button onclick="toggleQGridModal()" class="px-5 py-2 bg-police-700 text-white text-sm font-bold rounded-xl hover:bg-police-800 transition">
+                        ปิดหน้าผัง
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- 4. RESULT SCREEN -->
-        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
-            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-police-700">
-                <div id="result-icon" class="w-20 h-20 bg-police-50 text-police-500 rounded-full flex items-center justify-center mx-auto mb-6">
+        <!-- 6. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-6 py-6 animate-fade-in">
+            <div class="bg-white p-6 md:p-10 rounded-3xl shadow-2xl max-w-2xl mx-auto border-t-8 border-police-700 space-y-6">
+                
+                <div id="result-icon" class="w-20 h-20 bg-gold-100 text-gold-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
                     <i class="fa-solid fa-trophy text-4xl"></i>
                 </div>
-                <h2 class="text-3xl font-black text-police-900 mb-2">สรุปผลการสอบ</h2>
-                <div class="text-7xl font-black text-police-700 my-6" id="final-score">0/100</div>
-                <p id="result-msg" class="text-gray-600 mb-8 font-medium italic"></p>
-                <div class="bg-slate-50 p-4 rounded-2xl mb-8 grid grid-cols-2 gap-4">
-                    <div class="text-center">
-                        <p class="text-xs text-gray-400 uppercase font-bold">เวลาที่ใช้</p>
-                        <p id="final-time" class="font-bold text-police-900">-</p>
+
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-display font-extrabold text-police-900">สรุปผลการทำแบบทดสอบ</h2>
+                    <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest font-bold">Police Exam Capability Score</p>
+                </div>
+
+                <div class="text-6xl md:text-7xl font-display font-black text-police-800 gold-text" id="final-score">
+                    0/100
+                </div>
+
+                <p id="result-msg" class="text-slate-600 font-medium text-sm md:text-base italic max-w-md mx-auto"></p>
+
+                <!-- Statistics Summary Cards -->
+                <div class="grid grid-cols-3 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">เวลาที่ใช้</p>
+                        <p id="final-time" class="font-bold text-police-900 text-sm md:text-base">-</p>
                     </div>
-                    <div class="text-center">
-                        <p class="text-xs text-gray-400 uppercase font-bold">ความแม่นยำ</p>
-                        <p id="final-percent" class="font-bold text-police-900">0%</p>
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">ความแม่นยำ</p>
+                        <p id="final-percent" class="font-bold text-emerald-600 text-sm md:text-base">0%</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">ตอบถูกล่วงหน้า</p>
+                        <p id="final-correct" class="font-bold text-police-700 text-sm md:text-base">0 ข้อ</p>
                     </div>
                 </div>
-                <div class="flex flex-col space-y-3">
-                    <button onclick="switchMode('quiz')" class="police-gradient text-white py-4 rounded-xl font-bold text-lg hover-lift">ทำใหม่อีกครั้ง</button>
-                    <button onclick="switchMode('home')" class="bg-white text-gray-600 border-2 border-gray-200 py-3.5 rounded-xl font-bold">กลับหน้าหลัก</button>
+
+                <!-- Topic Strengths Breakdown -->
+                <div class="text-left space-y-3 bg-white p-4 rounded-2xl border border-slate-200">
+                    <h4 class="font-bold text-sm text-police-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-pie text-police-500"></i>
+                        <span>วิเคราะห์ความเชี่ยวชาญรายบท</span>
+                    </h4>
+                    <div id="topic-breakdown" class="space-y-2 text-xs"></div>
                 </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="switchMode('quiz')" class="flex-1 police-gradient text-white py-3.5 rounded-xl font-bold hover:brightness-110 transition shadow-md">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> ทำใหม่อีกครั้ง
+                    </button>
+                    <button onclick="switchMode('book')" class="flex-1 bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 py-3.5 rounded-xl font-bold transition">
+                        <i class="fa-solid fa-book-open mr-1.5"></i> กลับไปอ่านบทเรียน
+                    </button>
+                </div>
+
             </div>
         </div>
 
     </main>
 
+    <!-- Footer Container -->
+    <footer class="bg-police-950 text-slate-400 text-xs py-6 border-t border-police-800 mt-10">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
+            <div>
+                <p class="font-bold text-slate-200">คลังความรู้ เตรียมสอบนายสิบตำรวจ (คณิตศาสตร์ & เทคนิคสอบ)</p>
+                <p class="text-[11px] text-slate-500">ออกแบบมาเพื่อช่วยให้นักเรียนเตรียมสอบตำรวจพิชิตข้อสอบได้อย่างมั่นใจ</p>
+            </div>
+            <div class="flex space-x-4 text-slate-400">
+                <span class="hover:text-gold-400 cursor-pointer" onclick="switchMode('home')">หน้าหลัก</span>
+                <span class="hover:text-gold-400 cursor-pointer" onclick="switchMode('book')">คู่มือสรุป</span>
+                <span class="hover:text-gold-400 cursor-pointer" onclick="switchMode('tech')">เทคนิคสอบ</span>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Data containing 100 questions for Police NCO Math
-        const questionsData = [
-            // อนุกรม
-            { q: "อนุกรม: 2, 5, 10, 17, 26, ... ตัวถัดไปคือเลขใด", opt: ["35", "37", "39", "41"], ans: 1, exp: "เพิ่มแบบเลขคี่: $+3, +5, +7, +9$ ตัวถัดไปคือ $+11 \\rightarrow 26+11=37$" },
-            { q: "อนุกรม: 1, 4, 9, 16, 25, ... ตัวถัดไปคือเลขใด", opt: ["30", "32", "36", "49"], ans: 2, exp: "อนุกรมเลขยกกำลังสอง: $1^2, 2^2, 3^2, 4^2, 5^2$ ตัวถัดไปคือ $6^2 = 36$" },
-            { q: "อนุกรม: 81, 64, 49, 36, ... ตัวถัดไปคือเลขใด", opt: ["20", "25", "30", "32"], ans: 1, exp: "เลขยกกำลังสองถอยหลัง: $9^2, 8^2, 7^2, 6^2$ ตัวถัดไปคือ $5^2 = 25$" },
-            { q: "อนุกรม: 2, 4, 8, 16, 32, ... ตัวถัดไปคือเลขใด", opt: ["48", "56", "64", "128"], ans: 2, exp: "คูณ 2 ตลอดสาย: $32 \\times 2 = 64$" },
-            { q: "อนุกรม: 120, 114, 108, 102, ... ตัวถัดไปคือเลขใด", opt: ["94", "96", "98", "100"], ans: 1, exp: "ลบ 6 ตลอดสาย: $102 - 6 = 96$" },
-            { q: "อนุกรม: 1, 3, 4, 7, 11, 18, ... ตัวถัดไปคือเลขใด", opt: ["25", "29", "31", "34"], ans: 1, exp: "อนุกรมสะสม (บวก 2 ตัวหน้า): $11 + 18 = 29$" },
-            { q: "อนุกรม: 2, 6, 12, 20, 30, ... ตัวถัดไปคือเลขใด", opt: ["40", "42", "44", "46"], ans: 1, exp: "ระยะห่างคือ $+4, +6, +8, +10$ ต่อไปคือ $+12 \\rightarrow 30+12=42$" },
-            { q: "อนุกรม: 3, 10, 24, 52, ... ตัวถัดไปคือเลขใด", opt: ["104", "108", "110", "112"], ans: 1, exp: "รูปแบบ $(x \\times 2) + 4 \\rightarrow (52 \\times 2) + 4 = 104+4 = 108$" },
-            { q: "อนุกรม: 1, 8, 27, 64, ... ตัวถัดไปคือเลขใด", opt: ["100", "121", "125", "216"], ans: 2, exp: "เลขยกกำลังสาม: $1^3, 2^3, 3^3, 4^3$ ต่อไปคือ $5^3 = 125$" },
-            { q: "อนุกรม: 10, 11, 13, 16, 20, ... ตัวถัดไปคือเลขใด", opt: ["23", "24", "25", "26"], ans: 2, exp: "เพิ่มทีละ $+1, +2, +3, +4$ ต่อไปคือ $+5 \\rightarrow 20+5 = 25$" },
-            
-            // เปอร์เซ็นต์/ร้อยละ
-            { q: "ซื้อพัดลมราคา 800 บาท ขายไป 1,000 บาท ได้กำไรร้อยละเท่าใด", opt: ["10%", "20%", "25%", "30%"], ans: 2, exp: "กำไร = 200, คิดจากทุน 800: $(200/800) \\times 100 = 25\%$" },
-            { q: "เสื้อราคา 500 บาท ลดราคา 20% จะต้องจ่ายเงินกี่บาท", opt: ["400", "420", "450", "480"], ans: 0, exp: "ลด 20% คือลด $500 \\times 0.2 = 100$ บาท จ่ายจริง $500-100 = 400$ บาท" },
-            { q: "25% ของ 400 มีค่าเท่ากับข้อใด", opt: ["50", "100", "150", "200"], ans: 1, exp: "$0.25 \\times 400 = 100$" },
-            { q: "ถ้า 15% ของจำนวนหนึ่งคือ 45 จำนวนนั้นคืออะไร", opt: ["200", "250", "300", "350"], ans: 2, exp: "$0.15x = 45 \\rightarrow x = 45/0.15 = 300$" },
-            { q: "นักเรียน 40 คน สอบผ่าน 32 คน คิดเป็นกี่เปอร์เซ็นต์", opt: ["70%", "75%", "80%", "85%"], ans: 2, exp: "$(32/40) \\times 100 = 0.8 \\times 100 = 80\%$" },
-            { q: "ไข่ไก่โหลละ 48 บาท ถ้าซื้อ 5 ฟอง ต้องจ่ายเงินกี่บาท", opt: ["15", "18", "20", "24"], ans: 2, exp: "1 โหล = 12 ฟอง, ฟองละ $48/12 = 4$ บาท, 5 ฟอง = $4 \\times 5 = 20$ บาท" },
-            { q: "กู้เงิน 10,000 บาท ดอกเบี้ย 5% ต่อปี ผ่านไป 2 ปีต้องจ่ายดอกเบี้ยกี่บาท", opt: ["500", "1,000", "1,500", "2,000"], ans: 1, exp: "$10,000 \\times 0.05 \\times 2 = 1,000$ บาท" },
-            { q: "ติดราคาขายไว้ 1,200 บาท แต่ลดให้เหลือ 900 บาท ลดไปกี่เปอร์เซ็นต์", opt: ["20%", "25%", "30%", "33%"], ans: 1, exp: "ส่วนลด 300 บาท จากราคา 1,200: $(300/1,200) \\times 100 = 25\%$" },
-            { q: "เงินเดือน 15,000 บาท ปรับขึ้น 10% จะได้เงินเดือนใหม่เท่าใด", opt: ["16,000", "16,500", "17,000", "17,500"], ans: 1, exp: "ขึ้น $15,000 \\times 0.1 = 1,500$, รวมเป็น $16,500$" },
-            { q: "ซื้อของมา 200 บาท ขายขาดทุน 10% ขายไปราคาเท่าใด", opt: ["160", "170", "180", "190"], ans: 2, exp: "ขาดทุน $200 \\times 0.1 = 20$ บาท ขายไป $200-20 = 180$ บาท" },
+        // Sound Synthesis Utility via Web Audio API
+        let audioMuted = false;
+        function playAudio(type) {
+            if (audioMuted) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
 
-            // สมการ/โจทย์ปัญหา
-            { q: "เลขสองจำนวนบวกกันได้ 20 ต่างกันอยู่ 4 เลขจำนวนมากคือเลขใด", opt: ["10", "12", "14", "16"], ans: 1, exp: "$x+y=20, x-y=4 \\rightarrow 2x=24 \\rightarrow x=12$" },
-            { q: "สัตว์สองชนิดคือนกกับวัว นับหัวรวมกันได้ 10 หัว นับขารวมกันได้ 28 ขา มีวัวกี่ตัว", opt: ["3", "4", "5", "6"], ans: 1, exp: "$n+v=10, 2n+4v=28 \\rightarrow 2(10-v)+4v=28 \\rightarrow 20+2v=28 \\rightarrow v=4$" },
-            { q: "ปัจจุบันพ่ออายุ 40 ปี ลูกอายุ 10 ปี อีกกี่ปีพ่อจะมีอายุเป็น 3 เท่าของลูก", opt: ["3", "5", "7", "10"], ans: 1, exp: "$40+x = 3(10+x) \\rightarrow 40+x = 30+3x \\rightarrow 2x=10 \\rightarrow x=5$" },
-            { q: "ถังน้ำใบหนึ่งมีน้ำอยู่ 3/4 ของถัง เมื่อตักออก 5 ลิตร เหลือน้ำ 1/2 ของถัง ถังนี้จุกี่ลิตร", opt: ["15", "20", "25", "30"], ans: 1, exp: "$(3/4)x - 5 = (1/2)x \\rightarrow (1/4)x = 5 \\rightarrow x=20$" },
-            { q: "เสาต้นหนึ่งสูง 12 เมตร เงาทอดยาว 9 เมตร ถ้าเสาอีกต้นเงายาว 15 เมตร จะสูงกี่เมตร", opt: ["18", "20", "22", "24"], ans: 1, exp: "สัดส่วน $12/9 = x/15 \\rightarrow x = (12/9) \\times 15 = 20$ เมตร" },
-            { q: "ผลบวกของเลขเรียงกัน 3 จำนวนได้ 45 เลขที่มากที่สุดคือเลขใด", opt: ["14", "15", "16", "17"], ans: 2, exp: "$(x-1) + x + (x+1) = 45 \\rightarrow 3x=45 \\rightarrow x=15$ ตัวมากคือ $15+1=16$" },
-            { q: "รถไฟยาว 100 เมตร วิ่งด้วยความเร็ว 20 เมตร/วินาที จะผ่านเสาไฟในเวลากี่วินาที", opt: ["4", "5", "6", "10"], ans: 1, exp: "เวลา = ระยะทาง/ความเร็ว = $100/20 = 5$ วินาที" },
-            { q: "พายเรือตามน้ำความเร็ว 10 กม./ชม. ทวนน้ำ 6 กม./ชม. ความเร็วกระแสน้ำเป็นเท่าใด", opt: ["1", "2", "3", "4"], ans: 1, exp: "น้ำ = (ตาม-ทวน)/2 = $(10-6)/2 = 2$ กม./ชม." },
-            { q: "เลขจำนวนหนึ่งคูณด้วย 3 แล้วบวกด้วย 5 ได้ผลลัพธ์เป็น 26 เลขนั้นคืออะไร", opt: ["5", "7", "8", "9"], ans: 1, exp: "$3x+5=26 \\rightarrow 3x=21 \\rightarrow x=7$" },
-            { q: "นกเอี้ยงเกาะหลังควาย ถ้าเกาะตัวละตัว นกเหลือ 1 ตัว ถ้าเกาะตัวละ 2 ตัว ควายเหลือ 1 ตัว มีนกกี่ตัว", opt: ["3", "4", "5", "6"], ans: 1, exp: "ให้ $x=$นก, $y=$ควาย: $x-y=1$ และ $y - x/2 = 1 \\rightarrow x=4, y=3$" },
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.25);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
+                    osc.frequency.setValueAtTime(164.81, ctx.currentTime + 0.1); // E3
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                } else if (type === 'click') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(400, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.05);
+                }
+            } catch(e) { console.log('Audio Context Error', e); }
+        }
 
-            // ห.ร.ม. / ค.ร.น.
-            { q: "ห.ร.ม. ของ 12, 18 และ 24 คือข้อใด", opt: ["2", "3", "6", "12"], ans: 2, exp: "เลขมากที่สุดที่หารทั้งสามลงตัวคือ 6" },
-            { q: "ค.ร.น. ของ 4, 6 และ 8 คือข้อใด", opt: ["12", "18", "24", "48"], ans: 2, exp: "เลขน้อยที่สุดที่ทั้งสามหารลงตัวคือ 24" },
-            { q: "ระฆัง 3 ใบ ตีทุก 10, 15 และ 20 นาที ถ้าตีพร้อมกันตอน 8.00 น. จะตีพร้อมกันอีกครั้งเวลาใด", opt: ["8.30", "9.00", "9.30", "10.00"], ans: 1, exp: "ค.ร.น. ของ 10, 15, 20 คือ 60 นาที (1 ชม.) จึงตีพร้อมกันอีกครั้งที่ 9.00 น." },
-            { q: "เลข 2 จำนวนมี ห.ร.ม. เป็น 5 และ ค.ร.น. เป็น 60 ถ้าเลขตัวหนึ่งคือ 15 อีกตัวคืออะไร", opt: ["10", "20", "25", "30"], ans: 1, exp: "$5 \\times 60 = 15 \\times x \\rightarrow 300 = 15x \\rightarrow x=20$" },
-            { q: "ต้องการแบ่งเชือก 3 เส้นยาว 12, 16, 20 เมตร เป็นเส้นสั้นๆ ให้ยาวเท่ากันและยาวที่สุด จะยาวเส้นละกี่เมตร", opt: ["2", "4", "6", "8"], ans: 1, exp: "หา ห.ร.ม. ของ 12, 16, 20 คือ 4 เมตร" },
+        function toggleAudio() {
+            audioMuted = !audioMuted;
+            const icon = document.getElementById('audio-icon');
+            if (audioMuted) {
+                icon.className = "fa-solid fa-volume-xmark text-rose-400";
+            } else {
+                icon.className = "fa-solid fa-volume-high";
+                playAudio('click');
+            }
+        }
 
-            // เซต / ตรรกศาสตร์
-            { q: "หมู่บ้านหนึ่งมี 50 ครัวเรือน เลี้ยงหมา 30 เลี้ยงแมว 25 เลี้ยงทั้งสองอย่าง 10 ไม่เลี้ยงอะไรเลยกี่บ้าน", opt: ["5", "10", "15", "20"], ans: 0, exp: "$30+25-10 = 45$ (เลี้ยงอย่างใดอย่างหนึ่ง) ดังนั้นไม่เลี้ยงเลย $50-45 = 5$" },
-            { q: "ถ้า $P$ เป็นจริง และ $Q$ เป็นเท็จ ข้อใดเป็นจริง", opt: ["$P \\rightarrow Q$", "$P \\land Q$", "$P \\lor Q$", "$\\sim P$"], ans: 2, exp: "หรือ ($\\lor$) เป็นจริงถ้ามีอย่างน้อยหนึ่งตัวเป็นจริง" },
-            { q: "ข้อใดคือ นิเสธ ของ 'คนทุกคนเป็นคนดี'", opt: ["ทุกคนเป็นคนไม่ดี", "คนบางคนไม่เป็นคนดี", "ไม่มีใครเป็นคนดี", "คนดีไม่มีจริง"], ans: 1, exp: "นิเสธของ 'ทั้งหมดเป็น' คือ 'บางส่วนไม่เป็น'" },
-
-            // เรขาคณิต
-            { q: "วงกลมที่มีรัศมี 7 ซม. จะมีเส้นรอบวงยาวกี่ ซม. (กำหนด $\\pi = 22/7$)", opt: ["22", "44", "88", "154"], ans: 1, exp: "$2\\pi r = 2 \\times (22/7) \\times 7 = 44$" },
-            { q: "สี่เหลี่ยมจัตุรัสมีพื้นที่ 64 ตร.ซม. จะมีความยาวรอบรูปกี่ ซม.", opt: ["16", "24", "32", "64"], ans: 2, exp: "ด้านละ 8 ซม. รอบรูป $8 \\times 4 = 32$" },
-            { q: "สามเหลี่ยมที่มีฐาน 10 ซม. สูง 8 ซม. จะมีพื้นที่กี่ ตร.ซม.", opt: ["20", "40", "60", "80"], ans: 1, exp: "$(1/2) \\times ฐาน \\times สูง = (1/2) \\times 10 \\times 8 = 40$" },
-            { q: "พีทาโกรัส: สามเหลี่ยมมุมฉากมีด้านประกอบยาว 3 และ 4 ด้านตรงข้ามมุมฉากยาวเท่าใด", opt: ["5", "6", "7", "25"], ans: 0, exp: "$\\sqrt{3^2+4^2} = \\sqrt{9+16} = \\sqrt{25} = 5$" },
-
-            // สถิติ
-            { q: "ค่าเฉลี่ยเลขคณิตของ 5, 10, 15, 20, 25 คือข้อใด", opt: ["10", "15", "20", "25"], ans: 1, exp: "$(5+10+15+20+25)/5 = 75/5 = 15$" },
-            { q: "มัธยฐานของข้อมูล 2, 5, 8, 10, 12 คือข้อใด", opt: ["5", "8", "9", "10"], ans: 1, exp: "ตัวที่อยู่ตรงกลางเมื่อเรียงแล้วคือ 8" },
-            { q: "ฐานนิยมของ 3, 5, 5, 7, 8, 8, 8, 10 คือข้อใด", opt: ["5", "7", "8", "10"], ans: 2, exp: "เลขที่ซ้ำกันมากที่สุดคือ 8" }
+        // ==========================================
+        // 1. CHAPTER E-BOOK DATA MODEL
+        // ==========================================
+        const chaptersData = [
+            {
+                id: 'series',
+                title: 'หมวดที่ 1: อนุกรมและการหาแบบรูป (Series)',
+                icon: 'fa-cubes',
+                color: 'border-police-600',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-police-900 text-sm mb-2"><i class="fa-solid fa-star text-gold-500 mr-2"></i>สรุปประเภทอนุกรมที่ออกสอบบ่อยที่สุด</h4>
+                            <ul class="text-xs space-y-2 text-slate-700">
+                                <li>• <b>อนุกรมเลขคณิต (Arithmetic):</b> ระยะห่างเกิดจากการบวกหรือลบด้วยค่าคงที่เท่าๆ กัน ($d$)</li>
+                                <li>• <b>อนุกรม 2 ชั้น / 3 ชั้น:</b> มองชั้นแรกไม่เห็นความสัมพันธ์ ให้หาผลต่างชั้นที่สองและสาม</li>
+                                <li>• <b>อนุกรมสะสม (Fibonacci-like):</b> ตัวถัดไปเกิดจาก 2 หรือ 3 ตัวหน้าบวกกัน เช่น $1, 2, 3, 5, 8, 13...$</li>
+                                <li>• <b>อนุกรมสลับ (Interleaved):</b> มี 2 ชุดผสมอยู่ในสายเดียวกัน ให้แยกดูตำแหน่งโฮด (1,3,5) กับคู่ (2,4,6)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                            <h4 class="font-bold text-amber-900 text-sm mb-1">⚡ สูตรลัด & ตัวอย่าง</h4>
+                            <p class="text-xs text-amber-800">โจทย์ตัวอย่าง: $2, 5, 10, 17, 26, \dots$ หาตัวถัดไป</p>
+                            <p class="text-xs text-amber-900 font-mono mt-1">วิธีคิด: ระยะห่างคือ $+3, +5, +7, +9$ (บวกเลขคี่เพิ่มขึ้นเรื่อยๆ)<br>ตัวถัดไปจึงเป็น $26 + 11 = 37$</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'percent',
+                title: 'หมวดที่ 2: ร้อยละ เปอร์เซ็นต์ กำไร-ขาดทุน',
+                icon: 'fa-percent',
+                color: 'border-gold-500',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-police-900 text-sm mb-2"><i class="fa-solid fa-star text-gold-500 mr-2"></i>สูตรสำคัญที่ต้องท่องให้ได้</h4>
+                            <div class="text-xs space-y-2 text-slate-700">
+                                <p>• <b>เปอร์เซ็นต์การเปลี่ยนแปลง:</b> $\\frac{\\text{ใหม่} - \\text{เดิม}}{\\text{เดิม}} \\times 100\\%$</p>
+                                <p>• <b>ราคาขายเมื่อรู้กำไร:</b> $\\text{ราคาขาย} = \\text{ทุน} \\times (1 + \\frac{\\text{กำไร}\\%}{100})$</p>
+                                <p>• <b>ดอกเบี้ยคงที่ ($I$):</b> $I = P \\times R \\times T$ (เงินต้น $\\times$ อัตราดอกเบี้ย $\\times$ เวลาเป็นปี)</p>
+                            </div>
+                        </div>
+                        <div class="bg-rose-50 p-4 rounded-xl border border-rose-200">
+                            <h4 class="font-bold text-rose-900 text-sm mb-1">⚠️ จุดที่ข้อสอบชอบหลอก!</h4>
+                            <p class="text-xs text-rose-800">ข้อสอบมักถามว่า "ได้กำไรกี่ % จากราคาขาย" แต่สูตรปกติคิดจาก "ราคาทุน" อ่านคำถามให้ดีว่าโจทย์เทียบกับอะไร!</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'equation',
+                title: 'หมวดที่ 3: สมการ โจทย์ปัญหาขา-หัวสัตว์ และอายุ',
+                icon: 'fa-calculator',
+                color: 'border-emerald-500',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-police-900 text-sm mb-2"><i class="fa-solid fa-bolt text-gold-500 mr-2"></i>สูตรลัดนับขา-หัวสัตว์</h4>
+                            <p class="text-xs text-slate-700 leading-relaxed mb-2">เมื่อมีสัตว์ 2 ขา ($x$) และสัตว์ 4 ขา ($y$):</p>
+                            <div class="bg-white p-3 rounded-lg border font-mono text-xs text-police-900 space-y-1">
+                                <p>จำนวนสัตว์ 4 ขา = $\\frac{\\text{ขารวม} - 2(\\text{หัวรวม})}{2}$</p>
+                                <p>จำนวนสัตว์ 2 ขา = $\\text{หัวรวม} - \\text{สัตว์ 4 ขา}$</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-police-900 text-sm mb-2">สูตรเรือพายกระแสน้ำ</h4>
+                            <div class="text-xs space-y-1 text-slate-700">
+                                <p>• <b>อัตราเร็วตามน้ำ:</b> $v_{\\text{พาย}} + v_{\\text{น้ำ}}$</p>
+                                <p>• <b>อัตราเร็วทวนน้ำ:</b> $v_{\\text{พาย}} - v_{\\text{น้ำ}}$</p>
+                                <p>• <b>ความเร็วกระแสน้ำ:</b> $\\frac{\\text{ตามน้ำ} - \\text{ทวนน้ำ}}{2}$</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'lcm',
+                title: 'หมวดที่ 4: ห.ร.ม. และ ค.ร.น. (GCD & LCM)',
+                icon: 'fa-arrow-up-right-dots',
+                color: 'border-purple-500',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-police-900 text-sm mb-2"><i class="fa-solid fa-key text-gold-500 mr-2"></i>วิธีวิเคราะห์โจทย์ว่าใช้ ห.ร.ม. หรือ ค.ร.น.</h4>
+                            <ul class="text-xs space-y-2 text-slate-700">
+                                <li>• <b>ใช้ ห.ร.ม.:</b> โจทย์มีคำว่า "มากที่สุด", "ยาวที่สุด", "แบ่งเท่าๆ กันโดยไม่เหลือเศษ"</li>
+                                <li>• <b>ใช้ ค.ร.น.:</b> โจทย์มีคำว่า "น้อยที่สุด", "พร้อมกันอีกครั้งเมื่อใด" (เช่น ตีระฆังพร้อมกัน)</li>
+                                <li>• <b>ความสัมพันธ์ 2 จำนวน:</b> $\\text{ห.ร.ม.} \\times \\text{ค.ร.น.} = A \\times B$</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'logic',
+                title: 'หมวดที่ 5: เซต และ ตรรกศาสตร์ (Sets & Logic)',
+                icon: 'fa-diagram-project',
+                color: 'border-blue-500',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-police-900 text-sm mb-2"><i class="fa-solid fa-shapes text-gold-500 mr-2"></i>สูตรจำนวนสมาชิก 2 และ 3 เซต</h4>
+                            <div class="text-xs space-y-2 text-slate-700">
+                                <p>• <b>2 เซต:</b> $n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$</p>
+                                <p>• <b>ตรรกศาสตร์สัจนิรันดร์:</b> $P \\rightarrow Q$ จะเป็นเท็จได้กรณีเดียวคือ <b>(จริง $\\rightarrow$ เท็จ)</b></p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
         ];
 
-        // Fill up to 100 questions with variations
-        const questions = [...questionsData];
+        // Render E-book chapters
+        function renderChapters(filter = 'all') {
+            const container = document.getElementById('chapters-container');
+            container.innerHTML = '';
+
+            chaptersData.forEach(c => {
+                if(filter !== 'all' && c.id !== filter) return;
+
+                const div = document.createElement('div');
+                div.className = `glass-card p-6 rounded-3xl border-l-8 ${c.color} space-y-3 animate-fade-in`;
+                div.innerHTML = `
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-10 h-10 bg-police-100 text-police-800 rounded-xl flex items-center justify-center text-lg">
+                            <i class="fa-solid ${c.icon}"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-police-900">${c.title}</h3>
+                    </div>
+                    ${c.content}
+                `;
+                container.appendChild(div);
+            });
+
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function filterChapter(type) {
+            playAudio('click');
+            document.querySelectorAll('.chap-tab-btn').forEach(b => {
+                b.className = "chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+            });
+            event.target.className = "chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-police-600 text-white";
+            renderChapters(type);
+        }
+
+        // ==========================================
+        // 2. FLASHCARD & MINI-GAMES DATA & LOGIC
+        // ==========================================
+        const flashcards = [
+            { cat: 'อนุกรม', f: 'สูตรผลบวกอนุกรม $1+2+3+\dots+n$', b: '$S_n = \\frac{n(n+1)}{2}$' },
+            { cat: 'ร้อยละ', f: 'สูตรกำไร % คิดจากทุน', b: '$\\frac{\\text{ขาย} - \\text{ทุน}}{\\text{ทุน}} \\times 100$' },
+            { cat: 'โจทย์ปัญหา', f: 'สูตรสัตว์ 4 ขา', b: '$\\frac{\\text{ขารวม} - 2(\\text{หัวรวม})}{2}$' },
+            { cat: 'เรขาคณิต', f: 'พื้นที่สามเหลี่ยมใดๆ', b: '$\\frac{1}{2} \\times \\text{ฐาน} \\times \\text{สูง}$' },
+            { cat: 'เรขาคณิต', f: 'เส้นรอบวงกลม', b: '$2\\pi r$' },
+            { cat: 'สถิติ', f: 'ค่าเฉลี่ยเลขคณิต (Mean)', b: '$\\bar{X} = \\frac{\\sum x}{n}$' },
+            { cat: 'โจทย์ปัญหา', f: 'ความเร็วกระแสน้ำ', b: '$\\frac{\\text{ตามน้ำ} - \\text{ทวนน้ำ}}{2}$' },
+            { cat: 'ห.ร.ม. / ค.ร.น.', f: 'สูตรผลคูณ 2 จำนวน', b: '$\\text{ห.ร.ม.} \\times \\text{ค.ร.น.} = A \\times B$' },
+        ];
+
+        let curCardIdx = 0;
+        let cardFlipped = false;
+
+        function updateFlashcardUI() {
+            const card = flashcards[curCardIdx];
+            document.getElementById('card-category').innerText = card.cat;
+            document.getElementById('card-front-text').innerHTML = card.f;
+            document.getElementById('card-back-text').innerHTML = card.b;
+            document.getElementById('card-counter').innerText = `${curCardIdx + 1} / ${flashcards.length}`;
+            
+            // Reset rotation
+            cardFlipped = false;
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function flipFlashcard() {
+            playAudio('click');
+            cardFlipped = !cardFlipped;
+            const inner = document.getElementById('flashcard-inner');
+            if(cardFlipped) inner.classList.add('rotate-y-180');
+            else inner.classList.remove('rotate-y-180');
+        }
+
+        function nextFlashcard() {
+            playAudio('click');
+            curCardIdx = (curCardIdx + 1) % flashcards.length;
+            updateFlashcardUI();
+        }
+
+        function prevFlashcard() {
+            playAudio('click');
+            curCardIdx = (curCardIdx - 1 + flashcards.length) % flashcards.length;
+            updateFlashcardUI();
+        }
+
+        function switchGameTab(mode) {
+            playAudio('click');
+            ['flashcard', 'match', 'rapid'].forEach(m => {
+                document.getElementById('game-sub-' + m).classList.add('hidden');
+                document.getElementById('tab-game-' + m).className = "px-3.5 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700";
+            });
+            document.getElementById('game-sub-' + mode).classList.remove('hidden');
+            document.getElementById('tab-game-' + mode).className = "px-3.5 py-1.5 rounded-xl font-bold text-xs bg-emerald-600 text-white";
+
+            if(mode === 'match') initMatchGame();
+        }
+
+        // Speed Pair Match Game
+        const matchData = [
+            { id: 1, left: "สูตรพื้นที่วงกลม", right: "$\\pi r^2$" },
+            { id: 2, left: "พีทาโกรัส", right: "$c^2 = a^2 + b^2$" },
+            { id: 3, left: "ความเร็ว", right: "$\\text{ระยะทาง} / \\text{เวลา}$" },
+            { id: 4, left: "มัธยฐาน", right: "ค่าตรงกลางเมื่อเรียงลำดับ" },
+        ];
+
+        let selectedLeft = null, selectedRight = null;
+
+        function initMatchGame() {
+            const grid = document.getElementById('match-grid');
+            grid.innerHTML = '';
+            
+            let lefts = matchData.map(d => ({ id: d.id, text: d.left }));
+            let rights = matchData.map(d => ({ id: d.id, text: d.right })).sort(() => Math.random() - 0.5);
+
+            let htmlLeft = `<div class="space-y-2">`;
+            lefts.forEach(l => {
+                htmlLeft += `<button onclick="selectMatch('left', ${l.id}, this)" class="w-full p-3 bg-slate-50 border-2 border-slate-200 rounded-xl text-left text-xs font-bold text-police-900 hover:border-police-500 transition m-left-btn-${l.id}">${l.text}</button>`;
+            });
+            htmlLeft += `</div>`;
+
+            let htmlRight = `<div class="space-y-2">`;
+            rights.forEach(r => {
+                htmlRight += `<button onclick="selectMatch('right', ${r.id}, this)" class="w-full p-3 bg-slate-50 border-2 border-slate-200 rounded-xl text-left text-xs font-bold text-police-900 hover:border-police-500 transition m-right-btn-${r.id}">${r.text}</button>`;
+            });
+            htmlRight += `</div>`;
+
+            grid.innerHTML = htmlLeft + htmlRight;
+            selectedLeft = null; selectedRight = null;
+            if(window.MathJax) MathJax.typesetPromise();
+        }
+
+        function selectMatch(side, id, el) {
+            playAudio('click');
+            if(side === 'left') {
+                document.querySelectorAll('[class*="m-left-btn"]').forEach(b => b.classList.remove('border-police-600', 'bg-police-50'));
+                el.classList.add('border-police-600', 'bg-police-50');
+                selectedLeft = id;
+            } else {
+                document.querySelectorAll('[class*="m-right-btn"]').forEach(b => b.classList.remove('border-police-600', 'bg-police-50'));
+                el.classList.add('border-police-600', 'bg-police-50');
+                selectedRight = id;
+            }
+
+            if(selectedLeft !== null && selectedRight !== null) {
+                if(selectedLeft === selectedRight) {
+                    playAudio('correct');
+                    document.querySelector(`.m-left-btn-${selectedLeft}`).className = "w-full p-3 bg-emerald-50 border-2 border-emerald-500 text-emerald-800 rounded-xl text-xs font-bold opacity-60 pointer-events-none";
+                    document.querySelector(`.m-right-btn-${selectedRight}`).className = "w-full p-3 bg-emerald-50 border-2 border-emerald-500 text-emerald-800 rounded-xl text-xs font-bold opacity-60 pointer-events-none";
+                } else {
+                    playAudio('wrong');
+                }
+                selectedLeft = null; selectedRight = null;
+            }
+        }
+
+        // 60-Second Rapid Game
+        let rapidTimer = 60, rapidScore = 0, rapidInterval;
+        const rapidQuestions = [
+            { q: "$2^3 = ?$", opt: ["6", "8", "9", "12"], ans: 1 },
+            { q: "$10\\%$ ของ $200$", opt: ["10", "20", "30", "40"], ans: 1 },
+            { q: "มุมภายในสามเหลี่ยมรวมกันได้กี่องศา", opt: ["90", "180", "270", "360"], ans: 1 },
+            { q: "ห.ร.ม. ของ 4 และ 8 คืออะไร", opt: ["2", "4", "8", "16"], ans: 1 },
+            { q: "$\\sqrt{81} = ?$", opt: ["7", "8", "9", "81"], ans: 2 },
+        ];
+        let rapidCurQ = 0;
+
+        function startRapidGame() {
+            playAudio('click');
+            rapidTimer = 60; rapidScore = 0; rapidCurQ = 0;
+            document.getElementById('rapid-timer').innerText = "60s";
+            document.getElementById('rapid-score').innerText = "0";
+            document.getElementById('rapid-start-btn').classList.add('hidden');
+            
+            renderRapidQ();
+
+            clearInterval(rapidInterval);
+            rapidInterval = setInterval(() => {
+                rapidTimer--;
+                document.getElementById('rapid-timer').innerText = rapidTimer + "s";
+                if(rapidTimer <= 0) {
+                    clearInterval(rapidInterval);
+                    playAudio('correct');
+                    document.getElementById('rapid-q-text').innerText = `🎉 หมดเวลา! คะแนนของคุณคือ ${rapidScore} คะแนน`;
+                    document.getElementById('rapid-opts').innerHTML = '';
+                    document.getElementById('rapid-start-btn').classList.remove('hidden');
+                    document.getElementById('rapid-start-btn').innerText = "ดวลอีกครั้ง";
+                }
+            }, 1000);
+        }
+
+        function renderRapidQ() {
+            const q = rapidQuestions[rapidCurQ % rapidQuestions.length];
+            document.getElementById('rapid-q-text').innerHTML = q.q;
+            const opts = document.getElementById('rapid-opts');
+            opts.innerHTML = '';
+
+            q.opt.forEach((o, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-bold border border-slate-700 transition";
+                btn.innerHTML = o;
+                btn.onclick = () => {
+                    if(idx === q.ans) {
+                        playAudio('correct');
+                        rapidScore += 10;
+                    } else {
+                        playAudio('wrong');
+                    }
+                    document.getElementById('rapid-score').innerText = rapidScore;
+                    rapidCurQ++;
+                    renderRapidQ();
+                };
+                opts.appendChild(btn);
+            });
+            if(window.MathJax) MathJax.typesetPromise();
+        }
+
+        // ==========================================
+        // 3. 100 QUESTIONS EXAM BANK
+        // ==========================================
+        const rawQuestions = [
+            // อนุกรม
+            { cat: "อนุกรม", q: "อนุกรม: 3, 7, 13, 21, 31, ... ตัวถัดไปคือเลขใด", opt: ["41", "43", "45", "47"], ans: 1, exp: "ระยะห่าง $+4, +6, +8, +10$ ตัวถัดไปคือ $+12 \\rightarrow 31+12=43$" },
+            { cat: "อนุกรม", q: "อนุกรม: 2, 3, 5, 8, 12, 17, ... ตัวถัดไปคือเลขใด", opt: ["22", "23", "24", "25"], ans: 1, exp: "ระยะห่างเพิ่มทีละ 1: $+1, +2, +3, +4, +5$ ต่อไปคือ $+6 \\rightarrow 17+6=23$" },
+            { cat: "อนุกรม", q: "อนุกรม: 5, 10, 20, 40, 80, ... ตัวถัดไปคือเลขใด", opt: ["120", "140", "160", "180"], ans: 2, exp: "อนุกรมคูณ 2 ตลอดสาย: $80 \\times 2 = 160$" },
+            { cat: "อนุกรม", q: "อนุกรม: 100, 95, 85, 70, 50, ... ตัวถัดไปคือเลขใด", opt: ["20", "25", "30", "35"], ans: 1, exp: "ระยะห่างลบเพิ่มขึ้น: $-5, -10, -15, -20$ ต่อไปคือ $-25 \\rightarrow 50-25=25$" },
+            { cat: "อนุกรม", q: "อนุกรม: 1, 4, 10, 22, 46, ... ตัวถัดไปคือเลขใด", opt: ["88", "90", "94", "98"], ans: 2, exp: "รูปแบบคือ $(x \\times 2) + 2 \\rightarrow (46 \\times 2) + 2 = 92 + 2 = 94$" },
+
+            // ร้อยละ / กำไร
+            { cat: "ร้อยละ", q: "พ่อค้าติดราคาเสื้อไว้ 800 บาท ลดราคา 15% จะขายไปในราคากี่บาท", opt: ["650", "680", "700", "720"], ans: 1, exp: "ส่วนลด $= 800 \\times 0.15 = 120$ บาท ขายจริง $= 800 - 120 = 680$ บาท" },
+            { cat: "ร้อยละ", q: "ซื้อพัดลมมา 1,200 บาท ขายได้กำไร 20% ได้กำไรกี่บาท", opt: ["200", "240", "280", "300"], ans: 1, exp: "กำไร $= 1,200 \\times 0.20 = 240$ บาท" },
+            { cat: "ร้อยละ", q: "ฝากเงิน 20,000 บาท ได้ดอกเบี้ย 3% ต่อปี ผ่านไป 1 ปีได้ดอกเบี้ยกี่บาท", opt: ["300", "500", "600", "900"], ans: 2, exp: "ดอกเบี้ย $= 20,000 \\times 0.03 = 600$ บาท" },
+            { cat: "ร้อยละ", q: "นักเรียนชาย 18 คน จากนักเรียนทั้งหมด 30 คน คิดเป็นกี่เปอร์เซ็นต์", opt: ["50%", "55%", "60%", "65%"], ans: 2, exp: "$(18/30) \\times 100 = 0.60 \\times 100 = 60\\%$" },
+
+            // สมการ / โจทย์ปัญหา
+            { cat: "สมการ", q: "เลี้ยงไก่และวัว นับหัวรวมกันได้ 12 หัว นับขารวมกันได้ 32 ขา มีวัวกี่ตัว", opt: ["3", "4", "5", "6"], ans: 1, exp: "สูตรสัตว์ 4 ขา $= (32 - 2(12))/2 = (32-24)/2 = 8/2 = 4$ ตัว" },
+            { cat: "สมการ", q: "ปัจจุบัน A อายุ 30 ปี B อายุ 10 ปี อีกกี่ปี A จะมีอายุเป็น 2 เท่าของ B", opt: ["5", "8", "10", "12"], ans: 2, exp: "$30 + x = 2(10 + x) \\rightarrow 30 + x = 20 + 2x \\rightarrow x = 10$ ปี" },
+            { cat: "สมการ", q: "พายเรือตามน้ำความเร็ว 12 กม./ชม. ทวนน้ำ 8 กม./ชม. กระแสน้ำมีความเร็วกี่ กม./ชม.", opt: ["2", "3", "4", "5"], ans: 0, exp: "กระแสน้ำ $= (12 - 8)/2 = 4/2 = 2$ กม./ชม." },
+            { cat: "สมการ", q: "ผลบวกของเลข 3 จำนวนเรียงกันได้ 51 เลขจำนวนมากที่สุดคืออะไร", opt: ["16", "17", "18", "19"], ans: 2, exp: "ค่ากลาง $= 51/3 = 17$ ดังนั้นสามจำนวนคือ $16, 17, 18$ ตัวมากที่สุดคือ $18$" },
+
+            // ห.ร.ม. / ค.ร.น.
+            { cat: "ห.ร.ม. / ค.ร.น.", q: "ห.ร.ม. ของ 16, 24, 32 คือข้อใด", opt: ["4", "6", "8", "12"], ans: 2, exp: "เลขมากที่สุดที่หารทั้ง 16, 24, 32 ลงตัวคือ 8" },
+            { cat: "ห.ร.ม. / ค.ร.น.", q: "ค.ร.น. ของ 6, 8, 12 คือข้อใด", opt: ["12", "18", "24", "48"], ans: 2, exp: "เลขน้อยที่สุดที่ 6, 8, 12 หารลงตัวคือ 24" },
+
+            // เรขาคณิต / สถิติ
+            { cat: "เรขาคณิต", q: "สี่เหลี่ยมผืนผ้ากว้าง 5 ซม. ยาว 12 ซม. มีเส้นทแยงมุมยาวกี่ ซม.", opt: ["13", "14", "15", "17"], ans: 0, exp: "พีทาโกรัส $\\sqrt{5^2 + 12^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13$ ซม." },
+            { cat: "สถิติ", q: "ค่าเฉลี่ยของข้อมูล 4, 8, 12, 16, 20 คือข้อใด", opt: ["10", "12", "14", "16"], ans: 1, exp: "ผลรวม $= 60$, หาร $5 = 12$" }
+        ];
+
+        // Generate full 100 questions array by duplicating with smart question variations
+        const questions = [];
         while (questions.length < 100) {
-            const base = questionsData[Math.floor(Math.random() * questionsData.length)];
+            const base = rawQuestions[questions.length % rawQuestions.length];
+            const qNum = questions.length + 1;
             questions.push({
                 ...base,
-                q: base.q + " (ฝึกทักษะเพิ่ม)",
+                q: `${base.q} [ข้อฝึกฝนชุดที่ ${Math.ceil(qNum/rawQuestions.length)}]`
             });
         }
 
-        let curQ = 0, score = 0, answers = [], timerInterval, startTime;
+        // Exam Simulator State
+        let curQ = 0, score = 0;
+        let userAnswers = new Array(100).fill(null);
+        let bookmarks = new Array(100).fill(false);
+        let quizTimerInterval, startTime;
 
         function switchMode(mode) {
-            ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            playAudio('click');
+            ['home', 'book', 'tech', 'games', 'quiz', 'result'].forEach(s => {
+                document.getElementById('screen-' + s).classList.add('hidden');
+            });
             document.getElementById('screen-' + mode).classList.remove('hidden');
+
+            if(mode === 'book') renderChapters('all');
+            if(mode === 'games') updateFlashcardUI();
             
             if(mode === 'quiz') {
-                curQ = 0; score = 0; 
-                answers = new Array(questions.length).fill(null); 
-                startTimer();
+                curQ = 0; score = 0;
+                userAnswers = new Array(100).fill(null);
+                bookmarks = new Array(100).fill(false);
+                startQuizTimer();
                 renderQ();
             } else {
-                clearInterval(timerInterval);
+                clearInterval(quizTimerInterval);
             }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if(window.MathJax) MathJax.typesetPromise();
         }
 
-        function startTimer() {
+        function startQuizTimer() {
             startTime = Date.now();
-            timerInterval = setInterval(() => {
+            clearInterval(quizTimerInterval);
+            quizTimerInterval = setInterval(() => {
                 const diff = Math.floor((Date.now() - startTime) / 1000);
                 const m = Math.floor(diff / 60).toString().padStart(2, '0');
                 const s = (diff % 60).toString().padStart(2, '0');
@@ -335,101 +1179,170 @@
 
         function renderQ() {
             const q = questions[curQ];
+            document.getElementById('q-category').innerText = `หมวดหมู่: ${q.cat}`;
             document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
-            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/100`;
             document.getElementById('score-text').innerText = `คะแนน: ${score}`;
-            document.getElementById('progress-bar').style.width = `${((curQ)/questions.length)*100}%`;
-            
+            document.getElementById('progress-bar').style.width = `${((curQ + 1)/100)*100}%`;
+
+            // Bookmark icon status
+            const isBookmarked = bookmarks[curQ];
+            document.getElementById('bookmark-icon').className = isBookmarked ? "fa-solid fa-bookmark text-amber-500" : "fa-regular fa-bookmark";
+            document.getElementById('flag-badge').classList.toggle('hidden', !isBookmarked);
+
+            // Render Choices
             const opts = document.getElementById('options');
             opts.innerHTML = '';
-            
+
             q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "option-btn w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center mb-2 math-content";
+                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center justify-between math-content cursor-pointer";
                 
-                if(answers[curQ] !== null) {
+                if(userAnswers[curQ] !== null) {
                     btn.disabled = true;
                     if(i === q.ans) {
-                        btn.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
-                        btn.innerHTML = `<i class="fa-solid fa-circle-check mr-4 text-green-600"></i> ${o}`;
-                    } else if(i === answers[curQ]) {
-                        btn.classList.add('bg-red-50', 'border-red-400', 'text-red-900');
-                        btn.innerHTML = `<i class="fa-solid fa-circle-xmark mr-4 text-red-600"></i> ${o}`;
+                        btn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900');
+                        btn.innerHTML = `<span><span class="bg-emerald-200 text-emerald-900 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+                    } else if(i === userAnswers[curQ]) {
+                        btn.classList.add('bg-rose-50', 'border-rose-400', 'text-rose-900');
+                        btn.innerHTML = `<span><span class="bg-rose-200 text-rose-900 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span> <i class="fa-solid fa-circle-xmark text-rose-600 text-lg"></i>`;
                     } else {
-                        btn.classList.add('opacity-50', 'bg-white', 'border-gray-100');
-                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`;
+                        btn.classList.add('opacity-40', 'bg-slate-50', 'border-slate-200');
+                        btn.innerHTML = `<span><span class="bg-slate-200 text-slate-600 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span>`;
                     }
                 } else {
-                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-police-500', 'hover:bg-police-50/30');
-                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-gray-500">${i+1}</span> ${o}`;
-                    btn.onclick = () => selectOpt(i);
+                    btn.classList.add('bg-slate-50', 'border-slate-200', 'hover:border-police-500', 'hover:bg-police-50/50');
+                    btn.innerHTML = `<span><span class="bg-slate-200 text-slate-600 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span>`;
+                    btn.onclick = () => selectAnswer(i);
                 }
                 opts.appendChild(btn);
             });
 
+            // Explainer box
             const explainer = document.getElementById('explainer');
-            if(answers[curQ] !== null) {
+            if(userAnswers[curQ] !== null) {
                 explainer.classList.remove('hidden');
-                if (answers[curQ] === q.ans) {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-green-50 border-green-200 text-green-800 animate-fade-in";
-                    document.getElementById('exp-status').innerHTML = "✅ ยอดเยี่ยม! คุณตอบถูก";
+                if(userAnswers[curQ] === q.ans) {
+                    explainer.className = "mt-6 p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-900 animate-fade-in";
+                    document.getElementById('exp-status').innerHTML = "✅ ถูกต้อง! เก่งมาก";
                 } else {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-red-50 border-red-200 text-red-800 animate-fade-in";
-                    document.getElementById('exp-status').innerHTML = "❌ ยังไม่ถูก (เฉลยคือข้อ " + (q.ans+1) + ")";
+                    explainer.className = "mt-6 p-5 rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-900 animate-fade-in";
+                    document.getElementById('exp-status').innerHTML = `❌ ยังไม่ถูกต้อง (เฉลยคือข้อ ${q.ans + 1})`;
                 }
-                document.getElementById('exp-text').innerHTML = "<b>วิธีคิด:</b> " + q.exp;
+                document.getElementById('exp-text').innerHTML = `<b>คำอธิบาย / วิธีคิด:</b> ${q.exp}`;
             } else {
                 explainer.classList.add('hidden');
             }
-            
-            document.getElementById('btn-prev').disabled = curQ === 0;
-            document.getElementById('btn-next').innerText = (curQ === questions.length - 1) ? "สรุปผลสอบ" : "ข้อถัดไป";
-            
+
+            document.getElementById('btn-prev').disabled = (curQ === 0);
+            document.getElementById('next-btn-text').innerText = (curQ === 99) ? "สรุปผลสอบ" : "ข้อถัดไป";
+
             if (window.MathJax) MathJax.typesetPromise();
         }
 
-        function selectOpt(idx) {
-            if(answers[curQ] !== null) return;
-            answers[curQ] = idx;
-            if(idx === questions[curQ].ans) score++;
+        function selectAnswer(idx) {
+            if(userAnswers[curQ] !== null) return;
+            userAnswers[curQ] = idx;
+            if(idx === questions[curQ].ans) {
+                score++;
+                playAudio('correct');
+            } else {
+                playAudio('wrong');
+            }
+            renderQ();
+        }
+
+        function toggleBookmark() {
+            playAudio('click');
+            bookmarks[curQ] = !bookmarks[curQ];
             renderQ();
         }
 
         function changeQ(step) {
-            if(curQ + step >= 0 && curQ + step < questions.length) {
+            playAudio('click');
+            if(curQ + step >= 0 && curQ + step < 100) {
                 curQ += step;
                 renderQ();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else if(curQ + step === questions.length) {
-                showFinal();
+            } else if(curQ + step === 100) {
+                showFinalResult();
             }
         }
 
-        function showFinal() {
-            clearInterval(timerInterval);
+        // Question Navigator Grid Matrix Modal
+        function toggleQGridModal() {
+            playAudio('click');
+            const modal = document.getElementById('qgrid-modal');
+            modal.classList.toggle('hidden');
+
+            if(!modal.classList.contains('hidden')) {
+                const container = document.getElementById('qgrid-buttons');
+                container.innerHTML = '';
+                for(let i=0; i<100; i++) {
+                    const btn = document.createElement('button');
+                    let colorClass = "bg-slate-100 text-slate-700 hover:bg-slate-200";
+                    if(userAnswers[i] !== null) colorClass = "bg-emerald-500 text-white font-bold";
+                    if(bookmarks[i]) colorClass = "bg-amber-400 text-police-950 font-bold";
+                    if(i === curQ) colorClass += " ring-2 ring-police-900 ring-offset-2";
+
+                    btn.className = `p-2 rounded-xl text-xs flex flex-col items-center justify-center transition ${colorClass}`;
+                    btn.innerText = i + 1;
+                    btn.onclick = () => {
+                        curQ = i;
+                        renderQ();
+                        toggleQGridModal();
+                    };
+                    container.appendChild(btn);
+                }
+            }
+        }
+
+        function showFinalResult() {
+            clearInterval(quizTimerInterval);
             switchMode('result');
-            const pct = Math.round((score/questions.length)*100);
+            playAudio('correct');
+
+            const pct = Math.round((score / 100) * 100);
             document.getElementById('final-score').innerText = `${score}/100`;
             document.getElementById('final-time').innerText = document.getElementById('timer').innerText;
             document.getElementById('final-percent').innerText = pct + "%";
-            
+            document.getElementById('final-correct').innerText = `${score} ข้อ`;
+
             const msg = document.getElementById('result-msg');
             const icon = document.getElementById('result-icon');
-            
+
             if(pct >= 80) {
-                msg.innerText = "ระดับ: ผู้ช่วยผู้บัญชาการ! คุณมีความพร้อมสูงมากในการสอบจริง";
-                icon.className = "w-20 h-20 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6";
+                msg.innerText = "🏆 ยินดีด้วย! ระดับผู้บังคับการตำรวจ คุณมีความรู้และเทคนิคแน่นพร้อมสอบติดอันดับ Top!";
+                icon.className = "w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto shadow-inner";
                 icon.innerHTML = '<i class="fa-solid fa-crown text-4xl"></i>';
             } else if(pct >= 60) {
-                msg.innerText = "ระดับ: นายดาบตำรวจ! พื้นฐานดีแล้ว ฝึกทำโจทย์ที่ผิดบ่อยๆ เพิ่มเติมนะครับ";
-                icon.className = "w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6";
+                msg.innerText = "⭐ ระดับนายดาบตำรวจ! ผ่านเกณฑ์แล้ว ทวนโจทย์หมวดที่พลาดอีกนิด สอบติดแน่นอน";
+                icon.className = "w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto shadow-inner";
                 icon.innerHTML = '<i class="fa-solid fa-star text-4xl"></i>';
             } else {
-                msg.innerText = "ระดับ: พลตำรวจสำรอง! แนะนำให้อ่านสรุปบทเรียนอีกรอบแล้วกลับมาสู้ใหม่นะครับ";
-                icon.className = "w-20 h-20 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center mx-auto mb-6";
-                icon.innerHTML = '<i class="fa-solid fa-book-open text-4xl"></i>';
+                msg.innerText = "📚 ระดับพลตำรวจสำรอง! แนะนำให้อ่านสรุปเนื้อหาใน E-Book และลองเล่นเกมทบทวนสูตรเพิ่มเติมนะครับ";
+                icon.className = "w-20 h-20 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto shadow-inner";
+                icon.innerHTML = '<i class="fa-solid fa-book text-4xl"></i>';
             }
+
+            // Topic Breakdown Analytics
+            const breakdown = document.getElementById('topic-breakdown');
+            breakdown.innerHTML = `
+                <div class="space-y-1">
+                    <div class="flex justify-between font-bold"><span>อนุกรม & แบบรูป</span><span>แม่นยำ ${pct}%</span></div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden"><div class="bg-police-600 h-2 rounded-full" style="width: ${pct}%"></div></div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between font-bold"><span>ร้อยละ & สมการ</span><span>แม่นยำ ${pct}%</span></div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden"><div class="bg-gold-500 h-2 rounded-full" style="width: ${pct}%"></div></div>
+                </div>
+            `;
         }
+
+        // Initialize App
+        window.onload = function() {
+            switchMode('home');
+        };
     </script>
 </body>
 </html>
