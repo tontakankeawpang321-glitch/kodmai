@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>ศูนย์รวมข้อสอบ นนส. / นสต. - Prep Pass Academy</title>
 
-<!-- Fonts -->
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -17,6 +17,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
+    darkMode: 'class',
     theme: {
       extend: {
         fontFamily: {
@@ -24,24 +25,37 @@
           display: ['Kanit', 'sans-serif'],
         },
         colors: {
+          tactical: {
+            950: '#090d16',
+            900: '#0f172a',
+            800: '#1e293b',
+            700: '#334155',
+          },
+          gold: {
+            300: '#fde047',
+            400: '#facc15',
+            500: '#eab308',
+            600: '#ca8a04',
+          },
           army: {
-            50: '#f0fdf4',
-            100: '#dcfce7',
             500: '#22c55e',
             700: '#15803d',
             800: '#166534',
             900: '#14532d',
-            dark: '#0e381e'
+            dark: '#0a2313'
           },
           police: {
-            50: '#eff6ff',
-            100: '#dbeafe',
             500: '#3b82f6',
             700: '#1d4ed8',
             800: '#1e40af',
             900: '#1e3a8a',
-            dark: '#0f172a'
+            dark: '#081329'
           }
+        },
+        boxShadow: {
+          'gold-glow': '0 0 20px rgba(234, 179, 8, 0.25)',
+          'police-glow': '0 0 20px rgba(59, 130, 246, 0.25)',
+          'army-glow': '0 0 20px rgba(34, 197, 94, 0.25)',
         }
       }
     }
@@ -50,8 +64,8 @@
 
 <style>
   body {
-    background-color: #0f172a;
-    color: #334155;
+    background-color: #060911;
+    color: #f1f5f9;
     font-family: 'Sarabun', sans-serif;
     -webkit-tap-highlight-color: transparent;
   }
@@ -60,24 +74,27 @@
     font-family: 'Kanit', sans-serif;
   }
 
-  /* Custom Scrollbar */
+  /* Custom Metallic Scrollbar */
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #0f172a;
   }
   ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #334155;
     border-radius: 10px;
   }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #eab308;
+  }
 
-  /* Animations & Transitions */
+  /* Tab Animation */
   .tab-pane {
     display: none;
     opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(10px);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .tab-pane.active {
     display: block;
@@ -85,27 +102,44 @@
     transform: translateY(0);
   }
 
-  /* Glassmorphic Backgrounds */
+  /* Glassmorphism & Metallic Borders */
   .glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .glass-nav {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(16px);
+    background: rgba(10, 16, 30, 0.92);
+    backdrop-filter: blur(20px);
   }
 
-  /* Pulse Ripple Effect */
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
-    50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.8); }
+  .official-border {
+    position: relative;
   }
-  .streak-glow {
-    animation: pulseGlow 2.5s infinite;
+  .official-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(234,179,8,0.5), rgba(255,255,255,0.05), rgba(59,130,246,0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
-  /* Accordion Chevron Rotation */
+  /* Pulse Glow Animation */
+  @keyframes badgePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+  }
+  .pulse-badge {
+    animation: badgePulse 3s ease-in-out infinite;
+  }
+
+  /* Accordion Smooth Icon Rotation */
   details summary .chevron-icon {
     transition: transform 0.3s ease;
   }
@@ -113,232 +147,283 @@
     transform: rotate(180deg);
   }
 
-  /* Smooth Slide Up Modal */
+  /* Bottom Sheet Drawer */
   .bottom-sheet {
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .bottom-sheet.closed {
     transform: translateY(100%);
+  }
+
+  /* FB Container dynamic height fix */
+  .fb-responsive-container iframe {
+    width: 100% !important;
+    border-radius: 12px;
   }
 </style>
 </head>
 
 <body class="min-h-screen flex justify-center items-start sm:py-6">
 
-  <!-- Facebook SDK Root -->
+  <!-- Facebook SDK -->
   <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0" nonce="abc123"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0" nonce="abc1234"></script>
 
-  <!-- Main Mobile App Wrapper -->
-  <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[36px] shadow-2xl relative overflow-hidden flex flex-col pb-24 border-slate-700/20 sm:border">
+  <!-- MAIN APP WRAPPER CONTAINER -->
+  <div class="w-full max-w-md bg-tactical-950 min-h-screen sm:min-h-[880px] sm:rounded-[36px] shadow-2xl relative overflow-hidden flex flex-col pb-20 border-slate-800/80 sm:border">
     
-    <!-- APP TOP BAR (HEADER) -->
-    <header class="bg-gradient-to-r from-army-900 via-slate-900 to-police-900 text-white pt-5 pb-6 px-5 rounded-b-[28px] shadow-lg relative z-20">
-      <div class="flex items-center justify-between mb-3">
+    <!-- HEADER BAR (OFFICIAL ACADEMY HEADER) -->
+    <header class="relative bg-gradient-to-b from-slate-900 via-tactical-900 to-tactical-950 text-white pt-6 pb-6 px-5 rounded-b-[30px] border-b border-slate-800/80 shadow-2xl z-20 overflow-hidden">
+      <!-- Background Insignia Watermark -->
+      <div class="absolute -right-8 -top-8 opacity-5 text-slate-100 pointer-events-none">
+        <i class="fa-solid fa-shield-halved text-9xl"></i>
+      </div>
+
+      <div class="flex items-center justify-between mb-3 relative z-10">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center text-amber-400 font-bold text-lg shadow-inner">
-            <i class="fa-solid fa-shield-halved"></i>
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 p-0.5 shadow-gold-glow flex items-center justify-center">
+            <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-amber-400 font-black text-xl">
+              <i class="fa-solid fa-award"></i>
+            </div>
           </div>
           <div>
-            <h1 class="font-display font-bold text-lg leading-tight tracking-wide text-white">เตรียมสอบ นนส. / นสต.</h1>
-            <p class="text-xs text-slate-300 font-light">คู่มือติวสอบทหาร & ตำรวจ มืออาชีพ</p>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">PREP PASS</span>
+              <span class="text-[10px] text-slate-400">สถาบันติวราชการ</span>
+            </div>
+            <h1 class="font-display font-bold text-lg leading-snug text-white tracking-wide">ศูนย์สอบ นนส. / นสต.</h1>
           </div>
         </div>
 
-        <!-- Streak Counter Button Top Right -->
-        <button onclick="openCheckinModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/20 border border-amber-400/40 rounded-full text-amber-300 font-display text-xs font-semibold hover:bg-amber-500/30 transition-all cursor-pointer">
-          <i class="fa-solid fa-fire text-amber-400 text-sm"></i>
+        <!-- STREAK BUTTON -->
+        <button onclick="openCheckinModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/90 border border-amber-500/40 rounded-full text-amber-300 font-display text-xs font-bold hover:bg-slate-800 transition-all cursor-pointer shadow-md active:scale-95">
+          <i class="fa-solid fa-fire text-amber-400 text-sm animate-pulse"></i>
           <span id="topStreakCount">0</span> วัน
         </button>
       </div>
 
-      <!-- Quick Exam Countdown Banner -->
-      <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center justify-between text-xs mt-2">
-        <div class="flex items-center gap-2.5">
+      <!-- OFFICIAL EXAM STATUS BANNER -->
+      <div class="bg-gradient-to-r from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-md rounded-xl p-2.5 border border-amber-500/20 flex items-center justify-between text-xs mt-2 shadow-inner">
+        <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          <span class="text-slate-200">เตรียมความพร้อมโค้งสุดท้าย</span>
+          <span class="text-slate-300 text-[11px] font-medium">คลังข้อสอบอัปเดตเก็งตรงจุด</span>
         </div>
-        <span class="bg-emerald-500/30 text-emerald-300 px-2.5 py-0.5 rounded-full font-display font-medium text-[11px] border border-emerald-400/30">
-          คลังข้อสอบ 2026
+        <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-display font-bold text-[10px] px-2.5 py-0.5 rounded-md shadow-sm">
+          ปี 2026 OFFICIAL
         </span>
       </div>
     </header>
 
-    <!-- CONTAINER CONTENT -->
+    <!-- MAIN CONTENT AREA -->
     <main class="flex-1 px-4 pt-4 relative z-10 space-y-4">
 
-      <!-- TAB 1: HOME -->
+      <!-- TAB 1: HOME (หลักสูตร/คลังข้อสอบ) -->
       <div id="tab-home" class="tab-pane active space-y-4">
         
-        <!-- Highlight Featured Test Banner -->
+        <!-- FEATURED TEST CARD (เก็งข้อสอบ 100 ข้อ) -->
         <a href="https://sites.google.com/view/tiwkhosoob/แบบทดสอบ-100-ขอ" target="_blank" 
-           class="group relative block w-full p-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/20 overflow-hidden hover:shadow-xl transition-all duration-300 transform active:scale-[0.98]">
-          <div class="absolute -right-4 -bottom-4 opacity-15 text-white text-8xl font-black pointer-events-none font-display">100</div>
+           class="group relative block w-full rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 p-4 border border-indigo-500/30 shadow-police-glow overflow-hidden hover:border-indigo-400 transition-all duration-300 transform active:scale-[0.99]">
+          
+          <div class="absolute -right-2 -bottom-3 opacity-10 text-indigo-300 text-8xl font-black pointer-events-none font-display">100</div>
+          
           <div class="relative z-10 flex items-center justify-between">
-            <div>
-              <span class="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full mb-1 backdrop-blur-sm">
-                <i class="fa-solid fa-star text-amber-300 text-[9px]"></i> ชุดข้อสอบแนะนำ
-              </span>
-              <h2 class="font-display text-lg font-bold leading-snug">เก็งข้อสอบจริง 100 ข้อ</h2>
-              <p class="text-xs text-blue-100 mt-0.5 font-light">ทดสอบคลังข้อสอบจำลองเสมือนจริง</p>
+            <div class="space-y-1">
+              <div class="inline-flex items-center gap-1.5 bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+                <i class="fa-solid fa-star text-amber-400 text-[10px]"></i> คลังจำลองข้อสอบจริง
+              </div>
+              <h2 class="font-display text-lg font-bold text-white leading-snug">ชุดเก็งข้อสอบมาตรฐาน 100 ข้อ</h2>
+              <p class="text-xs text-slate-400 font-light">วัดระดับความพร้อมเสมือนลงสนามจริง</p>
             </div>
-            <div class="w-10 h-10 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold shadow-md group-hover:translate-x-1 transition-transform">
-              <i class="fa-solid fa-arrow-right"></i>
+            
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 text-white flex items-center justify-center font-bold shadow-lg group-hover:translate-x-1 transition-transform">
+              <i class="fa-solid fa-chevron-right"></i>
             </div>
           </div>
         </a>
 
-        <!-- CATEGORY 1: ARMY (นนส.) -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
-          <details class="group" open>
-            <summary class="flex items-center justify-between p-4 cursor-pointer select-none bg-gradient-to-r from-emerald-50/50 to-transparent">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-army-100 text-army-800 flex items-center justify-center text-lg font-bold shadow-sm">
+        <!-- CATEGORY 1: ARMY (นายสิบทหารบก นนส.) -->
+        <div class="bg-tactical-900 rounded-2xl border border-army-500/30 shadow-lg overflow-hidden official-border">
+          <details class="group">
+            <summary class="flex items-center justify-between p-4 cursor-pointer select-none bg-gradient-to-r from-army-900/40 via-tactical-900 to-tactical-900 hover:bg-army-900/60 transition-colors">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-army-700 to-army-900 border border-army-500/40 text-emerald-300 flex items-center justify-center text-xl shadow-md">
                   <i class="fa-solid fa-person-military-rifle"></i>
                 </div>
                 <div>
-                  <h3 class="font-display font-bold text-slate-800 text-base">นายสิบทหารบก (นนส.)</h3>
-                  <p class="text-xs text-slate-500">รวม 6 วิชาเตรียมสอบเข้ากองทัพบก</p>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-display font-bold text-white text-base">นายสิบทหารบก (นนส.)</h3>
+                    <span class="text-[10px] bg-army-500/20 text-emerald-400 border border-army-500/30 px-2 py-0.2 rounded font-semibold">6 วิชาหลัก</span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-light mt-0.5">รวมแนวข้อสอบ & สัมภาษณ์ เข้ากองทัพบก</p>
                 </div>
               </div>
-              <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs chevron-icon">
+              <div class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs chevron-icon border border-slate-700">
                 <i class="fa-solid fa-chevron-down"></i>
               </div>
             </summary>
 
-            <div class="p-4 pt-1 border-t border-slate-100">
+            <div class="p-3.5 pt-1 border-t border-slate-800/80 bg-tactical-950/60">
               <div class="grid grid-cols-2 gap-2.5 mt-2">
-                <!-- Links -->
-                <a href="sompasnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                
+                <a href="sompasnco.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-army-900/40 border border-slate-800 hover:border-army-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-army-900/80 border border-army-500/30 text-emerald-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-comments"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">สอบสัมภาษณ์</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">เทคนิคการตอบ</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-emerald-300">สอบสัมภาษณ์</span>
+                    <span class="text-[10px] text-slate-400 block truncate">เทคนิคการตอบ</span>
+                  </div>
                 </a>
 
-                <a href="kanitnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="kanitnco.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-army-900/40 border border-slate-800 hover:border-army-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-army-900/80 border border-army-500/30 text-emerald-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-calculator"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">คณิตศาสตร์</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">สูตร & โจทย์คำนวณ</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-emerald-300">คณิตศาสตร์</span>
+                    <span class="text-[10px] text-slate-400 block truncate">สูตร & คำนวณ</span>
+                  </div>
                 </a>
 
-                <a href="thainco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="thainco.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-army-900/40 border border-slate-800 hover:border-army-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-army-900/80 border border-army-500/30 text-emerald-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-book-bookmark"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">ภาษาไทย</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">หลักภาษา & การอ่าน</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-emerald-300">ภาษาไทย</span>
+                    <span class="text-[10px] text-slate-400 block truncate">หลักภาษาการอ่าน</span>
+                  </div>
                 </a>
 
-                <a href="englishnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="englishnco.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-army-900/40 border border-slate-800 hover:border-army-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-army-900/80 border border-army-500/30 text-emerald-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-language"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">ภาษาอังกฤษ</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">Grammar & Vocab</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-emerald-300">ภาษาอังกฤษ</span>
+                    <span class="text-[10px] text-slate-400 block truncate">Grammar Vocab</span>
+                  </div>
                 </a>
 
-                <a href="vitayachadnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="vitayachadnco.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-army-900/40 border border-slate-800 hover:border-army-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-army-900/80 border border-army-500/30 text-emerald-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-flask"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">วิทยาศาสตร์</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">ฟิสิกส์ เคมี ชีวะ</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-emerald-300">วิทยาศาสตร์</span>
+                    <span class="text-[10px] text-slate-400 block truncate">ฟิสิกส์ เคมี ชีวะ</span>
+                  </div>
                 </a>
 
-                <a href="alllearn.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="alllearn.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-army-900/40 border border-slate-800 hover:border-army-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-army-900/80 border border-army-500/30 text-emerald-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-globe"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">ความรู้ทั่วไป</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">เหตุการณ์ปัจจุบัน</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-emerald-300">ความรู้ทั่วไป</span>
+                    <span class="text-[10px] text-slate-400 block truncate">เหตุการณ์ปัจจุบัน</span>
+                  </div>
                 </a>
+
               </div>
             </div>
           </details>
         </div>
 
-        <!-- CATEGORY 2: POLICE (นสต.) -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+        <!-- CATEGORY 2: POLICE (นายสิบตำรวจ นสต.) -->
+        <div class="bg-tactical-900 rounded-2xl border border-police-500/30 shadow-lg overflow-hidden official-border">
           <details class="group">
-            <summary class="flex items-center justify-between p-4 cursor-pointer select-none bg-gradient-to-r from-blue-50/50 to-transparent">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-police-100 text-police-800 flex items-center justify-center text-lg font-bold shadow-sm">
+            <summary class="flex items-center justify-between p-4 cursor-pointer select-none bg-gradient-to-r from-police-950 via-tactical-900 to-tactical-900 hover:bg-police-900/50 transition-colors">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-police-700 to-police-900 border border-police-500/40 text-blue-300 flex items-center justify-center text-xl shadow-md">
                   <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <div>
-                  <h3 class="font-display font-bold text-slate-800 text-base">นายสิบตำรวจ (นสต.)</h3>
-                  <p class="text-xs text-slate-500">รวม 7 หมวดวิชาหลักนายสิบตำรวจ</p>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-display font-bold text-white text-base">นายสิบตำรวจ (นสต.)</h3>
+                    <span class="text-[10px] bg-police-500/20 text-blue-400 border border-police-500/30 px-2 py-0.2 rounded font-semibold">7 หมวดวิชา</span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-light mt-0.5">คลังข้อสอบสายปราบปราม & สายอำนวยการ</p>
                 </div>
               </div>
-              <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs chevron-icon">
+              <div class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs chevron-icon border border-slate-700">
                 <i class="fa-solid fa-chevron-down"></i>
               </div>
             </summary>
 
-            <div class="p-4 pt-1 border-t border-slate-100">
+            <div class="p-3.5 pt-1 border-t border-slate-800/80 bg-tactical-950/60">
               <div class="grid grid-cols-2 gap-2.5 mt-2">
-                <!-- Links -->
-                <a href="sompaspolice.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                
+                <a href="sompaspolice.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-id-card"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">สัมภาษณ์ตำรวจ</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">แนวทางสอบสัมภาษณ์</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">สัมภาษณ์ตำรวจ</span>
+                    <span class="text-[10px] text-slate-400 block truncate">แนวทางสัมภาษณ์</span>
+                  </div>
                 </a>
 
-                <a href="PoliceNCOMath.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="PoliceNCOMath.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-square-root-variable"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">คณิตศาสตร์</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">ความสามารถทั่วไป</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">คณิตศาสตร์</span>
+                    <span class="text-[10px] text-slate-400 block truncate">ความสามารถทั่วไป</span>
+                  </div>
                 </a>
 
-                <a href="policethai.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="policethai.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-spell-check"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">ภาษาไทย</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">การจับใจความ & สะกด</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">ภาษาไทย</span>
+                    <span class="text-[10px] text-slate-400 block truncate">จับใจความ & สะกด</span>
+                  </div>
                 </a>
 
-                <a href="policeenglish.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="policeenglish.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-language"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">ภาษาอังกฤษ</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">Reading & Structure</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">ภาษาอังกฤษ</span>
+                    <span class="text-[10px] text-slate-400 block truncate">Reading Structure</span>
+                  </div>
                 </a>
 
-                <a href="policecomputer.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="policecomputer.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-laptop-code"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">คอมพิวเตอร์</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">เทคโนโลยีสารสนเทศ</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">คอมพิวเตอร์</span>
+                    <span class="text-[10px] text-slate-400 block truncate">เทคโนโลยีสารสนเทศ</span>
+                  </div>
                 </a>
 
-                <a href="PoliceNCOSociety.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                <a href="PoliceNCOSociety.html" target="_blank" class="flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-users"></i>
                   </div>
-                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">สังคมฯ & จริยธรรม</span>
-                  <span class="text-[10px] text-slate-400 mt-0.5">วัฒนธรรม & อาเซียน</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">สังคม & จริยธรรม</span>
+                    <span class="text-[10px] text-slate-400 block truncate">วัฒนธรรม & อาเซียน</span>
+                  </div>
                 </a>
 
-                <a href="PoliceLaw.html" target="_blank" class="col-span-2 flex items-center justify-center gap-3 p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base group-hover:scale-110 transition-transform">
+                <a href="PoliceLaw.html" target="_blank" class="col-span-2 flex items-center gap-3 p-3 bg-slate-900 hover:bg-police-900/40 border border-slate-800 hover:border-police-500/50 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-police-900/80 border border-police-500/30 text-blue-400 flex items-center justify-center text-sm flex-shrink-0 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-scale-balanced"></i>
                   </div>
-                  <div class="text-left">
-                    <span class="font-display font-semibold text-xs text-slate-700 block group-hover:text-police-900">กฎหมายที่ประชาชนควรรู้</span>
-                    <span class="text-[10px] text-slate-400">ประมวลกฎหมายเบื้องต้น</span>
+                  <div class="overflow-hidden">
+                    <span class="font-display font-semibold text-xs text-slate-200 block truncate group-hover:text-blue-300">กฎหมายที่ประชาชนควรรู้</span>
+                    <span class="text-[10px] text-slate-400 block truncate">ประมวลกฎหมายเบื้องต้นสำหรับสอบนายสิบตำรวจ</span>
                   </div>
                 </a>
+
               </div>
             </div>
           </details>
@@ -346,39 +431,59 @@
 
       </div>
 
-      <!-- TAB 2: COMMUNITY -->
+      <!-- TAB 2: COMMUNITY (ชุมชนติวเตอร์ Facebook Live Feed) -->
       <div id="tab-community" class="tab-pane space-y-4">
         
-        <!-- FB Feed Section -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
-          <div class="flex items-center gap-2 mb-3">
-            <i class="fa-brands fa-facebook text-blue-600 text-xl"></i>
-            <h3 class="font-display font-bold text-slate-800 text-sm">เพจข่าวสาร & แนวข้อสอบ</h3>
+        <!-- FACEBOOK PAGE STREAM -->
+        <div class="bg-tactical-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400 flex items-center justify-center">
+                <i class="fa-brands fa-facebook text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-white text-sm">เพจข่าวสาร & ข้อมูลติวสอบ</h3>
+                <p class="text-[10px] text-slate-400">ข้อมูลเรียลไทม์จากศูนย์ติว</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1 text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> LIVE
+            </span>
           </div>
-          <div class="overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex justify-center py-2">
+
+          <!-- Uncropped FB Responsive Frame Container -->
+          <div class="fb-responsive-container rounded-xl overflow-hidden bg-slate-900 p-1 border border-slate-800 flex justify-center">
             <div class="fb-page" 
                  data-href="https://www.facebook.com/s0ldier02/" 
                  data-tabs="timeline" 
                  data-width="380"
-                 data-height="400"
-                 data-small-header="true" 
+                 data-height="500"
+                 data-small-header="false" 
                  data-adapt-container-width="true" 
-                 data-hide-cover="true">
+                 data-hide-cover="false"
+                 data-show-facepile="true">
             </div>
           </div>
         </div>
 
-        <!-- FB Comments Section -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
-          <div class="flex items-center gap-2 mb-3">
-            <i class="fa-solid fa-comments text-indigo-600 text-lg"></i>
-            <h3 class="font-display font-bold text-slate-800 text-sm">กระดานสนทนาเพื่อนสอบ</h3>
+        <!-- FACEBOOK COMMENTS DISCUSSION BOARD -->
+        <div class="bg-tactical-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
+          <div class="flex items-center gap-2.5 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center">
+              <i class="fa-solid fa-comments text-base"></i>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-white text-sm">กระดานสนทนาเพื่อนสอบ</h3>
+              <p class="text-[10px] text-slate-400">พูดคุย สอบถาม แลกเปลี่ยนแนวข้อสอบ</p>
+            </div>
           </div>
-          <div class="overflow-hidden rounded-xl bg-slate-50 p-2">
+
+          <div class="rounded-xl bg-slate-900 p-2 border border-slate-800 overflow-x-auto">
             <div class="fb-comments" 
                  data-href="https://sites.google.com/view/tiwkhosoob/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" 
                  data-width="100%" 
-                 data-numposts="5">
+                 data-numposts="5"
+                 data-colorscheme="dark">
             </div>
           </div>
         </div>
@@ -388,71 +493,71 @@
     </main>
 
     <!-- FLOATING QUICK ACTIONS -->
-    <div class="fixed bottom-20 right-4 sm:absolute sm:bottom-20 z-30 flex flex-col items-end gap-2.5 pointer-events-auto">
+    <div class="fixed bottom-20 right-4 sm:absolute sm:bottom-20 z-30 flex flex-col items-end gap-2 pointer-events-auto">
       
-      <!-- AI Tutor Floating Button -->
+      <!-- AI Tutor Floating Action Button -->
       <button onclick="toggleChat(true)" 
-              class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-full font-display text-xs font-semibold shadow-lg shadow-indigo-500/30 hover:scale-105 active:scale-95 transition-all">
-        <i class="fa-solid fa-robot text-sm"></i>
-        <span>AI ช่วยติว</span>
+              class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white rounded-full font-display text-xs font-bold shadow-lg shadow-indigo-900/50 border border-indigo-400/30 hover:scale-105 active:scale-95 transition-all">
+        <i class="fa-solid fa-robot text-sm text-indigo-200"></i>
+        <span>AI ช่วยติว 24 ชม.</span>
       </button>
 
-      <!-- Checkin Floating Button -->
+      <!-- Daily Checkin Floating Button -->
       <button onclick="openCheckinModal()" 
-              class="streak-glow flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full font-display text-xs font-semibold shadow-lg hover:scale-105 active:scale-95 transition-all">
+              class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 rounded-full font-display text-xs font-extrabold shadow-lg shadow-amber-900/40 border border-amber-300/40 hover:scale-105 active:scale-95 transition-all">
         <i class="fa-solid fa-calendar-check text-sm"></i>
-        <span>เช็คชื่อประจำวัน</span>
+        <span>เช็คชื่อเรียน</span>
       </button>
 
     </div>
 
     <!-- AI TUTOR CHAT DRAWER -->
-    <div id="chatDrawer" class="bottom-sheet closed fixed inset-0 z-50 flex flex-col justify-end bg-slate-900/60 backdrop-blur-sm pointer-events-none">
-      <div class="w-full max-w-md mx-auto bg-white rounded-t-[28px] h-[80vh] max-h-[600px] flex flex-col shadow-2xl pointer-events-auto overflow-hidden">
+    <div id="chatDrawer" class="bottom-sheet closed fixed inset-0 z-50 flex flex-col justify-end bg-slate-950/80 backdrop-blur-md pointer-events-none">
+      <div class="w-full max-w-md mx-auto bg-tactical-900 rounded-t-[32px] h-[82vh] max-h-[620px] flex flex-col shadow-2xl pointer-events-auto overflow-hidden border-t border-indigo-500/30">
         
-        <!-- Chat Header -->
-        <div class="bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-5 py-4 flex items-center justify-between shadow-md">
+        <!-- Drawer Header -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white px-5 py-4 flex items-center justify-between border-b border-slate-800">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-base border border-white/30">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-lg shadow-md border border-indigo-300/30">
               <i class="fa-solid fa-brain"></i>
             </div>
             <div>
-              <h3 class="font-display font-bold text-sm">AI ผู้ช่วยติวสอบ 24 ชม.</h3>
-              <p class="text-[10px] text-indigo-100 font-light">ถามแนวข้อสอบ / เฉลยโจทย์ / วางแผนเรียน</p>
+              <h3 class="font-display font-bold text-sm text-white">AI ผู้ช่วยติวสอบอัจฉริยะ</h3>
+              <p class="text-[10px] text-indigo-300 font-light">ตอบคำถาม เฉลยโจทย์ และวางแผนการสอบ</p>
             </div>
           </div>
-          <button onclick="toggleChat(false)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xs transition-colors">
+          <button onclick="toggleChat(false)" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 text-xs transition-colors border border-slate-700">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
 
-        <!-- Preset Prompt Suggestions -->
-        <div class="px-4 py-2.5 bg-indigo-50/60 border-b border-indigo-100/50 flex gap-2 overflow-x-auto text-[11px] no-scrollbar">
-          <button onclick="sendPresetPrompt('ขอเทคนิคการเตรียมสอบสัมภาษณ์หน่อยครับ')" class="px-3 py-1 bg-white border border-indigo-200 text-indigo-700 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">💡 สัมภาษณ์อย่างไรให้ผ่าน</button>
-          <button onclick="sendPresetPrompt('แนะนำสูตรคณิตที่ชอบออกสอบ')" class="px-3 py-1 bg-white border border-indigo-200 text-indigo-700 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">📐 สูตรคณิตต้องจำ</button>
-          <button onclick="sendPresetPrompt('ขอตารางอ่านหนังสือสอบ 30 วัน')" class="px-3 py-1 bg-white border border-indigo-200 text-indigo-700 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">📅 ตารางติว 30 วัน</button>
+        <!-- Quick Preset Prompt Suggestions -->
+        <div class="px-4 py-2 bg-slate-950 border-b border-slate-800/80 flex gap-2 overflow-x-auto text-[11px] no-scrollbar">
+          <button onclick="sendPresetPrompt('ขอเทคนิคการเตรียมสอบสัมภาษณ์หน่อยครับ')" class="px-3 py-1 bg-slate-900 border border-indigo-500/30 text-indigo-300 rounded-full whitespace-nowrap hover:bg-indigo-950 transition-colors">💡 เทคนิคสัมภาษณ์</button>
+          <button onclick="sendPresetPrompt('แนะนำสูตรคณิตที่ชอบออกสอบ')" class="px-3 py-1 bg-slate-900 border border-indigo-500/30 text-indigo-300 rounded-full whitespace-nowrap hover:bg-indigo-950 transition-colors">📐 สูตรคณิตต้องจำ</button>
+          <button onclick="sendPresetPrompt('ขอตารางอ่านหนังสือสอบ 30 วัน')" class="px-3 py-1 bg-slate-900 border border-indigo-500/30 text-indigo-300 rounded-full whitespace-nowrap hover:bg-indigo-950 transition-colors">📅 แผนติว 30 วัน</button>
         </div>
 
-        <!-- Chat Messages Container -->
-        <div id="chatBody" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs">
-          <!-- Default AI Message -->
+        <!-- Messages Container -->
+        <div id="chatBody" class="flex-1 p-4 overflow-y-auto space-y-3 bg-tactical-950 text-xs">
+          <!-- Initial AI Welcome Message -->
           <div class="flex gap-2.5 items-start">
-            <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+            <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5 shadow-sm">
               <i class="fa-solid fa-robot"></i>
             </div>
-            <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 max-w-[82%] shadow-sm text-slate-700 leading-relaxed">
-              สวัสดีครับ! ผมคือ AI ผู้ช่วยติวสอบ นนส. และ นสต. มีคำถามวิชาไหน หรืออยากให้ช่วยเฉลยข้อสอบเรื่องอะไร พิมพ์ถามได้เลยครับ! 🎖️
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-slate-200 leading-relaxed shadow-sm">
+              สวัสดีครับ! ผมคือ AI ผู้ช่วยติวสอบ นนส. และ นสต. พร้อมช่วยตอบโจทย์วิชาต่างๆ วางแผนการเรียน หรือแนะนำเทคนิคทำข้อสอบตลอด 24 ชั่วโมงครับ 🎖️
             </div>
           </div>
         </div>
 
         <!-- Chat Input Footer -->
-        <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
-          <input type="text" id="chatInput" placeholder="พิมพ์คำถามข้อสอบหรือวิชาที่สงสัย..." 
+        <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+          <input type="text" id="chatInput" placeholder="ถามข้อสอบ หรือวิชาที่สงสัย..." 
                  onkeypress="handleEnter(event)"
-                 class="flex-1 bg-slate-100 border border-slate-200 rounded-full px-4 py-2 text-xs text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all">
+                 class="flex-1 bg-tactical-950 border border-slate-700 rounded-full px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all">
           <button onclick="sendMessage()" 
-                  class="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow-md hover:bg-indigo-700 active:scale-95 transition-all">
+                  class="w-9 h-9 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white flex items-center justify-center text-xs shadow-md hover:brightness-110 active:scale-95 transition-all flex-shrink-0">
             <i class="fa-solid fa-paper-plane"></i>
           </button>
         </div>
@@ -460,56 +565,57 @@
       </div>
     </div>
 
-    <!-- CHECK-IN MODAL -->
-    <div id="checkinModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 p-4">
-      <div class="w-full max-w-xs bg-white rounded-3xl p-6 shadow-2xl text-center relative transform scale-90 transition-transform duration-300" id="checkinBox">
+    <!-- CHECK-IN STREAK MODAL -->
+    <div idcheckinModal id="checkinModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+      <div class="w-full max-w-xs bg-tactical-900 rounded-3xl p-6 border border-amber-500/30 shadow-2xl text-center relative transform scale-90 transition-transform duration-300" id="checkinBox">
         
-        <!-- Close Button -->
-        <button onclick="closeCheckinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-sm">
+        <!-- Modal Close Button -->
+        <button onclick="closeCheckinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-sm w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
           <i class="fa-solid fa-xmark"></i>
         </button>
 
-        <!-- Modal Header -->
-        <div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-500 flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
-          <i class="fa-solid fa-fire"></i>
+        <!-- Badge Icon -->
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-slate-950 flex items-center justify-center text-3xl mx-auto mb-3 shadow-gold-glow">
+          <i class="fa-solid fa-fire-flame-curved"></i>
         </div>
-        <h3 class="font-display font-bold text-lg text-slate-800">เช็คชื่อเรียนประจำวัน</h3>
-        <p class="text-xs text-slate-500 mt-1">สะสมความต่อเนื่อง เพื่อเตรียมพร้อมวันสอบจริง</p>
+        
+        <h3 class="font-display font-bold text-lg text-white">ลงชื่อติวประจำวัน</h3>
+        <p class="text-xs text-slate-400 mt-1">สร้างความสม่ำเสมอ พิชิตสนามสอบจริง</p>
 
-        <!-- Day Streak Display -->
-        <div class="my-5 p-4 bg-amber-50 rounded-2xl border border-amber-200/60">
-          <span class="text-xs text-amber-800 font-medium block">ทำต่อเนื่องแล้ว</span>
-          <div class="font-display font-black text-4xl text-amber-600 my-1" id="modalStreakCount">0</div>
-          <span class="text-[11px] text-amber-700">วันติดกัน! 🔥</span>
+        <!-- Dynamic Counter Display -->
+        <div class="my-5 p-4 bg-slate-950 rounded-2xl border border-amber-500/20">
+          <span class="text-[11px] text-amber-400 font-semibold block">สถิติเรียนต่อเนื่อง</span>
+          <div class="font-display font-black text-4xl text-amber-400 my-1 drop-shadow-md" id="modalStreakCount">0</div>
+          <span class="text-xs text-slate-300">วันติดกัน 🔥</span>
         </div>
 
-        <!-- 7-Day Visual Progress Pills -->
+        <!-- 7-Day Tracker Bar -->
         <div class="grid grid-cols-7 gap-1.5 mb-5" id="weekTracker">
-          <!-- JS populates days here -->
+          <!-- Populated by JavaScript -->
         </div>
 
         <button id="btnCheckinAction" onclick="doCheckin()" 
-                class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-display font-bold text-sm rounded-xl shadow-lg shadow-amber-500/30 hover:brightness-105 active:scale-95 transition-all">
+                class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-display font-bold text-sm rounded-xl shadow-lg shadow-amber-500/20 hover:brightness-110 active:scale-95 transition-all">
           ลงชื่อเข้าติววันนี้
         </button>
       </div>
     </div>
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="glass-nav fixed bottom-0 left-0 right-0 max-w-md mx-auto h-16 border-t border-slate-200/80 flex items-center justify-around z-40 px-2 sm:rounded-b-[36px]">
-      <button onclick="switchTab('home', this)" class="nav-btn active flex flex-col items-center justify-center w-1/2 h-full text-police-900 transition-all">
-        <i class="fa-solid fa-house text-base mb-1"></i>
-        <span class="font-display text-[11px] font-semibold">หน้าหลัก</span>
+    <nav class="glass-nav fixed bottom-0 left-0 right-0 max-w-md mx-auto h-16 border-t border-slate-800 flex items-center justify-around z-40 px-2 sm:rounded-b-[36px]">
+      <button onclick="switchTab('home', this)" class="nav-btn active flex flex-col items-center justify-center w-1/2 h-full text-amber-400 transition-all">
+        <i class="fa-solid fa-shield-halved text-lg mb-0.5"></i>
+        <span class="font-display text-[11px] font-semibold">หน้าหลัก / คลังข้อสอบ</span>
       </button>
-      <button onclick="switchTab('community', this)" class="nav-btn flex flex-col items-center justify-center w-1/2 h-full text-slate-400 hover:text-slate-600 transition-all">
-        <i class="fa-solid fa-users text-base mb-1"></i>
+      <button onclick="switchTab('community', this)" class="nav-btn flex flex-col items-center justify-center w-1/2 h-full text-slate-500 hover:text-slate-300 transition-all">
+        <i class="fa-solid fa-users text-lg mb-0.5"></i>
         <span class="font-display text-[11px] font-semibold">ชุมชนติวเตอร์</span>
       </button>
     </nav>
 
   </div>
 
-  <!-- JAVASCRIPT APP LOGIC -->
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
     // --- Tab Switching Logic ---
     function switchTab(tabName, btn) {
@@ -517,16 +623,21 @@
       document.getElementById('tab-' + tabName).classList.add('active');
       
       document.querySelectorAll('.nav-btn').forEach(el => {
-        el.classList.remove('text-police-900');
-        el.classList.add('text-slate-400');
+        el.classList.remove('text-amber-400');
+        el.classList.add('text-slate-500');
       });
       
-      btn.classList.remove('text-slate-400');
-      btn.classList.add('text-police-900');
+      btn.classList.remove('text-slate-500');
+      btn.classList.add('text-amber-400');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Trigger FB re-parse when community tab is selected to ensure natural rendering
+      if (tabName === 'community' && typeof FB !== 'undefined') {
+        FB.XFBML.parse();
+      }
     }
 
-    // --- AI Chat Drawer Logic ---
+    // --- AI Chat Drawer Controls ---
     function toggleChat(show) {
       const drawer = document.getElementById('chatDrawer');
       if (show) {
@@ -552,7 +663,7 @@
 
       const body = document.getElementById('chatBody');
 
-      // User Message Bubble
+      // Add User Message
       const userBubble = `
         <div class="flex gap-2.5 items-start justify-end">
           <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 max-w-[82%] shadow-sm leading-relaxed">
@@ -564,38 +675,38 @@
       input.value = '';
       body.scrollTop = body.scrollHeight;
 
-      // Simulated AI Bot Typing Response
+      // Simulated Intelligent AI Response
       setTimeout(() => {
-        let reply = "ยินดีด้วยครับที่ตั้งใจอ่านหนังสือ! สำหรับคำถามนี้ คุณสามารถศึกษาแนวข้อสอบย้อนหลังได้จากลิงก์รายวิชาในหน้าหลักได้เลยครับ";
+        let reply = "ยินดีด้วยครับที่ตั้งใจเตรียมตัวสอบ! สามารถศึกษาบทเรียนและแนวข้อสอบฉบับเต็มได้ตามรายวิชาในหน้าหลักได้เลยครับ";
         
-        if(text.includes('สัมภาษณ์')) {
-          reply = "💡 **เคล็ดลับการสอบสัมภาษณ์:** 1. ท่องประวัติส่วนตัว/สถาบันให้แม่นยำ 2. แสดงความจงรักภักดีและทัศนคติที่ดีต่อองค์กร 3. บุคลิกภาพ ท่าทาง และเสียงต้องเข้มแข็งชัดเจนครับ!";
-        } else if(text.includes('คณิต')) {
-          reply = "📐 **หัวข้อคณิตที่ออกบ่อย:** อนุกรม, ร้อยละ/เปอร์เซ็นต์, ความน่าจะเป็น, สมการการทำงาน และโจทย์เงื่อนไขสัญลักษณ์ครับ";
-        } else if(text.includes('ตาราง')) {
-          reply = "📅 **แผนการเรียนแนะนำ:** แบ่งอ่านวันละ 2 วิชา (วิชาคำนวณ 1 + วิชาความจำ 1) และทำโจทย์ย้อนหลังอย่างน้อยวันละ 30 ข้อครับ!";
+        if (text.includes('สัมภาษณ์')) {
+          reply = "💡 **เทคนิคสอบสัมภาษณ์ นนส. / นสต.:**<br>1. ลำดับประวัติส่วนตัวและแรงจูงใจให้กระชับชัดเจน<br>2. แสดงทัศนคติเชิงบวกต่อองค์กร ความจงรักภักดี และระเบียบวินัย<br>3. ท่าทาง เสียงหนักแน่น สายตามุ่งมั่น และมีความมั่นใจครับ!";
+        } else if (text.includes('คณิต')) {
+          reply = "📐 **หมวดคณิตศาสตร์ที่ออกบ่อย:**<br>• อนุกรมเลขและภาพ<br>• ร้อยละ / เปอร์เซ็นต์ / กำไร-ขาดทุน<br>• สมการการทำงานและความเร็ว<br>• ความน่าจะเป็นและเงื่อนไขสัญลักษณ์";
+        } else if (text.includes('ตาราง') || text.includes('30 วัน')) {
+          reply = "📅 **ตารางอ่านหนังสือ 30 วัน:**<br>• สัปดาห์ 1-2: เก็บเนื้อหาหลัก (คณิต + ไทย + กฎหมาย)<br>• สัปดาห์ 3: ทบทวนอังกฤษ + สังคม/จริยธรรม + คอมพิวเตอร์<br>• สัปดาห์ 4: ตะลุยโจทย์ย้อนหลังวันละ 50-100 ข้อ!";
         }
 
         const aiBubble = `
           <div class="flex gap-2.5 items-start">
-            <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+            <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5 shadow-sm">
               <i class="fa-solid fa-robot"></i>
             </div>
-            <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 max-w-[82%] shadow-sm text-slate-700 leading-relaxed">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-slate-200 leading-relaxed shadow-sm">
               ${reply}
             </div>
           </div>
         `;
         body.innerHTML += aiBubble;
         body.scrollTop = body.scrollHeight;
-      }, 700);
+      }, 650);
     }
 
     function escapeHtml(str) {
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // --- Check-in & Streak System (localStorage) ---
+    // --- Streak & Daily Check-in Logic (localStorage) ---
     const STORAGE_KEY = 'prep_app_checkin_data';
 
     function openCheckinModal() {
@@ -629,18 +740,18 @@
       const btn = document.getElementById('btnCheckinAction');
 
       if (data.lastDate === today) {
-        btn.innerText = "ลงชื่อเข้าใช้เรียบร้อยแล้ววันนี้ ✨";
+        btn.innerText = "ลงชื่อเข้าใช้เรียบร้อยแล้ว ✨";
         btn.disabled = true;
         btn.classList.remove('from-amber-500', 'to-orange-500');
-        btn.classList.add('from-slate-400', 'to-slate-500', 'opacity-80');
+        btn.classList.add('from-slate-700', 'to-slate-800', 'text-slate-400');
       } else {
         btn.innerText = "ลงชื่อเข้าติววันนี้";
         btn.disabled = false;
-        btn.classList.remove('from-slate-400', 'to-slate-500', 'opacity-80');
-        btn.classList.add('from-amber-500', 'to-orange-500');
+        btn.classList.remove('from-slate-700', 'to-slate-800', 'text-slate-400');
+        btn.classList.add('from-amber-500', 'to-orange-500', 'text-slate-950');
       }
 
-      // Render 7-Day visual indicators
+      // Render 7-Day Indicators
       const tracker = document.getElementById('weekTracker');
       const days = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
       let trackerHtml = '';
@@ -648,11 +759,14 @@
       const currentDayIdx = new Date().getDay();
       for(let i = 0; i < 7; i++) {
         const isPastOrToday = i <= currentDayIdx;
-        const activeClass = (isPastOrToday && data.count > 0) ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-400';
+        const activeStyle = (isPastOrToday && data.count > 0) 
+          ? 'bg-amber-500 text-slate-950 font-bold' 
+          : 'bg-slate-800 text-slate-500 border border-slate-700';
+
         trackerHtml += `
           <div class="flex flex-col items-center">
-            <span class="text-[9px] text-slate-400 mb-1">${days[i]}</span>
-            <div class="w-7 h-7 rounded-full ${activeClass} flex items-center justify-center text-[10px] font-bold">
+            <span class="text-[9px] text-slate-500 mb-1 font-medium">${days[i]}</span>
+            <div class="w-7 h-7 rounded-full ${activeStyle} flex items-center justify-center text-[10px]">
               ${isPastOrToday && data.count > 0 ? '<i class="fa-solid fa-check"></i>' : (i+1)}
             </div>
           </div>
@@ -667,7 +781,6 @@
 
       if (data.lastDate === today) return;
 
-      // Calculate consecutive streak
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yesterdayStr = yesterday.toISOString().split('T')[0];
@@ -675,7 +788,7 @@
       if (data.lastDate === yesterdayStr) {
         data.count += 1;
       } else {
-        data.count = 1; // Reset streak if missed a day
+        data.count = 1;
       }
 
       data.lastDate = today;
@@ -683,7 +796,7 @@
       updateCheckinData();
     }
 
-    // Initialize on Page Load
+    // Initialize application state
     window.onload = function() {
       updateCheckinData();
     };
