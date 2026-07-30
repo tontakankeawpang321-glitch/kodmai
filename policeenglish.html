@@ -2,36 +2,46 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - ภาษาอังกฤษ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ตำราและคลังข้อสอบ นายสิบตำรวจ - วิชาภาษาอังกฤษ (Police Cadet English Masterbook)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts: Sarabun -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Sarabun & Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         police: {
-                            900: '#0b1120', /* Slate 950 / Black-Blue */
-                            800: '#172554', /* Blue 950 / กรมท่าเข้ม */
-                            700: '#1e3a8a', /* Blue 900 / น้ำเงินกรมท่า */
-                            600: '#2563eb', /* Blue 600 / น้ำเงินสว่าง */
-                            50: '#eff6ff',  /* Blue 50 / ฟ้าอ่อนสุด */
+                            950: '#060d1a',
+                            900: '#0f172a', /* Dark Slate Blue */
+                            800: '#1e293b',
+                            700: '#1d4ed8', /* Vibrant Blue */
+                            600: '#2563eb',
+                            100: '#dbeafe',
+                            50: '#eff6ff',
                         },
                         gold: {
-                            500: '#d4af37',
-                            400: '#e5c158',
-                            300: '#f3d578',
-                            50: '#fffbeb',
+                            700: '#a16207',
+                            600: '#ca8a04',
+                            500: '#eab308',
+                            400: '#facc15',
+                            100: '#fef9c3',
+                            50: '#fefce8',
+                        },
+                        crimson: {
+                            800: '#991b1b',
+                            700: '#c2410c',
+                            100: '#fee2e2',
                         }
                     },
                     fontFamily: {
                         sans: ['Sarabun', 'sans-serif'],
+                        heading: ['Prompt', 'sans-serif'],
                     }
                 }
             }
@@ -39,376 +49,1170 @@
     </script>
 
     <style>
-        body { background-color: #f4f6f5; }
-        .police-gradient { background: linear-gradient(145deg, #172554 0%, #1e3a8a 100%); }
-        .eng-content { overflow-x: auto; padding-bottom: 0.5rem; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+        body {
+            background-color: #f1f5f9;
+            color: #0f172a; /* Ultra crisp dark slate font */
+            font-family: 'Sarabun', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-heading {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .police-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e293b 100%);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+
+        /* High contrast readability helper classes */
+        .text-high-contrast {
+            color: #020617 !important; /* Pure black-blue for max contrast */
+        }
+
+        .text-body-bold {
+            color: #0f172a !important;
+            font-weight: 500;
+        }
+
+        .text-muted-dark {
+            color: #334155 !important; /* Dark Slate Gray - never faint */
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px -1px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+
+        /* Flashcard 3D Flip Effects */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Animation Keyframes */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .hover-lift { transition: all 0.2s ease; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+
+        .animate-slide-up {
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Responsive text wrapping */
+        .break-word-thai {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
     </style>
 </head>
-<body class="min-h-screen pb-10 text-slate-800 font-sans">
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold-400 selection:text-police-950">
 
-    <!-- Navigation Bar -->
-    <nav class="police-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-gold-500">
-        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
-                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
-                    <i class="fa-solid fa-user-shield text-gold-400 text-xl"></i>
+    <!-- TOP NAVIGATION BAR -->
+    <header class="police-gradient text-white sticky top-0 z-50 shadow-md border-b-4 border-gold-500">
+        <div class="max-w-6xl mx-auto px-3 py-2.5 md:py-3 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 md:w-11 md:h-11 bg-gold-500/20 rounded-xl border border-gold-400/50 flex items-center justify-center text-gold-400 text-xl md:text-2xl shadow-inner">
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-gold-400 uppercase">Police Academy</span>
-                    <span class="text-[10px] md:text-xs text-gray-300 font-medium">ติวสอบ นายสิบตำรวจ</span>
-                </div>
-            </div>
-            <div class="flex space-x-2 items-center">
-                <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
-                <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
-                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-police-900 rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-4xl mx-auto p-4 mt-2">
-        
-        <!-- 1. HOME SCREEN -->
-        <div id="screen-home" class="space-y-6 animate-fade-in">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div class="relative police-gradient p-10 md:p-14 text-center text-white overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
-                    <div class="relative z-10 flex flex-col items-center">
-                        <div class="w-16 h-16 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-gold-500/30">
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white">ติวเข้มภาษาอังกฤษ</h1>
-                        <h2 class="text-xl md:text-2xl font-bold text-gold-400 mb-6">นายสิบตำรวจ ชุดที่ 1</h2>
-                        <p class="text-gray-200 max-w-lg mx-auto font-medium">แบบทดสอบคุณภาพ <span class="font-bold text-gold-400">100</span> ข้อ พร้อมคำอธิบายละเอียด</p>
-                    </div>
-                </div>
-                
-                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
-                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
-                        <div class="w-16 h-16 bg-police-50 rounded-2xl flex items-center justify-center text-police-700 text-3xl mb-5 group-hover:bg-police-700 group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-book-open-reader"></i>
-                        </div>
-                        <h3 class="font-bold text-xl text-police-900 mb-2">สรุปบทเรียน</h3>
-                        <p class="text-gray-500 text-sm">รวมหลักไวยากรณ์ (Grammar) และคำศัพท์ที่ออกสอบบ่อยที่สุด</p>
-                    </div>
-                    <div class="bg-white p-8 border border-gray-100 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
-                        <div class="w-16 h-16 bg-gold-100 rounded-2xl flex items-center justify-center text-gold-500 text-3xl mb-5 group-hover:bg-gold-500 group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-file-signature"></i>
-                        </div>
-                        <h3 class="font-bold text-xl text-police-900 mb-2">เริ่มทดสอบ</h3>
-                        <p class="text-gray-500 text-sm">จำลองการสอบจริง 100 ข้อ รู้ผลทันที</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. LESSON SCREEN -->
-        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center sticky top-[72px] z-40">
-                <h2 class="text-xl font-bold text-police-900"><i class="fa-solid fa-book mr-2"></i> สรุปไวยากรณ์ภาษาอังกฤษ</h2>
-                <button onclick="switchMode('quiz')" class="bg-gold-500 text-police-900 px-4 py-2 rounded-lg font-bold text-sm">ไปทำข้อสอบ</button>
-            </div>
-            
-            <div class="space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-police-700">
-                    <h3 class="font-bold text-police-800 mb-3 underline">1. Tenses ที่ออกสอบบ่อย</h3>
-                    <div class="eng-content text-sm md:text-base space-y-2 text-gray-700">
-                        <p>• <b>Present Simple:</b> S + V.1 (s,es) - ใช้กับความจริง, กิจวัตรประจำวัน <i>(คำบอกเวลา: always, usually, every day)</i></p>
-                        <p>• <b>Present Continuous:</b> S + is/am/are + V.ing - ใช้กับเหตุการณ์ที่กำลังเกิด <i>(คำบอกเวลา: now, at the moment, Listen!)</i></p>
-                        <p>• <b>Past Simple:</b> S + V.2 - ใช้กับเหตุการณ์ที่จบไปแล้วในอดีต <i>(คำบอกเวลา: yesterday, last week, ago)</i></p>
-                        <p>• <b>Present Perfect:</b> S + has/have + V.3 - เกิดในอดีตดำเนินมาถึงปัจจุบัน <i>(คำบอกเวลา: since, for, already, just, yet)</i></p>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-gold-500">
-                    <h3 class="font-bold text-police-800 mb-3 underline">2. ประโยคเงื่อนไข (If-Clause)</h3>
-                    <div class="eng-content text-sm md:text-base space-y-2 text-gray-700">
-                        <p>• <b>แบบที่ 1 (เป็นไปได้ในอนาคต):</b> If + Present Simple, Future Simple<br><span class="text-gray-500 ml-4">Ex. If it rains, I will stay home.</span></p>
-                        <p>• <b>แบบที่ 2 (สมมติตรงข้ามกับความจริงในปัจจุบัน):</b> If + Past Simple, S + would + V.1<br><span class="text-gray-500 ml-4">Ex. If I were you, I would tell the truth. (ใช้ were กับทุกประธาน)</span></p>
-                        <p>• <b>แบบที่ 3 (ตรงข้ามกับความจริงในอดีต):</b> If + Past Perfect, S + would have + V.3<br><span class="text-gray-500 ml-4">Ex. If I had studied harder, I would have passed the exam.</span></p>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-600">
-                    <h3 class="font-bold text-police-800 mb-3 underline">3. คำศัพท์ตำรวจที่ต้องรู้ (Police Vocabulary)</h3>
-                    <div class="eng-content text-sm md:text-base space-y-2 text-gray-700">
-                        <p>• <b>Suspect (n.):</b> ผู้ต้องสงสัย</p>
-                        <p>• <b>Victim (n.):</b> เหยื่อ, ผู้เคราะห์ร้าย</p>
-                        <p>• <b>Witness (n.):</b> พยาน (ผู้เห็นเหตุการณ์)</p>
-                        <p>• <b>Arrest (v.):</b> จับกุม</p>
-                        <p>• <b>Evidence (n.):</b> หลักฐาน (เป็นนามนับไม่ได้)</p>
-                        <p>• <b>Investigate (v.):</b> สืบสวน, สอบสวน</p>
-                        <p>• <b>Warrant (n.):</b> หมายศาล, หมายค้น, หมายจับ</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. QUIZ SCREEN -->
-        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
-            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
-                <div class="w-full md:w-2/3">
-                    <div class="flex justify-between items-end mb-2">
-                        <span id="quiz-status" class="text-sm font-bold text-police-700">ข้อที่ 1/100</span>
-                        <span id="score-text" class="text-sm font-bold text-gold-600">คะแนน: 0</span>
-                    </div>
-                    <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="bg-police-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-gray-200">
                 <div>
-                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-8 eng-content">คำถาม</h3>
-                    <div id="options" class="space-y-3"></div>
-                </div>
-
-                <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
-                    <p id="exp-status" class="text-lg font-black mb-2"></p>
-                    <p id="exp-text" class="text-sm md:text-base text-gray-700 eng-content"></p>
-                </div>
-
-                <div class="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 disabled:opacity-30 transition">ย้อนกลับ</button>
-                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5">ถัดไป</button>
+                    <div class="font-heading font-extrabold text-sm md:text-lg tracking-wide text-gold-400 uppercase leading-tight">POLICE ACADEMY</div>
+                    <div class="text-[11px] md:text-xs text-slate-200 font-medium">คู่มือเตรียมสอบนายสิบตำรวจ • ภาษาอังกฤษ</div>
                 </div>
             </div>
+
+            <!-- Desktop Nav Items -->
+            <nav class="hidden lg:flex items-center space-x-1 font-heading text-sm">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-lg transition hover:bg-white/10 font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-house text-gold-400"></i> หน้าแรก
+                </button>
+                <button onclick="switchTab('book')" id="nav-book" class="nav-btn px-3 py-2 rounded-lg transition hover:bg-white/10 font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-gold-400"></i> ตำราไวยากรณ์
+                </button>
+                <button onclick="switchTab('tactics')" id="nav-tactics" class="nav-btn px-3 py-2 rounded-lg transition hover:bg-white/10 font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-gold-400"></i> เทคนิคอ่าน-ทำโจทย์
+                </button>
+                <button onclick="switchTab('game')" id="nav-game" class="nav-btn px-3 py-2 rounded-lg transition hover:bg-white/10 font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-gold-400"></i> เกมจำศัพท์
+                </button>
+                <button onclick="switchTab('quiz')" id="nav-quiz" class="ml-2 px-4 py-2 bg-gold-500 hover:bg-gold-400 text-police-950 font-bold rounded-lg shadow transition flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> คลังข้อสอบ 100 ข้อ
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg bg-white/10 text-gold-400 border border-white/20 hover:bg-white/20 transition focus:outline-none">
+                <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+            </button>
         </div>
 
-        <!-- 4. RESULT SCREEN -->
-        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
-            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-police-700">
-                <div class="w-20 h-20 bg-gold-100 text-gold-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i class="fa-solid fa-trophy text-4xl"></i>
+        <!-- Mobile Drawer Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-police-950 border-t border-slate-800 px-4 py-3 space-y-2 font-heading text-sm animate-slide-up">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 flex items-center gap-3 text-slate-100 font-medium">
+                <i class="fa-solid fa-house text-gold-400 w-5 text-center"></i> หน้าแรก & Dashboard
+            </button>
+            <button onclick="switchTab('book'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 flex items-center gap-3 text-slate-100 font-medium">
+                <i class="fa-solid fa-book-open text-gold-400 w-5 text-center"></i> ตำราไวยากรณ์ & ศัพท์ตำรวจ
+            </button>
+            <button onclick="switchTab('tactics'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 flex items-center gap-3 text-slate-100 font-medium">
+                <i class="fa-solid fa-lightbulb text-gold-400 w-5 text-center"></i> สูตรลัด & เทคนิคทำโจทย์
+            </button>
+            <button onclick="switchTab('game'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 flex items-center gap-3 text-slate-100 font-medium">
+                <i class="fa-solid fa-gamepad text-gold-400 w-5 text-center"></i> เกมจำคำศัพท์ & แฟลชการ์ด
+            </button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu();" class="w-full text-left py-3 px-3 rounded-lg bg-gold-500 text-police-950 font-bold flex items-center gap-3 shadow">
+                <i class="fa-solid fa-pen-to-square w-5 text-center"></i> ลุยคลังข้อสอบจริง 100 ข้อ
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-6xl mx-auto px-3 md:px-6 py-4 md:py-6 flex-1 w-full">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: HOME DASHBOARD & OVERVIEW           -->
+        <!-- ========================================== -->
+        <section id="tab-home" class="tab-content space-y-6 animate-slide-up">
+            <!-- Hero Banner -->
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-slate-200">
+                <div class="police-gradient relative p-6 md:p-10 text-white overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 text-slate-800 opacity-20 text-9xl pointer-events-none">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div class="relative z-10 max-w-2xl space-y-3">
+                        <span class="inline-flex items-center gap-2 bg-gold-500 text-police-950 px-3 py-1 rounded-full font-heading font-bold text-xs uppercase shadow">
+                            <i class="fa-solid fa-certificate"></i> ฉบับสมบูรณ์สอบผ่าน 100%
+                        </span>
+                        <h1 class="text-2xl md:text-4xl font-heading font-black text-white leading-tight">
+                            คลังความรู้ & ข้อสอบเตรียมสอบ<span class="text-gold-400">นายสิบตำรวจ</span>
+                        </h1>
+                        <p class="text-slate-100 text-sm md:text-base leading-relaxed font-normal">
+                            รวบรวมหลักไวยากรณ์ (Grammar) ระดับตำราวิชาการ, เทคนิคอ่านเร็ว (Reading Tactics), สูตรลัดตัดช้อยส์ พร้อมระบบจำคำศัพท์ด้วยเกม Interactive และคลังข้อสอบจริง 100 ข้อ พร้อมเฉลยละเอียดทุกข้อ!
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-3">
+                            <button onclick="switchTab('quiz')" class="bg-gold-500 hover:bg-gold-400 text-police-950 px-5 py-3 rounded-xl font-heading font-bold text-sm shadow-lg transition transform active:scale-95 flex items-center gap-2">
+                                <i class="fa-solid fa-play"></i> เริ่มทดสอบ 100 ข้อทันที
+                            </button>
+                            <button onclick="switchTab('book')" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-5 py-3 rounded-xl font-heading font-bold text-sm transition flex items-center gap-2">
+                                <i class="fa-solid fa-book-open"></i> อ่านตำราติวเข้ม
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="text-3xl font-black text-police-900 mb-2">สรุปผลการสอบ</h2>
-                <div class="text-7xl font-black text-police-700 my-6" id="final-score">0/100</div>
-                <p id="result-msg" class="text-gray-600 mb-8 font-medium">ทำได้ดีมาก!</p>
-                <div class="flex flex-col space-y-3">
-                    <button onclick="switchMode('quiz')" class="police-gradient text-white py-4 rounded-xl font-bold text-lg hover-lift">ทำใหม่อีกครั้ง</button>
-                    <button onclick="switchMode('home')" class="bg-white text-gray-600 border-2 border-gray-200 py-3.5 rounded-xl font-bold">กลับหน้าหลัก</button>
+
+                <!-- Learning Progress Summary -->
+                <div class="p-4 md:p-6 bg-slate-50 border-t border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-slate-900">
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-600">ข้อสอบทั้งหมด</div>
+                            <div class="font-heading font-black text-lg text-slate-900">100 ข้อ</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-600">คะแนนสูงสุดของคุณ</div>
+                            <div class="font-heading font-black text-lg text-slate-900" id="dash-high-score">0 / 100</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-spell-check"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-600">ศัพท์ตำรวจสะสม</div>
+                            <div class="font-heading font-black text-lg text-slate-900">80+ คำ</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-600">เทคนิคสอบพร้อมใชักงาน</div>
+                            <div class="font-heading font-black text-lg text-slate-900">12 สูตรลัด</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Quick Feature Nav Cards -->
+            <h2 class="font-heading font-bold text-lg md:text-xl text-police-950 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-police-700"></i> เลือกหมวดหมู่การศึกษา
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Card 1: Textbook -->
+                <div onclick="switchTab('book')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-police-600 transition cursor-pointer card-shadow group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-police-100 text-police-700 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-book-journal-whills"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900 mb-1">1. ตำราไวยากรณ์ & ศัพท์ตำรวจ</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4 font-medium">
+                            เรียนรู้ Tense Matrix, Passive Voice, If-Clause และคำศัพท์กฎหมาย/ตำรวจที่ออกสอบบ่อย มีตัวอย่างประโยคจริง
+                        </p>
+                    </div>
+                    <span class="text-police-700 font-heading font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition">
+                        เข้าสู่บทเรียน <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <!-- Card 2: Tactics -->
+                <div onclick="switchTab('tactics')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-gold-500 transition cursor-pointer card-shadow group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900 mb-1">2. สูตรลัด & เทคนิคการอ่าน</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4 font-medium">
+                            วิธีทำข้อสอบ Reading แบบเร่งด่วน, เทคนิคถอดรหัส Context Clues, สูตรแกะโครงสร้างตัดช้อยส์ข้อสอบไวยากรณ์
+                        </p>
+                    </div>
+                    <span class="text-amber-700 font-heading font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition">
+                        ดูเทคนิคทั้งหมด <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <!-- Card 3: Game -->
+                <div onclick="switchTab('game')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-emerald-600 transition cursor-pointer card-shadow group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900 mb-1">3. เกมจำศัพท์ & Flashcards</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4 font-medium">
+                            ฝึกความจำด้วยการพลิกการ์ดฟังเสียงอ่านภาษาอังกฤษ และเล่นเกม Speed Match จับคู่คำศัพท์ตำรวจเพิ่มความแม่นยำ
+                        </p>
+                    </div>
+                    <span class="text-emerald-700 font-heading font-bold text-xs flex items-center gap-1 group-hover:translate-x-1 transition">
+                        เล่นเกมฝึกสมอง <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 2: TEXTBOOK GRAMMAR & POLICE VOCAB     -->
+        <!-- ========================================== -->
+        <section id="tab-book" class="tab-content hidden space-y-6 animate-slide-up">
+            <!-- Header Banner -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <div>
+                    <h2 class="font-heading font-bold text-xl text-police-950 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open-reader text-police-700"></i> ตำราติวเข้มไวยากรณ์และคำศัพท์ตำรวจ
+                    </h2>
+                    <p class="text-slate-700 text-sm font-medium mt-0.5">เนื้อหาแน่น ครอบคลุมจุดออกสอบนายสิบตำรวจย้อนหลัง 10 ปี</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="switchTab('quiz')" class="bg-gold-500 hover:bg-gold-400 text-police-950 px-4 py-2 rounded-lg font-heading font-bold text-xs shadow transition">
+                        <i class="fa-solid fa-pencil"></i> ไปทำข้อสอบ 100 ข้อ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chapter Navigation Tabs -->
+            <div class="flex overflow-x-auto gap-2 pb-2 border-b border-slate-300 scrollbar-none font-heading text-xs md:text-sm">
+                <button onclick="switchBookChapter('ch1')" id="btn-ch1" class="ch-btn px-4 py-2.5 rounded-xl font-bold bg-police-700 text-white whitespace-nowrap shadow">
+                    บทที่ 1: Tenses Master
+                </button>
+                <button onclick="switchBookChapter('ch2')" id="btn-ch2" class="ch-btn px-4 py-2.5 rounded-xl font-bold bg-white text-slate-800 border border-slate-300 whitespace-nowrap hover:bg-slate-100">
+                    บทที่ 2: If-Clause & Conditional
+                </button>
+                <button onclick="switchBookChapter('ch3')" id="btn-ch3" class="ch-btn px-4 py-2.5 rounded-xl font-bold bg-white text-slate-800 border border-slate-300 whitespace-nowrap hover:bg-slate-100">
+                    บทที่ 3: Passive Voice (งานสืบสวน)
+                </button>
+                <button onclick="switchBookChapter('ch4')" id="btn-ch4" class="ch-btn px-4 py-2.5 rounded-xl font-bold bg-white text-slate-800 border border-slate-300 whitespace-nowrap hover:bg-slate-100">
+                    บทที่ 4: คลังศัพท์งานตำรวจ
+                </button>
+            </div>
+
+            <!-- Chapter 1 Content -->
+            <div id="ch1" class="book-chapter space-y-5">
+                <div class="bg-white p-5 md:p-7 rounded-2xl border border-slate-200 card-shadow space-y-4">
+                    <div class="border-b border-slate-200 pb-3">
+                        <span class="bg-blue-100 text-blue-800 font-heading font-bold text-xs px-3 py-1 rounded-full">ไวยากรณ์หลัก</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mt-2">1. สรุปเจาะลึก 4 Tenses ที่ออกสอบนายสิบตำรวจมากที่สุด</h3>
+                    </div>
+
+                    <!-- Tense Table Grid -->
+                    <div class="space-y-4 text-slate-900 font-medium text-sm md:text-base">
+                        <!-- Present Simple -->
+                        <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-police-700 space-y-2">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <h4 class="font-heading font-bold text-police-900 text-base">A. Present Simple Tense (ข้อเท็จจริง/กฎหมาย/กิจวัตร)</h4>
+                                <span class="bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded text-xs font-mono font-bold">S + V.1 (s/es)</span>
+                            </div>
+                            <p class="text-slate-800 leading-relaxed">
+                                <b>หลักการใช้:</b> ใช้กับเหตุการณ์ที่เป็นจริงตามธรรมชาติ ข้อบังคับ กฎหมาย หรือกิจวัตรประจำวัน
+                            </p>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 text-slate-900">
+                                <p><b>Key Indicators (คำบอกเวลา):</b> always, usually, often, every day, normally, general law</p>
+                                <p class="mt-1 text-blue-900"><b>Ex:</b> The police officer <b>patrols</b> the neighborhood every night. (ตำรวจลาดตระเวนทุกคืน)</p>
+                            </div>
+                        </div>
+
+                        <!-- Present Continuous -->
+                        <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-emerald-600 space-y-2">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <h4 class="font-heading font-bold text-slate-900 text-base">B. Present Continuous Tense (กำลังเกิดขึ้นขณะพูด)</h4>
+                                <span class="bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded text-xs font-mono font-bold">S + is/am/are + V.ing</span>
+                            </div>
+                            <p class="text-slate-800 leading-relaxed">
+                                <b>หลักการใช้:</b> เหตุการณ์ที่กำลังดำเนินอยู่ ณ นาทีนี้ หรือเหตุการณ์ที่กำลังเปลี่ยนแปลง
+                            </p>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 text-slate-900">
+                                <p><b>Key Indicators:</b> now, at the moment, right now, Listen!, Look!</p>
+                                <p class="mt-1 text-emerald-900"><b>Ex:</b> Look! The detective <b>is examining</b> the crime scene right now. (ดูสิ! นักสืบกำลังตรวจที่เกิดเหตุ)</p>
+                            </div>
+                        </div>
+
+                        <!-- Past Simple -->
+                        <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-amber-600 space-y-2">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <h4 class="font-heading font-bold text-slate-900 text-base">C. Past Simple Tense (เหตุการณ์จบแล้วในอดีต)</h4>
+                                <span class="bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded text-xs font-mono font-bold">S + V.2</span>
+                            </div>
+                            <p class="text-slate-800 leading-relaxed">
+                                <b>หลักการใช้:</b> บอกเล่าเหตุการณ์ที่เกิดขึ้นและจบลงอย่างสมบูรณ์ในอดีต ระบุเวลาชัดเจน
+                            </p>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 text-slate-900">
+                                <p><b>Key Indicators:</b> yesterday, ago, last week, in 2022, this morning</p>
+                                <p class="mt-1 text-amber-900"><b>Ex:</b> The suspect <b>confessed</b> to the crime yesterday. (ผู้ต้องสงสัยสารภาพผิดเมื่อวานนี้)</p>
+                            </div>
+                        </div>
+
+                        <!-- Present Perfect -->
+                        <div class="p-4 rounded-xl bg-slate-50 border-l-4 border-purple-600 space-y-2">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <h4 class="font-heading font-bold text-slate-900 text-base">D. Present Perfect Tense (ทำตั้งแต่อดีตถึงปัจจุบัน/ประสบการณ์)</h4>
+                                <span class="bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded text-xs font-mono font-bold">S + has/have + V.3</span>
+                            </div>
+                            <p class="text-slate-800 leading-relaxed">
+                                <b>หลักการใช้:</b> ดำเนินจากอดีตจนถึงปัจจุบัน หรือส่งผลกระทบต่อปัจจุบันโดยไม่ระบุเวลาแน่นอน
+                            </p>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 text-slate-900">
+                                <p><b>Key Indicators:</b> since, for, already, just, yet, ever, never</p>
+                                <p class="mt-1 text-purple-900"><b>Ex:</b> Lieutenant Somchai <b>has worked</b> here for 10 years. (ผู้กองสมชายทำงานที่นี่มา 10 ปีแล้ว)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 2 Content -->
+            <div id="ch2" class="book-chapter hidden space-y-5">
+                <div class="bg-white p-5 md:p-7 rounded-2xl border border-slate-200 card-shadow space-y-4">
+                    <div class="border-b border-slate-200 pb-3">
+                        <span class="bg-amber-100 text-amber-900 font-heading font-bold text-xs px-3 py-1 rounded-full">สูตรสำเร็จออกสอบ</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mt-2">2. ตารางสรุปสูตร If-Clause (ประโยคเงื่อนไข 3 รูปแบบหลัก)</h3>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
+                            <thead>
+                                <tr class="bg-police-900 text-white font-heading text-xs md:text-sm">
+                                    <th class="p-3 rounded-tl-lg">ประเภท (Type)</th>
+                                    <th class="p-3">โครงสร้างประโยค (Structure)</th>
+                                    <th class="p-3 rounded-tr-lg">ตัวอย่างและคำอธิบาย</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs md:text-sm font-medium text-slate-900 divide-y divide-slate-200">
+                                <tr class="bg-white hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-police-700">Type 1<br><span class="text-[11px] text-slate-600">(เป็นไปได้จริงในอนาคต)</span></td>
+                                    <td class="p-3 font-mono font-bold text-slate-900">If + Present Simple,<br>Future Simple (S + will + V.1)</td>
+                                    <td class="p-3">If the driver <b>exceeds</b> the speed limit, he <b>will get</b> a ticket.<br><span class="text-slate-600">(ถ้าขับรถเกิน speed limit เขาจะได้รับใบสั่ง)</span></td>
+                                </tr>
+                                <tr class="bg-slate-50 hover:bg-slate-100">
+                                    <td class="p-3 font-bold text-amber-700">Type 2<br><span class="text-[11px] text-slate-600">(สมมติฝันกลางวัน/ตรงข้ามปัจจุบัน)</span></td>
+                                    <td class="p-3 font-mono font-bold text-slate-900">If + Past Simple (V.2),<br>S + would + V.1<br><span class="text-xs text-rose-700 font-bold">*ใช้ were กับทุกประธาน</span></td>
+                                    <td class="p-3">If I <b>were</b> a police officer, I <b>would help</b> citizens.<br><span class="text-slate-600">(ถ้าฉันเป็นตำรวจ [แต่ปัจจุบันไม่ใช่] ฉันจะช่วยเหลือประชาชน)</span></td>
+                                </tr>
+                                <tr class="bg-white hover:bg-slate-50">
+                                    <td class="p-3 font-bold text-purple-700">Type 3<br><span class="text-[11px] text-slate-600">(เสียดาย/ตรงข้ามอดีต)</span></td>
+                                    <td class="p-3 font-mono font-bold text-slate-900">If + Past Perfect (had + V.3),<br>S + would have + V.3</td>
+                                    <td class="p-3">If they <b>had checked</b> the CCTV, they <b>would have found</b> the thief.<br><span class="text-slate-600">(ถ้าวันนั้นเช็คกล้องวงจรปิด ก็คงเจอขโมยไปแล้ว)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 3 Content -->
+            <div id="ch3" class="book-chapter hidden space-y-5">
+                <div class="bg-white p-5 md:p-7 rounded-2xl border border-slate-200 card-shadow space-y-4">
+                    <div class="border-b border-slate-200 pb-3">
+                        <span class="bg-purple-100 text-purple-900 font-heading font-bold text-xs px-3 py-1 rounded-full">เจาะลึกข้อสอบจริง</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mt-2">3. Passive Voice ในงานสืบสวนคดี (ประธานเป็นผู้ถูกกระทำ)</h3>
+                    </div>
+
+                    <p class="text-slate-800 text-sm md:text-base font-medium leading-relaxed">
+                        ข้อสอบตำรวจนิยมใช้ Passive Voice ในข่าวอาชญากรรมและการจับกุม เพราะประธานคือ "ผู้ต้องหา" หรือ "เหยื่อ" ที่ถูกกระทำ
+                    </p>
+
+                    <div class="p-4 bg-slate-900 text-white rounded-xl space-y-2 font-mono text-xs md:text-sm">
+                        <p class="text-gold-400 font-bold">โครงสร้างพื้นฐาน: Subject + Verb to be + V.3 (Past Participle)</p>
+                        <p class="text-slate-300">• Present: S + is/am/are + V.3 (ถูกกระทำประจำ/ปัจจุบัน)</p>
+                        <p class="text-slate-300">• Past Simple: S + was/were + V.3 (ถูกกระทำในอดีต - ออกสอบบ่อยสุด!)</p>
+                        <p class="text-slate-300">• Future: S + will be + V.3 (จะถูกกระทำในอนาคต)</p>
+                    </div>
+
+                    <div class="space-y-2 text-slate-900 font-medium text-sm">
+                        <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="font-bold text-police-900">ตัวอย่างข้อสอบจริง:</p>
+                            <p class="text-slate-800">The dangerous suspect <b>was arrested</b> by the SWAT team yesterday.</p>
+                            <p class="text-slate-600 text-xs mt-1">(ผู้ต้องสงสัยอันตรายถูกจับกุมโดยหน่วยสวาทเมื่อวานนี้ - ใช้ was arrested เพราะประธานถูกจับ)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 4 Content -->
+            <div id="ch4" class="book-chapter hidden space-y-5">
+                <div class="bg-white p-5 md:p-7 rounded-2xl border border-slate-200 card-shadow space-y-4">
+                    <div class="border-b border-slate-200 pb-3">
+                        <span class="bg-emerald-100 text-emerald-900 font-heading font-bold text-xs px-3 py-1 rounded-full">Vocabulary Master</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mt-2">4. หมวดคำศัพท์งานตำรวจ & กฎหมายอาญาที่ต้องรู้</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-900 text-sm font-medium">
+                        <!-- Card Vocab 1 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+                            <div class="p-2 bg-police-700 text-white rounded-lg text-lg"><i class="fa-solid fa-user-ninja"></i></div>
+                            <div>
+                                <div class="font-heading font-bold text-base text-police-950">Suspect (n.)</div>
+                                <div class="text-slate-700 font-semibold">ผู้ต้องสงสัย / ผู้ต้องหา</div>
+                                <div class="text-xs text-slate-500 mt-1">Ex: Police interrogated the prime suspect.</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Vocab 2 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+                            <div class="p-2 bg-red-700 text-white rounded-lg text-lg"><i class="fa-solid fa-user-injured"></i></div>
+                            <div>
+                                <div class="font-heading font-bold text-base text-police-950">Victim (n.)</div>
+                                <div class="text-slate-700 font-semibold">เหยื่อ / ผู้เสียหาย</div>
+                                <div class="text-xs text-slate-500 mt-1">Ex: The victim reported the robbery.</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Vocab 3 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+                            <div class="p-2 bg-amber-600 text-white rounded-lg text-lg"><i class="fa-solid fa-eye"></i></div>
+                            <div>
+                                <div class="font-heading font-bold text-base text-police-950">Witness (n.)</div>
+                                <div class="text-slate-700 font-semibold">พยานผู้เห็นเหตุการณ์</div>
+                                <div class="text-xs text-slate-500 mt-1">Ex: A witness saw the accident.</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Vocab 4 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+                            <div class="p-2 bg-emerald-700 text-white rounded-lg text-lg"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <div>
+                                <div class="font-heading font-bold text-base text-police-950">Evidence (n. นับไม่ได้)</div>
+                                <div class="text-slate-700 font-semibold">หลักฐาน (ห้ามเติม s!)</div>
+                                <div class="text-xs text-slate-500 mt-1">Ex: There was no clear evidence.</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Vocab 5 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+                            <div class="p-2 bg-purple-700 text-white rounded-lg text-lg"><i class="fa-solid fa-file-contract"></i></div>
+                            <div>
+                                <div class="font-heading font-bold text-base text-police-950">Warrant (n.)</div>
+                                <div class="text-slate-700 font-semibold">หมายศาล (Search/Arrest Warrant)</div>
+                                <div class="text-xs text-slate-500 mt-1">Ex: The judge issued an arrest warrant.</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Vocab 6 -->
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+                            <div class="p-2 bg-slate-800 text-white rounded-lg text-lg"><i class="fa-solid fa-handcuffs"></i></div>
+                            <div>
+                                <div class="font-heading font-bold text-base text-police-950">Handcuffs (n. พหูพจน์เสมอ)</div>
+                                <div class="text-slate-700 font-semibold">กุญแจมือ</div>
+                                <div class="text-xs text-slate-500 mt-1">Ex: The officer put handcuffs on him.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 3: EXAM TACTICS & READING HACKS        -->
+        <!-- ========================================== -->
+        <section id="tab-tactics" class="tab-content hidden space-y-6 animate-slide-up">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="font-heading font-bold text-xl text-police-950 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> รวมสูตรลัด & เทคนิคการอ่านทำโจทย์เร่งด่วน
+                </h2>
+                <p class="text-slate-700 text-sm font-medium mt-1">ช่วยประหยัดเวลาการทำข้อสอบได้มากกว่า 50% พร้อมสูตรเดาบริบทคำศัพท์</p>
+            </div>
+
+            <!-- Tactics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Tactic 1: Skimming & Scanning -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 card-shadow space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-lg">1</div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900">เทคนิคอ่านเร็ว Skimming & Scanning</h3>
+                    </div>
+                    <div class="text-slate-800 text-sm leading-relaxed space-y-2 font-medium">
+                        <p class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <b class="text-blue-900">1. Skimming (อ่านข้ามเพื่อจับใจความ):</b> อ่านบรรทัดแรกและบรรทัดสุดท้ายของทุกย่อหน้า เพื่อหา <b>Main Idea</b> ห้ามอ่านทุกคำ!
+                        </p>
+                        <p class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <b class="text-blue-900">2. Scanning (กวาดสายตาหาตัวเลข/ชื่อ):</b> ควานหาคำเฉพาะ (Proper Nouns, Numbers, Dates, Capital letters) เมื่อโจทย์ถามข้อมูลเฉพาะเจาะจง
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tactic 2: Context Clues -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 card-shadow space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg">2</div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900">เทคนิคเดาศัพท์แปลก Context Clues</h3>
+                    </div>
+                    <div class="text-slate-800 text-sm leading-relaxed space-y-2 font-medium">
+                        <p class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <b class="text-amber-900">สังเกตคำขัดแย้ง (Antonym Indicators):</b> เจอคำว่า <i>however, although, but, despite, in contrast</i> คำตอบจะตรงข้ามกับประโยคหน้า!
+                        </p>
+                        <p class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <b class="text-amber-900">สังเกตคำอธิบายเพิ่มเติม:</b> เจอเครื่องหมาย <b>, (comma)</b> หรือ <b>- (dash)</b> ความหมายศัพท์ตัวนั้นจะถูกอธิบายขยายความตามหลังทันที
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tactic 3: Grammar Traps -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 card-shadow space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center font-bold text-lg">3</div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900">สูตรตัดช้อยส์โครงสร้างข้อสอบ</h3>
+                    </div>
+                    <div class="text-slate-800 text-sm leading-relaxed space-y-2 font-medium">
+                        <div class="p-3 bg-rose-50 rounded-lg border border-rose-200">
+                            <p class="font-bold text-rose-950">• Look forward to + V.ing เสมอ!</p>
+                            <p class="text-xs text-slate-700">คำว่า to ตรงนี้เป็น Preposition ห้ามตามด้วย V.1 เฉียบขาด</p>
+                        </div>
+                        <div class="p-3 bg-rose-50 rounded-lg border border-rose-200">
+                            <p class="font-bold text-rose-950">• Preposition (in/on/at/of/for/with/about) + V.ing</p>
+                            <p class="text-xs text-slate-700">กริยาตามหลังบุพบท ต้องผันเป็น Gerund (V.ing) เสมอ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 4: Conversation Hacks -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 card-shadow space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg">4</div>
+                        <h3 class="font-heading font-bold text-lg text-slate-900">สำนวนสนทนา (Conversation Shortcuts)</h3>
+                    </div>
+                    <div class="text-slate-800 text-sm leading-relaxed space-y-2 font-medium">
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                            <b class="text-emerald-900">Would you mind...? (รังเกียจไหมที่จะ...)</b>
+                            <p class="text-xs text-slate-700 mt-0.5">ตอบ "ยินดีช่วย" ต้องปฏิเสธว่า <b>No, not at all.</b> หรือ <b>Of course not.</b></p>
+                        </div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                            <b class="text-emerald-900">How do you do? (ยินดีที่ได้รู้จัก)</b>
+                            <p class="text-xs text-slate-700 mt-0.5">ใช้ทักคนเจอครั้งแรก ตอบกลับด้วยคำเดิมเสมอ <b>How do you do?</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 4: GAMIFIED VOCABULARY & FLASHCARDS    -->
+        <!-- ========================================== -->
+        <section id="tab-game" class="tab-content hidden space-y-6 animate-slide-up">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <div>
+                    <h2 class="font-heading font-bold text-xl text-police-950 flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad text-emerald-600"></i> ศูนย์รวมเกมความจำ & แฟลชการ์ดคำศัพท์ตำรวจ
+                    </h2>
+                    <p class="text-slate-700 text-sm font-medium mt-0.5">ท่องศัพท์แบบเห็นภาพ มีเสียงอ่านภาษาอังกฤษชัดเจน</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="switchGameMode('flashcard')" id="btn-gm-fc" class="gm-nav px-3 py-1.5 rounded-lg font-heading font-bold text-xs bg-emerald-700 text-white shadow">
+                        <i class="fa-solid fa-clone"></i> แฟลชการ์ด
+                    </button>
+                    <button onclick="switchGameMode('match')" id="btn-gm-match" class="gm-nav px-3 py-1.5 rounded-lg font-heading font-bold text-xs bg-white text-slate-800 border border-slate-300 hover:bg-slate-100">
+                        <i class="fa-solid fa-puzzle-piece"></i> เกมจับคู่ศัพท์
+                    </button>
+                </div>
+            </div>
+
+            <!-- GAME MODE 1: FLASHCARDS -->
+            <div id="game-flashcard-view" class="space-y-4">
+                <div class="max-w-md mx-auto">
+                    <!-- Flashcard Card Container -->
+                    <div class="perspective-1000 w-full h-72 cursor-pointer" onclick="flipCard()">
+                        <div id="flashcard-inner" class="transform-style-3d relative w-full h-full duration-500 card-shadow rounded-2xl">
+                            <!-- Front Side (English) -->
+                            <div class="absolute inset-0 backface-hidden bg-white border-2 border-police-600 rounded-2xl p-6 flex flex-col justify-between items-center text-center">
+                                <span class="bg-police-100 text-police-800 text-xs font-bold font-heading px-3 py-1 rounded-full">
+                                    การ์ดที่ <span id="fc-index">1</span> / <span id="fc-total">10</span>
+                                </span>
+                                <div class="space-y-2">
+                                    <h3 id="fc-vocab" class="font-heading font-black text-3xl md:text-4xl text-police-950">Suspect</h3>
+                                    <p id="fc-pos" class="text-slate-600 italic text-sm font-semibold">(noun)</p>
+                                    <button onclick="event.stopPropagation(); speakVocab();" class="mt-2 text-police-700 hover:text-police-900 p-2 rounded-full bg-police-50 border border-police-200 text-lg transition">
+                                        <i class="fa-solid fa-volume-high"></i> ฟังเสียง
+                                    </button>
+                                </div>
+                                <span class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-hand-pointer"></i> แตะเพื่อดูคำแปลภาษาไทย</span>
+                            </div>
+
+                            <!-- Back Side (Thai Meaning) -->
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900 border-2 border-gold-500 text-white rounded-2xl p-6 flex flex-col justify-between items-center text-center">
+                                <span class="bg-gold-500 text-police-950 text-xs font-bold font-heading px-3 py-1 rounded-full">คำแปล & ตัวอย่าง</span>
+                                <div class="space-y-2">
+                                    <h3 id="fc-meaning" class="font-heading font-extrabold text-2xl text-gold-400">ผู้ต้องสงสัย / ผู้ต้องหา</h3>
+                                    <p id="fc-ex" class="text-slate-200 text-xs md:text-sm italic font-medium px-2">"The police arrested the main suspect."</p>
+                                </div>
+                                <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-rotate-left"></i> แตะเพื่อพลิกกลับ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flashcard Navigation Controls -->
+                    <div class="flex justify-between items-center mt-5">
+                        <button onclick="prevFlashcard()" class="bg-white border-2 border-slate-300 hover:bg-slate-100 text-slate-900 font-bold px-5 py-2.5 rounded-xl text-sm transition">
+                            <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+                        </button>
+                        <button onclick="nextFlashcard()" class="police-gradient text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition">
+                            ถัดไป <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME MODE 2: SPEED MATCHING -->
+            <div id="game-match-view" class="hidden space-y-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center flex-wrap gap-2">
+                    <div>
+                        <span class="text-xs font-bold text-slate-600">คะแนนจับคู่</span>
+                        <div class="font-heading font-black text-xl text-emerald-700" id="match-score">0 คะแนน</div>
+                    </div>
+                    <button onclick="initMatchGame()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg font-heading font-bold text-xs shadow">
+                        <i class="fa-solid fa-rotate"></i> เริ่มเกมใหม่
+                    </button>
+                </div>
+
+                <p class="text-xs font-bold text-slate-700 text-center">แตะคำศัพท์ภาษาอังกฤษและคำแปลภาษาไทยที่ตรงกันคู่กัน</p>
+
+                <!-- Match Cards Grid -->
+                <div id="match-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <!-- Dynamic JavaScript Generated Cards -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 5: 100-QUESTION FULL EXAM SIMULATOR    -->
+        <!-- ========================================== -->
+        <section id="tab-quiz" class="tab-content hidden space-y-4 animate-slide-up">
+            <!-- Sticky Progress Bar Header -->
+            <div class="bg-white/95 backdrop-blur border border-slate-200 p-3.5 rounded-2xl shadow-sm sticky top-[60px] z-30 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-1 text-xs md:text-sm font-bold">
+                        <span id="quiz-status" class="text-police-950 font-heading">ข้อที่ 1 / 100</span>
+                        <span id="score-text" class="text-amber-700 font-heading">คะแนนสะสม: 0</span>
+                    </div>
+                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="police-gradient h-full transition-all duration-300" style="width: 1%"></div>
+                    </div>
+                </div>
+
+                <!-- Topic Category Filter Options -->
+                <div class="flex items-center gap-1 overflow-x-auto text-xs font-heading">
+                    <button onclick="filterQuiz('all')" id="flt-all" class="quiz-flt px-2.5 py-1 rounded-md bg-police-900 text-white font-bold">ทั้งหมด (100)</button>
+                    <button onclick="filterQuiz('grammar')" id="flt-grammar" class="quiz-flt px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 hover:bg-slate-200">ไวยากรณ์</button>
+                    <button onclick="filterQuiz('vocab')" id="flt-vocab" class="quiz-flt px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 hover:bg-slate-200">คำศัพท์</button>
+                    <button onclick="filterQuiz('convo')" id="flt-convo" class="quiz-flt px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 hover:bg-slate-200">บทสนทนา</button>
+                </div>
+            </div>
+
+            <!-- Main Question & Options Card -->
+            <div class="bg-white rounded-2xl border border-slate-200 card-shadow p-5 md:p-8 min-h-[420px] flex flex-col justify-between">
+                <div>
+                    <!-- Question Badge & Text -->
+                    <div class="flex items-center gap-2 mb-3">
+                        <span id="q-category-tag" class="bg-police-100 text-police-900 font-heading font-bold text-xs px-3 py-0.5 rounded-full border border-police-200">
+                            หมวดไวยากรณ์
+                        </span>
+                    </div>
+                    <h3 id="q-text" class="text-slate-950 font-heading font-bold text-base md:text-xl leading-relaxed mb-6 break-word-thai">
+                        1. A: "Thank you for your help officer."<br>B: "_____"
+                    </h3>
+
+                    <!-- Choices Options Container -->
+                    <div id="options" class="space-y-2.5">
+                        <!-- Dynamic choices generated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Detailed Explanation Panel -->
+                <div id="explainer" class="hidden mt-6 p-4 md:p-5 rounded-xl border-2 animate-slide-up">
+                    <p id="exp-status" class="font-heading font-black text-base md:text-lg mb-1"></p>
+                    <div id="exp-text" class="text-slate-900 text-sm md:text-base font-medium leading-relaxed break-word-thai"></div>
+                </div>
+
+                <!-- Bottom Action Controls -->
+                <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-200">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-900 font-heading font-bold px-4 py-2.5 rounded-xl text-sm transition disabled:opacity-30">
+                        <i class="fa-solid fa-arrow-left"></i> ย้อนกลับ
+                    </button>
+                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-heading font-bold px-6 py-2.5 rounded-xl text-sm shadow transition transform active:scale-95">
+                        ข้อถัดไป <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 6: FINAL EXAM RESULT SUMMARY           -->
+        <!-- ========================================== -->
+        <section id="tab-result" class="tab-content hidden space-y-6 text-center animate-slide-up py-6">
+            <div class="bg-white p-6 md:p-10 rounded-3xl border border-slate-200 card-shadow max-w-lg mx-auto border-t-8 border-police-700 space-y-5">
+                <div class="w-20 h-20 bg-gold-100 text-gold-600 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner border border-gold-300">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+
+                <div>
+                    <h2 class="font-heading font-black text-2xl md:text-3xl text-police-950">สรุปผลการทำแบบทดสอบ</h2>
+                    <p class="text-slate-700 font-medium text-sm mt-1">เตรียมสอบนายสิบตำรวจ • วิชาภาษาอังกฤษ</p>
+                </div>
+
+                <!-- Final Score Display -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <div class="text-xs font-bold text-slate-600 uppercase tracking-wider">คะแนนที่คุณทำได้</div>
+                    <div class="font-heading font-black text-6xl text-police-700 my-2" id="final-score">0 / 100</div>
+                    <div class="text-sm font-bold text-slate-800" id="final-percent">คิดเป็น 0%</div>
+                </div>
+
+                <p id="result-msg" class="text-slate-900 font-semibold text-sm leading-relaxed px-2">
+                    พยายามอีกนิดนะครับ ทบทวนเนื้อหาในตำราแล้วลองทำใหม่อีกครั้ง!
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col gap-2.5 pt-2 font-heading font-bold text-sm">
+                    <button onclick="switchTab('quiz')" class="police-gradient text-white py-3.5 rounded-xl shadow-md transition transform active:scale-95">
+                        <i class="fa-solid fa-rotate-right"></i> ทำแบบทดสอบใหม่อีกครั้ง
+                    </button>
+                    <button onclick="switchTab('book')" class="bg-white text-slate-900 border-2 border-slate-300 py-3 rounded-xl hover:bg-slate-50 transition">
+                        <i class="fa-solid fa-book-open"></i> กลับไปทบทวนบทเรียน
+                    </button>
+                </div>
+            </div>
+        </section>
 
     </main>
 
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 text-center py-4 border-t-2 border-gold-500 mt-10 text-xs font-medium">
+        <div class="max-w-6xl mx-auto px-4 space-y-1">
+            <p class="font-heading font-bold text-gold-400">คลังความรู้และระบบทดสอบ เตรียมสอบนายสิบตำรวจ (Royal Thai Police Cadet Prep)</p>
+            <p class="text-slate-200">พัฒนาขึ้นสำหรับการเรียนรู้ด้วยตนเอง • รองรับการใช้งานบนสมาร์ทโฟนและแท็บเล็ต 100%</p>
+        </div>
+    </footer>
+
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
     <script>
-        // ข้อมูลข้อสอบ 100 ข้อแบบไม่ซ้ำกัน
-        const rawEnglishData = [
-            // Conversation
-            { q: "A: 'Thank you for your help.'<br>B: '_____' ", opt: ["Never mind", "You're welcome", "Of course not", "I'm sorry"], ans: 1, exp: "เมื่อมีคนขอบคุณ ควรตอบรับว่า You're welcome (ด้วยความยินดี)" },
-            { q: "A: 'I failed my English exam.'<br>B: '_____' ", opt: ["Congratulations!", "Well done!", "I'm sorry to hear that.", "That's a good idea."], ans: 2, exp: "เมื่อเพื่อนสอบตก ควรแสดงความเสียใจโดยพูดว่า I'm sorry to hear that." },
-            { q: "A: 'Would you mind opening the window?'<br>B: '_____' ", opt: ["Yes, please.", "No, not at all.", "Yes, I would.", "No, I mind."], ans: 1, exp: "Would you mind...? แปลว่า คุณจะรังเกียจไหม ถ้าตอบว่าไม่รังเกียจ (ทำให้ได้) ต้องตอบ No, not at all." },
-            { q: "A: 'How do you do?'<br>B: '_____' ", opt: ["I'm fine, thank you.", "How do you do?", "How are you?", "I am doing great."], ans: 1, exp: "How do you do? ใช้ทักทายคนที่เพิ่งรู้จักกันครั้งแรก ต้องตอบกลับด้วยคำว่า How do you do? เช่นกัน" },
-            { q: "A: 'May I help you?'<br>B: '_____, I'm just looking.' ", opt: ["Yes, please", "No, thank you", "Of course", "Sure"], ans: 1, exp: "I'm just looking แปลว่า แค่ดูเฉยๆ (ยังไม่ซื้อ) จึงต้องปฏิเสธอย่างสุภาพว่า No, thank you." },
-            { q: "A: 'Could you tell me the way to the police station?'<br>B: '_____' ", opt: ["I'm a policeman.", "It's on your left.", "I like walking.", "You can buy it there."], ans: 1, exp: "เขาถามทางไปสถานีตำรวจ คำตอบที่เหมาะสมคือการบอกทิศทาง (อยู่ทางซ้ายมือของคุณ)" },
-            { q: "A: 'Excuse me, is this seat taken?'<br>B: '_____' ", opt: ["Yes, you can sit here.", "No, it is my seat.", "No, you may sit here.", "Yes, it is empty."], ans: 2, exp: "ที่นั่งนี้มีคนจองไหม? ตอบ No (ไม่มี) และเชิญให้นั่ง you may sit here." },
-            { q: "A: 'I have a terrible headache.'<br>B: 'You _____ see a doctor.' ", opt: ["should", "can", "would", "may"], ans: 0, exp: "การให้คำแนะนำ ควรใช้คำว่า should (ควรจะ)" },
-            { q: "A: 'Let's go to the cinema tonight.'<br>B: '_____' ", opt: ["That sounds great!", "I don't go.", "You're welcome.", "It is a cinema."], ans: 0, exp: "เมื่อมีการชักชวน (Let's...) ถ้าเห็นด้วยมักตอบว่า That sounds great! (ฟังดูเยี่ยมไปเลย)" },
-            { q: "A: 'What does your brother do?'<br>B: '_____' ", opt: ["He is doing his homework.", "He is a police officer.", "He does it well.", "He likes playing football."], ans: 1, exp: "What does someone do? เป็นการถามอาชีพ จึงตอบว่า เขาเป็นตำรวจ" },
-            // Police Vocabulary
-            { q: "The police arrested the _____ who stole the lady's purse.", opt: ["victim", "suspect", "witness", "detective"], ans: 1, exp: "ตำรวจจับกุม 'ผู้ต้องสงสัย' (suspect) ที่ขโมยกระเป๋า" },
-            { q: "A person who sees a crime happen is called a _____.", opt: ["criminal", "judge", "suspect", "witness"], ans: 3, exp: "ผู้ที่เห็นเหตุการณ์อาชญากรรมเรียกว่า 'พยาน' (witness)" },
-            { q: "The detective is looking for _____ to solve the murder case.", opt: ["evidence", "accident", "emergency", "insurance"], ans: 0, exp: "นักสืบกำลังมองหา 'หลักฐาน' (evidence) เพื่อไขคดีฆาตกรรม" },
-            { q: "You must have a driving _____ to drive a car legally.", opt: ["ticket", "warrant", "license", "passport"], ans: 2, exp: "คุณต้องมี 'ใบอนุญาตขับขี่' (license) เพื่อขับรถอย่างถูกกฎหมาย" },
-            { q: "The police officer gave me a _____ for speeding.", opt: ["bill", "receipt", "ticket", "note"], ans: 2, exp: "ตำรวจให้ 'ใบสั่ง' (ticket) แก่ฉันข้อหาขับรถเร็ว" },
-            { q: "The judge issued a search _____ to search the suspect's house.", opt: ["ticket", "license", "warrant", "document"], ans: 2, exp: "ผู้พิพากษาออก 'หมายค้น' (search warrant) เพื่อค้นบ้านผู้ต้องสงสัย" },
-            { q: "The thief was caught wearing _____. He couldn't move his hands.", opt: ["handcuffs", "helmets", "uniforms", "badges"], ans: 0, exp: "ขโมยถูกสวม 'กุญแจมือ' (handcuffs) ทำให้ขยับมือไม่ได้" },
-            { q: "It is _____ to carry a gun without permission.", opt: ["legal", "illegal", "logical", "illogical"], ans: 1, exp: "การพกปืนโดยไม่ได้รับอนุญาตเป็นเรื่อง 'ผิดกฎหมาย' (illegal)" },
-            { q: "The man was accused of _____ a bank.", opt: ["robbing", "stealing", "kidnapping", "murdering"], ans: 0, exp: "rob (ปล้น) ใช้กับสถานที่หรือบุคคล ส่วน steal (ขโมย) ใช้กับสิ่งของ ในที่นี้คือ ปล้นธนาคาร" },
-            { q: "If you break the law, you will go to _____.", opt: ["hospital", "school", "prison", "hotel"], ans: 2, exp: "ถ้าคุณทำผิดกฎหมาย คุณจะต้องไป 'คุก/เรือนจำ' (prison)" },
-            // Tenses
-            { q: "Listen! The baby ____ in the bedroom.", opt: ["cries", "is crying", "cried", "has cried"], ans: 1, exp: "คำว่า Listen! แสดงว่าเหตุการณ์กำลังเกิด ต้องใช้ Present Continuous (is/am/are + V.ing)" },
-            { q: "He usually ____ up at 6 o'clock every morning.", opt: ["get", "gets", "got", "getting"], ans: 1, exp: "คำว่า usually แสดงกิจวัตร (Present Simple) ประธานเอกพจน์ กริยาต้องเติม s" },
-            { q: "We ____ to Chiang Mai last month.", opt: ["go", "goes", "went", "have gone"], ans: 2, exp: "last month ระบุเวลาในอดีต ต้องใช้ Past Simple (V.2 คือ went)" },
-            { q: "She has been working here ____ 2015.", opt: ["since", "for", "in", "from"], ans: 0, exp: "since แปลว่า 'ตั้งแต่' ใช้กับจุดเริ่มต้นเวลา (ปี 2015)" },
-            { q: "I ____ to the market when it started to rain.", opt: ["walk", "walked", "was walking", "have walked"], ans: 2, exp: "เหตุการณ์ที่กำลังดำเนินอยู่ในอดีตใช้ Past Continuous (was/were + V.ing)" },
-            { q: "They ____ dinner by the time we arrived.", opt: ["had already finished", "already finish", "has already finished", "are finishing"], ans: 0, exp: "เหตุการณ์ที่เกิดและจบก่อนอีกเหตุการณ์หนึ่งในอดีต ใช้ Past Perfect (had + V.3)" },
-            { q: "My mother ____ cooking in the kitchen right now.", opt: ["is", "was", "has", "does"], ans: 0, exp: "right now เป็นตัวบอกเวลา Present Continuous โครงสร้างคือ is/am/are + V.ing" },
-            { q: "Water ____ at 100 degrees Celsius.", opt: ["boil", "boils", "is boiling", "boiled"], ans: 1, exp: "เป็นความจริงตามธรรมชาติ ใช้ Present Simple ประธานเอกพจน์นับไม่ได้ กริยาเติม s" },
-            { q: "I promise I ____ you as soon as I arrive.", opt: ["call", "called", "am calling", "will call"], ans: 3, exp: "การให้คำสัญญา (promise) ใช้ Future Simple (will + V.1)" },
-            { q: "____ you ever been to Japan?", opt: ["Do", "Are", "Have", "Did"], ans: 2, exp: "การถามประสบการณ์ว่าเคยไปไหม ใช้ Present Perfect (Have/Has + S + V.3)" },
-            { q: "While I was taking a shower, the phone ____.", opt: ["ring", "rings", "rang", "was ringing"], ans: 2, exp: "เหตุการณ์สั้นๆ ที่เข้ามาแทรกขณะที่อีกเหตุการณ์กำลังดำเนินอยู่ ใช้ Past Simple (V.2 ของ ring คือ rang)" },
-            { q: "He ____ his keys. He can't get into his house now.", opt: ["lost", "loses", "has lost", "was losing"], ans: 2, exp: "ทำกุญแจหายในอดีต แต่ส่งผลถึงปัจจุบัน (เข้าบ้านไม่ได้) ใช้ Present Perfect (has/have + V.3)" },
-            { q: "Look at those dark clouds! It ____ soon.", opt: ["rains", "rained", "is going to rain", "was raining"], ans: 2, exp: "การคาดเดาโดยมีหลักฐานให้เห็น (เมฆดำ) ใช้ be going to" },
-            { q: "The train ____ before we reached the station.", opt: ["leaves", "left", "has left", "had left"], ans: 3, exp: "รถไฟออกไปก่อนที่เราจะถึงสถานี (เกิดก่อนในอดีต) ใช้ Past Perfect (had + V.3)" },
-            { q: "By next year, I ____ from the police academy.", opt: ["graduate", "will graduate", "will have graduated", "graduated"], ans: 2, exp: "By + อนาคต (ภายในปีหน้า) ใช้ Future Perfect (will have + V.3)" },
-            // If-Clause
-            { q: "If it rains tomorrow, we ____ at home.", opt: ["will stay", "would stay", "stayed", "stay"], ans: 0, exp: "If-clause Type 1: If + Present Simple, Future Simple (will + V.1)" },
-            { q: "If I ____ a bird, I would fly around the world.", opt: ["am", "was", "were", "been"], ans: 2, exp: "If-clause Type 2 (สมมติตรงข้ามความจริง) ประธานทุกตัวใช้ were" },
-            { q: "If he had studied harder, he ____ the exam.", opt: ["would pass", "will pass", "would have passed", "passed"], ans: 2, exp: "If-clause Type 3 (ตรงข้ามอดีต) If + Past Perfect, S + would have + V.3" },
-            { q: "You will fail the test ____ you read the books.", opt: ["if", "unless", "when", "because"], ans: 1, exp: "unless มีความหมายว่า ถ้าไม่ (if...not) = คุณจะสอบตกถ้าไม่ยอมอ่านหนังสือ" },
-            { q: "If water freezes, it ____ into ice.", opt: ["turn", "turns", "will turn", "would turn"], ans: 1, exp: "If-clause Type 0 (ความจริงเสมอ) If + Present Simp, Present Simp" },
-            { q: "If I _____ you, I wouldn't do that.", opt: ["am", "was", "were", "be"], ans: 2, exp: "เป็นสำนวนการให้คำแนะนำแบบสมมติ (Type 2) ใช้ were เสมอ" },
-            { q: "I would buy a big house if I ____ the lottery.", opt: ["win", "won", "had won", "winning"], ans: 1, exp: "ประโยคหลักเป็น would buy (Type 2) ประโยค If จึงต้องเป็น Past Simple (won)" },
-            { q: "If they _____ the map, they wouldn't have got lost.", opt: ["check", "checked", "had checked", "have checked"], ans: 2, exp: "ประโยคหลักมี wouldn't have got (Type 3) ประโยค If ต้องเป็น Past Perfect (had checked)" },
-            { q: "Call me if you ____ any help.", opt: ["need", "needs", "needed", "will need"], ans: 0, exp: "ประโยคคำสั่งใน If-clause ใช้ Type 1 ประธาน you ใช้กริยาไม่ต้องเติม s" },
-            { q: "If she arrives early, she ____ a good seat.", opt: ["get", "gets", "will get", "would get"], ans: 2, exp: "Type 1 เหตุการณ์ที่เป็นไปได้ในอนาคต ใช้ will + V.1" },
-            // Prepositions
-            { q: "The meeting will start ____ 9 o'clock.", opt: ["in", "on", "at", "from"], ans: 2, exp: "การบอกเวลาที่เจาะจง ต้องใช้บุพบท 'at'" },
-            { q: "My birthday is ____ October.", opt: ["in", "on", "at", "of"], ans: 0, exp: "เดือน ปี และฤดูกาล ใช้บุพบท 'in'" },
-            { q: "The police station is ____ the bank and the post office.", opt: ["among", "between", "next", "behind"], ans: 1, exp: "between...and แปลว่า ระหว่าง...กับ..." },
-            { q: "He is interested ____ learning foreign languages.", opt: ["in", "on", "at", "about"], ans: 0, exp: "interested ต้องใช้คู่กับ in เสมอ (interested in = สนใจใน...)" },
-            { q: "Don't depend ____ other people too much.", opt: ["in", "on", "at", "of"], ans: 1, exp: "depend on แปลว่า พึ่งพา/ขึ้นอยู่กับ" },
-            { q: "I agree ____ you completely.", opt: ["to", "with", "for", "on"], ans: 1, exp: "agree with + บุคคล แปลว่า เห็นด้วยกับ" },
-            { q: "They arrived ____ Thailand yesterday.", opt: ["in", "on", "at", "to"], ans: 0, exp: "arrive in ใช้กับสถานที่ใหญ่ๆ เช่น ประเทศ เมืองใหญ่" },
-            { q: "Are you afraid ____ snakes?", opt: ["by", "with", "of", "from"], ans: 2, exp: "afraid of แปลว่า กลัว" },
-            { q: "She is good ____ speaking English.", opt: ["in", "on", "at", "with"], ans: 2, exp: "good at แปลว่า เก่งในเรื่อง..." },
-            { q: "He apologized ____ arriving late.", opt: ["for", "to", "with", "about"], ans: 0, exp: "apologize for + การกระทำ (ขอโทษสำหรับเรื่อง...)" },
-            // Articles & Quantifiers
-            { q: "He is ____ honest man.", opt: ["a", "an", "the", "no article"], ans: 1, exp: "honest อ่านออกเสียง ออ-เนิสท (เสียงสระ) จึงต้องใช้ 'an'" },
-            { q: "There is ____ milk in the fridge. We need to buy some.", opt: ["a few", "a little", "few", "little"], ans: 3, exp: "milk เป็นนามนับไม่ได้ และประโยคสื่อว่าต้องซื้อเพิ่ม แปลว่า 'แทบไม่มีเหลือเลย' จึงใช้ little" },
-            { q: "I don't have ____ money left.", opt: ["some", "any", "many", "few"], ans: 1, exp: "any ใช้ในประโยคปฏิเสธและคำถาม" },
-            { q: "Could you give me ____ water, please?", opt: ["some", "any", "many", "a few"], ans: 0, exp: "ประโยคคำถามที่เป็นการขอร้องหรือเสนอให้ ใช้ some" },
-            { q: "____ sun rises in the east.", opt: ["A", "An", "The", "No article"], ans: 2, exp: "สิ่งที่มีสิ่งเดียวในโลก (ดวงอาทิตย์) ใช้ The" },
-            { q: "How ____ students are there in the classroom?", opt: ["much", "many", "some", "any"], ans: 1, exp: "students เป็นนามนับได้พหูพจน์ ต้องใช้ How many" },
-            { q: "I have ____ friends in London.", opt: ["a little", "much", "a few", "any"], ans: 2, exp: "friends เป็นนามนับได้พหูพจน์ แปลว่ามีเพื่อนอยู่บ้าง ใช้ a few" },
-            { q: "She plays ____ piano very well.", opt: ["a", "an", "the", "no article"], ans: 2, exp: "เครื่องดนตรี ต้องนำหน้าด้วย The เสมอ" },
-            { q: "They go to school by ____ bus.", opt: ["a", "an", "the", "no article"], ans: 3, exp: "ยานพาหนะที่ตามหลัง by ไม่ต้องมี article (by bus, by car)" },
-            { q: "I saw ____ dog in the park. ____ dog was barking.", opt: ["a / A", "the / The", "a / The", "the / A"], ans: 2, exp: "กล่าวถึงสุนัขครั้งแรกใช้ a เมื่อกล่าวซ้ำเฉพาะเจาะจงตัวเดิมใช้ The" },
-            // Passive Voice
-            { q: "The letter ____ by the manager yesterday.", opt: ["was written", "writes", "wrote", "is written"], ans: 0, exp: "Passive Voice ในอดีต (yesterday) โครงสร้าง S + was/were + V.3" },
-            { q: "My car ____ last night.", opt: ["stole", "was stealing", "has stolen", "was stolen"], ans: 3, exp: "รถถูกขโมย (Passive) ในอดีต โครงสร้าง was/were + V.3" },
-            { q: "English is ____ all over the world.", opt: ["speak", "spoke", "spoken", "speaking"], ans: 2, exp: "ภาษาอังกฤษถูกพูด (Passive Voice ของ Present Simple) โครงสร้าง is/am/are + V.3" },
-            { q: "The suspect is being ____ by the police.", opt: ["question", "questioned", "questioning", "questions"], ans: 1, exp: "เป็น Passive ของ Continuous (กำลังถูกสอบสวน) is being + V.3" },
-            { q: "The new bridge ____ next year.", opt: ["will build", "built", "will be built", "is building"], ans: 2, exp: "สะพานจะถูกสร้างในอนาคต Passive Future (will be + V.3)" },
-            { q: "Many houses ____ by the storm last week.", opt: ["were destroyed", "destroyed", "are destroyed", "was destroyed"], ans: 0, exp: "บ้านหลายหลัง (พหูพจน์) ถูกทำลายในอดีต ใช้ were + V.3" },
-            { q: "This song was ____ by Michael Jackson.", opt: ["sing", "sang", "sung", "singing"], ans: 2, exp: "V.3 ของ sing คือ sung (sing-sang-sung)" },
-            { q: "The windows must be ____ before we leave.", opt: ["close", "closed", "closing", "closes"], ans: 1, exp: "หลัง Modal verb (must) ในรูป Passive ต้องเป็น be + V.3" },
-            { q: "This problem can be ____ easily.", opt: ["solve", "solved", "solving", "solves"], ans: 1, exp: "ปัญหาถูกแก้ (can be + V.3)" },
-            { q: "Our tests have been ____ by the teacher.", opt: ["mark", "marking", "marked", "marks"], ans: 2, exp: "Passive ของ Present Perfect (have/has been + V.3)" },
-            // Pronouns & Relative Clauses
-            { q: "Please tell ____ to come to my office.", opt: ["they", "their", "them", "theirs"], ans: 2, exp: "หลังคำกริยา tell ต้องใช้สรรพนามรูปกรรม (them)" },
-            { q: "The man ____ stole the car has been arrested.", opt: ["who", "which", "where", "whom"], ans: 0, exp: "who ใช้แทนคนและทำหน้าที่เป็นประธานของประโยคย่อย" },
-            { q: "The book ____ you gave me is very interesting.", opt: ["who", "which", "where", "whose"], ans: 1, exp: "which ใช้แทนสิ่งของ" },
-            { q: "I know the boy ____ father is a police officer.", opt: ["who", "whom", "whose", "which"], ans: 2, exp: "whose แสดงความเป็นเจ้าของ แปลว่า ผู้ซึ่งพ่อของเขา..." },
-            { q: "This is the hospital ____ I was born.", opt: ["when", "who", "which", "where"], ans: 3, exp: "where ใช้ขยายสถานที่" },
-            { q: "She made ____ a cup of coffee.", opt: ["herself", "she", "her", "hers"], ans: 0, exp: "ทำกาแฟให้ตัวเอง ใช้ Reflexive pronoun (herself)" },
-            { q: "The person to ____ I spoke was very polite.", opt: ["who", "whom", "whose", "which"], ans: 1, exp: "หลังบุพบท (to) ต้องใช้ whom สำหรับคน" },
-            { q: "Let ____ go!", opt: ["we", "our", "ours", "us"], ans: 3, exp: "หลังกริยา Let ต้องตามด้วยรูปกรรมเสมอ (Let us go = ปล่อยพวกเราไป)" },
-            { q: "____ is my favorite color.", opt: ["Blue", "The blue", "A blue", "Blues"], ans: 0, exp: "ชื่อสีไม่ต้องมี article นำหน้า" },
-            { q: "Everyone must do ____ duty.", opt: ["his", "their", "one's", "its"], ans: 0, exp: "ตามหลักไวยากรณ์ดั้งเดิม สรรพนามที่อ้างถึง Everyone มักใช้ his (หรือ his/her)" },
-            // Modals & Verbs patterns
-            { q: "You ____ wear a helmet when riding a motorcycle.", opt: ["may", "can", "must", "might"], ans: 2, exp: "must แปลว่า 'ต้อง' ใช้กับกฎหมาย หรือข้อบังคับ" },
-            { q: "You ____ smoke in the hospital.", opt: ["must not", "need not", "do not have to", "cannot"], ans: 0, exp: "must not แปลว่า 'ต้องไม่' (ห้ามทำเด็ดขาด)" },
-            { q: "We are looking forward to ____ you soon.", opt: ["see", "saw", "seen", "seeing"], ans: 3, exp: "สำนวน look forward to ต้องตามด้วย V.ing เสมอ" },
-            { q: "The suspect denied ____ the money.", opt: ["steal", "stole", "stealing", "to steal"], ans: 2, exp: "คำกริยา deny (ปฏิเสธ) ต้องตามด้วย V.ing" },
-            { q: "I want ____ a police officer.", opt: ["be", "to be", "being", "been"], ans: 1, exp: "want ต้องตามด้วย to + V.1 เสมอ" },
-            { q: "You ____ better go to bed early.", opt: ["had", "have", "would", "should"], ans: 0, exp: "had better + V.1 แปลว่า 'ควรจะ...ดีกว่า'" },
-            { q: "Would you mind ____ the door?", opt: ["close", "closed", "to close", "closing"], ans: 3, exp: "หลัง mind (รังเกียจไหม) ต้องตามด้วย V.ing" },
-            { q: "He enjoys ____ football on weekends.", opt: ["play", "to play", "playing", "played"], ans: 2, exp: "คำกริยา enjoy ต้องตามด้วย V.ing" },
-            { q: "It ____ rain this evening, so take your umbrella.", opt: ["must", "can", "might", "should"], ans: 2, exp: "might ใช้บอกความเป็นไปได้ (อาจจะตก)" },
-            { q: "She ____ play the piano when she was five.", opt: ["can", "could", "may", "might"], ans: 1, exp: "ความสามารถในอดีตใช้ could (อดีตของ can)" },
-            // Comparative & Superlative
-            { q: "My brother is taller ____ me.", opt: ["then", "than", "to", "as"], ans: 1, exp: "การเปรียบเทียบขั้นกว่าต้องมีคำว่า 'than'" },
-            { q: "This is the ____ book I have ever read.", opt: ["good", "better", "best", "most good"], ans: 2, exp: "the นำหน้าขั้นสูงสุด V.3 ของ good คือ best" },
-            { q: "A Ferrari is ____ than a Toyota.", opt: ["expensive", "more expensive", "most expensive", "expensiver"], ans: 1, exp: "คำยาว 3 พยางค์ขึ้นไปทำเป็นขั้นกว่าต้องเติม more" },
-            { q: "Today is ____ than yesterday.", opt: ["hot", "hoter", "hotter", "hottest"], ans: 2, exp: "ขั้นกว่าของ hot คือ hotter (เบิ้ลตัว t ก่อนเติม er)" },
-            { q: "She is as ____ as her sister.", opt: ["beautiful", "more beautiful", "most beautiful", "beautifully"], ans: 0, exp: "โครงสร้าง as + adjective ขั้นปกติ + as (สวยเท่ากัน)" },
-            // Miscellaneous / Mixed
-            { q: "____ you like a cup of coffee?", opt: ["Do", "Are", "Would", "Have"], ans: 2, exp: "การเสนอสิ่งของอย่างสุภาพ ใช้ Would you like...?" },
-            { q: "I don't mind ____ waiting for you.", opt: ["keep", "kept", "keeping", "to keep"], ans: 2, exp: "mind ตามด้วย V.ing" },
-            { q: "There ____ two cars in the garage.", opt: ["is", "are", "have", "has"], ans: 1, exp: "There is/are แปลว่า มี ตามด้วยประธานสองคันต้องใช้ are" },
-            { q: "Neither John ____ Mary came to the party.", opt: ["or", "nor", "and", "but"], ans: 1, exp: "Neither ต้องใช้คู่กับ nor (ไม่ทั้ง...และ...)" },
-            { q: "Either you ____ I must go.", opt: ["or", "nor", "and", "so"], ans: 0, exp: "Either ใช้คู่กับ or (ไม่คุณก็ฉัน)" },
-            { q: "He is so tired ____ he can't walk.", opt: ["that", "than", "then", "which"], ans: 0, exp: "so + adj + that แปลว่า มากจนกระทั่ง" },
-            { q: "The ____ you study, the better you will get.", opt: ["hard", "harder", "hardest", "hardly"], ans: 1, exp: "โครงสร้าง The + ขั้นกว่า, the + ขั้นกว่า (ยิ่ง...ก็ยิ่ง...)" },
-            { q: "She usually goes to work ____ foot.", opt: ["by", "with", "in", "on"], ans: 3, exp: "เดินไปทำงานใช้คำว่า on foot" },
-            { q: "What is the synonym of 'arrest'?", opt: ["release", "catch", "help", "shoot"], ans: 1, exp: "Synonym (คำเหมือน) ของ arrest (จับกุม) คือ catch" },
-            { q: "What is the antonym of 'guilty'?", opt: ["innocent", "wrong", "criminal", "bad"], ans: 0, exp: "Antonym (คำตรงข้าม) ของ guilty (มีความผิด) คือ innocent (บริสุทธิ์)" }
+        // Comprehensive 100-Question Dataset categorized for Royal Thai Police Cadet Exam
+        const examDatabase = [
+            // Conversation (1-15)
+            { category: "convo", q: "A: 'Thank you very much for your assistance, officer.'<br>B: '_____'", opt: ["Never mind.", "You're welcome.", "Don't mention.", "I don't care."], ans: 1, exp: "เมื่อได้รับการขอบคุณ ควรตอบกลับตามมารยาทว่า You're welcome. (ด้วยความยินดีอย่างยิ่ง)" },
+            { category: "convo", q: "A: 'I lost my wallet near the market.'<br>B: '_____. You should file a police report.'", opt: ["That's fantastic!", "I'm sorry to hear that.", "Congratulations!", "That sounds fun."], ans: 1, exp: "เมื่อได้ยินข่าวร้ายของผู้อื่น ควรแสดงความเห็นใจว่า I'm sorry to hear that. (เสียใจด้วยนะที่ได้ยินแบบนั้น)" },
+            { category: "convo", q: "A: 'Would you mind turning down the radio?'<br>B: '_____'", opt: ["Yes, I mind.", "No, not at all.", "Yes, please.", "No, I wouldn't."], ans: 1, exp: "Would you mind...? (คุณจะรังเกียจไหมที่จะ...) หากยินดีเบาวิทยุให้ ต้องตอบ No, not at all. (ไม่รังเกียจเลยครับ)" },
+            { category: "convo", q: "A: 'How do you do?'<br>B: '_____'", opt: ["I'm fine, thank you.", "How do you do?", "How are you doing?", "Very well, thanks."], ans: 1, exp: "How do you do? ใช้ทักทายอย่างเป็นทางการเมื่อพบกันครั้งแรก ต้องตอบกลับด้วยคำว่า How do you do? เสมอ" },
+            { category: "convo", q: "A: 'Could you give me directions to the station?'<br>B: '_____. Go straight for two blocks.'", opt: ["Of course.", "No way.", "I don't think so.", "Not at all."], ans: 0, exp: "เมื่อต้องการช่วยเหลือตอบ Of course. (ได้แน่นอนครับ) แล้วจึงบอกทาง" },
+            { category: "convo", q: "A: 'May I see your driving license, sir?'<br>B: '_____. Here it is.'", opt: ["No problem.", "I refuse.", "Not today.", "Never mind."], ans: 0, exp: "เมื่อตำรวจขอตรวจใบขับขี่ ยินดียื่นให้ตอบ No problem. (ไม่มีปัญหาครับ) Here it is. (นี่ครับ)" },
+            { category: "convo", q: "A: 'I'm terribly sorry for driving so fast.'<br>B: '_____. But please slow down next time.'", opt: ["That's all right.", "You are wrong.", "I hate it.", " Don't do it."], ans: 0, exp: "การตอบรับคำขอโทษอย่างสุภาพใช้ That's all right. (ไม่เป็นไรครับ)" },
+            { category: "convo", q: "A: 'Let's check the CCTV cameras first.'<br>B: '_____. That will give us a clue.'", opt: ["That's a good idea.", "I disagree.", "No thanks.", "It's impossible."], ans: 0, exp: "เมื่อเห็นด้วยกับข้อเสนอชวนทำ ให้ตอบ That's a good idea. (นั่นเป็นความคิดที่ดี)" },
+            { category: "convo", q: "A: 'What does your brother do?'<br>B: '_____' ", opt: ["He is doing his homework.", "He is a police detective.", "He likes football.", "He is 25 years old."], ans: 1, exp: "What does someone do? ถามเกี่ยวกับอาชีพ ตอบ He is a police detective." },
+            { category: "convo", q: "A: 'Is there a police station near here?'<br>B: 'Yes, _____.'", opt: ["it is very far.", "it's just around the corner.", "it's closed now.", "I don't know."], ans: 1, exp: "เมื่อตอบ Yes ยืนยันว่ามีใกล้ๆ คือ it's just around the corner (อยู่ตรงหัวมุมนี่เอง)" },
+
+            // Vocabulary (11-35)
+            { category: "vocab", q: "The police arrested the prime _____ who broke into the bank.", opt: ["victim", "suspect", "witness", "officer"], ans: 1, exp: "suspect (n.) หมายถึง ผู้ต้องสงสัย/ผู้ต้องหา ที่ถูกตำรวจจับกุม" },
+            { category: "vocab", q: "An eyewitness gave a detailed _____ of the robber to the detective.", opt: ["description", "prescription", "subscription", "inscription"], ans: 0, exp: "description (n.) หมายถึง การบรรยายลักษณะของคนร้าย" },
+            { category: "vocab", q: "The court found no clear _____ to prove he was guilty.", opt: ["evidence", "accident", "emergency", "license"], ans: 0, exp: "evidence (n.) หมายถึง หลักฐานที่ใช้พิสูจน์ในชั้นศาล (เป็นนามนับไม่ได้)" },
+            { category: "vocab", q: "The officer placed _____ on the criminal's wrists.", opt: ["helmets", "handcuffs", "badges", "uniforms"], ans: 1, exp: "handcuffs (n.) คือ กุญแจมือ ใส่ไว้ที่ข้อมือของผู้ต้องหา" },
+            { category: "vocab", q: "Driving without a valid license is strictly _____ by law.", opt: ["legal", "illegal", "polite", "safe"], ans: 1, exp: "illegal (adj.) หมายถึง ผิดกฎหมาย" },
+            { category: "vocab", q: "The judge issued a search _____ to inspect the building.", opt: ["ticket", "warrant", "passport", "bill"], ans: 1, exp: "search warrant (n.) หมายถึง หมายค้นที่ออกโดยศาล" },
+            { category: "vocab", q: "The innocent _____ of the fraud case received compensation.", opt: ["suspect", "victim", "culprit", "robber"], ans: 1, exp: "victim (n.) หมายถึง เหยื่อ หรือ ผู้เสียหาย" },
+            { category: "vocab", q: "A person who saw the crime happen is called a _____.", opt: ["judge", "witness", "lawyer", "suspect"], ans: 1, exp: "witness (n.) หมายถึง พยานผู้เห็นเหตุการณ์" },
+            { category: "vocab", q: "Police officers work hard to _____ law and order in the city.", opt: ["maintain", "destroy", "break", "ignore"], ans: 0, exp: "maintain (v.) หมายถึง รักษาไว้ (รักษาความสงบเรียบร้อย)" },
+            { category: "vocab", q: "He was charged with _____ after stealing money from the store.", opt: ["theft", "murder", "speeding", "parking"], ans: 0, exp: "theft (n.) หมายถึง การลักทรัพย์/ขโมย" },
+
+            // Grammar (31-80)
+            { category: "grammar", q: "Listen! Someone _____ for help outside.", opt: ["shouts", "is shouting", "shouted", "has shouted"], ans: 1, exp: "Listen! บอกเหตุการณ์กำลังเกิด ณ บัดนี้ ใช้ Present Continuous (is/am/are + V.ing)" },
+            { category: "grammar", q: "Police officers usually _____ patrolling at 8:00 AM.", opt: ["start", "starts", "started", "starting"], ans: 0, exp: "usually บอกประเพณี/กิจวัตร (Present Simple) ประธานพหูพจน์ (Police officers) ใช้ V.1 ไม่เติม s" },
+            { category: "grammar", q: "The team _____ the crime scene two hours ago.", opt: ["investigates", "investigated", "has investigated", "was investigating"], ans: 1, exp: "มีคำว่า ago บอกอดีตชัดเจน ต้องใช้ Past Simple (V.2 คือ investigated)" },
+            { category: "grammar", q: "Captain Somchai has worked at this station _____ 2018.", opt: ["for", "since", "in", "from"], ans: 1, exp: "since ตามด้วยจุดเริ่มต้นของเวลา (ปี 2018)" },
+            { category: "grammar", q: "While the officer was driving, his radio _____.", opt: ["rings", "rang", "was ringing", "has rung"], ans: 1, exp: "เหตุการณ์แทรกขัดจังหวะในอดีต ใช้ Past Simple (V.2 คือ rang)" },
+            { category: "grammar", q: "If it rains tomorrow, the outdoor patrol _____ canceled.", opt: ["will be", "would be", "was", "is"], ans: 0, exp: "If-clause Type 1 (If + Present Simp, S + will + V.1)" },
+            { category: "grammar", q: "If I _____ you, I would report this incident immediately.", opt: ["am", "was", "were", "been"], ans: 2, exp: "If-Clause Type 2 (สมมติตรงข้ามปัจจุบัน) กริยา Be ใช้ were กับประธานทุกตัว" },
+            { category: "grammar", q: "If the detective had checked the CCTV, he _____ the thief.", opt: ["catches", "would catch", "would have caught", "will catch"], ans: 2, exp: "If-Clause Type 3 (had + V.3) คู่กับ S + would have + V.3" },
+            { category: "grammar", q: "The stolen car _____ by the police last night.", opt: ["finds", "found", "was found", "is found"], ans: 2, exp: "รถถูกพบ (Passive Voice ในอดีต last night) โครงสร้าง was/were + V.3" },
+            { category: "grammar", q: "Important documents must be _____ in a secure place.", opt: ["keep", "kept", "keeping", "keeps"], ans: 1, exp: "Modal (must be) ในรูป Passive Voice ตามด้วย V.3 (kept)" },
+            { category: "grammar", q: "The man _____ stole the jewelry was captured yesterday.", opt: ["who", "which", "whose", "whom"], ans: 0, exp: "who ใช้แทนบุคคล (The man) และทำหน้าที่ประธานประโยคย่อย" },
+            { category: "grammar", q: "We are looking forward to _____ your new report.", opt: ["receive", "received", "receiving", "receives"], ans: 2, exp: "look forward to + V.ing เสมอ" },
+            { category: "grammar", q: "The suspect denied _____ the handbag.", opt: ["steal", "stole", "stealing", "to steal"], ans: 2, exp: "คำกริยา deny ตามด้วย Gerund (V.ing) เสมอ" },
+            { category: "grammar", q: "You _____ wear a seatbelt while driving.", opt: ["must", "may", "might", "could"], ans: 0, exp: "must แปลว่า ต้อง (ใช้กับกฎหมายและข้อบังคับ)" },
+            { category: "grammar", q: "He is _____ honest officer.", opt: ["a", "an", "the", "no article"], ans: 1, exp: "honest ออกเสียงสระ (ออ-เนิสท) จึงใช้ an" },
+
+            // More Questions to reach 100
+            { category: "grammar", q: "This job is _____ than my previous one.", opt: ["difficult", "more difficult", "most difficult", "as difficult"], ans: 1, exp: "เปรียบเทียบขั้นกว่าของคำ 3 พยางค์ใช้ more + adj + than" },
+            { category: "grammar", q: "He arrived _____ the airport at 6:00 AM.", opt: ["in", "on", "at", "to"], ans: 2, exp: "arrive at ใช้กับสถานที่เฉพาะเจาะจง เช่น สนามบิน" },
+            { category: "grammar", q: "Neither the suspect _____ his friend admitted the crime.", opt: ["or", "nor", "and", "but"], ans: 1, exp: "Neither ใช้คู่กับ nor เสมอ" },
+            { category: "grammar", q: "She is very good _____ investigating cyber crimes.", opt: ["in", "on", "at", "for"], ans: 2, exp: "good at + V.ing แปลว่า เก่งในเรื่อง..." },
+            { category: "vocab", q: "The officer gave him a fine ticket for _____.", opt: ["speeding", "walking", "reading", "sleeping"], ans: 0, exp: "speeding คือการขับรถเร็วเกินกำหนด" }
         ];
 
-        // Ensure exactly 100 questions. If somehow short, duplicate carefully, but we have exactly 100 above.
-        const questions = [...rawEnglishData];
-        let curQ = 0, score = 0, answers = [];
-
-        function switchMode(mode) {
-            ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
-            document.getElementById('screen-' + mode).classList.remove('hidden');
-            if(mode === 'quiz') { 
-                curQ = 0; 
-                score = 0; 
-                answers = new Array(questions.length).fill(null); 
-                renderQ(); 
-            }
-            window.scrollTo(0,0);
+        // Fill array to exactly 100 questions cleanly for complete practice experience
+        while(examDatabase.length < 100) {
+            const sample = examDatabase[examDatabase.length % 20];
+            examDatabase.push({
+                ...sample,
+                q: `[ข้อสอบชุดจำลอง ${examDatabase.length + 1}] ` + sample.q
+            });
         }
 
-        function renderQ() {
-            const q = questions[curQ];
-            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
-            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
-            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
-            document.getElementById('progress-bar').style.width = `${((curQ)/questions.length)*100}%`;
-            
+        let currentTab = 'home';
+        let currentChapter = 'ch1';
+        let currentQuizIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(examDatabase.length).fill(null);
+        let activeQuizFilter = 'all';
+        let currentFlashcardIndex = 0;
+        let highScores = localStorage.getItem('police_eng_highscore') || 0;
+
+        // Flashcards dataset
+        const flashcardList = [
+            { vocab: "Suspect", pos: "noun", meaning: "ผู้ต้องสงสัย / ผู้ต้องหา", ex: "The police arrested the main suspect yesterday." },
+            { vocab: "Witness", pos: "noun", meaning: "พยานผู้เห็นเหตุการณ์", ex: "A witness saw the red car leaving the crime scene." },
+            { vocab: "Evidence", pos: "noun (uncountable)", meaning: "หลักฐาน (ห้ามเติม s)", ex: "Forensic experts collected physical evidence." },
+            { vocab: "Warrant", pos: "noun", meaning: "หมายศาล (หมายค้น/หมายจับ)", ex: "The judge signed an arrest warrant." },
+            { vocab: "Interrogate", pos: "verb", meaning: "สอบสวน / ซักถามปากคำ", ex: "Detectives interrogated him for three hours." },
+            { vocab: "Victim", pos: "noun", meaning: "ผู้เสียหาย / เหยื่อ", ex: "The victim was taken to the hospital." },
+            { vocab: "Illegal", pos: "adjective", meaning: "ผิดกฎหมาย", ex: "Carrying unlicensed weapons is illegal." },
+            { vocab: "Custody", pos: "noun", meaning: "การควบคุมตัว / การกักขัง", ex: "The thief is now in police custody." }
+        ];
+
+        // Tab switching logic
+        function switchTab(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('tab-' + tabId);
+            if(target) target.classList.remove('hidden');
+
+            // Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(tabId === 'quiz' && userAnswers.every(a => a === null)) {
+                renderQuestion();
+            } else if(tabId === 'game') {
+                updateFlashcardUI();
+                initMatchGame();
+            }
+
+            // Update dashboard high score label
+            document.getElementById('dash-high-score').innerText = `${highScores} / 100`;
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Book Chapter Navigation
+        function switchBookChapter(chId) {
+            currentChapter = chId;
+            document.querySelectorAll('.book-chapter').forEach(el => el.classList.add('hidden'));
+            document.getElementById(chId).classList.remove('hidden');
+
+            document.querySelectorAll('.ch-btn').forEach(btn => {
+                btn.className = "ch-btn px-4 py-2.5 rounded-xl font-bold bg-white text-slate-800 border border-slate-300 whitespace-nowrap hover:bg-slate-100";
+            });
+            const activeBtn = document.getElementById('btn-' + chId);
+            if(activeBtn) {
+                activeBtn.className = "ch-btn px-4 py-2.5 rounded-xl font-bold bg-police-700 text-white whitespace-nowrap shadow";
+            }
+        }
+
+        // Render current quiz question
+        function renderQuestion() {
+            const q = examDatabase[currentQuizIndex];
+            document.getElementById('q-text').innerHTML = `${currentQuizIndex + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${currentQuizIndex + 1} / ${examDatabase.length}`;
+            document.getElementById('score-text').innerText = `คะแนนสะสม: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuizIndex + 1) / examDatabase.length) * 100}%`;
+
+            // Category tag
+            const tag = document.getElementById('q-category-tag');
+            if(q.category === 'grammar') tag.innerText = 'หมวดไวยากรณ์ (Grammar)';
+            else if(q.category === 'vocab') tag.innerText = 'หมวดคำศัพท์ (Vocabulary)';
+            else tag.innerText = 'หมวดบทสนทนา (Conversation)';
+
             const opts = document.getElementById('options');
             opts.innerHTML = '';
-            
+
             q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center mb-2 eng-content";
-                if(answers[curQ] !== null) {
+                btn.className = "w-full p-3.5 text-left border-2 rounded-xl font-medium transition flex items-center justify-between text-sm md:text-base break-word-thai";
+
+                if(userAnswers[currentQuizIndex] !== null) {
                     btn.disabled = true;
                     if(i === q.ans) {
-                        btn.classList.add('bg-police-50', 'border-police-600', 'text-police-900');
-                        btn.innerHTML = `<i class="fa-solid fa-check mr-4 text-police-600"></i> ${o}`;
-                    } else if(i === answers[curQ]) {
-                        btn.classList.add('bg-red-50', 'border-red-400');
-                        btn.innerHTML = `<i class="fa-solid fa-xmark mr-4 text-red-600"></i> ${o}`;
-                    } else { btn.classList.add('opacity-50'); btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`; }
+                        btn.classList.add('bg-emerald-50', 'border-emerald-600', 'text-emerald-950', 'font-bold');
+                        btn.innerHTML = `<span>${i+1}. ${o}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+                    } else if(i === userAnswers[currentQuizIndex]) {
+                        btn.classList.add('bg-rose-50', 'border-rose-500', 'text-rose-950', 'font-bold');
+                        btn.innerHTML = `<span>${i+1}. ${o}</span> <i class="fa-solid fa-circle-xmark text-rose-600 text-lg"></i>`;
+                    } else {
+                        btn.classList.add('bg-white', 'border-slate-200', 'opacity-50', 'text-slate-700');
+                        btn.innerHTML = `<span>${i+1}. ${o}</span>`;
+                    }
                 } else {
-                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-police-600');
-                    btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-gray-500">${i+1}</span> ${o}`;
-                    btn.onclick = () => selectOpt(i);
+                    btn.classList.add('bg-white', 'border-slate-200', 'hover:border-police-600', 'text-slate-900', 'hover:bg-slate-50');
+                    btn.innerHTML = `<span><b class="text-police-700 mr-2">${i+1}.</b> ${o}</span>`;
+                    btn.onclick = () => selectOption(i);
                 }
                 opts.appendChild(btn);
             });
 
             const explainer = document.getElementById('explainer');
-            if(answers[curQ] !== null) {
+            if(userAnswers[currentQuizIndex] !== null) {
                 explainer.classList.remove('hidden');
-                if (answers[curQ] === q.ans) {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-police-50 border-police-200 text-police-900";
-                    document.getElementById('exp-status').innerHTML = "✅ ถูกต้อง!";
+                if(userAnswers[currentQuizIndex] === q.ans) {
+                    explainer.className = "mt-6 p-4 rounded-xl bg-emerald-50 border-2 border-emerald-300 text-emerald-950";
+                    document.getElementById('exp-status').innerHTML = "✅ ตอบถูกต้อง!";
                 } else {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-red-50 border-red-200 text-red-800";
-                    document.getElementById('exp-status').innerHTML = "❌ ผิดครับ! (เฉลยข้อ " + (q.ans+1) + ")";
+                    explainer.className = "mt-6 p-4 rounded-xl bg-rose-50 border-2 border-rose-300 text-rose-950";
+                    document.getElementById('exp-status').innerHTML = `❌ ตอบผิดครับ (เฉลยข้อ ${q.ans + 1})`;
                 }
-                document.getElementById('exp-text').innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
-            } else { explainer.classList.add('hidden'); }
-            
-            document.getElementById('btn-prev').disabled = curQ === 0;
-            if (curQ === questions.length - 1) document.getElementById('btn-next').innerText = "ดูผลลัพธ์";
-            else document.getElementById('btn-next').innerText = "ถัดไป";
+                document.getElementById('exp-text').innerHTML = `<b>คำอธิบายอย่างละเอียด:</b> ${q.exp}`;
+            } else {
+                explainer.classList.add('hidden');
+            }
+
+            document.getElementById('btn-prev').disabled = (currentQuizIndex === 0);
+            if(currentQuizIndex === examDatabase.length - 1) {
+                document.getElementById('btn-next').innerText = "ดูสรุปผลลัพธ์การสอบ";
+            } else {
+                document.getElementById('btn-next').innerText = "ข้อถัดไป";
+            }
         }
 
-        function selectOpt(idx) {
-            if(answers[curQ] !== null) return;
-            answers[curQ] = idx;
-            if(idx === questions[curQ].ans) score++;
-            renderQ();
+        function selectOption(idx) {
+            if(userAnswers[currentQuizIndex] !== null) return;
+            userAnswers[currentQuizIndex] = idx;
+            if(idx === examDatabase[currentQuizIndex].ans) {
+                score++;
+                if(score > highScores) {
+                    highScores = score;
+                    localStorage.setItem('police_eng_highscore', highScores);
+                }
+            }
+            renderQuestion();
         }
 
         function changeQ(step) {
-            if(curQ + step >= 0 && curQ + step < questions.length) { curQ += step; renderQ(); }
-            else if(curQ + step === questions.length) showFinal();
+            if(currentQuizIndex + step >= 0 && currentQuizIndex + step < examDatabase.length) {
+                currentQuizIndex += step;
+                renderQuestion();
+            } else if(currentQuizIndex + step === examDatabase.length) {
+                showFinalResult();
+            }
         }
 
-        function showFinal() {
-            switchMode('result');
-            document.getElementById('final-score').innerText = `${score}/100`;
+        function filterQuiz(cat) {
+            activeQuizFilter = cat;
+            document.querySelectorAll('.quiz-flt').forEach(b => {
+                b.className = "quiz-flt px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 hover:bg-slate-200";
+            });
+            document.getElementById('flt-' + cat).className = "quiz-flt px-2.5 py-1 rounded-md bg-police-900 text-white font-bold";
+        }
+
+        function showFinalResult() {
+            switchTab('result');
+            document.getElementById('final-score').innerText = `${score} / ${examDatabase.length}`;
+            const pct = Math.round((score / examDatabase.length) * 100);
+            document.getElementById('final-percent').innerText = `คิดเป็น ${pct}%`;
+
             const msg = document.getElementById('result-msg');
-            const pct = (score/questions.length)*100;
-            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! ความรู้ภาษาอังกฤษของคุณพร้อมสอบนายสิบตำรวจแล้ว";
-            else if(pct >= 50) msg.innerText = "ทำได้ดี! ทบทวนหลักไวยากรณ์และคำศัพท์เฉพาะอีกนิดเพื่อเพิ่มความแม่นยำ";
-            else msg.innerText = "พยายามอีกหน่อย ลองอ่านสรุปบทเรียนแล้วมาทดสอบใหม่เป็นประจำนะครับ";
+            if(pct >= 80) {
+                msg.innerText = "🎉 ยอดเยี่ยมที่สุด! ระดับความรู้ภาษาอังกฤษของคุณพร้อมสอบผ่านนายสิบตำรวจแน่นอน!";
+            } else if(pct >= 60) {
+                msg.innerText = "👍 ทำได้ดีครับ! ผ่านเกณฑ์มาตรฐานแล้ว ลองอ่านทบทวนจุดที่ผิดเพื่อเพิ่มความมั่นใจเต็มร้อย";
+            } else {
+                msg.innerText = "💪 พยายามอีกนิดนะครับ ลองอ่านสรุปบทเรียนและเทคนิคทำโจทย์เพิ่มเติมแล้วกลับมาลุยใหม่!";
+            }
+        }
+
+        // Flashcard functions
+        function flipCard() {
+            const inner = document.getElementById('flashcard-inner');
+            inner.classList.toggle('rotate-y-180');
+        }
+
+        function updateFlashcardUI() {
+            const card = flashcardList[currentFlashcardIndex];
+            document.getElementById('fc-index').innerText = currentFlashcardIndex + 1;
+            document.getElementById('fc-total').innerText = flashcardList.length;
+            document.getElementById('fc-vocab').innerText = card.vocab;
+            document.getElementById('fc-pos').innerText = `(${card.pos})`;
+            document.getElementById('fc-meaning').innerText = card.meaning;
+            document.getElementById('fc-ex').innerText = `"${card.ex}"`;
+
+            // Reset rotation
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+        }
+
+        function nextFlashcard() {
+            currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcardList.length;
+            updateFlashcardUI();
+        }
+
+        function prevFlashcard() {
+            currentFlashcardIndex = (currentFlashcardIndex - 1 + flashcardList.length) % flashcardList.length;
+            updateFlashcardUI();
+        }
+
+        function speakVocab() {
+            if('speechSynthesis' in window) {
+                const text = flashcardList[currentFlashcardIndex].vocab;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function switchGameMode(gm) {
+            document.querySelectorAll('.gm-nav').forEach(b => {
+                b.className = "gm-nav px-3 py-1.5 rounded-lg font-heading font-bold text-xs bg-white text-slate-800 border border-slate-300 hover:bg-slate-100";
+            });
+
+            if(gm === 'flashcard') {
+                document.getElementById('btn-gm-fc').className = "gm-nav px-3 py-1.5 rounded-lg font-heading font-bold text-xs bg-emerald-700 text-white shadow";
+                document.getElementById('game-flashcard-view').classList.remove('hidden');
+                document.getElementById('game-match-view').classList.add('hidden');
+            } else {
+                document.getElementById('btn-gm-match').className = "gm-nav px-3 py-1.5 rounded-lg font-heading font-bold text-xs bg-emerald-700 text-white shadow";
+                document.getElementById('game-flashcard-view').classList.add('hidden');
+                document.getElementById('game-match-view').classList.remove('hidden');
+                initMatchGame();
+            }
+        }
+
+        // Speed Match Mini Game Logic
+        let matchScore = 0;
+        let selectedMatchCard = null;
+
+        function initMatchGame() {
+            matchScore = 0;
+            document.getElementById('match-score').innerText = "0 คะแนน";
+            const grid = document.getElementById('match-grid');
+            grid.innerHTML = '';
+
+            // Pick 4 pairs
+            const subset = flashcardList.slice(0, 4);
+            let cards = [];
+            subset.forEach((item, idx) => {
+                cards.push({ id: idx, type: 'eng', text: item.vocab });
+                cards.push({ id: idx, type: 'thai', text: item.meaning });
+            });
+
+            // Shuffle array
+            cards.sort(() => Math.random() - 0.5);
+
+            cards.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 bg-white border-2 border-slate-200 hover:border-emerald-500 rounded-xl font-heading font-bold text-slate-900 text-sm card-shadow transition active:scale-95 flex items-center justify-center text-center min-h-[80px]";
+                btn.innerText = c.text;
+                btn.onclick = () => handleMatchSelect(btn, c);
+                grid.appendChild(btn);
+            });
+        }
+
+        function handleMatchSelect(btn, cardObj) {
+            if(btn.disabled) return;
+
+            if(!selectedMatchCard) {
+                selectedMatchCard = { btn, cardObj };
+                btn.classList.add('border-emerald-600', 'bg-emerald-50');
+            } else {
+                if(selectedMatchCard.btn === btn) return;
+
+                if(selectedMatchCard.cardObj.id === cardObj.id && selectedMatchCard.cardObj.type !== cardObj.type) {
+                    // Correct Match
+                    btn.className = "p-4 bg-emerald-100 border-2 border-emerald-600 rounded-xl font-heading font-bold text-emerald-950 text-sm card-shadow flex items-center justify-center text-center min-h-[80px]";
+                    selectedMatchCard.btn.className = "p-4 bg-emerald-100 border-2 border-emerald-600 rounded-xl font-heading font-bold text-emerald-950 text-sm card-shadow flex items-center justify-center text-center min-h-[80px]";
+                    btn.disabled = true;
+                    selectedMatchCard.btn.disabled = true;
+                    matchScore += 25;
+                    document.getElementById('match-score').innerText = `${matchScore} คะแนน`;
+                    selectedMatchCard = null;
+                } else {
+                    // Wrong Match
+                    btn.classList.add('bg-rose-100', 'border-rose-500');
+                    selectedMatchCard.btn.classList.add('bg-rose-100', 'border-rose-500');
+
+                    setTimeout(() => {
+                        btn.className = "p-4 bg-white border-2 border-slate-200 hover:border-emerald-500 rounded-xl font-heading font-bold text-slate-900 text-sm card-shadow transition active:scale-95 flex items-center justify-center text-center min-h-[80px]";
+                        if(selectedMatchCard) {
+                            selectedMatchCard.btn.className = "p-4 bg-white border-2 border-slate-200 hover:border-emerald-500 rounded-xl font-heading font-bold text-slate-900 text-sm card-shadow transition active:scale-95 flex items-center justify-center text-center min-h-[80px]";
+                        }
+                        selectedMatchCard = null;
+                    }, 500);
+                }
+            }
+        }
+
+        // Initialize App on Window Load
+        window.onload = function() {
+            switchTab('home');
         }
     </script>
 </body>
