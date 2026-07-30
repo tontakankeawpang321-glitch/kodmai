@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="h-full bg-slate-100">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คลังความรู้ เตรียมสอบนายสิบตำรวจ - ภาษาไทย (ธีมดำขาว)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>คู่มือเตรียมสอบนายสิบตำรวจ - วิชาภาษาไทย (ฉบับสมบูรณ์)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts: Sarabun -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Sarabun & Noto Sans Thai -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -17,6 +17,15 @@
                 extend: {
                     fontFamily: {
                         sans: ['Sarabun', 'sans-serif'],
+                        heading: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        police: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            gold: '#d97706',
+                            accent: '#1e3a8a'
+                        }
                     }
                 }
             }
@@ -24,163 +33,596 @@
     </script>
 
     <style>
-        body { background-color: #f8fafc; /* zinc-50 equivalent */ }
-        .thai-content { overflow-x: auto; padding-bottom: 0.5rem; }
+        /* High Contrast Typography Guard */
+        body { 
+            font-family: 'Sarabun', sans-serif;
+            color: #0f172a; /* Extra dark slate for maximum readability */
+            background-color: #f1f5f9;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Prompt', sans-serif;
+        }
+        .text-readable {
+            color: #0f172a !important;
+            line-height: 1.7;
+        }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .hover-lift { transition: all 0.2s ease; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #0f172a;
+            font-weight: 700;
+            border-bottom: 3px solid #1e3a8a;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="min-h-screen pb-10 text-zinc-800 font-sans bg-zinc-50">
+<body class="min-h-screen flex flex-col antialiased bg-slate-100 text-slate-900 selection:bg-amber-200">
 
     <!-- Navigation Bar -->
-    <nav class="bg-gradient-to-r from-zinc-900 to-zinc-800 text-white shadow-lg sticky top-0 z-50 border-b-4 border-zinc-400">
-        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
-                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
-                    <i class="fa-solid fa-user-shield text-zinc-100 text-xl"></i>
+    <nav class="bg-slate-900 text-white sticky top-0 z-50 border-b-2 border-amber-500 shadow-lg">
+        <div class="max-w-6xl mx-auto px-3 sm:px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
+                    <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-slate-900 font-black text-xl shadow-md border border-amber-300">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <div class="font-heading font-bold text-base sm:text-lg leading-tight tracking-wide text-amber-400">POLICE EXAM PRO</div>
+                        <div class="text-[11px] sm:text-xs text-slate-300 font-medium">คู่มือเตรียมสอบนายสิบตำรวจ • วิชาภาษาไทย</div>
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-white uppercase">Police Academy</span>
-                    <span class="text-[10px] md:text-xs text-zinc-300 font-medium">ติวสอบ นายสิบตำรวจ (วิชาภาษาไทย)</span>
+
+                <!-- Desktop / Tablet Navigation Links -->
+                <div class="hidden md:flex items-center space-x-1 font-medium text-sm">
+                    <button onclick="switchMode('home')" id="nav-home" class="nav-link px-3 py-2 rounded-lg hover:bg-slate-800 transition">หน้าหลัก</button>
+                    <button onclick="switchMode('lesson')" id="nav-lesson" class="nav-link px-3 py-2 rounded-lg hover:bg-slate-800 transition">สรุปบทเรียนตำรา</button>
+                    <button onclick="switchMode('technique')" id="nav-technique" class="nav-link px-3 py-2 rounded-lg hover:bg-slate-800 transition">เทคนิคการอ่าน/สอบ</button>
+                    <button onclick="switchMode('game')" id="nav-game" class="nav-link px-3 py-2 rounded-lg hover:bg-slate-800 transition text-amber-300 font-bold"><i class="fa-solid fa-gamepad mr-1"></i> มินิเกมความจำ</button>
+                    <button onclick="switchMode('quiz')" id="nav-quiz" class="ml-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg shadow-md transition transform hover:scale-105"><i class="fa-solid fa-pen-to-square mr-1"></i> เริ่มคลังข้อสอบ 100 ข้อ</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="p-2 text-slate-200 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
-            <div class="flex space-x-2 items-center">
-                <button onclick="switchMode('home')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm transition"><i class="fa-solid fa-house"></i></button>
-                <button onclick="switchMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition">บทเรียน</button>
-                <button onclick="switchMode('quiz')" class="px-4 py-2 bg-white hover:bg-zinc-200 text-zinc-900 rounded-lg font-bold text-xs md:text-sm shadow-md transition transform hover:scale-105">เริ่มสอบ</button>
-            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-950 border-t border-slate-800 px-4 py-3 space-y-2 font-medium text-sm">
+            <button onclick="switchMode('home'); toggleMobileMenu()" class="block w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 text-slate-100"><i class="fa-solid fa-house mr-2 text-amber-400"></i> หน้าหลัก</button>
+            <button onclick="switchMode('lesson'); toggleMobileMenu()" class="block w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 text-slate-100"><i class="fa-solid fa-book-open mr-2 text-amber-400"></i> สรุปบทเรียนตำราฉบับเต็ม</button>
+            <button onclick="switchMode('technique'); toggleMobileMenu()" class="block w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 text-slate-100"><i class="fa-solid fa-lightbulb mr-2 text-amber-400"></i> เทคนิคการอ่าน & ทำข้อสอบ</button>
+            <button onclick="switchMode('game'); toggleMobileMenu()" class="block w-full text-left py-2.5 px-3 rounded-lg hover:bg-slate-800 text-amber-300 font-bold"><i class="fa-solid fa-gamepad mr-2"></i> มินิเกมฝึกความจำข้อสอบ</button>
+            <button onclick="switchMode('quiz'); toggleMobileMenu()" class="block w-full text-center py-3 px-3 rounded-lg bg-amber-500 text-slate-950 font-bold mt-2 shadow"><i class="fa-solid fa-file-signature mr-2"></i> ทำแบบทดสอบ 100 ข้อ</button>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-4 mt-2">
+    <main class="flex-grow max-w-5xl w-full mx-auto p-3 sm:p-5 md:p-6">
         
-        <!-- 1. HOME SCREEN -->
+        <!-- ================= 1. HOME SCREEN ================= -->
         <div id="screen-home" class="space-y-6 animate-fade-in">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-zinc-200">
-                <div class="relative bg-gradient-to-br from-zinc-900 to-zinc-700 p-10 md:p-14 text-center text-white overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
-                    <div class="relative z-10 flex flex-col items-center">
-                        <div class="w-16 h-16 bg-white/20 text-white rounded-full flex items-center justify-center text-3xl mb-4 border border-white/30">
-                            <i class="fa-solid fa-language"></i>
-                        </div>
-                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white">ติวเข้มภาษาไทย</h1>
-                        <h2 class="text-xl md:text-2xl font-bold text-zinc-300 mb-6">นายสิบตำรวจ ชุดที่ 1</h2>
-                        <p class="text-zinc-200 max-w-lg mx-auto font-medium">แบบทดสอบคุณภาพ <span class="font-bold text-white">100</span> ข้อ พร้อมคำอธิบายละเอียด</p>
+            <!-- Hero Card -->
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-slate-700 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full text-xs font-bold mb-4">
+                        <i class="fa-solid fa-star mr-1"></i> อัปเดตแนวข้อสอบเก็งใหม่ล่าสุด
+                    </span>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white mb-3 leading-tight">
+                        คลังความรู้ & เก็งข้อสอบวิชาภาษาไทย <span class="text-amber-400 underline decoration-amber-500">นายสิบตำรวจ</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed font-normal">
+                        เจาะลึกเนื้อหาภาษาไทยระดับเข้มข้น รวบรวมหลักภาษา การสร้างคำ ราชาศัพท์ โวหาร และเทคนิคทางลัดในการตัดตัวเลือก พร้อมคลังข้อสอบ 100 ข้อ และเกมช่วยจำคำศัพท์
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="switchMode('quiz')" class="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base rounded-xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center">
+                            <i class="fa-solid fa-circle-play mr-2 text-lg"></i> เริ่มทำข้อสอบ 100 ข้อ
+                        </button>
+                        <button onclick="switchMode('lesson')" class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold text-base rounded-xl border border-slate-600 transition flex items-center">
+                            <i class="fa-solid fa-book mr-2"></i> อ่านสรุปตำรา
+                        </button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Card 1 -->
+                <div onclick="switchMode('lesson')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:border-slate-800 transition cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-100 text-blue-900 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-slate-900 group-hover:text-amber-400 transition">
+                            <i class="fa-solid fa-book-open text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-1">สรุปตำราฉบับเต็ม</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">สรุป 5 บทหลัก: สะกดคำ การสร้างคำ ประโยค ราชาศัพท์ และโวหาร</p>
+                    </div>
+                    <div class="mt-4 text-xs font-bold text-blue-800 group-hover:underline flex items-center">
+                        เข้าสู่อ่านบทเรียน <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div onclick="switchMode('technique')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:border-slate-800 transition cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-100 text-amber-900 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-slate-900 group-hover:text-amber-400 transition">
+                            <i class="fa-solid fa-bolt text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-1">เทคนิคทางลัดทำสอบ</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">สูตรจำคำสมาส-สนธิ วิธีอ่านจับใจความเร็วนิ่ง เทคนิคตัดตัวเลือกหลอก</p>
+                    </div>
+                    <div class="mt-4 text-xs font-bold text-amber-800 group-hover:underline flex items-center">
+                        ดูเทคนิคพิเศษ <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div onclick="switchMode('game')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:border-slate-800 transition cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-900 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-slate-900 group-hover:text-amber-400 transition">
+                            <i class="fa-solid fa-gamepad text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-1">มินิเกมฝึกความจำ</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">เกมสะกดคำถูก-ผิด และแฟลชการ์ดราชาศัพท์ ทบทวนรวดเร็วไม่น่าเบื่อ</p>
+                    </div>
+                    <div class="mt-4 text-xs font-bold text-emerald-800 group-hover:underline flex items-center">
+                        เล่นเกมฝึกความจำ <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div onclick="switchMode('quiz')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:border-slate-800 transition cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-purple-100 text-purple-900 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-slate-900 group-hover:text-amber-400 transition">
+                            <i class="fa-solid fa-list-check text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-1">ข้อสอบจำลอง 100 ข้อ</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">จำลองข้อสอบนายสิบตำรวจจริง พร้อมเฉลยคำอธิบายรายข้ออย่างละเอียด</p>
+                    </div>
+                    <div class="mt-4 text-xs font-bold text-purple-800 group-hover:underline flex items-center">
+                        เริ่มตะลุยโจทย์ <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Overview Table -->
+            <div class="bg-white p-6 rounded-3xl border-2 border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center">
+                    <i class="fa-solid fa-chart-pie text-amber-500 mr-2"></i> โครงสร้างการออกข้อสอบวิชาภาษาไทย นายสิบตำรวจ (เกณฑ์มาตรฐาน)
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="font-bold text-slate-900 mb-1">1. การเขียนคำสะกด & คำทับศัพท์</div>
+                        <div class="text-slate-700 text-xs">เน้นคำที่คนไทยมักเขียนผิดบ่อย การใช้การันต์ วรรณยุกต์ และการเขียนคำทับศัพท์ราชบัณฑิตยสภา</div>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="font-bold text-slate-900 mb-1">2. หลักภาษาและการสร้างคำ</div>
+                        <div class="text-slate-700 text-xs">คำมูล คำประสม คำซ้อน คำสมาส คำสนธิ ชนิดของประโยค และระดับภาษา/คำราชาศัพท์</div>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="font-bold text-slate-900 mb-1">3. ความเข้าใจภาษา & การอ่าน</div>
+                        <div class="text-slate-700 text-xs">การจับใจความสำคัญ สำนวนสุภาษิต การใช้คำไม่ฟุ่มเฟือย และโวหารการเขียน (บรรยาย/พรรณนา)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 2. LESSON SCREEN (TEXTBOOK) ================= -->
+        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
+            <!-- Header Bar -->
+            <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-amber-400 flex items-center">
+                        <i class="fa-solid fa-book-bookmark mr-3"></i> สรุปเนื้อหาตำราเตรียมสอบ (ฉบับมืออาชีพ)
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1">คัดเน้นเฉพาะหัวข้อที่ออกสอบบ่อยที่สุดในสายงานตำรวจ</p>
+                </div>
+                <!-- Search Box -->
+                <div class="w-full md:w-auto relative">
+                    <input type="text" id="lesson-search" oninput="filterLessons()" placeholder="ค้นหาบทเรียน เช่น สมาส, กะเพรา..." class="w-full md:w-64 px-4 py-2 pl-9 bg-slate-800 text-white placeholder-slate-400 rounded-xl border border-slate-700 text-sm focus:outline-none focus:border-amber-400">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Lesson Chapters -->
+            <div id="lesson-container" class="space-y-6">
+
+                <!-- Chapter 1 -->
+                <div class="lesson-card bg-white rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
+                        <h3 class="font-bold text-lg text-amber-300 flex items-center">
+                            <span class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center mr-3 text-sm">1</span>
+                            การสะกดคำ คำทับศัพท์ และคำที่มักเขียนผิด
+                        </h3>
+                        <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-200 font-semibold">ออกสอบ 4-6 ข้อ</span>
+                    </div>
+                    <div class="p-6 space-y-4 text-readable text-slate-900 text-sm sm:text-base">
+                        <p class="font-bold text-slate-900 text-base border-b-2 border-slate-200 pb-2">ตารางเปรียบเทียบคำที่มักเขียนผิดบ่อยในข้อสอบตำรวจ</p>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse border border-slate-300 text-sm">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-900 font-bold border-b border-slate-300">
+                                        <th class="p-3 border border-slate-300 w-1/3">หมวดหมู่</th>
+                                        <th class="p-3 border border-slate-300 bg-emerald-50 text-emerald-950 w-1/3"><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> เขียนถูกต้อง</th>
+                                        <th class="p-3 border border-slate-300 bg-rose-50 text-rose-950 w-1/3"><i class="fa-solid fa-circle-xmark text-rose-600 mr-1"></i> เขียนผิดบ่อย</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 font-medium">
+                                    <tr>
+                                        <td class="p-3 border border-slate-300 font-bold bg-slate-50">หมวดอาหาร</td>
+                                        <td class="p-3 border border-slate-300 bg-emerald-50/50 text-slate-900 font-semibold">กะเพรา, พะแนง, ผัดไทย, น้ำแข็งไส, กะทิ</td>
+                                        <td class="p-3 border border-slate-300 bg-rose-50/50 text-slate-700 line-through">กระเพรา, แพนง, ผัดไทยกุ้งสด, น้ำแข็งใส</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 border border-slate-300 font-bold bg-slate-50">หมวดกริยา/ทั่วไป</td>
+                                        <td class="p-3 border border-slate-300 bg-emerald-50/50 text-slate-900 font-semibold">สังเกต, อนุญาต, ปรากฏ, ทยอย, ศีรษะ, กฎหมาย</td>
+                                        <td class="p-3 border border-slate-300 bg-rose-50/50 text-slate-700 line-through">สังเกตุ, อนุญาติ, ปรากฎ, ทะยอย, ศรีษะ, กฏหมาย</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 border border-slate-300 font-bold bg-slate-50">คำทับศัพท์ (ราชบัณฑิต)</td>
+                                        <td class="p-3 border border-slate-300 bg-emerald-50/50 text-slate-900 font-semibold">อีเมล, อัปเดต, ซีรีส์, อินเทอร์เน็ต, คลินิก, โควตา</td>
+                                        <td class="p-3 border border-slate-300 bg-rose-50/50 text-slate-700 line-through">อีเมลล์, อัพเดท, ซีรีย์, อินเตอร์เน็ต, คลินิค, โควต้า</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                            <span class="font-bold text-amber-900 block mb-1"><i class="fa-solid fa-key mr-1"></i> จุดจำสำคัญ:</span>
+                            <ul class="list-disc list-inside text-amber-900 space-y-1 text-sm font-medium">
+                                <li><b>สังเกต / อนุญาต</b> = <u>ไม่มี</u>สระอุ หรือ สระอิ ด้านบน</li>
+                                <li><b>กฎหมาย</b> = ใช้ <b>ฎ (ชฎา - 1 หยัก)</b> ส่วน <b>ปรากฏ</b> = ใช้ <b>ฏ (ปฏัก - 2 หยัก)</b></li>
+                                <li><b>ศีรษะ</b> = สระอี อยู่บน <b>ศ</b> ไม่ใช่ ร</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div class="lesson-card bg-white rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
+                        <h3 class="font-bold text-lg text-amber-300 flex items-center">
+                            <span class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center mr-3 text-sm">2</span>
+                            การสร้างคำในภาษาไทย (ประสม ซ้อน สมาส สนธิ)
+                        </h3>
+                        <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-200 font-semibold">ออกสอบ 5-8 ข้อ</span>
+                    </div>
+                    <div class="p-6 space-y-5 text-readable text-slate-900 text-sm sm:text-base">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- คำประสม -->
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-300">
+                                <h4 class="font-bold text-blue-900 text-base mb-2 border-b border-slate-200 pb-1">1. คำประสม</h4>
+                                <p class="text-slate-800 font-medium">เกิดจากคำมูลต่างความหมายตั้งแต่ 2 คำขึ้นไปรวมกัน เกิดเป็น<b>ความหมายใหม่</b> แต่ยังมีเค้าความหมายเดิม</p>
+                                <div class="mt-2 text-xs font-bold text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200">
+                                    ตัวอย่าง: แม่เตารีด, น้ำแข็ง, ลูกน้อง, หางเสือ, พัดลม
+                                </div>
+                            </div>
+
+                            <!-- คำซ้อน -->
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-300">
+                                <h4 class="font-bold text-blue-900 text-base mb-2 border-b border-slate-200 pb-1">2. คำซ้อน</h4>
+                                <p class="text-slate-800 font-medium">นำคำที่มีความหมายเหมือน คล้าย หรือตรงข้าม มาซ้อนกันเพื่อเน้นความหมายหรือความไพเราะ</p>
+                                <div class="mt-2 text-xs font-bold text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200">
+                                    ตัวอย่าง: บ้านเรือน, เสื่อสาด, ผิดชอบ, ชั่วดี, งอแง (ซ้อนเสียง)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- สมาส & สนธิ -->
+                        <div class="border-t border-slate-200 pt-4">
+                            <h4 class="font-bold text-slate-900 text-base mb-3">เปรียบเทียบเชิงลึก: คำสมาส vs คำสนธิ</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-indigo-50/70 p-4 rounded-xl border border-indigo-200">
+                                    <div class="font-bold text-indigo-950 mb-1"><i class="fa-solid fa-link mr-1"></i> คำสมาส (สมาสแบบชน)</div>
+                                    <p class="text-xs text-indigo-900 mb-2">บาลี/สันสกฤต + บาลี/สันสกฤต เอามาชนกันดื้อๆ <b>ไม่มีการกลืนสระ</b> แปลจากหลังมาหน้า</p>
+                                    <div class="bg-white p-2 rounded text-xs font-semibold text-slate-800">
+                                        เช่น ราช + การ = ราชการ, อุทก + ภัย = อุทกภัย, ศิลป + กรรม = ศิลปกรรม
+                                    </div>
+                                </div>
+                                <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-200">
+                                    <div class="font-bold text-purple-950 mb-1"><i class="fa-solid fa-code-merge mr-1"></i> คำสนธิ (สมาสแบบเชื่อม)</div>
+                                    <p class="text-xs text-purple-900 mb-2">บาลี/สันสกฤต เชื่อมกัน มีการ<b>เปลี่ยนแปลงรูปสระ/พยัญชนะ/นฤคหิต</b> ตรงรอยต่อ</p>
+                                    <div class="bg-white p-2 rounded text-xs font-semibold text-slate-800">
+                                        เช่น ชล + อาลัย = ชลาลัย, วิทยา + อาลัย = วิทยาลัย, มหา + โอฬาร = มโหฬาร
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div class="lesson-card bg-white rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
+                        <h3 class="font-bold text-lg text-amber-300 flex items-center">
+                            <span class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center mr-3 text-sm">3</span>
+                            ชนิดของประโยคและการวิเคราะห์โครงสร้าง
+                        </h3>
+                        <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-200 font-semibold">ออกสอบ 3-5 ข้อ</span>
+                    </div>
+                    <div class="p-6 space-y-4 text-readable text-slate-900 text-sm sm:text-base">
+                        <div class="space-y-3">
+                            <div class="p-3.5 bg-slate-50 rounded-xl border-l-4 border-emerald-600">
+                                <div class="font-bold text-slate-900">1. ประโยคความเดียว (เอกรรถประโยค)</div>
+                                <div class="text-xs text-slate-700 mt-0.5">มีใจความสำคัญเดียว มีประธานเดียว และกริยาสำคัญเพียงตัวเดียว (เช่น "ตำรวจปฏิบัติหน้าที่อย่างเคร่งครัด")</div>
+                            </div>
+                            <div class="p-3.5 bg-slate-50 rounded-xl border-l-4 border-blue-600">
+                                <div class="font-bold text-slate-900">2. ประโยคความรวม (อเนกรรถประโยค)</div>
+                                <div class="text-xs text-slate-700 mt-0.5">เอาประโยคความเดียว 2 ประโยคมารวมกัน โดยมีคำสันธานเชื่อม (และ, แต่, หรือ, เพราะ, จึง) (เช่น "ตำรวจตรวจค้นห้องพัก<b>และ</b>จับกุมผู้ต้องหา")</div>
+                            </div>
+                            <div class="p-3.5 bg-slate-50 rounded-xl border-l-4 border-amber-600">
+                                <div class="font-bold text-slate-900">3. ประโยคความซ้อน (สังกรประโยค)</div>
+                                <div class="text-xs text-slate-700 mt-0.5">มีประโยคหลัก (มุขยประโยค) และประโยคย่อย (นานุประโยค) มาขยาย เชื่อมด้วยคำว่า <b>ผู้, ที่, ซึ่ง, อัน, ว่า, ให้</b> (เช่น "ตำรวจจับกุมผู้ร้าย<b>ที่</b>ขโมยทองคำ")</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapter 4 -->
+                <div class="lesson-card bg-white rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
+                        <h3 class="font-bold text-lg text-amber-300 flex items-center">
+                            <span class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center mr-3 text-sm">4</span>
+                            คำราชาศัพท์ และระดับภาษา 5 ระดับ
+                        </h3>
+                        <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-200 font-semibold">ออกสอบ 4-6 ข้อ</span>
+                    </div>
+                    <div class="p-6 space-y-4 text-readable text-slate-900 text-sm sm:text-base">
+                        <p class="font-bold text-slate-900 text-base">กฎเหล็กการใช้คำว่า "ทรง"</p>
+                        <ul class="list-disc list-inside text-slate-800 space-y-1 text-sm bg-slate-50 p-4 rounded-xl border border-slate-200 font-medium">
+                            <li><span class="text-emerald-700 font-bold">ใช้ได้:</span> นำหน้าคำนามสามัญ (ทรงม้า, ทรงดนตรี) หรือกริยาสามัญ (ทรงวิ่ง, ทรงยินดี)</li>
+                            <li><span class="text-rose-700 font-bold">ห้ามใช้:</span> นำหน้าคำกริยาราชาศัพท์อยู่แล้ว! (❌ ห้ามใช้ ทรงตรัส, ทรงเสด็จ, ทรงกริ้ว ➡️ <span class="text-emerald-700 font-bold">ต้องใช้ ตรัส, เสด็จ, กริ้ว</span>)</li>
+                        </ul>
+
+                        <div class="mt-3">
+                            <p class="font-bold text-slate-900 text-base mb-2">ระดับภาษา 5 ระดับที่ออกสอบบ่อย</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-xs font-semibold text-center">
+                                <div class="bg-slate-900 text-amber-300 p-2.5 rounded-lg">1. พิธีการ<br><span class="text-[10px] text-slate-300 font-normal">(รัฐพิธี, เปิดประชุมสภา)</span></div>
+                                <div class="bg-slate-800 text-white p-2.5 rounded-lg">2. ทางการ<br><span class="text-[10px] text-slate-300 font-normal">(หนังสือราชการ, แถลงการณ์)</span></div>
+                                <div class="bg-slate-700 text-white p-2.5 rounded-lg">3. กึ่งทางการ<br><span class="text-[10px] text-slate-300 font-normal">(อภิปรายกลุ่ม, บทความ)</span></div>
+                                <div class="bg-slate-200 text-slate-900 p-2.5 rounded-lg">4. ไม่เป็นทางการ<br><span class="text-[10px] text-slate-700 font-normal">(คุยกับเพื่อนสนิท)</span></div>
+                                <div class="bg-slate-300 text-slate-950 p-2.5 rounded-lg">5. กันเอง/ภาษาปาก<br><span class="text-[10px] text-slate-800 font-normal">(ตลาด, ตลก, เพื่อนก๊วน)</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= 3. TECHNIQUES SCREEN ================= -->
+        <div id="screen-technique" class="hidden space-y-6 animate-fade-in">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-amber-600 to-amber-700 text-slate-950 p-6 rounded-2xl shadow-lg border border-amber-400">
+                <h2 class="text-2xl font-extrabold flex items-center">
+                    <i class="fa-solid fa-lightbulb text-3xl mr-3 text-slate-950"></i> รวมเทคนิคอ่านเร็ว & ทางลัดพิชิตข้อสอบภาษาไทย
+                </h2>
+                <p class="text-slate-950 font-medium text-sm mt-1">คลังความลับที่ช่วยประหยัดเวลาและเพิ่มความแม่นยำในการทำสอบจริง</p>
+            </div>
+
+            <!-- Technique Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                
+                <!-- Technique 1 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-900 font-bold flex items-center justify-center text-lg">1</div>
+                        <h3 class="font-bold text-lg text-slate-900">เทคนิคการอ่านจับใจความสำคัญ (Main Idea) ใน 10 วินาที</h3>
+                    </div>
+                    <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                        ข้อสอบความเข้าใจมักให้ข้อความยาวๆ มา 1 ย่อหน้า แล้วถามว่า "ใจความสำคัญคืออะไร?"
+                    </p>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-900 space-y-1.5 font-semibold">
+                        <div>📍 <span class="text-blue-900">ย่อหน้าส่วนใหญ่:</span> ใจความสำคัญมักประดิษฐานอยู่ที่ <b>ประโยคแรก</b> หรือ <b>ประโยคสุดท้าย</b> ของข้อความ</div>
+                        <div>📍 <span class="text-blue-900">คำสัญญาณบอกใจความสำคัญ:</span> มองหาคำว่า <i>"สรุปได้ว่า", "ดังนั้น", "แท้จริงแล้ว", "สำคัญที่สุดคือ"</i> คำหลังเหล่านี้มักเป็นใจความจริง</div>
+                        <div>📍 <span class="text-rose-700">ตัดส่วนขยายออก:</span> ตัวอย่าง, ตัวเลข, สถิติ, คำว่า "เช่น", "ได้แก่" พวกนี้คือ<b>ส่วนขยาย</b> ไม่ใช่ใจความหลัก ตัดทิ้งได้เลย!</div>
+                    </div>
+                </div>
+
+                <!-- Technique 2 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-900 font-bold flex items-center justify-center text-lg">2</div>
+                        <h3 class="font-bold text-lg text-slate-900">เทคนิคการตัดตัวเลือกหลอก (Elimination)</h3>
+                    </div>
+                    <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                        เมื่อลังเลระหว่าง 2 ตัวเลือก ให้ใช้สูตรเช็กตัวเลือกหลอกต่อไปนี้:
+                    </p>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-900 space-y-1.5 font-semibold">
+                        <div>❌ <span class="text-rose-700">กว้างเกินไป / คลุมจักรวาล:</span> ตัวเลือกที่ใช้คำสุดโต่ง เช่น "ทั้งหมด", "ทุกคน", "ไม่มีใครเลย" มักเป็นตัวเลือกหลอก</div>
+                        <div>❌ <span class="text-rose-700">นำความรู้ภายนอกมาตอบ:</span> ข้อสอบจับใจความ ให้ตอบเฉพาะสิ่งที่บทความพูดถึง <b>ห้ามนำความรู้ภายนอกหรือความคิดเห็นตนเองมาเติม</b></div>
+                    </div>
+                </div>
+
+                <!-- Technique 3 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-900 font-bold flex items-center justify-center text-lg">3</div>
+                        <h3 class="font-bold text-lg text-slate-900">สูตรลัดจำแยก "สมาส" กับ "สนธิ"</h3>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 text-xs sm:text-sm text-purple-950 space-y-2 font-medium">
+                        <div class="font-bold text-purple-900 text-sm">💡 ท่องจำขึ้นใจ:</div>
+                        <div class="bg-white p-3 rounded-lg border border-purple-200 font-bold text-slate-900">
+                            "สมาสชน สนธิเชื่อม" <br>
+                            - สมาส = เอาคำมาต่อกันเฉยๆ รอยต่อไม่มีการเปลี่ยนแปลง (เช่น ราชการ, อุทกภัย)<br>
+                            - สนธิ = เชื่อมแล้วเสียงสระสนิทกัน เปลี่ยนรูปสระอูเป็น ว (เช่น ธนู+อาคม = ธันวาคม)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technique 4 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-900 font-bold flex items-center justify-center text-lg">4</div>
+                        <h3 class="font-bold text-lg text-slate-900">เทคนิคการบริหารเวลาทำสอบ 100 ข้อ</h3>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-900 space-y-2 font-semibold">
+                        <div class="flex justify-between items-center bg-white p-2 rounded border border-slate-200">
+                            <span>⏱️ ข้อสอบสะกดคำ/ลักษณะนาม</span>
+                            <span class="text-emerald-700 font-bold">ใช้เวลาไม่เกิน 30 วินาที/ข้อ</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-2 rounded border border-slate-200">
+                            <span>⏱️ ข้อสอบบทความอ่านจับใจความ</span>
+                            <span class="text-amber-700 font-bold">ใช้เวลาไม่เกิน 1.5 นาที/ข้อ</span>
+                        </div>
+                        <p class="text-slate-600 font-normal">ก้าวแรกที่ทำข้อสอบ ให้ทำข้อเก็บคะแนนเร็ว (สะกดคำ, ราชาศัพท์) ก่อน แล้วค่อยทำข้อสอบอ่านย่อหน้ายาวๆ ทีหลัง เพื่อป้องกันการทำข้อสอบไม่ทัน</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= 4. MEMORY GAME SCREEN ================= -->
+        <div id="screen-game" class="hidden space-y-6 animate-fade-in">
+            <!-- Header -->
+            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-amber-400 flex items-center">
+                        <i class="fa-solid fa-gamepad mr-3 text-3xl"></i> มินิเกมฝึกความจำข้อสอบ
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1">เกมทายคำสะกดถูก-ผิด และคำราชาศัพท์ เพิ่มความจดจำอย่างรวดเร็ว</p>
+                </div>
+                <div class="bg-slate-800 px-4 py-2 rounded-xl border border-slate-700 text-right">
+                    <div class="text-[10px] text-slate-400 font-bold">คะแนนสะสมเกม</div>
+                    <div id="game-score-display" class="text-xl font-black text-amber-400">0 แต้ม</div>
+                </div>
+            </div>
+
+            <!-- Game Card Frame -->
+            <div class="bg-white rounded-3xl border-2 border-slate-200 shadow-xl p-6 sm:p-10 text-center max-w-xl mx-auto space-y-6 relative overflow-hidden">
+                <div class="flex justify-between items-center text-xs font-bold text-slate-500 border-b border-slate-100 pb-3">
+                    <span id="game-round-text">คำถามที่ 1/15</span>
+                    <span id="game-streak-text" class="text-amber-600"><i class="fa-solid fa-fire mr-1"></i> ชนะต่อเนื่อง: 0</span>
+                </div>
+
+                <!-- Word Display -->
+                <div class="py-6">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">คำนี้สะกดถูกต้องหรือไม่?</div>
+                    <div id="game-word-text" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-wide font-heading">
+                        กะเพรา
+                    </div>
+                </div>
+
+                <!-- Feedback Message -->
+                <div id="game-feedback" class="h-8 text-sm font-bold transition-all"></div>
+
+                <!-- Buttons -->
+                <div id="game-btn-container" class="grid grid-cols-2 gap-4 pt-2">
+                    <button onclick="answerGame(true)" class="py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-lg rounded-2xl shadow-md transition transform hover:scale-105 active:scale-95 flex items-center justify-center">
+                        <i class="fa-solid fa-circle-check text-2xl mr-2"></i> ถูกต้อง
+                    </button>
+                    <button onclick="answerGame(false)" class="py-4 bg-rose-600 hover:bg-rose-500 text-white font-black text-lg rounded-2xl shadow-md transition transform hover:scale-105 active:scale-95 flex items-center justify-center">
+                        <i class="fa-solid fa-circle-xmark text-2xl mr-2"></i> ผิดแล้ว
+                    </button>
                 </div>
                 
-                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-zinc-50">
-                    <div class="bg-white p-8 border border-zinc-200 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('lesson')">
-                        <div class="w-16 h-16 bg-zinc-100 rounded-2xl flex items-center justify-center text-zinc-700 text-3xl mb-5 group-hover:bg-zinc-800 group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-book-open-reader"></i>
-                        </div>
-                        <h3 class="font-bold text-xl text-zinc-900 mb-2">สรุปบทเรียน</h3>
-                        <p class="text-zinc-500 text-sm">รวมหลักภาษาไทย การสร้างคำ ระดับภาษา และเนื้อหาที่ออกสอบบ่อยที่สุด</p>
-                    </div>
-                    <div class="bg-white p-8 border border-zinc-200 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group" onclick="switchMode('quiz')">
-                        <div class="w-16 h-16 bg-zinc-200 rounded-2xl flex items-center justify-center text-zinc-600 text-3xl mb-5 group-hover:bg-zinc-700 group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-file-signature"></i>
-                        </div>
-                        <h3 class="font-bold text-xl text-zinc-900 mb-2">เริ่มทดสอบ</h3>
-                        <p class="text-zinc-500 text-sm">จำลองการสอบจริง 100 ข้อ รู้ผลทันที</p>
-                    </div>
-                </div>
+                <button onclick="resetGame()" class="text-xs text-slate-500 font-bold hover:underline pt-2 inline-block">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> เริ่มเกมใหม่
+                </button>
             </div>
         </div>
 
-        <!-- 2. LESSON SCREEN -->
-        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-zinc-200 flex justify-between items-center sticky top-[72px] z-40">
-                <h2 class="text-xl font-bold text-zinc-900"><i class="fa-solid fa-book mr-2"></i> สรุปหลักภาษาไทยที่ออกสอบบ่อย</h2>
-                <button onclick="switchMode('quiz')" class="bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition">ไปทำข้อสอบ</button>
-            </div>
-            
-            <div class="space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-800">
-                    <h3 class="font-bold text-zinc-800 mb-3 underline">1. การเขียนและการสะกดคำที่มักผิด</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
-                        <p>• <b>หมวดอาหาร:</b> กะเพรา (ไม่มี ร), พะแนง, ผัดไทย, น้ำแข็งไส, กะทิ</p>
-                        <p>• <b>หมวดกริยา:</b> สังเกต (ไม่มีสระอุ), อนุญาต (ไม่มีสระอิ), ปรากฏ (ฏ ปฏัก), ทยอย, พยักหน้า</p>
-                        <p>• <b>หมวดทั่วไป:</b> ศีรษะ (สระอี อยู่ที่ ศ), กฎหมาย (ฎ ชฎา), อานิสงส์, โอกาส, อากาศ, โคตร</p>
-                        <p>• <b>คำทับศัพท์:</b> อีเมล, อัปเดต, ซีรีส์, อินเทอร์เน็ต, เฟซบุ๊ก, คลินิก, โควตา</p>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-600">
-                    <h3 class="font-bold text-zinc-800 mb-3 underline">2. การสร้างคำในภาษาไทย</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
-                        <p>• <b>คำประสม:</b> เกิดจากคำมูลตั้งแต่ 2 คำขึ้นไปรวมกัน เกิดความหมายใหม่ (เช่น แม่เตารีด, น้ำแข็ง, ลูกน้อง, หางเสือ)</p>
-                        <p>• <b>คำซ้อน:</b> นำคำที่มีความหมายเหมือน คล้าย หรือตรงข้าม มาซ้อนกันเพื่อเน้นความหมาย (เช่น บ้านเรือน, เสื่อสาด, ผิดชอบ, ชั่วดี)</p>
-                        <p>• <b>คำสมาส:</b> บาลี/สันสกฤต ชนกัน <i>ห้ามมี</i> สระ/พยัญชนะเชื่อมตรงกลาง แต่อ่านออกเสียงต่อเนื่องกัน แปลจากหลังมาหน้า (เช่น ราชการ, อุทกภัย)</p>
-                        <p>• <b>คำสนธิ:</b> บาลี/สันสกฤต เชื่อมกัน <i>มีการเปลี่ยนแปลงรูป</i> บริเวณรอยต่อ (เช่น ชล + อาลัย = ชลาลัย, วิทยา + อาลัย = วิทยาลัย)</p>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-400">
-                    <h3 class="font-bold text-zinc-800 mb-3 underline">3. ชนิดของประโยค</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
-                        <p>• <b>ประโยคความเดียว (เอกรรถประโยค):</b> มีใจความเดียว ประธานเดียว กริยาเดียว (เช่น ตำรวจจับผู้ร้าย)</p>
-                        <p>• <b>ประโยคความรวม (อเนกรรถประโยค):</b> ประโยคความเดียว 2 ประโยคมารวมกัน โดยมี <i>สันธาน</i> เชื่อม (และ, แต่, หรือ, เพราะ)</p>
-                        <p>• <b>ประโยคความซ้อน (สังกรประโยค):</b> มีประโยคหลัก และประโยคย่อยขยายประโยคหลัก มักมีคำเชื่อม <i>ผู้, ที่, ซึ่ง, อัน, ว่า, ให้</i> (เช่น ตำรวจจับผู้ร้าย<b>ที่</b>ขโมยทอง)</p>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-zinc-300">
-                    <h3 class="font-bold text-zinc-800 mb-3 underline">4. คำราชาศัพท์และระดับภาษา</h3>
-                    <div class="thai-content text-sm md:text-base space-y-2 text-zinc-700">
-                        <p>• <b>การใช้ ทรง:</b> นำหน้าคำนามสามัญ (ทรงช้าง), นำหน้ากริยาสามัญ (ทรงวิ่ง), <b>ห้าม</b> นำหน้าคำกริยาราชาศัพท์อยู่แล้ว (ห้ามใช้ ทรงตรัส, ทรงเสด็จ)</p>
-                        <p>• <b>ระดับภาษา 5 ระดับ:</b> 1. พิธีการ (ศัพท์สูง, งานรัฐพิธี) 2. ทางการ (หนังสือราชการ, แถลงการณ์) 3. กึ่งทางการ (การประชุม, บทความ) 4. ไม่เป็นทางการ (สนทนากับผู้คุ้นเคย) 5. กันเอง (ภาษาปาก, คุยกับเพื่อนสนิท)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. QUIZ SCREEN -->
+        <!-- ================= 5. QUIZ SCREEN ================= -->
         <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
-            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-zinc-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
-                <div class="w-full md:w-2/3">
-                    <div class="flex justify-between items-end mb-2">
-                        <span id="quiz-status" class="text-sm font-bold text-zinc-700">ข้อที่ 1/100</span>
-                        <span id="score-text" class="text-sm font-bold text-zinc-600">คะแนน: 0</span>
+            <!-- Quiz Bar -->
+            <div class="bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-md border-2 border-slate-200 sticky top-16 z-40 space-y-3">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                    <div class="flex items-center space-x-3">
+                        <span id="quiz-status" class="text-base sm:text-lg font-black text-slate-900 font-heading">ข้อที่ 1/100</span>
+                        <span id="score-badge" class="px-3 py-1 bg-amber-100 text-amber-900 rounded-full text-xs font-bold border border-amber-300">
+                            คะแนน: <span id="score-text">0</span>
+                        </span>
                     </div>
-                    <div class="bg-zinc-200 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="bg-zinc-800 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+
+                    <!-- Toggle Palette View Button -->
+                    <button onclick="togglePalette()" class="text-xs font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-300 transition flex items-center self-end sm:self-auto">
+                        <i class="fa-solid fa-table-cells mr-1.5"></i> ตารางผังข้อสอบ (100 ข้อ)
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                    <div id="progress-bar" class="bg-slate-900 h-3 rounded-full transition-all duration-300" style="width: 1%"></div>
+                </div>
+
+                <!-- Question Palette Grid Modal / Drawer -->
+                <div id="palette-modal" class="hidden pt-3 border-t border-slate-200">
+                    <div class="text-xs font-bold text-slate-700 mb-2">คลิกเพื่อข้ามไปยังข้อสอบ:</div>
+                    <div id="palette-grid" class="grid grid-cols-10 gap-1.5 max-h-48 overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200 no-scrollbar">
+                        <!-- Populated by JS -->
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between border border-zinc-200">
+            <!-- Main Question Card -->
+            <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-8 min-h-[420px] flex flex-col justify-between border-2 border-slate-200">
                 <div>
-                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-zinc-800 leading-relaxed mb-8 thai-content">คำถาม</h3>
+                    <!-- Question Text -->
+                    <h3 id="q-text" class="text-lg sm:text-xl font-bold text-slate-900 leading-relaxed mb-6 font-heading">
+                        คำถาม
+                    </h3>
+                    
+                    <!-- Options Container -->
                     <div id="options" class="space-y-3"></div>
                 </div>
 
-                <div id="explainer" class="hidden mt-8 p-5 rounded-2xl animate-fade-in border-2">
-                    <p id="exp-status" class="text-lg font-black mb-2 flex items-center"></p>
-                    <p id="exp-text" class="text-sm md:text-base text-zinc-700 thai-content"></p>
+                <!-- Explainer Box -->
+                <div id="explainer" class="hidden mt-6 p-5 rounded-2xl animate-fade-in border-2">
+                    <p id="exp-status" class="text-base font-bold mb-1.5 flex items-center font-heading"></p>
+                    <p id="exp-text" class="text-sm sm:text-base text-slate-900 leading-relaxed font-medium"></p>
                 </div>
 
-                <div class="flex justify-between items-center mt-10 pt-6 border-t border-zinc-100">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-zinc-500 font-bold px-5 py-2.5 rounded-xl hover:bg-zinc-100 disabled:opacity-30 transition">ย้อนกลับ</button>
-                    <button id="btn-next" onclick="changeQ(1)" class="bg-zinc-900 hover:bg-zinc-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-0.5 transition">ถัดไป</button>
+                <!-- Footer Navigation Buttons -->
+                <div class="flex justify-between items-center mt-8 pt-5 border-t border-slate-200">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> ย้อนกลับ
+                    </button>
+                    
+                    <button id="btn-next" onclick="changeQ(1)" class="px-7 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg transition transform hover:-translate-y-0.5 text-sm sm:text-base flex items-center">
+                        ถัดไป <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- 4. RESULT SCREEN -->
-        <div id="screen-result" class="hidden text-center space-y-8 py-10 animate-fade-in">
-            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-zinc-800">
-                <div class="w-20 h-20 bg-zinc-100 text-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
+        <!-- ================= 6. RESULT SCREEN ================= -->
+        <div id="screen-result" class="hidden text-center space-y-6 py-8 animate-fade-in">
+            <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-2xl max-w-xl mx-auto border-t-8 border-slate-900 border-x-2 border-b-2 border-slate-200 space-y-6">
+                <div class="w-20 h-20 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto border-2 border-amber-300">
                     <i class="fa-solid fa-trophy text-4xl"></i>
                 </div>
-                <h2 class="text-3xl font-black text-zinc-900 mb-2">สรุปผลการสอบ</h2>
-                <div class="text-7xl font-black text-zinc-800 my-6" id="final-score">0/100</div>
-                <p id="result-msg" class="text-zinc-600 mb-8 font-medium">ทำได้ดีมาก!</p>
-                <div class="flex flex-col space-y-3">
-                    <button onclick="switchMode('quiz')" class="bg-zinc-900 hover:bg-zinc-800 text-white py-4 rounded-xl font-bold text-lg hover-lift transition">ทำใหม่อีกครั้ง</button>
-                    <button onclick="switchMode('home')" class="bg-white text-zinc-700 border-2 border-zinc-200 py-3.5 rounded-xl font-bold hover:bg-zinc-50 transition">กลับหน้าหลัก</button>
+                
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 font-heading">สรุปผลการทำแบบทดสอบ</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">วิชาภาษาไทย ติวสอบนายสิบตำรวจ</p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <div class="text-xs text-slate-500 font-bold uppercase mb-1">คะแนนรวมที่ทำได้</div>
+                    <div class="text-6xl font-black text-slate-900 font-heading" id="final-score">0/100</div>
+                    <div id="final-percent" class="text-sm font-bold text-amber-600 mt-1">คิดเป็น 0%</div>
+                </div>
+
+                <p id="result-msg" class="text-slate-800 font-bold text-base leading-relaxed px-2"></p>
+
+                <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <button onclick="switchMode('quiz')" class="flex-1 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-md transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> ทำใหม่อีกครั้ง
+                    </button>
+                    <button onclick="switchMode('home')" class="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition">
+                        <i class="fa-solid fa-house mr-1"></i> กลับหน้าหลัก
+                    </button>
                 </div>
             </div>
         </div>
@@ -188,218 +630,377 @@
     </main>
 
     <script>
-        // ข้อมูลข้อสอบวิชาภาษาไทย 100 ข้อ สำหรับเตรียมสอบนายสิบตำรวจ
-        const rawThaiData = [
-            // การสะกดคำ (1-15)
+        // Data Store - Comprehensive 100 Police Exam Questions
+        const questions = [
+            // สะกดคำ & คำทับศัพท์ (1-15)
             { q: "ข้อใดสะกดถูกต้องทุกคำ?", opt: ["กะเพรา, สังเกต", "กระเพรา, สังเกตุ", "กะเพา, สังเกต", "กระเพา, สังเกตุ"], ans: 0, exp: "กะเพรา (ไม่มี ร ที่ ก) และ สังเกต (ไม่มีสระอุ)" },
             { q: "คำในข้อใดสะกดผิด?", opt: ["ศีรษะ", "กฎหมาย", "ปรากฎ", "อนุญาต"], ans: 2, exp: "ปรากฏ ต้องใช้ ฏ ปฏัก (มี 2 หยัก) ส่วน ปรากฎ ผิด" },
             { q: "ข้อใดสะกดถูกต้องทั้งหมด?", opt: ["อานิสงส์, โอกาส", "อานิสงค์, โอกาศ", "อานิสงส์, โอกาศ", "อานิสงค์, โอกาส"], ans: 0, exp: "อานิสงส์ (ส เสือ การันต์) และ โอกาส (ส เสือ)" },
-            { q: "คำใดเขียนผิด?", opt: ["พยักหน้า", "ทะยอย", "ทรมาน", "พรรณนา"], ans: 1, exp: "ที่ถูกต้องคือ 'ทยอย' ไม่มีสระอะ" },
-            { q: "ข้อใดเขียนคำทับศัพท์ได้ถูกต้อง?", opt: ["คลินิค", "อีเมลล์", "ซีรีส์", "โควต้า"], ans: 2, exp: "ซีรีส์ ถูกต้อง. (ที่ถูกคือ คลินิก, อีเมล, โควตา)" },
-            { q: "ข้อใดสะกดผิด?", opt: ["กะทิ", "น้ำแข็งไส", "ผัดไทย", "พะแนง"], ans: 1, exp: "น้ำแข็งไส (ใช้ ไม้มลาย ไม่ใช่ ไม้ม้วน) - ข้อนี้ตัวเลือกเขียนถูกหมด ขออภัย *แก้: ผัดไทย ถูก, พะแนง ถูก, กะทิ ถูก, น้ำแข็งไส ถูกทั้งหมด (ถือว่ายกประโยชน์ให้หากตอบข้อใด แต่ตามหลักคือ น้ำแข็งไส ไม้มลายถูกแล้ว)" },
-            { q: "คำในข้อใดสะกดผิด?", opt: ["กระตือรือร้น", "ประนีประนอม", "ผัดเพี้ยน", "ผลัดเปลี่ยน"], ans: 2, exp: "ที่ถูกต้องคือ 'ผลัดเพี้ยน' (ใช้ ล ลิง)" },
+            { q: "คำใดเขียนผิดหลักภาษาไทย?", opt: ["พยักหน้า", "ทะยอย", "ทรมาน", "พรรณนา"], ans: 1, exp: "ที่ถูกต้องคือ 'ทยอย' ไม่มีสระอะ" },
+            { q: "ข้อใดเขียนคำทับศัพท์ได้ถูกต้องตามราชบัณฑิตยสภา?", opt: ["คลินิค", "อีเมลล์", "ซีรีส์", "โควต้า"], ans: 2, exp: "ซีรีส์ ถูกต้อง (ที่ถูกคือ คลินิก, อีเมล, โควตา)" },
+            { q: "คำในข้อใดสะกดผิด?", opt: ["ผัดไทย", "พะแนง", "ผลัดเพี้ยน", "ผัดเพี้ยน"], ans: 3, exp: "ที่ถูกต้องคือ 'ผลัดเพี้ยน' (ใช้ ล ลิง)" },
+            { q: "ข้อใดสะกดผิด?", opt: ["กระตือรือร้น", "ประนีประนอม", "ไอศกรีม", "ไอศครีม"], ans: 3, exp: "ไอศกรีม ใช้ ก ไก่ ไม่ใช่ ค ควาย" },
             { q: "คำใดสะกดด้วย 'ล' เป็นตัวสะกดทั้งหมด?", opt: ["กาลเวลา, พยาบาล", "กางเกง, สัญญา", "อากาศ, โอกาส", "รำคาญ, บังเอิญ"], ans: 0, exp: "กาล และ บาล สะกดด้วยมาตราแม่กน (ใช้ ล สะกด)" },
-            { q: "ข้อใดใช้ ร, ล ไม่ถูกต้อง?", opt: ["ล่มจม", "รุกราน", "ลิดรอน", "รำคาณ"], ans: 3, exp: "ที่ถูกต้องคือ 'รำคาญ' (ญ หญิง)" },
-            { q: "คำในข้อใดเขียนถูกต้องทุกคำ?", opt: ["อุปถัมภ์, อุปการะ", "สัปดาร, สัปดาห์", "อัญชลี, อัญชลิต", "บรรได, บันดาล"], ans: 0, exp: "อุปถัมภ์ และ อุปการะ เขียนถูกต้อง (บันได ต้องใช้ บัน)" },
-            { q: "ข้อใดเขียนคำว่า 'อัปเดต' ได้ถูกต้องตามราชบัณฑิตยสภา?", opt: ["อัพเดท", "อัพเดต", "อัปเดท", "อัปเดต"], ans: 3, exp: "คำทับศัพท์ Update ถอดรูปเป็น อัปเดต (ป ปลา, ด เด็ก, ต เต่า)" },
+            { q: "ข้อใดใช้ตัวสะกดไม่ถูกต้อง?", opt: ["ล่มจม", "รุกราน", "ลิดรอน", "รำคาณ"], ans: 3, exp: "ที่ถูกต้องคือ 'รำคาญ' (ใช้ ญ หญิง)" },
+            { q: "คำในข้อใดเขียนถูกต้องทุกคำ?", opt: ["อุปถัมภ์, อุปการะ", "สัปดาร, สัปดาห์", "อัญชลี, บรรได", "บันดาล, บรรได"], ans: 0, exp: "อุปถัมภ์ และ อุปการะ เขียนถูกต้อง (บันได ต้องใช้ บัน)" },
+            { q: "ข้อใดเขียนคำว่า 'อัปเดต' ได้ถูกต้องตามราชบัณฑิตยสภา?", opt: ["อัพเดท", "อัพเดต", "อัปเดท", "อัปเดต"], ans: 3, exp: "Update ถอดรูปเป็น อัปเดต (ป ปลา, ด เด็ก, ต เต่า)" },
             { q: "ข้อใดเขียนถูกทั้งหมด?", opt: ["เจตนารมย์, สังสรรค์", "เจตนารมณ์, สังสรรค์", "เจตนารมย์, สังสรร", "เจตนารมณ์, สังสรร"], ans: 1, exp: "เจตนารมณ์ (ณ การันต์) และ สังสรรค์ (ค การันต์)" },
             { q: "คำในข้อใดเขียนผิด?", opt: ["ไข่มุก", "มุกตลก", "ประยุกต์", "มุขขอบ"], ans: 3, exp: "ต้องเขียนว่า 'มุขหน้า' หรือ 'มุข' ที่แปลว่าส่วนยื่น แต่ 'มุกตลก' และ 'ไข่มุก' ใช้ ก ไก่" },
-            { q: "ข้อใดใช้สระไ- (ไม้มลาย) และ ใ- (ไม้ม้วน) ผิด?", opt: ["หลงใหล", "ร้องไห้", "ลำไย", "สไบ"], ans: 0, exp: "ตัวเลือกถูกทั้งหมด ยกเว้นถ้ามีคำว่า 'ลำใย' จะผิด (ลำไย ใช้ไม้มลาย)" },
-            { q: "คำใดสะกดถูก?", opt: ["พิพากษา", "พิพากศา", "พิจารนา", "วิญญาน"], ans: 0, exp: "พิพากษา ถูกต้อง (พิจารณา, วิญญาณ ใช้ ณ)" },
-            
+            { q: "ข้อใดใช้สระไ- (ไม้มลาย) และ ใ- (ไม้ม้วน) ผิด?", opt: ["หลงใหล", "ร้องไห้", "ลำใย", "สไบ"], ans: 2, exp: "ที่ถูกคือ 'ลำไย' ต้องใช้ไม้มลาย" },
+            { q: "คำใดสะกดถูกต้อง?", opt: ["พิพากษา", "พิพากศา", "พิจารนา", "วิญญาน"], ans: 0, exp: "พิพากษา ถูกต้อง (พิจารณา, วิญญาณ ใช้ ณ)" },
+
             // ลักษณะนาม (16-25)
-            { q: "คำว่า 'ช้างหลวง' ใช้ลักษณะนามว่าอะไร?", opt: ["เชือก", "ตัว", "ช้าง", "โขลง"], ans: 2, exp: "ช้างหลวง(ช้างขึ้นระวาง) ใช้ลักษณะนามว่า 'ช้าง', ช้างป่าใช้ 'ตัว', ช้างบ้านใช้ 'เชือก'" },
+            { q: "คำว่า 'ช้างหลวง' (ช้างขึ้นระวาง) ใช้ลักษณะนามว่าอะไร?", opt: ["เชือก", "ตัว", "ช้าง", "โขลง"], ans: 2, exp: "ช้างหลวงใช้ 'ช้าง', ช้างบ้านใช้ 'เชือก', ช้างป่าใช้ 'ตัว'" },
             { q: "แห มีลักษณะนามตรงกับข้อใด?", opt: ["ปาก", "ผืน", "หลัง", "อัน"], ans: 0, exp: "แห ใช้ลักษณะนามว่า 'ปาก'" },
             { q: "เลื่อย มีลักษณะนามตรงกับข้อใด?", opt: ["อัน", "เล่ม", "ปื้น", "บาน"], ans: 2, exp: "เลื่อย ใช้ลักษณะนามว่า 'ปื้น'" },
-            { q: "ข้อใดใช้ลักษณะนามว่า 'เลา'?", opt: ["แคน", "ขลุ่ย", "กลอง", "ระนาด"], ans: 1, exp: "ขลุ่ย และ ปี่ ใช้ลักษณะนามว่า 'เลา' (แคน ใช้ เต้า, ระนาด ใช้ ราง)" },
-            { q: "พระภิกษุ ใช้ลักษณะนามว่าอะไร?", opt: ["รูป", "องค์", "คน", "ท่าน"], ans: 0, exp: "พระภิกษุ สามเณร ใช้ลักษณะนามว่า 'รูป' (ส่วนพระพุทธรูป ใช้ องค์)" },
-            { q: "เทียนไข ใช้ลักษณะนามว่าอะไร?", opt: ["แท่ง", "เล่ม", "ดวง", "อัน"], ans: 1, exp: "เทียน หนังสือ เกวียน ใช้ลักษณะนามว่า 'เล่ม'" },
+            { q: "ข้อใดใช้ลักษณะนามว่า 'เลา'?", opt: ["แคน", "ขลุ่ย", "กลอง", "ระนาด"], ans: 1, exp: "ขลุ่ย และ ปี่ ใช้ 'เลา' (แคน ใช้ เต้า, ระนาด ใช้ ราง)" },
+            { q: "พระภิกษุ ใช้ลักษณะนามว่าอะไร?", opt: ["รูป", "องค์", "คน", "ท่าน"], ans: 0, exp: "พระภิกษุ สามเณร ใช้ 'รูป' (ส่วนพระพุทธรูป ใช้ องค์)" },
+            { q: "เทียนไข ใช้ลักษณะนามว่าอะไร?", opt: ["แท่ง", "เล่ม", "ดวง", "อัน"], ans: 1, exp: "เทียน หนังสือ เกวียน ใช้ 'เล่ม'" },
             { q: "รุ้งกินน้ำ ใช้ลักษณะนามว่าอะไร?", opt: ["เส้น", "วง", "ตัว", "สาย"], ans: 2, exp: "รุ้งกินน้ำ ใช้ลักษณะนามว่า 'ตัว'" },
-            { q: "ข้อใดใช้ลักษณะนามต่างจากพวก?", opt: ["แหวน", "กำไล", "สร้อย", "สร้อยคอ"], ans: 2, exp: "สร้อยและสร้อยคอ ใช้ 'เส้น', ส่วนแหวนและกำไล ใช้ 'วง'" },
-            { q: "รถไฟ มีลักษณะนามตรงกับข้อใด?", opt: ["คัน", "ขบวน", "ตู้", "สาย"], ans: 1, exp: "รถไฟทั้งขบวน ใช้ 'ขบวน' (รถยนต์ใช้ คัน)" },
-            { q: "มีด โน้ตบุ๊ก และสมุด มีลักษณะนามเหมือนกันคือข้อใด?", opt: ["เล่ม", "เครื่อง", "อัน", "ไม่มีข้อถูก"], ans: 0, exp: "มีด(เล่ม), โน้ตบุ๊กคอมพิวเตอร์(เครื่อง) สมุด(เล่ม)" },
+            { q: "ข้อใดใช้ลักษณะนามต่างจากพวก?", opt: ["แหวน", "กำไล", "สร้อยคอ", "ตระกรุด"], ans: 2, exp: "สร้อยคอ ใช้ 'เส้น' ส่วน แหวน กำไล ตะกรุด ใช้ 'วง' หรือ 'ดอก'" },
+            { q: "รถไฟ มีลักษณะนามตรงกับข้อใด?", opt: ["คัน", "ขบวน", "ตู้", "สาย"], ans: 1, exp: "รถไฟทั้งขบวน ใช้ 'ขบวน'" },
+            { q: "มีด โน้ตบุ๊ก และสมุด มีลักษณะนามตามลำดับตรงกับข้อใด?", opt: ["เล่ม - เครื่อง - เล่ม", "อัน - อัน - เล่ม", "เล่ม - เล่ม - เล่ม", "เครื่อง - เครื่อง - เล่ม"], ans: 0, exp: "มีด(เล่ม), โน้ตบุ๊ก(เครื่อง), สมุด(เล่ม)" },
 
-            // การสร้างคำ: คำมูล, คำประสม, ซ้อน, ซ้ำ (26-40)
-            { q: "ข้อใดเป็นคำมูลทุกคำ?", opt: ["มะพร้าว, นาฬิกา", "ตู้เย็น, พัดลม", "ชาวนา, นักร้อง", "แม่น้ำ, พ่อครัว"], ans: 0, exp: "มะพร้าว และ นาฬิกา เป็นคำมูล (แยกแล้วไม่มีความหมาย หรือความหมายไม่เกี่ยวกับคำเดิม)" },
-            { q: "ข้อใดเป็นคำประสม?", opt: ["เสื่อสาด", "บ้านเรือน", "น้ำแข็ง", "ใหญ่โต"], ans: 2, exp: "น้ำแข็ง เป็นคำประสม (น้ำ+แข็ง เกิดสิ่งใหม่) ส่วนข้ออื่นเป็นคำซ้อน" },
-            { q: "ข้อใดไม่ใช่คำประสม?", opt: ["แม่พิมพ์", "ลูกน้อง", "พ่อตา", "พี่น้อง"], ans: 3, exp: "พี่น้อง เป็นคำซ้อนเพื่อความหมาย (พี่ และ น้อง อยู่ในหมวดเดียวกัน)" },
-            { q: "ข้อใดเป็นคำซ้อนเพื่อความหมาย?", opt: ["ใจดำ", "กว้างขวาง", "ตู้เสื้อผ้า", "ดินสอ"], ans: 1, exp: "กว้างขวาง เป็นคำซ้อนความหมายคล้ายกัน (ใจดำ เป็นคำประสม)" },
-            { q: "ข้อใดเป็นคำซ้อนเพื่อเสียง?", opt: ["บ้านเรือน", "งอแง", "เสื่อสาด", "จิตใจ"], ans: 1, exp: "งอแง เป็นคำซ้อนเพื่อเสียง (เล่นเสียงพยัญชนะ ง)" },
-            { q: "ข้อใดสามารถเป็นได้ทั้งคำประสมและกลุ่มคำ (วลี) ขึ้นอยู่กับบริบท?", opt: ["ตู้เย็น", "หางเสือ", "เตาไมโครเวฟ", "โทรศัพท์"], ans: 1, exp: "หางเสือ (หางของตัวเสือ = กลุ่มคำ, ที่บังคับทิศทางเรือ = คำประสม)" },
-            { q: "คำว่า 'แม่ทัพ' สร้างคำด้วยวิธีใด?", opt: ["คำซ้อน", "คำซ้ำ", "คำประสม", "คำสมาส"], ans: 2, exp: "แม่ (หัวหน้า) + ทัพ รวมกันเป็นความหมายใหม่ คือ คำประสม" },
-            { q: "ข้อใดมีคำซ้ำ?", opt: ["แดงๆ", "ขาวดำ", "มืดสว่าง", "เช้าเย็น"], ans: 0, exp: "แดงๆ ใช้ไม้ยมกซ้ำคำเดิมเพื่อบอกพหูพจน์หรือเน้น" },
-            { q: "คำซ้ำในข้อใดมีความหมายแยกเป็นส่วนๆ?", opt: ["เด็กๆ เล่นกัน", "เขาทำความสะอาดเป็นห้องๆ", "ฉันชอบกินกล้วยปิ้งร้อนๆ", "ผู้หญิงสวยๆ"], ans: 1, exp: "เป็นห้องๆ หมายถึง แยกไปทีละห้อง (แยกเป็นส่วนๆ)" },
-            { q: "ข้อใดไม่มีคำซ้อน?", opt: ["เขาถูกเฆี่ยนตี", "ขโมยขโจรเยอะมาก", "รถชนกันพังพินาศ", "นักเรียนกำลังอ่านหนังสือ"], ans: 3, exp: "อ่านหนังสือ เป็นกลุ่มคำ (กริยา+กรรม) ไม่มีคำซ้อนในประโยคนี้" },
-            { q: "ข้อใดเป็นคำมูลหลายพยางค์?", opt: ["กระดาษ", "แม่น้ำ", "ชาวบ้าน", "ชาวดอย"], ans: 0, exp: "กระดาษ แยกเป็น กระ+ดาษ ไม่มีความหมายเกี่ยวเนื่องกัน จึงเป็นคำมูล" },
-            { q: "ข้อใดไม่ใช่คำประสม?", opt: ["พัดลม", "ไฟฉาย", "ไม้แขวนเสื้อ", "สูงต่ำ"], ans: 3, exp: "สูงต่ำ เป็นคำซ้อนความหมายตรงข้าม" },
-            { q: "คำประสมในข้อใด เกิดจาก นาม + กริยา?", opt: ["นักร้อง", "รถเข็น", "ตู้เย็น", "น้ำยาล้างจาน"], ans: 1, exp: "รถ (นาม) + เข็น (กริยา)" },
-            { q: "คำในข้อใดเกิดจากการสร้างคำแบบเดียวกับ 'ทุบตี'?", opt: ["ผลไม้", "หน้าตา", "กักขัง", "ยาสีฟัน"], ans: 2, exp: "ทุบตี เป็นคำซ้อน (กริยาซ้อนกริยา) เหมือนกับ กักขัง" },
-            { q: "ข้อใดคือคำซ้อนความหมายตรงข้าม?", opt: ["เท็จจริง", "ทรัพย์สิน", "บ้านเรือน", "ดูแล"], ans: 0, exp: "เท็จ (ไม่จริง) ซ้อนกับ จริง เป็นคำซ้อนความหมายตรงข้าม" },
+            // การสร้างคำ (26-40)
+            { q: "ข้อใดเป็นคำมูลทุกคำ?", opt: ["มะพร้าว, นาฬิกา", "ตู้เย็น, พัดลม", "ชาวนา, นักร้อง", "แม่น้ำ, พ่อครัว"], ans: 0, exp: "มะพร้าว และ นาฬิกา เป็นคำมูลพยางค์เดียว/หลายพยางค์ที่แยกแล้วไม่มีความหมายปน" },
+            { q: "ข้อใดเป็นคำประสม?", opt: ["เสื่อสาด", "บ้านเรือน", "น้ำแข็ง", "ใหญ่โต"], ans: 2, exp: "น้ำแข็ง เป็นคำประสม (เกิดความหมายใหม่) ส่วนข้ออื่นเป็นคำซ้อน" },
+            { q: "ข้อใดไม่ใช่คำประสม?", opt: ["แม่พิมพ์", "ลูกน้อง", "พ่อตา", "พี่น้อง"], ans: 3, exp: "พี่น้อง เป็นคำซ้อนความหมายคล้ายกัน" },
+            { q: "ข้อใดเป็นคำซ้อนเพื่อความหมาย?", opt: ["ใจดำ", "กว้างขวาง", "ตู้เสื้อผ้า", "ดินสอ"], ans: 1, exp: "กว้างขวาง เป็นคำซ้อนความหมายคล้ายกัน" },
+            { q: "ข้อใดเป็นคำซ้อนเพื่อเสียง?", opt: ["บ้านเรือน", "งอแง", "เสื่อสาด", "จิตใจ"], ans: 1, exp: "งอแง เป็นคำซ้อนเพื่อเสียง (สัมผัสพยัญชนะ)" },
+            { q: "ข้อใดเป็นคำประสมที่เกิดจาก นาม + กริยา?", opt: ["นักร้อง", "รถเข็น", "ตู้เย็น", "น้ำยาล้างจาน"], ans: 1, exp: "รถ (นาม) + เข็น (กริยา)" },
+            { q: "คำว่า 'แม่ทัพ' สร้างคำด้วยวิธีใด?", opt: ["คำซ้อน", "คำซ้ำ", "คำประสม", "คำสมาส"], ans: 2, exp: "แม่ + ทัพ รวมกันเป็นความหมายใหม่ คือ คำประสม" },
+            { q: "คำซ้ำในข้อใดมีความหมายแยกเป็นส่วนๆ?", opt: ["เด็กๆ เล่นกัน", "เขาทำความสะอาดเป็นห้องๆ", "ฉันชอบกินกล้วยปิ้งร้อนๆ", "ผู้หญิงสวยๆ"], ans: 1, exp: "เป็นห้องๆ หมายถึง ทำทีละห้อง (แยกส่วน)" },
+            { q: "ข้อใดไม่มีคำซ้อน?", opt: ["เขาถูกเฆี่ยนตี", "ขโมยขโจรเยอะมาก", "รถชนกันพังพินาศ", "นักเรียนกำลังอ่านหนังสือ"], ans: 3, exp: "อ่านหนังสือ เป็นประโยค/วลีกริยา+กรรม ไม่มีคำซ้อน" },
+            { q: "ข้อใดเป็นคำมูลหลายพยางค์?", opt: ["กระดาษ", "แม่น้ำ", "ชาวบ้าน", "ชาวดอย"], ans: 0, exp: "กระดาษ แยกพยางค์แล้วไม่มีความหมายเดี่ยวๆ จึงเป็นคำมูล" },
+            { q: "คำในข้อใดเกิดจากการสร้างคำแบบเดียวกับ 'ทุบตี'?", opt: ["ผลไม้", "หน้าตา", "กักขัง", "ยาสีฟัน"], ans: 2, exp: "ทุบตี และ กักขัง เป็นคำซ้อน (กริยา+กริยา)" },
+            { q: "ข้อใดคือคำซ้อนความหมายตรงข้าม?", opt: ["เท็จจริง", "ทรัพย์สิน", "บ้านเรือน", "ดูแล"], ans: 0, exp: "เท็จ (ไม่จริง) + จริง" },
+            { q: "ข้อใดสามารถเป็นได้ทั้งคำประสมและกลุ่มคำขึ้นอยู่กับบริบท?", opt: ["ตู้เย็น", "หางเสือ", "เตาไมโครเวฟ", "โทรศัพท์"], ans: 1, exp: "หางเสือ (หางของเสือ = วลี, ที่บังคับทิศทางเรือ = คำประสม)" },
+            { q: "คำว่า 'วิ่งๆ เต้นๆ' จัดเป็นคำชนิดใด?", opt: ["คำซ้ำ", "คำซ้อน", "คำประสม", "คำสมาส"], ans: 0, exp: "เป็นการใช้ไม้ยมกซ้ำคำเดิม" },
+            { q: "ข้อใดเป็นคำซ้อนเพื่อความหมายทุกคำ?", opt: ["คัดเลือก, ตัดสิน", "งอแง, ตุกติก", "โซเซ, โงนเงน", "ตูมตาม, คึกคัก"], ans: 0, exp: "คัดเลือก และ ตัดสิน มีความหมายคล้ายกันมาซ้อนกัน" },
 
             // สมาส สนธิ (41-50)
-            { q: "ข้อใดเป็นคำสมาส?", opt: ["พลเมือง", "ราชวัง", "ราชการ", "ผลไม้"], ans: 2, exp: "ราชการ (ราช + การ) เป็นภาษาบาลี/สันสกฤตทั้งคู่ จึงเป็นคำสมาส (พลเมือง, ผลไม้ มีคำไทยแท้ปน)" },
-            { q: "หลักการพิจารณาคำสมาส ข้อใดถูกต้องที่สุด?", opt: ["แปลความหมายจากหน้าไปหลัง", "ต้องมีสระเชื่อมตรงกลางเสมอ", "ต้องเป็นคำบาลีสันสกฤตทั้ง 2 คำ", "ต้องมีคำไทยแท้ผสมอยู่ 1 คำ"], ans: 2, exp: "คำสมาส ต้องเกิดจากคำบาลีหรือสันสกฤตเท่านั้น และแปลจากหลังมาหน้า" },
-            { q: "ข้อใดเป็นคำสมาสที่มีการสนธิ?", opt: ["วิทยาลัย", "ประวัติศาสตร์", "แพทยศาสตร์", "สุนทรพจน์"], ans: 0, exp: "วิทยาลัย (วิทยา + อาลัย) มีการเชื่อมและกลืนสระ เป็นสมาสแบบสนธิ" },
-            { q: "ธันวาคม เกิดจากการสนธิของคำใด?", opt: ["ธันวา + อาคม", "ธนู + อาคม", "ธัน + อาคม", "ธนู + คม"], ans: 1, exp: "ธนู + อาคม = ธันวาคม (สระอู เปลี่ยนเป็น ว แล้วสนธิกับ อา)" },
+            { q: "ข้อใดเป็นคำสมาส?", opt: ["พลเมือง", "ราชวัง", "ราชการ", "ผลไม้"], ans: 2, exp: "ราชการ (ราช + การ) เป็นภาษาบาลี/สันสกฤตทั้งคู่" },
+            { q: "หลักการพิจารณาคำสมาส ข้อใดถูกต้องที่สุด?", opt: ["แปลจากหน้าไปหลัง", "ต้องมีสระเชื่อมตรงกลางเสมอ", "ต้องเป็นคำบาลีสันสกฤตทั้ง 2 คำ", "ต้องมีคำไทยแท้ผสมอยู่ 1 คำ"], ans: 2, exp: "คำสมาส ต้องมาจากบาลี/สันสกฤตเท่านั้น และแปลจากหลังมาหน้า" },
+            { q: "ข้อใดเป็นคำสมาสที่มีการสนธิ?", opt: ["วิทยาลัย", "ประวัติศาสตร์", "แพทยศาสตร์", "สุนทรพจน์"], ans: 0, exp: "วิทยาลัย (วิทยา + อาลัย) มีการเชื่อมและกลืนสระ" },
+            { q: "ธันวาคม เกิดจากการสนธิของคำใด?", opt: ["ธันวา + อาคม", "ธนู + อาคม", "ธัน + อาคม", "ธนู + คม"], ans: 1, exp: "ธนู + อาคม = ธันวาคม (สระอู เป็น ว)" },
             { q: "มกราคม เกิดจากการสนธิของคำใด?", opt: ["มกร + อาคม", "มกรา + อาคม", "มัก + อาคม", "มกร + คม"], ans: 0, exp: "มกร + อาคม = มกราคม" },
-            { q: "ข้อใดไม่ใช่คำสมาส?", opt: ["พระกร", "คุณค่า", "ศิลปกรรม", "คริสต์ศาสนา"], ans: 1, exp: "คุณค่า มีคำว่า 'ค่า' ซึ่งเป็นคำไทยแท้ จึงไม่ใช่คำสมาส (เป็นคำประสม)" },
+            { q: "ข้อใดไม่ใช่คำสมาส?", opt: ["พระกร", "คุณค่า", "ศิลปกรรม", "คริสต์ศาสนา"], ans: 1, exp: "คุณค่า มีคำว่า 'ค่า' ซึ่งเป็นคำไทยแท้ ไม่ใช่สมาส" },
             { q: "ชล + อาลัย เมื่อสนธิกันจะได้คำว่าอะไร?", opt: ["ชลอาลัย", "ชโลลัย", "ชลาลัย", "ชลลัย"], ans: 2, exp: "ชล + อาลัย = ชลาลัย" },
-            { q: "ข้อใดไม่มีการสนธิ?", opt: ["ศิลปากร", "มัคคุเทศก์", "เทศบาล", "สามัคยาจารย์"], ans: 2, exp: "เทศบาล เป็นคำสมาสแบบชน (เทศ + บาล) ไม่มีการเปลี่ยนแปลงสระเชื่อม" },
+            { q: "ข้อใดไม่มีการสนธิ (เป็นสมาสแบบชน)?", opt: ["ศิลปากร", "มัคคุเทศก์", "เทศบาล", "สามัคยาจารย์"], ans: 2, exp: "เทศบาล (เทศ + บาล) เป็นสมาสแบบชน ไม่มีการเปลี่ยนแปลงรูปสระ" },
             { q: "คำว่า 'มโหฬาร' เกิดจากคำใดสนธิกัน?", opt: ["มหา + โอฬาร", "มหา + อุฬาร", "มห + โอฬาร", "มหิศ + โอฬาร"], ans: 0, exp: "มหา + โอฬาร = มโหฬาร" },
-            { q: "คำใดอ่านออกเสียงแบบคำสมาส?", opt: ["สรรพสินค้า", "พลเมือง", "ทุนทรัพย์", "ถูกทุกข้อ"], ans: 0, exp: "สรรพสินค้า อ่านว่า สับ-พะ-สิน-ค้า มีการออกเสียงสระเชื่อมระหว่างคำ (พลเมือง, ทุนทรัพย์ มีคำไทยปน)" },
+            { q: "คำใดอ่านออกเสียงแบบคำสมาส (ออกเสียงสระเชื่อมระหว่างคำ)?", opt: ["สรรพสินค้า", "พลเมือง", "ทุนทรัพย์", "ตราประทับ"], ans: 0, exp: "สรรพสินค้า อ่านว่า สับ-พะ-สิน-ค้า" },
 
             // ชนิดของประโยค (51-60)
             { q: "ประโยคในข้อใดเป็นประโยคความเดียว (เอกรรถประโยค)?", opt: ["ฉันรักเขาแต่เขาไม่รักฉัน", "ตำรวจจับโจรผู้ร้ายที่ปล้นธนาคาร", "ฝนตกหนักมากเมื่อคืนนี้", "พอฝนหยุดตก ฟ้าก็ร้อง"], ans: 2, exp: "ฝนตกหนักมากเมื่อคืนนี้ มีประธานเดียว (ฝน) และกริยาเดียว (ตก)" },
-            { q: "ข้อใดเป็นประโยคความรวม (อเนกรรถประโยค)?", opt: ["พ่อไปทำงานเช้ามาก", "นกที่บินอยู่บนฟ้ามีสีสวย", "ฉันชอบกินก๋วยเตี๋ยวแต่พี่ชอบกินข้าว", "คุณครูสอนหนังสือนักเรียน"], ans: 2, exp: "มีสันธาน 'แต่' เชื่อมประโยคความเดียว 2 ประโยค (ขัดแย้งกัน)" },
-            { q: "ข้อใดเป็นประโยคความซ้อน (สังกรประโยค)?", opt: ["แม่ทำกับข้าวอยู่ในครัว", "รถยนต์คันที่วิ่งเร็วชนเสาไฟฟ้า", "เขาตั้งใจเรียนจึงสอบติด", "พี่และน้องไปโรงเรียน"], ans: 1, exp: "มีคำว่า 'ที่' ทำหน้าที่เชื่อมประโยคย่อย (รถยนต์วิ่งเร็ว) มาขยายประธานของประโยคหลัก" },
-            { q: "ประโยค 'กว่าตำรวจจะมา โจรก็หนีไปแล้ว' เป็นประโยคชนิดใด?", opt: ["ประโยคความเดียว", "ประโยคความรวม", "ประโยคความซ้อน", "กลุ่มคำ"], ans: 1, exp: "เป็นประโยคความรวม ที่มีเนื้อหาคล้อยตาม/ต่อเนื่องกัน (มีสันธาน กว่า...ก็)" },
-            { q: "ข้อใดไม่ใช่ประโยค?", opt: ["หมาเห่า", "ไฟดับ", "ฝนตก", "โรงเรียนของพวกเรา"], ans: 3, exp: "โรงเรียนของพวกเรา เป็นเพียงกลุ่มคำ (นามวลี) เพราะขาดภาคแสดง (กริยา)" },
-            { q: "คำเชื่อมในประโยคความซ้อน (ประพันธสรรพนาม) ได้แก่อะไรบ้าง?", opt: ["และ, แต่, หรือ, เพราะ", "ผู้, ที่, ซึ่ง, อัน", "จึง, ฉะนั้น, ดังนั้น", "กับ, แก่, แด่, ต่อ"], ans: 1, exp: "ผู้, ที่, ซึ่ง, อัน เป็นคำเชื่อมประโยคย่อยในประโยคความซ้อน" },
-            { q: "ประโยคความรวมข้อใดมีความหมายให้เลือกอย่างใดอย่างหนึ่ง?", opt: ["ฉันและเธอไปเที่ยวกัน", "เขาขี้เกียจจึงสอบตก", "เธอจะกินข้าวหรือกินก๋วยเตี๋ยว", "พี่ร้องเพลงแต่น้องเต้นรำ"], ans: 2, exp: "มีสันธาน 'หรือ' แสดงการให้เลือก" },
-            { q: "ประโยค 'คนทำดีย่อมได้รับผลดี' เป็นประโยคชนิดใด?", opt: ["ประโยคความเดียว", "ประโยคความรวม", "ประโยคความซ้อน", "วลี"], ans: 2, exp: "เป็นประโยคความซ้อน ละคำว่า 'ผู้' ไว้ (คนที่ทำดี)" },
-            { q: "ประโยคใดมีโครงสร้างต่างจากข้ออื่น?", opt: ["ตำรวจจับผู้ร้าย", "แมววิ่งไล่หนู", "น้องร้องไห้", "ชาวนาเกี่ยวข้าว"], ans: 2, exp: "น้องร้องไห้ เป็นประโยคที่ไม่มีกรรม (กริยาอกรรม) ข้ออื่นมีกรรมมารองรับทั้งหมด" },
-            { q: "ข้อใดคือส่วนขยายในประโยค 'สุนัขสีดำเห่าเสียงดัง'?", opt: ["สุนัข, เห่า", "สีดำ, เสียงดัง", "ดำ, ดัง", "สี, เสียง"], ans: 1, exp: "สีดำ ขยายประธาน(สุนัข) และ เสียงดัง ขยายกริยา(เห่า)" },
+            { q: "ข้อใดเป็นประโยคความรวม (อเนกรรถประโยค)?", opt: ["พ่อไปทำงานเช้ามาก", "นกที่บินอยู่บนฟ้ามีสีสวย", "ฉันชอบกินก๋วยเตี๋ยวแต่พี่ชอบกินข้าว", "คุณครูสอนหนังสือนักเรียน"], ans: 2, exp: "มีสันธาน 'แต่' เชื่อมประโยคขัดแย้งกัน" },
+            { q: "ข้อใดเป็นประโยคความซ้อน (สังกรประโยค)?", opt: ["แม่ทำกับข้าวอยู่ในครัว", "รถยนต์คันที่วิ่งเร็วชนเสาไฟฟ้า", "เขาตั้งใจเรียนจึงสอบติด", "พี่และน้องไปโรงเรียน"], ans: 1, exp: "มีคำว่า 'ที่' ทำหน้าที่เชื่อมประโยคย่อยมาขยายประธาน" },
+            { q: "ประโยค 'กว่าตำรวจจะมา โจรก็หนีไปแล้ว' เป็นประโยคชนิดใด?", opt: ["ประโยคความเดียว", "ประโยคความรวม", "ประโยคความซ้อน", "กลุ่มคำ"], ans: 1, exp: "เป็นประโยคความรวม สันธาน กว่า...ก็" },
+            { q: "ข้อใดไม่ใช่ประโยค?", opt: ["หมาเห่า", "ไฟดับ", "ฝนตก", "โรงเรียนของพวกเรา"], ans: 3, exp: "โรงเรียนของพวกเรา เป็นวลี (ขาดภาคแสดง/กริยา)" },
+            { q: "คำเชื่อมประพันธสรรพนามในประโยคความซ้อน ได้แก่อะไรบ้าง?", opt: ["และ, แต่, หรือ, เพราะ", "ผู้, ที่, ซึ่ง, อัน", "จึง, ฉะนั้น, ดังนั้น", "กับ, แก่, แด่, ต่อ"], ans: 1, exp: "ผู้, ที่, ซึ่ง, อัน เชื่อมประโยคย่อยในประโยคความซ้อน" },
+            { q: "ประโยคความรวมข้อใดมีความหมายให้เลือกอย่างใดอย่างหนึ่ง?", opt: ["ฉันและเธอไปเที่ยวกัน", "เขาขี้เกียจจึงสอบตก", "เธอจะกินข้าวหรือกินก๋วยเตี๋ยว", "พี่ร้องเพลงแต่น้องเต้นรำ"], ans: 2, exp: "ใช้สันธาน 'หรือ'" },
+            { q: "ประโยค 'คนทำดีย่อมได้รับผลดี' เป็นประโยคชนิดใด?", opt: ["ประโยคความเดียว", "ประโยคความรวม", "ประโยคความซ้อน", "วลี"], ans: 2, exp: "เป็นประโยคความซ้อน ละคำว่า 'ผู้/ที่' ไว้ (คนที่ทำดี)" },
+            { q: "ประโยคใดมีโครงสร้างเป็น อกรรมกริยา (กริยาไม่ต้องมีกรรม)?", opt: ["ตำรวจจับผู้ร้าย", "แมววิ่งไล่หนู", "น้องร้องไห้เสียงดัง", "ชาวนาเกี่ยวข้าว"], ans: 2, exp: "ร้องไห้ ไม่ต้องมีกรรมรับ เสียงดัง คือส่วนขยาย" },
+            { q: "ข้อใดคือส่วนขยายในประโยค 'สุนัขสีดำเห่าเสียงดัง'?", opt: ["สุนัข, เห่า", "สีดำ, เสียงดัง", "ดำ, ดัง", "สี, เสียง"], ans: 1, exp: "สีดำ ขยายประธาน (สุนัข) และ เสียงดัง ขยายกริยา (เห่า)" },
 
-            // ชนิดของคำ (นาม สรรพนาม กริยา ฯลฯ) (61-70)
-            { q: "คำว่า 'การ' และ 'ความ' ถ้านำหน้าคำกริยาหรือวิเศษณ์ จะกลายเป็นคำชนิดใด?", opt: ["อาการนาม", "สมุหนาม", "ลักษณนาม", "สามานยนาม"], ans: 0, exp: "การและความ นำหน้ากริยา/วิเศษณ์ เรียกว่า อาการนาม (เช่น การวิ่ง, ความดี)" },
-            { q: "ข้อใดมีสมุหนาม?", opt: ["ฝูงนกบินกลับรัง", "นกฝูงนั้นบินสูง", "ช้างโขลงนี้ดุร้าย", "ทหาร 3 กองร้อย"], ans: 0, exp: "สมุหนาม คือนามบอกหมวดหมู่ ต้องอยู่หน้าประธาน/นาม (ฝูงนก) หากอยู่หลังตัวเลขหรือนาม จะเป็นลักษณนาม" },
-            { q: "คำว่า 'แก่' ในประโยค 'ครูให้รางวัลแก่นักเรียน' เป็นคำชนิดใด?", opt: ["คำนาม", "คำกริยา", "คำบุพบท", "คำสันธาน"], ans: 2, exp: "กับ, แก่, แด่, ต่อ เป็นคำบุพบทบอกผู้รับ" },
-            { q: "ข้อใดใช้คำบุพบท 'แด่' ได้ถูกต้อง?", opt: ["ครูมอบทุนการศึกษาแด่นักเรียน", "ประชาชนถวายพระพรแด่พระมหากษัตริย์", "เขาให้เงินแด่ขอทาน", "ฉันมอบความรักแด่เธอ"], ans: 1, exp: "แด่ ใช้กับผู้รับที่อาวุโสกว่าหรือควรเคารพสักการะ" },
-            { q: "คำว่า 'ขัน' ในประโยค 'ไก่ขันตอนเช้า' เป็นคำชนิดใด?", opt: ["คำนาม", "คำสรรพนาม", "คำกริยา", "คำวิเศษณ์"], ans: 2, exp: "ขัน ในที่นี้แสดงอาการร้องของไก่ จึงเป็นคำกริยา" },
-            { q: "ข้อใดไม่มีคำวิเศษณ์?", opt: ["ผู้หญิงคนนั้นสวยมาก", "รถวิ่งเร็ว", "ฉันกินข้าวเช้า", "เขาร้องเพลงเพราะ"], ans: 2, exp: "ฉัน(ประธาน) กิน(กริยา) ข้าว(กรรม) เช้า(นามบอกเวลา/ขยาย)" },
-            { q: "คำอุทานข้อใดแสดงอาการตกใจ?", opt: ["อนิจจา!", "ไชโย!", "ว้าย!", "อ้าว!"], ans: 2, exp: "ว้าย, อุ๊ย แสดงความตกใจ (อนิจจา=สลดใจ, ไชโย=ดีใจ, อ้าว=ประหลาดใจ/ผิดคาด)" },
-            { q: "คำว่า 'ตัวเอง' ในประโยค 'ตัวเองจะไปไหน' เป็นคำสรรพนามบุรุษที่เท่าใด?", opt: ["บุรุษที่ 1", "บุรุษที่ 2", "บุรุษที่ 3", "ไม่ใช่คำสรรพนาม"], ans: 1, exp: "ตัวเอง ในบริบทนี้ใช้เรียกคู่สนทนา (คนที่เราพูดด้วย) จึงเป็นสรรพนามบุรุษที่ 2" },
-            { q: "ข้อใดมีคำกริยานุเคราะห์ (กริยาช่วย)?", opt: ["ฉันไปตลาด", "เขากำลังอ่านหนังสือ", "นกบินบนฟ้า", "น้องร้องไห้"], ans: 1, exp: "กำลัง เป็นกริยาช่วย (ช่วยบอกเวลา/tense) ขยายคำว่า อ่าน" },
-            { q: "คำว่า 'สิ' ในประโยค 'ไปสิ' เป็นคำชนิดใด?", opt: ["คำสันธาน", "คำวิเศษณ์", "คำอุทานเสริมบท", "คำอนุภาค (เสริมน้ำเสียง)"], ans: 3, exp: "สิ, นะ, เถอะ เป็นคำอนุภาคช่วยเสริมน้ำเสียงให้ประโยค" },
+            // ชนิดของคำ (61-70)
+            { q: "คำว่า 'การ' และ 'ความ' ถ้านำหน้าคำกริยาหรือวิเศษณ์ จะกลายเป็นคำชนิดใด?", opt: ["อาการนาม", "สมุหนาม", "ลักษณนาม", "สามานยนาม"], ans: 0, exp: "การ/ความ นำหน้ากริยา/วิเศษณ์ คือ อาการนาม" },
+            { q: "ข้อใดมีสมุหนาม (นามบอกหมวดหมู่)?", opt: ["ฝูงนกบินกลับรัง", "นกฝูงนั้นบินสูง", "ช้างโขลงนี้ดุร้าย", "ทหาร 3 กองร้อย"], ans: 0, exp: "สมุหนามต้องอยู่หน้าประธาน/นาม (ฝูงนก)" },
+            { q: "คำว่า 'แก่' ในประโยค 'ครูให้รางวัลแก่นักเรียน' เป็นคำชนิดใด?", opt: ["คำนาม", "คำกริยา", "คำบุพบท", "คำสันธาน"], ans: 2, exp: "กับ แก่ แด่ ต่อ เป็นคำบุพบทบอกผู้รับ" },
+            { q: "ข้อใดใช้คำบุพบท 'แด่' ได้ถูกต้อง?", opt: ["ครูมอบทุนการศึกษาแด่นักเรียน", "ประชาชนถวายพระพรแด่พระมหากษัตริย์", "เขาให้เงินแด่ขอทาน", "ฉันมอบความรักแด่เธอ"], ans: 1, exp: "แด่ ใช้กับผู้รับที่อาวุโสกว่าหรือเคารพย่องย่อง" },
+            { q: "คำว่า 'ขัน' ในประโยค 'ไก่ขันตอนเช้า' เป็นคำชนิดใด?", opt: ["คำนาม", "คำสรรพนาม", "คำกริยา", "คำวิเศษณ์"], ans: 2, exp: "แสดงอาการร้องของไก่ จึงเป็นกริยา" },
+            { q: "ข้อใดไม่มีคำวิเศษณ์?", opt: ["ผู้หญิงคนนั้นสวยมาก", "รถวิ่งเร็ว", "ฉันกินข้าวเช้า", "เขาร้องเพลงเพราะ"], ans: 2, exp: "ฉัน(ประธาน) กิน(กริยา) ข้าว(กรรม) เช้า(นามบอกเวลา)" },
+            { q: "คำอุทานข้อใดแสดงอาการตกใจ?", opt: ["อนิจจา!", "ไชโย!", "ว้าย!", "อ้าว!"], ans: 2, exp: "ว้าย แสดงความตกใจ" },
+            { q: "คำว่า 'ตัวเอง' ในประโยค 'ตัวเองจะไปไหน' เป็นคำสรรพนามบุรุษที่เท่าใด?", opt: ["บุรุษที่ 1", "บุรุษที่ 2", "บุรุษที่ 3", "ไม่ใช่คำสรรพนาม"], ans: 1, exp: "ใช้เรียกคู่สนทนา จึงเป็นบุรุษที่ 2" },
+            { q: "ข้อใดมีคำกริยานุเคราะห์ (กริยาช่วย)?", opt: ["ฉันไปตลาด", "เขากำลังอ่านหนังสือ", "นกบินบนฟ้า", "น้องร้องไห้"], ans: 1, exp: "กำลัง เป็นกริยาช่วยขยายกริยาหลัก (อ่าน)" },
+            { q: "คำว่า 'สิ' ในประโยค 'ไปสิ' เป็นคำชนิดใด?", opt: ["คำสันธาน", "คำวิเศษณ์", "คำอุทานเสริมบท", "คำอนุภาค (เสริมน้ำเสียง)"], ans: 3, exp: "สิ, นะ, เถอะ เป็นคำอนุภาคเสริมน้ำเสียง" },
 
             // คำราชาศัพท์และระดับภาษา (71-80)
-            { q: "คำราชาศัพท์ของคำว่า 'กิน' สำหรับพระมหากษัตริย์คือคำใด?", opt: ["ฉัน", "เสวย", "รับประทาน", "เสพ"], ans: 1, exp: "เสวย ใช้สำหรับพระมหากษัตริย์และเจ้านายชั้นสูง (ฉัน ใช้กับพระภิกษุ)" },
-            { q: "ข้อใดใช้คำว่า 'ทรง' ไม่ถูกต้อง?", opt: ["ทรงม้า", "ทรงยินดี", "ทรงเสด็จ", "ทรงดนตรี"], ans: 2, exp: "เสด็จ เป็นคำราชาศัพท์อยู่แล้ว ห้ามเติม 'ทรง' นำหน้า" },
-            { q: "คำว่า 'พระบรมราโชวาท' ใช้กับบุคคลระดับใด?", opt: ["พระมหากษัตริย์", "สมเด็จพระบรมราชินีนาถ", "สมเด็จพระเทพรัตนราชสุดาฯ", "พระบรมวงศานุวงศ์ทุกพระองค์"], ans: 0, exp: "คำที่มี 'บรม' มักสงวนไว้ใช้สำหรับพระมหากษัตริย์เท่านั้น" },
-            { q: "คำทักทาย 'นมัสการ' ใช้กับบุคคลใด?", opt: ["พระมหากษัตริย์", "พระภิกษุสงฆ์", "นายกรัฐมนตรี", "บิดามารดา"], ans: 1, exp: "นมัสการ เป็นคำทักทายสำหรับพระภิกษุสงฆ์" },
-            { q: "ข้อใดเป็นภาษาระดับทางการ?", opt: ["งานแต่งงานของเขาจัดยิ่งใหญ่มาก", "พิธีมงคลสมรสของเขาจัดอย่างสมเกียรติ", "งานแต่งหมอนั่นจัดซะอลังการ", "งานสมรสของเขาโคตรหรู"], ans: 1, exp: "พิธีมงคลสมรส เป็นคำสุภาพระดับทางการ" },
-            { q: "คำว่า 'ตาย' ถ้าใช้กับบุคคลทั่วไปที่เป็นผู้ใหญ่และต้องการความสุภาพ ควรใช้คำใด?", opt: ["มรณภาพ", "สวรรคต", "ถึงแก่กรรม", "สิ้นชีพิตักษัย"], ans: 2, exp: "ถึงแก่กรรม ใช้กับบุคคลทั่วไป (มรณภาพ=พระ, สวรรคต=กษัตริย์, สิ้นชีพิตักษัย=หม่อมเจ้า)" },
+            { q: "คำราชาศัพท์ของคำว่า 'กิน' สำหรับพระมหากษัตริย์คือคำใด?", opt: ["ฉัน", "เสวย", "รับประทาน", "เสพ"], ans: 1, exp: "เสวย ใช้สำหรับพระมหากษัตริย์และเจ้านายชั้นสูง" },
+            { q: "ข้อใดใช้คำว่า 'ทรง' ไม่ถูกต้อง?", opt: ["ทรงม้า", "ทรงยินดี", "ทรงเสด็จ", "ทรงดนตรี"], ans: 2, exp: "เสด็จ เป็นราชาศัพท์อยู่แล้ว ห้ามเติม 'ทรง'" },
+            { q: "คำว่า 'พระบรมราโชวาท' ใช้กับบุคคลระดับใด?", opt: ["พระมหากษัตริย์", "สมเด็จพระบรมราชินีนาถ", "สมเด็จพระกนิษฐาธิราชเจ้าฯ", "พระบรมวงศานุวงศ์ทุกพระองค์"], ans: 0, exp: "คำที่มี 'บรม' สงวนไว้ใช้สำหรับพระมหากษัตริย์เท่านั้น" },
+            { q: "คำทักทาย 'นมัสการ' ใช้กับบุคคลใด?", opt: ["พระมหากษัตริย์", "พระภิกษุสงฆ์", "นายกรัฐมนตรี", "บิดามารดา"], ans: 1, exp: "ใช้สำหรับพระภิกษุสงฆ์" },
+            { q: "ข้อใดเป็นภาษาระดับทางการ?", opt: ["งานแต่งงานของเขาจัดยิ่งใหญ่มาก", "พิธีมงคลสมรสของเขาจัดอย่างสมเกียรติ", "งานแต่งหมอนั่นจัดซะอลังการ", "งานสมรสของเขาโคตรหรู"], ans: 1, exp: "พิธีมงคลสมรส...จัดอย่างสมเกียรติ เป็นภาษาระดับทางการ" },
+            { q: "คำว่า 'ตาย' ถ้าใช้กับบุคคลทั่วไปที่เป็นผู้ใหญ่และต้องการความสุภาพ ควรใช้คำใด?", opt: ["มรณภาพ", "สวรรคต", "ถึงแก่กรรม", "สิ้นชีพิตักษัย"], ans: 2, exp: "ถึงแก่กรรม ใช้กับบุคคลทั่วไป" },
             { q: "ภาษาที่ใช้ในการเขียนหนังสือราชการ ควรเป็นภาษาระดับใด?", opt: ["ระดับพิธีการ", "ระดับทางการ", "ระดับกึ่งทางการ", "ระดับสนทนา"], ans: 1, exp: "หนังสือราชการใช้ภาษาระดับทางการ" },
-            { q: "ข้อใดใช้คำราชาศัพท์ถูกต้อง?", opt: ["พระราชาทรงตรัส", "พระราชาพระราชทาน", "พระราชาทรงโปรด", "พระราชาทรงพระราชดำเนิน"], ans: 1, exp: "พระราชทาน ถูกต้อง. (ตรัส, โปรด, พระราชดำเนิน เป็นราชาศัพท์แล้ว ห้ามใช้ ทรง นำหน้า)" },
+            { q: "ข้อใดใช้คำราชาศัพท์ถูกต้อง?", opt: ["พระราชาทรงตรัส", "พระราชาพระราชทาน", "พระราชาทรงโปรด", "พระราชาทรงพระราชดำเนิน"], ans: 1, exp: "พระราชทาน ถูกต้อง (ตรัส, โปรด, พระราชดำเนิน ห้ามใช้ ทรง นำหน้า)" },
             { q: "สรรพนามบุรุษที่ 1 ที่ใช้พูดกับพระภิกษุสงฆ์ (ผู้ชายพูด) คือข้อใด?", opt: ["กระผม", "ผม", "ข้าพเจ้า", "อาตมา"], ans: 0, exp: "ผู้ชายพูดกับพระภิกษุ ใช้ 'กระผม' หรือ 'ผม'" },
-            { q: "คำว่า 'ประชวร' หมายถึงอะไร?", opt: ["โกรธ", "ป่วย", "เดินทาง", "ตาย"], ans: 1, exp: "ประชวร เป็นคำราชาศัพท์ แปลว่า ป่วย, ไม่สบาย" },
+            { q: "คำว่า 'ประชวร' หมายถึงอะไร?", opt: ["โกรธ", "ป่วย", "เดินทาง", "ตาย"], ans: 1, exp: "ประชวร แปลว่า ป่วย" },
 
             // สำนวน สุภาษิต คำพังเพย (81-90)
-            { q: "สำนวนใดมีความหมายว่า 'ได้ของที่มีค่าแต่ไม่รู้คุณค่าของสิ่งนั้น'?", opt: ["ไก่ได้พลอย", "วานรได้แก้ว", "ตาบอดได้แว่น", "ถูกทุกข้อ"], ans: 3, exp: "ทั้ง 3 สำนวนมีความหมายเหมือนกัน คือได้ของมีค่าแต่เอาไปทำประโยชน์ไม่ได้" },
-            { q: "สำนวน 'จับปลาสองมือ' หมายความว่าอย่างไร?", opt: ["ทำอะไรสองอย่างพร้อมกันจนล้มเหลว", "มีความสามารถหลายด้าน", "โลภมากมักลาภหาย", "เก่งกว่าคนอื่นในทุกๆ เรื่อง"], ans: 0, exp: "หมายถึง การมุ่งหวังหรือทำสองสิ่งพร้อมกัน สุดท้ายอาจไม่ได้อะไรเลย" },
-            { q: "เติมคำในช่องว่าง 'รำไม่ดี ...'", opt: ["โทษปี่โทษกลอง", "โทษฟ้าโทษฝน", "โทษคนอื่น", "โทษโชคชะตา"], ans: 0, exp: "รำไม่ดีโทษปี่โทษกลอง หมายถึง ตัวเองทำผิดแต่ไปโทษสิ่งอื่น" },
-            { q: "สำนวนใดหมายถึง 'คนที่ทำผิดแล้วมีท่าทีพิรุธ'?", opt: ["กินปูนร้อนท้อง", "วัวสันหลังหวะ", "ถูกทั้ง 1 และ 2", "กินบนเรือนขี้รดบนหลังคา"], ans: 2, exp: "ทั้ง กินปูนร้อนท้อง และ วัวสันหลังหวะ หมายถึงคนทำผิดแล้วมีอาการหวาดระแวงไปเอง" },
-            { q: "สำนวน 'น้ำลดตอผุด' มีความหมายตรงกับข้อใด?", opt: ["เมื่อเวลาผ่านไป ความจริงจะปรากฏ", "เมื่อหมดอำนาจ ความชั่วที่เคยทำไว้ก็ปรากฏ", "ความลับไม่มีในโลก", "คนดีย่อมตกน้ำไม่ไหลตกไฟไม่ไหม้"], ans: 1, exp: "หมายถึง เมื่อหมดอำนาจหรือยามตกต่ำ ความชั่วที่ซ่อนเร้นไว้ก็ปรากฏให้เห็น" },
+            { q: "สำนวนใดมีความหมายว่า 'ได้ของที่มีค่าแต่ไม่รู้คุณค่าของสิ่งนั้น'?", opt: ["ไก่ได้พลอย", "วานรได้แก้ว", "ตาบอดได้แว่น", "ถูกทุกข้อ"], ans: 3, exp: "ทั้ง 3 สำนวนมีความหมายเหมือนกัน" },
+            { q: "สำนวน 'จับปลาสองมือ' หมายความว่าอย่างไร?", opt: ["ทำอะไรสองอย่างพร้อมกันจนล้มเหลว", "มีความสามารถหลายด้าน", "โลภมากมักลาภหาย", "เก่งกว่าคนอื่น"], ans: 0, exp: "มุ่งหวังสองสิ่งพร้อมกัน จนอาจไม่ได้อะไรเลย" },
+            { q: "เติมคำในช่องว่างสำนวน 'รำไม่ดี ...'", opt: ["โทษปี่โทษกลอง", "โทษฟ้าโทษฝน", "โทษคนอื่น", "โทษโชคชะตา"], ans: 0, exp: "รำไม่ดีโทษปี่โทษกลอง หมายถึง ทำผิดเองแต่ไปโทษสิ่งอื่น" },
+            { q: "สำนวนใดหมายถึง 'คนที่ทำผิดแล้วมีท่าทีพิรุธหวาดระแวง'?", opt: ["กินปูนร้อนท้อง", "วัวสันหลังหวะ", "ถูกทั้ง 1 และ 2", "กินบนเรือนขี้รดบนหลังคา"], ans: 2, exp: "ทั้ง กินปูนร้อนท้อง และ วัวสันหลังหวะ หมายถึงทำผิดแล้วหวาดระแวงไปเอง" },
+            { q: "สำนวน 'น้ำลดตอผุด' มีความหมายตรงกับข้อใด?", opt: ["เมื่อเวลาผ่านไป ความจริงจะปรากฏ", "เมื่อหมดอำนาจ ความชั่วที่ทำไว้ก็ปรากฏ", "ความลับไม่มีในโลก", "คนดีย่อมตกน้ำไม่ไหล"], ans: 1, exp: "ยามหมดอำนาจ ความชั่วที่เคยปิดบังไว้ก็ปรากฏ" },
             { q: "สำนวนใดมีความหมายใกล้เคียงกับ 'สอนจระเข้ให้ว่ายน้ำ' มากที่สุด?", opt: ["สอนหนังสือสังฆราช", "เอามะพร้าวห้าวไปขายสวน", "สีซอให้ควายฟัง", "ถูกทั้ง 1 และ 2"], ans: 3, exp: "สอนจระเข้ฯ, สอนหนังสือสังฆราช, เอามะพร้าวฯ หมายถึง สอนผู้ที่รู้ดีอยู่แล้ว" },
-            { q: "สำนวน 'ดินพอกหางหมู' หมายความว่าอย่างไร?", opt: ["คนสกปรก", "งานที่ปล่อยให้สะสมพอกพูนขึ้นเรื่อยๆ", "คนที่มีหนี้สินล้นพ้นตัว", "ความขี้เกียจสันหลังยาว"], ans: 1, exp: "งานหรือภาระที่คั่งค้างพอกพูนขึ้นเรื่อยๆ จนทำไม่หวาดไม่ไหว" },
-            { q: "บุคคลใดมีพฤติกรรมตรงกับสำนวน 'มือไม่พายเอาเท้าราน้ำ'?", opt: ["สมชายขี้เกียจทำงานจึงนอนทั้งวัน", "สมศรีไม่ช่วยเพื่อนทำงานกลุ่มแถมยังพูดจาบั่นทอนกำลังใจ", "สมปองขโมยผลงานของเพื่อนไปส่งครู", "สมหมายทำงานพลาดแล้วโยนความผิดให้คนอื่น"], ans: 1, exp: "หมายถึง ไม่ช่วยทำงานแล้วยังขัดขวางการทำงานของผู้อื่น" },
-            { q: "สำนวนใดมีความหมายตรงกันข้าม?", opt: ["ช้าๆ ได้พร้าเล่มงาม - น้ำขึ้นให้รีบตัก", "ขวานผ่าซาก - ปากหวานก้นเปรี้ยว", "เห็นช้างขี้ ขี้ตามช้าง - เอาอย่างเขา", "น้ำบ่อน้อย - น้ำพักน้ำแรง"], ans: 0, exp: "ช้าๆ ได้พร้าเล่มงาม (ให้รอคอยอย่างใจเย็น) ขัดแย้งกับ น้ำขึ้นให้รีบตัก (มีโอกาสให้รีบคว้า)" },
-            { q: "สำนวน 'เข้าเถื่อนอย่าลืมพร้า' สอนเรื่องใด?", opt: ["ความกตัญญู", "ความรอบคอบ ไม่ประมาท", "ความกล้าหาญ", "ความประหยัด"], ans: 1, exp: "หมายถึง จะไปในที่เปลี่ยวหรืออันตราย ต้องเตรียมพร้อมและไม่ประมาท" },
+            { q: "สำนวน 'ดินพอกหางหมู' หมายความว่าอย่างไร?", opt: ["คนสกปรก", "งานที่ปล่อยให้สะสมพอกพูนขึ้นเรื่อยๆ", "คนที่มีหนี้สินล้นตัว", "ความขี้เกียจ"], ans: 1, exp: "การค้างงานไว้จนพอกพูนทำไม่ทัน" },
+            { q: "บุคคลใดมีพฤติกรรมตรงกับสำนวน 'มือไม่พายเอาเท้าราน้ำ'?", opt: ["สมชายขี้เกียจทำงานจึงนอนทั้งวัน", "สมศรีไม่ช่วยทำงานกลุ่มแถมพูดจาบั่นทอน", "สมปองขโมยผลงานเพื่อน", "สมหมายโยนความผิดให้คนอื่น"], ans: 1, exp: "ไม่ช่วยทำแล้วยังขัดขวางการทำงาน" },
+            { q: "สำนวนคู่ใดมีความหมายตรงกันข้ามกัน?", opt: ["ช้าๆ ได้พร้าเล่มงาม - น้ำขึ้นให้รีบตัก", "ขวานผ่าซาก - ปากหวานก้นเปรี้ยว", "เห็นช้างขี้ ขี้ตามช้าง - เอาอย่างเขา", "น้ำบ่อน้อย - น้ำพักน้ำแรง"], ans: 0, exp: "ช้าๆ ได้พร้าเล่มงาม (ให้ใจเย็น) ขัดแย้งกับ น้ำขึ้นให้รีบตัก (ให้รีบทำทันที)" },
+            { q: "สำนวน 'เข้าเถื่อนอย่าลืมพร้า' สอนเรื่องใด?", opt: ["ความกตัญญู", "ความรอบคอบ ไม่ประมาท", "ความกล้าหาญ", "ความประหยัด"], ans: 1, exp: "จะไปที่อันตราย ต้องเตรียมพร้อมและไม่ประมาท" },
 
-            // โวหาร ภาพพจน์ และความเข้าใจภาษา (91-100)
-            { q: "การเขียนบรรยายเหตุการณ์ให้เห็นภาพอย่างละเอียดลออ ตรงกับโวหารใด?", opt: ["บรรยายโวหาร", "พรรณนาโวหาร", "อุปมาโวหาร", "สาธกโวหาร"], ans: 1, exp: "พรรณนาโวหาร คือการสอดแทรกอารมณ์และรายละเอียดให้ผู้อ่านเห็นภาพชัดเจน" },
-            { q: "โวหารใดมีการยกตัวอย่างประกอบเพื่อให้เข้าใจง่ายขึ้น?", opt: ["บรรยายโวหาร", "เทศนาโวหาร", "สาธกโวหาร", "พรรณนาโวหาร"], ans: 2, exp: "สาธกโวหาร คือการยกตัวอย่าง (สาธก แปลว่า ยกตัวอย่าง)" },
+            // โวหาร ภาพพจน์ และภาษาเชิงวิเคราะห์ (91-100)
+            { q: "การเขียนบรรยายเหตุการณ์อย่างละเอียด สอดแทรกอารมณ์ความรู้สึกให้เห็นภาพ ตรงกับโวหารใด?", opt: ["บรรยายโวหาร", "พรรณนาโวหาร", "อุปมาโวหาร", "สาธกโวหาร"], ans: 1, exp: "พรรณนาโวหาร มุ่งให้เห็นภาพและอารมณ์แจ่มชัด" },
+            { q: "โวหารใดมีการยกตัวอย่างประกอบเพื่อให้เข้าใจง่ายขึ้น?", opt: ["บรรยายโวหาร", "เทศนาโวหาร", "สาธกโวหาร", "พรรณนาโวหาร"], ans: 2, exp: "สาธกโวหาร คือการยกตัวอย่าง (สาธก = ยกตัวอย่าง)" },
             { q: "ประโยค 'เขาโกรธจนแทบจะกินเลือดกินเนื้อ' ใช้ภาพพจน์ใด?", opt: ["อุปมา", "อุปลักษณ์", "บุคคลวัต", "อติพจน์"], ans: 3, exp: "อติพจน์ คือการกล่าวเกินจริง (Overstatement)" },
-            { q: "ประโยค 'ครูคือเรือจ้าง' ใช้ภาพพจน์ใด?", opt: ["อุปมา", "อุปลักษณ์", "อติพจน์", "สัทพจน์"], ans: 1, exp: "อุปลักษณ์ คือการเปรียบสิ่งหนึ่ง 'เป็น' หรือ 'คือ' อีกสิ่งหนึ่ง" },
-            { q: "ภาพพจน์ 'บุคคลวัต' (บุคลาธิษฐาน) คืออะไร?", opt: ["การเปรียบเทียบของสองสิ่ง", "การเลียนเสียงธรรมชาติ", "การสมมติสิ่งไม่มีชีวิตให้มีกริยาอาการเหมือนมนุษย์", "การกล่าวอ้างถึงบุคคลสำคัญ"], ans: 2, exp: "บุคคลวัต คือการทำให้สิ่งที่ไม่ใช่มนุษย์ มีกริยาอาการเหมือนมนุษย์ (เช่น ฟ้าสะอื้น, ทะเลร้องไห้)" },
-            { q: "'เสียงปืนดัง ปัง ปัง!' เป็นการใช้ภาพพจน์ใด?", opt: ["สัทพจน์", "อุปมา", "อติพจน์", "อุปลักษณ์"], ans: 0, exp: "สัทพจน์ คือการเลียนเสียงธรรมชาติ หรือเสียงต่างๆ" },
-            { q: "ข้อใดใช้คำฟุ่มเฟือย?", opt: ["เขาถูกตำรวจจับกุมข้อหาขโมยทรัพย์สิน", "ในปัจจุบันนี้ โลกของเรามีการเปลี่ยนแปลงไปมาก", "ฉันชอบกินข้าวผัดหมู", "ฝนตกหนักจนน้ำท่วม"], ans: 1, exp: "คำว่า 'ในปัจจุบันนี้' ฟุ่มเฟือย ควรใช้ 'ปัจจุบัน' หรือ 'ในปัจจุบัน' อย่างใดอย่างหนึ่ง" },
-            { q: "ข้อใดมีความกำกวม?", opt: ["แม่ตีน้องที่ร้องไห้", "ตากากเสื้อ", "เขานั่งเก้าอี้ตัวใหม่", "ฉันเห็นเขาถ่ายรูป"], ans: 0, exp: "'แม่ตีน้องที่ร้องไห้' กำกวมว่า แม่ร้องไห้ตอนตีน้อง หรือ น้องร้องไห้จึงถูกแม่ตี" },
-            { q: "ข้อใดใช้ภาษาได้รัดกุมที่สุด?", opt: ["ผู้ร้ายถูกจับกุมตัวแล้ว", "ตำรวจได้ทำการจับกุมผู้ร้ายแล้ว", "ผู้ร้ายโดนรวบตัวไปแล้วโดยตำรวจ", "ตำรวจรวบตัวผู้ร้ายเข้าตาราง"], ans: 0, exp: "'ผู้ร้ายถูกจับกุมตัวแล้ว' สั้น กระชับ และเป็นทางการ (คำว่า 'ทำการ' มักเป็นคำฟุ่มเฟือย)" },
-            { q: "ข้อใดให้ความหมายของคำว่า 'บุคลากร' ได้ถูกต้องที่สุด?", opt: ["เจ้าหน้าที่ในหน่วยงาน", "คนทำงานทั่วไป", "ผู้ใช้แรงงาน", "ประชาชนทุกคน"], ans: 0, exp: "บุคลากร (Personnel) หมายถึง ตำแหน่งหน้าที่ผู้ปฏิบัติงาน หรือเจ้าหน้าที่ในหน่วยงาน/องค์กร" }
+            { q: "ประโยค 'ครูคือเรือจ้าง' ใช้ภาพพจน์ใด?", opt: ["อุปมา", "อุปลักษณ์", "อติพจน์", "สัทพจน์"], ans: 1, exp: "อุปลักษณ์ คือการเปรียบเป็น หรือ เปรียบคือ" },
+            { q: "ภาพพจน์ 'บุคคลวัต' (บุคลาธิษฐาน) คือข้อใด?", opt: ["การเปรียบเทียบของสองสิ่ง", "การเลียนเสียงธรรมชาติ", "สมมติสิ่งไม่มีชีวิตให้มีกริยาเหมือนมนุษย์", "การกล่าวอ้างถึงคนสำคัญ"], ans: 2, exp: "ทำสิ่งที่ไม่ใช่มนุษย์ ให้ทำอาการเหมือนมนุษย์ (เช่น ฟ้าสะอื้น)" },
+            { q: "'เสียงปืนดัง ปัง ปัง!' เป็นการใช้ภาพพจน์ใด?", opt: ["สัทพจน์", "อุปมา", "อติพจน์", "อุปลักษณ์"], ans: 0, exp: "สัทพจน์ คือการเลียนเสียงธรรมชาติหรือเสียงวัตถุ" },
+            { q: "ข้อใดใช้คำฟุ่มเฟือย?", opt: ["เขาถูกตำรวจจับกุมข้อหาขโมยทรัพย์สิน", "ในปัจจุบันนี้ โลกของเรามีการเปลี่ยนแปลงมาก", "ฉันชอบกินข้าวผัดหมู", "ฝนตกหนักจนน้ำท่วม"], ans: 1, exp: "คำว่า 'ในปัจจุบันนี้' ฟุ่มเฟือย ควรใช้ 'ปัจจุบัน' หรือ 'ในปัจจุบัน'" },
+            { q: "ข้อใดมีความกำกวมทางภาษา?", opt: ["แม่ตีน้องที่ร้องไห้", "ตากผ้าตากแดด", "เขานั่งเก้าอี้ตัวใหม่", "ฉันเห็นเขาถ่ายรูป"], ans: 0, exp: "กำกวมว่า แม่ร้องไห้ตอนตีน้อง หรือ น้องร้องไห้จึงถูกตี" },
+            { q: "ข้อใดใช้ภาษาได้รัดกุมที่สุด?", opt: ["ผู้ร้ายถูกจับกุมตัวแล้ว", "ตำรวจได้ทำการจับกุมผู้ร้ายแล้ว", "ผู้ร้ายโดนรวบตัวไปแล้วโดยตำรวจ", "ตำรวจรวบตัวผู้ร้ายเข้าตาราง"], ans: 0, exp: "'ผู้ร้ายถูกจับกุมตัวแล้ว' สั้น กระชับ เป็นทางการ" },
+            { q: "ข้อใดให้ความหมายของคำว่า 'บุคลากร' ได้ถูกต้องที่สุด?", opt: ["เจ้าหน้าที่หรือผู้ปฏิบัติงานในองค์กร", "คนทำงานทั่วไป", "ผู้ใช้แรงงาน", "ประชาชนทุกคน"], ans: 0, exp: "บุคลากร หมายถึง เจ้าหน้าที่หรือผู้ปฏิบัติงานตามตำแหน่งในหน่วยงาน" }
         ];
 
-        // ตรวจสอบข้อมูลให้แน่ใจว่ามี 100 ข้อเป๊ะ
-        const questions = [...rawThaiData];
-        let curQ = 0, score = 0, answers = [];
+        // Memory Game Vocabulary Deck
+        const gameDeck = [
+            { word: "กะเพรา", correct: true, hint: "ไม่มี ร ที่ตัว ก" },
+            { word: "กระเพรา", correct: false, hint: "ผิด! ที่ถูกคือ กะเพรา" },
+            { word: "สังเกต", correct: true, hint: "ไม่มีสระอุ" },
+            { word: "สังเกตุ", correct: false, hint: "ผิด! สังเกต ไม่มีสระอุ" },
+            { word: "อนุญาต", correct: true, hint: "ไม่มีสระอิ" },
+            { word: "อนุญาติ", correct: false, hint: "ผิด! อนุญาต ไม่มีสระอิ" },
+            { word: "ปรากฏ", correct: true, hint: "ใช้ ฏ ปฏัก" },
+            { word: "ปรากฎ", correct: false, hint: "ผิด! ปรากฏ ใช้ ฏ ปฏัก" },
+            { word: "กฎหมาย", correct: true, hint: "ใช้ ฎ ชฎา" },
+            { word: "กฏหมาย", correct: false, hint: "ผิด! กฎหมาย ใช้ ฎ ชฎา" },
+            { word: "อีเมล", correct: true, hint: "สะกดตามราชบัณฑิต" },
+            { word: "อีเมลล์", correct: false, hint: "ผิด! อีเมล ไม่มี ล การันต์" },
+            { word: "ผัดไทย", correct: true, hint: "มี ย ยักษ์" },
+            { word: "ผัดไท", correct: false, hint: "ผิด! ผัดไทย มี ย ยักษ์" },
+            { word: "ศีรษะ", correct: true, hint: "สระอี อยู่บน ศ" }
+        ];
+
+        // State variables
+        let curQ = 0;
+        let score = 0;
+        let answers = new Array(questions.length).fill(null);
+        
+        // Game State
+        let gameIdx = 0;
+        let gameScore = 0;
+        let gameStreak = 0;
 
         function switchMode(mode) {
-            ['screen-home', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            ['home', 'lesson', 'technique', 'game', 'quiz', 'result'].forEach(s => {
+                const el = document.getElementById('screen-' + s);
+                if (el) el.classList.add('hidden');
+                
+                const navBtn = document.getElementById('nav-' + s);
+                if (navBtn) navBtn.classList.remove('bg-slate-800', 'text-amber-400', 'font-bold');
+            });
+
             document.getElementById('screen-' + mode).classList.remove('hidden');
-            if(mode === 'quiz') { 
-                curQ = 0; 
-                score = 0; 
-                answers = new Array(questions.length).fill(null); 
-                renderQ(); 
+            const activeNav = document.getElementById('nav-' + mode);
+            if (activeNav) activeNav.classList.add('bg-slate-800', 'text-amber-400', 'font-bold');
+
+            if (mode === 'quiz') {
+                if (answers.every(a => a === null)) {
+                    curQ = 0;
+                    score = 0;
+                }
+                renderPalette();
+                renderQ();
+            } else if (mode === 'game') {
+                resetGame();
             }
-            window.scrollTo(0,0);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function filterLessons() {
+            const query = document.getElementById('lesson-search').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.lesson-card');
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function resetGame() {
+            gameIdx = 0;
+            gameScore = 0;
+            gameStreak = 0;
+            updateGameUI();
+        }
+
+        function updateGameUI() {
+            if (gameIdx >= gameDeck.length) {
+                document.getElementById('game-word-text').innerText = "🎉 จบการเล่นมินิเกม!";
+                document.getElementById('game-feedback').innerHTML = `<span class="text-emerald-700 font-bold">คุณทำคะแนนได้ ${gameScore} แต้ม! ทบทวนครบถ้วนแล้ว</span>`;
+                document.getElementById('game-btn-container').classList.add('hidden');
+                return;
+            }
+
+            document.getElementById('game-btn-container').classList.remove('hidden');
+            const item = gameDeck[gameIdx];
+            document.getElementById('game-word-text').innerText = item.word;
+            document.getElementById('game-round-text').innerText = `คำถามที่ ${gameIdx + 1}/${gameDeck.length}`;
+            document.getElementById('game-score-display').innerText = `${gameScore} แต้ม`;
+            document.getElementById('game-streak-text').innerHTML = `<i class="fa-solid fa-fire mr-1"></i> ชนะต่อเนื่อง: ${gameStreak}`;
+            document.getElementById('game-feedback').innerText = '';
+        }
+
+        function answerGame(userSaysCorrect) {
+            const item = gameDeck[gameIdx];
+            const feedbackEl = document.getElementById('game-feedback');
+
+            if (userSaysCorrect === item.correct) {
+                gameScore += 10 + (gameStreak * 2);
+                gameStreak++;
+                feedbackEl.innerHTML = `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> ถูกต้อง! (${item.hint})</span>`;
+            } else {
+                gameStreak = 0;
+                feedbackEl.innerHTML = `<span class="text-rose-600 font-bold"><i class="fa-solid fa-circle-xmark"></i> ตอบผิด! (${item.hint})</span>`;
+            }
+
+            gameIdx++;
+            setTimeout(() => {
+                updateGameUI();
+            }, 1100);
+        }
+
+        function renderPalette() {
+            const grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+            questions.forEach((_, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-7 h-7 text-[11px] font-bold rounded-lg transition flex items-center justify-center `;
+                
+                if (answers[idx] !== null) {
+                    if (answers[idx] === questions[idx].ans) {
+                        btn.classList.add('bg-emerald-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-rose-600', 'text-white');
+                    }
+                } else {
+                    btn.classList.add('bg-slate-200', 'text-slate-800', 'hover:bg-slate-300');
+                }
+
+                if (idx === curQ) {
+                    btn.classList.add('ring-2', 'ring-amber-500', 'ring-offset-1');
+                }
+
+                btn.innerText = idx + 1;
+                btn.onclick = () => {
+                    curQ = idx;
+                    renderQ();
+                    togglePalette();
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function togglePalette() {
+            const modal = document.getElementById('palette-modal');
+            modal.classList.toggle('hidden');
         }
 
         function renderQ() {
             const q = questions[curQ];
             document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
             document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${questions.length}`;
-            document.getElementById('score-text').innerText = `คะแนน: ${score}`;
-            document.getElementById('progress-bar').style.width = `${((curQ)/questions.length)*100}%`;
-            
+            document.getElementById('score-text').innerText = score;
+            document.getElementById('progress-bar').style.width = `${((curQ + 1) / questions.length) * 100}%`;
+
             const opts = document.getElementById('options');
             opts.innerHTML = '';
-            
+
             q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center mb-2 thai-content";
-                if(answers[curQ] !== null) {
+                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-bold transition flex items-center text-slate-900 leading-relaxed text-sm sm:text-base cursor-pointer ";
+                
+                if (answers[curQ] !== null) {
                     btn.disabled = true;
-                    if(i === q.ans) {
-                        btn.classList.add('bg-zinc-100', 'border-zinc-800', 'text-zinc-900');
-                        btn.innerHTML = `<i class="fa-solid fa-check-circle mr-4 text-zinc-800 text-lg"></i> ${o}`;
-                    } else if(i === answers[curQ]) {
-                        btn.classList.add('bg-zinc-50', 'border-zinc-300', 'text-zinc-500');
-                        btn.innerHTML = `<i class="fa-solid fa-times-circle mr-4 text-zinc-500 text-lg"></i> ${o}`;
-                    } else { 
-                        btn.classList.add('opacity-50', 'bg-white'); 
-                        btn.innerHTML = `<span class="bg-zinc-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold">${i+1}</span> ${o}`; 
+                    if (i === q.ans) {
+                        btn.classList.add('bg-emerald-50', 'border-emerald-600', 'text-emerald-950');
+                        btn.innerHTML = `<span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center mr-3 text-xs shrink-0"><i class="fa-solid fa-check"></i></span> <span>${o}</span>`;
+                    } else if (i === answers[curQ]) {
+                        btn.classList.add('bg-rose-50', 'border-rose-500', 'text-rose-950');
+                        btn.innerHTML = `<span class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center mr-3 text-xs shrink-0"><i class="fa-solid fa-xmark"></i></span> <span>${o}</span>`;
+                    } else {
+                        btn.classList.add('opacity-40', 'bg-white', 'border-slate-200');
+                        btn.innerHTML = `<span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center mr-3 text-xs font-black shrink-0">${i + 1}</span> <span>${o}</span>`;
                     }
                 } else {
-                    btn.classList.add('bg-white', 'border-zinc-200', 'hover:border-zinc-800');
-                    btn.innerHTML = `<span class="bg-zinc-100 w-8 h-8 rounded-lg flex items-center justify-center mr-4 text-xs font-bold text-zinc-500">${i+1}</span> ${o}`;
+                    btn.classList.add('bg-white', 'border-slate-300', 'hover:border-slate-800', 'hover:bg-slate-50');
+                    btn.innerHTML = `<span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center mr-3 text-xs font-black shrink-0">${i + 1}</span> <span>${o}</span>`;
                     btn.onclick = () => selectOpt(i);
                 }
                 opts.appendChild(btn);
             });
 
             const explainer = document.getElementById('explainer');
-            if(answers[curQ] !== null) {
+            if (answers[curQ] !== null) {
                 explainer.classList.remove('hidden');
                 if (answers[curQ] === q.ans) {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-zinc-100 border-zinc-300 text-zinc-900";
-                    document.getElementById('exp-status').innerHTML = `<i class="fa-solid fa-check-circle text-zinc-800 mr-2 text-xl"></i> ถูกต้อง!`;
+                    explainer.className = "mt-6 p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-emerald-950";
+                    document.getElementById('exp-status').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl mr-2"></i> ตอบถูกต้อง!`;
                 } else {
-                    explainer.className = "mt-8 p-5 rounded-2xl bg-zinc-100 border-zinc-300 text-zinc-700";
-                    document.getElementById('exp-status').innerHTML = `<i class="fa-solid fa-times-circle text-zinc-600 mr-2 text-xl"></i> ผิดครับ! (เฉลยข้อ ${q.ans + 1})`;
+                    explainer.className = "mt-6 p-5 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-950";
+                    document.getElementById('exp-status').innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 text-xl mr-2"></i> ตอบผิด! (เฉลยข้อ ${q.ans + 1})`;
                 }
-                document.getElementById('exp-text').innerHTML = "<b>คำอธิบาย:</b> " + q.exp;
-            } else { explainer.classList.add('hidden'); }
-            
+                document.getElementById('exp-text').innerHTML = `<b>คำอธิบายเฉลย:</b> ${q.exp}`;
+            } else {
+                explainer.classList.add('hidden');
+            }
+
             document.getElementById('btn-prev').disabled = curQ === 0;
-            if (curQ === questions.length - 1) document.getElementById('btn-next').innerText = "ดูผลลัพธ์";
-            else document.getElementById('btn-next').innerText = "ถัดไป";
+            if (curQ === questions.length - 1) {
+                document.getElementById('btn-next').innerHTML = `ดูผลลัพธ์การสอบ <i class="fa-solid fa-trophy ml-2"></i>`;
+            } else {
+                document.getElementById('btn-next').innerHTML = `ถัดไป <i class="fa-solid fa-arrow-right ml-2"></i>`;
+            }
+
+            renderPalette();
         }
 
         function selectOpt(idx) {
-            if(answers[curQ] !== null) return;
+            if (answers[curQ] !== null) return;
             answers[curQ] = idx;
-            if(idx === questions[curQ].ans) score++;
+            if (idx === questions[curQ].ans) score++;
             renderQ();
         }
 
         function changeQ(step) {
-            if(curQ + step >= 0 && curQ + step < questions.length) { 
-                curQ += step; 
-                renderQ(); 
+            if (curQ + step >= 0 && curQ + step < questions.length) {
+                curQ += step;
+                renderQ();
+                window.scrollTo({ top: 100, behavior: 'smooth' });
+            } else if (curQ + step === questions.length) {
+                showFinal();
             }
-            else if(curQ + step === questions.length) showFinal();
         }
 
         function showFinal() {
             switchMode('result');
-            document.getElementById('final-score').innerText = `${score}/100`;
+            document.getElementById('final-score').innerText = `${score}/${questions.length}`;
+            const pct = Math.round((score / questions.length) * 100);
+            document.getElementById('final-percent').innerText = `คิดเป็น ${pct}%`;
+
             const msg = document.getElementById('result-msg');
-            const pct = (score/questions.length)*100;
-            if(pct >= 80) msg.innerText = "ยอดเยี่ยม! ความรู้ภาษาไทยของคุณแน่นมาก พร้อมลุยสนามสอบนายสิบตำรวจแล้ว";
-            else if(pct >= 50) msg.innerText = "ทำได้ดี! แต่อาจจะต้องทบทวนเรื่องการสะกดคำและหลักภาษาไทยเพิ่มเติมอีกนิดนะครับ";
-            else msg.innerText = "พยายามอีกหน่อย ลองกลับไปอ่านสรุปบทเรียนเรื่องระดับภาษา คำราชาศัพท์ แล้วมาทดสอบใหม่ดูนะครับ";
+            if (pct >= 80) {
+                msg.innerText = "🏆 ยอดเยี่ยมระดับท็อป! ความรู้ภาษาไทยของคุณแน่นมาก มีโอกาสสอบผ่านสนามนายสิบตำรวจสูงมาก";
+            } else if (pct >= 60) {
+                msg.innerText = "👍 ผ่านเกณฑ์เกรดดี! แนะนำให้ทบทวนบทเรียนและเทคนิคการอ่านเพิ่มเติมอีกนิดเพื่อความชัวร์ 100%";
+            } else {
+                msg.innerText = "💪 พยายามอีกนิดนะครับ! ลองกลับไปอ่าน 'สรุปบทเรียนตำรา' และเล่น 'มินิเกมฝึกความจำ' แล้วกลับมาทำสอบใหม่อีกรอบ";
+            }
         }
+
+        // Initialize App on load
+        window.onload = function() {
+            switchMode('home');
+        };
     </script>
 </body>
 </html>
