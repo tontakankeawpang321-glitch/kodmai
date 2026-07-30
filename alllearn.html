@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คลังความรู้ เตรียมสอบนายสิบทหารบก</title>
+    <title>ติวข้อสอบคอมพิวเตอร์ ทหารบก - NCO Academy Pro</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts: Sarabun -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Sarabun & Chakra Petch -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -17,22 +17,27 @@
                 extend: {
                     colors: {
                         military: {
-                            900: '#0a2214',
-                            800: '#113220',
-                            700: '#1a472a',
-                            600: '#235c37',
+                            950: '#07170d',
+                            900: '#0f2918',
+                            800: '#173d24',
+                            700: '#1f5431',
+                            600: '#2b7343',
+                            500: '#389457',
                             100: '#dcfce7',
                             50: '#f0fdf4',
                         },
                         gold: {
+                            600: '#b8860b',
                             500: '#d4af37',
                             400: '#e5c158',
                             300: '#f3d578',
                             100: '#fef3c7',
+                            50: '#fffbe8'
                         }
                     },
                     fontFamily: {
                         sans: ['Sarabun', 'sans-serif'],
+                        heading: ['Chakra Petch', 'sans-serif'],
                     }
                 }
             }
@@ -40,207 +45,429 @@
     </script>
 
     <style>
-        body { background-color: #f4f6f5; }
-        .military-gradient { background: linear-gradient(145deg, #113220 0%, #1a472a 100%); }
-        .gold-gradient { background: linear-gradient(145deg, #e5c158 0%, #d4af37 100%); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        body { 
+            background-color: #f1f5f9; 
+            color: #0f172a; 
+            font-family: 'Sarabun', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-heading { font-family: 'Chakra Petch', sans-serif; }
+        .military-gradient { background: linear-gradient(135deg, #0f2918 0%, #173d24 50%, #1f5431 100%); }
+        .gold-gradient { background: linear-gradient(135deg, #e5c158 0%, #d4af37 100%); }
+        .card-shadow { box-shadow: 0 4px 15px -2px rgba(15, 41, 24, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04); }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .hover-lift { transition: all 0.2s ease; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+
+        /* Flashcard 3D Flip Effects */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
     </style>
 </head>
-<body class="min-h-screen pb-10 text-slate-800 font-sans">
+<body class="min-h-screen pb-12 text-slate-900 font-sans antialiased selection:bg-gold-500 selection:text-white">
 
-    <!-- Navigation Bar -->
-    <nav class="military-gradient text-white shadow-lg sticky top-0 z-50 border-b-4 border-gold-500">
-        <div class="max-w-4xl mx-auto flex justify-between items-center p-3 md:p-4">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="gotoHome()">
-                <div class="bg-white/10 p-2 rounded-lg border border-white/20">
-                    <i class="fa-solid fa-shield-halved text-gold-400 text-xl"></i>
+    <nav class="military-gradient text-white shadow-xl sticky top-0 z-50 border-b-4 border-gold-500">
+        <div class="max-w-5xl mx-auto flex justify-between items-center px-3 py-2.5 md:px-6 md:py-3">
+            <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchScreen('screen-home')">
+                <div class="bg-gold-500 text-military-950 p-2 rounded-xl shadow-md font-bold flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-bold text-sm md:text-lg leading-tight tracking-widest text-gold-400 uppercase">NCO ACADEMY</span>
-                    <span class="text-[10px] md:text-xs text-gray-300 font-medium">ติวสอบ นายสิบทหารบก</span>
+                    <span class="font-heading font-bold text-base md:text-xl leading-tight tracking-wider text-gold-400">ติวข้อสอบคอมพิวเตอร์ ทหารบก</span>
+                    <span class="text-[11px] md:text-xs text-emerald-200 font-medium">คลังความรู้ & แนวข้อสอบคอมพิวเตอร์นายสิบทหารบก</span>
                 </div>
             </div>
-            <div class="flex space-x-2 md:space-x-3 items-center">
-                <button onclick="gotoHome()" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition duration-200">หน้าหลัก</button>
-                <button onclick="selectMode('lesson')" class="px-3 py-1.5 hover:bg-white/10 rounded-md text-xs md:text-sm font-medium transition duration-200">บทเรียน</button>
-                <button onclick="selectMode('quiz')" class="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-military-900 rounded-lg font-bold text-xs md:text-sm shadow-md transition duration-200 transform hover:scale-105">เริ่มสอบ</button>
+
+            <!-- Mobile Navigation Trigger & Menu Bar -->
+            <div class="hidden md:flex space-x-2 items-center font-heading">
+                <button onclick="switchScreen('screen-home')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/15 transition"><i class="fa-solid fa-house mr-1"></i> หน้าหลัก</button>
+                <button onclick="switchScreen('screen-book')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/15 transition"><i class="fa-solid fa-book-open mr-1"></i> ตำราเรียน</button>
+                <button onclick="switchScreen('screen-tech')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/15 transition"><i class="fa-solid fa-lightbulb text-gold-400 mr-1"></i> เทคนิคสอบ</button>
+                <button onclick="switchScreen('screen-games')" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-white/15 transition"><i class="fa-solid fa-gamepad text-emerald-300 mr-1"></i> เกมจำข้อสอบ</button>
+                <button onclick="openQuizModal()" class="px-4 py-2 bg-gold-500 hover:bg-gold-400 text-military-950 rounded-lg font-bold text-sm shadow-md transition transform hover:scale-105"><i class="fa-solid fa-pen-to-square mr-1"></i> ทำข้อสอบ</button>
             </div>
+
+            <!-- Mobile Quick Actions -->
+            <div class="flex md:hidden items-center space-x-1">
+                <button onclick="openQuizModal()" class="px-3 py-1.5 bg-gold-500 text-military-950 rounded-lg font-bold text-xs shadow">
+                    <i class="fa-solid fa-pen-to-square mr-1"></i> สอบ
+                </button>
+                <button onclick="toggleMobileMenu()" class="p-2 text-white hover:bg-white/10 rounded-lg text-lg">
+                    <i class="fa-solid fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-military-900 border-t border-military-800 px-4 py-3 space-y-2">
+            <button onclick="switchScreen('screen-home'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-lg font-bold text-slate-100 hover:bg-military-800 flex items-center"><i class="fa-solid fa-house w-6 text-gold-400"></i> หน้าหลัก</button>
+            <button onclick="switchScreen('screen-book'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-lg font-bold text-slate-100 hover:bg-military-800 flex items-center"><i class="fa-solid fa-book-open w-6 text-emerald-400"></i> ตำราเรียนฉบับเข้มข้น</button>
+            <button onclick="switchScreen('screen-tech'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-lg font-bold text-slate-100 hover:bg-military-800 flex items-center"><i class="fa-solid fa-lightbulb w-6 text-gold-400"></i> รวมเทคนิคสอบ & สูตรจำ</button>
+            <button onclick="switchScreen('screen-games'); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-lg font-bold text-slate-100 hover:bg-military-800 flex items-center"><i class="fa-solid fa-gamepad w-6 text-emerald-300"></i> มินิเกมช่วยจำข้อสอบ</button>
+            <button onclick="openQuizModal(); toggleMobileMenu()" class="w-full text-left py-2 px-3 rounded-lg font-bold text-military-950 bg-gold-500 flex items-center justify-center shadow"><i class="fa-solid fa-pen-to-square mr-2"></i> เริ่มทำแบบทดสอบ</button>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-4 mt-2">
-        
+    <main class="max-w-5xl mx-auto px-3 py-4 md:px-6 md:py-6">
+
         <!-- 1. HOME SCREEN -->
         <div id="screen-home" class="space-y-6 animate-fade-in">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div class="relative military-gradient p-10 md:p-14 text-center text-white overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
-                    <div class="relative z-10 flex flex-col items-center">
-                        <div class="w-16 h-16 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-gold-500/30 shadow-lg">
-                            <i class="fa-solid fa-star"></i>
+            <!-- Hero Banner -->
+            <div class="bg-white rounded-3xl card-shadow overflow-hidden border border-slate-200">
+                <div class="relative military-gradient p-6 md:p-12 text-white overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black select-none">ROYAL THAI ARMY</div>
+                    <div class="relative z-10 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-gold-500 text-military-950 rounded-full font-bold text-xs mb-3 shadow-md">
+                            <i class="fa-solid fa-award text-sm"></i>
+                            <span>คู่มือเตรียมสอบมาตรฐานกองทัพบก</span>
                         </div>
-                        <span class="inline-block px-3 py-1 bg-gold-500 text-military-900 font-bold text-xs rounded-full mb-4 shadow-sm tracking-wider">คลังข้อสอบอัปเดต 2567</span>
-                        <h1 class="text-3xl md:text-4xl font-black mb-2 text-white drop-shadow-md">เตรียมสอบบรรจุ</h1>
-                        <h2 class="text-xl md:text-2xl font-bold text-gold-400 mb-6 drop-shadow">นายทหารประทวนกองทัพบก</h2>
-                        <p class="text-gray-200 max-w-lg mx-auto font-medium leading-relaxed">รวบรวมแนวข้อสอบ คอมพิวเตอร์, ความรู้ทั่วไป และประวัติศาสตร์ (รวม <span id="total-q" class="font-bold text-gold-400">300</span> ข้อ) เพื่อความพร้อมสูงสุด</p>
+                        <h1 class="text-2xl md:text-4xl font-extrabold font-heading text-white mb-2 leading-tight drop-shadow">
+                            ติวข้อสอบคอมพิวเตอร์ ทหารบก
+                        </h1>
+                        <p class="text-slate-200 text-sm md:text-base leading-relaxed font-normal mb-6">
+                            รวมเนื้อหาคอมพิวเตอร์และเทคโนโลยีสารสนเทศสำหรับสอบบรรจุนายสิบทหารบก สรุปตำราเรียน เทคนิคทำข้อสอบ คีย์ลัด มินิเกม และคลังข้อสอบพร้อมเฉลยละเอียด
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="switchScreen('screen-book')" class="px-5 py-3 bg-white text-military-900 font-bold rounded-xl shadow-lg hover:bg-slate-100 transition flex items-center text-sm md:text-base">
+                                <i class="fa-solid fa-book mr-2 text-military-700"></i> อ่านตำราเตรียมสอบ
+                            </button>
+                            <button onclick="openQuizModal()" class="px-5 py-3 bg-gold-500 hover:bg-gold-400 text-military-950 font-bold rounded-xl shadow-lg transition flex items-center text-sm md:text-base">
+                                <i class="fa-solid fa-circle-play mr-2"></i> เริ่มทดสอบความรู้
+                            </button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50">
-                    <div class="bg-white p-8 border border-gray-100 hover:border-military-600 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group shadow-sm" onclick="selectMode('lesson')">
-                        <div class="w-16 h-16 bg-military-50 rounded-2xl flex items-center justify-center text-military-700 text-3xl mb-5 group-hover:bg-military-700 group-hover:text-white transition-colors duration-300 shadow-inner">
-                            <i class="fa-solid fa-book-open-reader"></i>
+
+                <!-- Dashboard Grid Menu -->
+                <div class="p-4 md:p-8 bg-slate-50 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Feature Card 1 -->
+                    <div onclick="switchScreen('screen-book')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-military-600 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-emerald-100 text-military-700 rounded-xl flex items-center justify-center text-2xl mb-3 group-hover:bg-military-700 group-hover:text-white transition">
+                                <i class="fa-solid fa-book-journal-whills"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900 mb-1 group-hover:text-military-700">ตำราเรียนฉบับเต็ม</h3>
+                            <p class="text-slate-700 text-xs leading-relaxed font-medium">สรุปเนื้อหาเป็นหมวดหมู่ คอมพิวเตอร์, ความรู้ทั่วไป, ประวัติศาสตร์ และระเบียบทหาร</p>
                         </div>
-                        <h3 class="font-bold text-xl text-military-900 mb-2 group-hover:text-military-700 transition-colors">โหมดบทเรียน</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">อ่านสรุปเนื้อหาสำคัญและแนวข้อสอบพร้อมเฉลยละเอียด จัดหมวดหมู่แยกตามวิชา</p>
+                        <span class="text-xs font-bold text-military-700 mt-4 inline-flex items-center">เข้าสู่อ่านเนื้อหา <i class="fa-solid fa-arrow-right ml-1 transition group-hover:translate-x-1"></i></span>
                     </div>
-                    <div class="bg-white p-8 border border-gray-100 hover:border-gold-500 rounded-2xl hover-lift cursor-pointer flex flex-col items-center text-center group shadow-sm" onclick="selectMode('quiz')">
-                        <div class="w-16 h-16 bg-gold-100 rounded-2xl flex items-center justify-center text-gold-500 text-3xl mb-5 group-hover:bg-gold-500 group-hover:text-white transition-colors duration-300 shadow-inner">
-                            <i class="fa-solid fa-file-signature"></i>
+
+                    <!-- Feature Card 2 -->
+                    <div onclick="switchScreen('screen-tech')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-gold-500 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-gold-100 text-gold-600 rounded-xl flex items-center justify-center text-2xl mb-3 group-hover:bg-gold-500 group-hover:text-military-950 transition">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900 mb-1 group-hover:text-gold-600">เทคนิค & สูตรจำ</h3>
+                            <p class="text-slate-700 text-xs leading-relaxed font-medium">รวบรวมเทคนิคตัดช้อยส์ สูตรจำยศทหาร ลำดับประวัติศาสตร์ และการบริหารเวลา</p>
                         </div>
-                        <h3 class="font-bold text-xl text-military-900 mb-2 group-hover:text-gold-600 transition-colors">โหมดทดสอบ</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">เลือกวิชาที่ต้องการทดสอบ จำลองการสอบจริง จับเวลา และแจ้งผลคะแนนทันที</p>
+                        <span class="text-xs font-bold text-gold-600 mt-4 inline-flex items-center">ดูเทคนิคทั้งหมด <i class="fa-solid fa-arrow-right ml-1 transition group-hover:translate-x-1"></i></span>
+                    </div>
+
+                    <!-- Feature Card 3 -->
+                    <div onclick="switchScreen('screen-games')" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-blue-500 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-3 group-hover:bg-blue-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900 mb-1 group-hover:text-blue-600">มินิเกมจำข้อสอบ</h3>
+                            <p class="text-slate-700 text-xs leading-relaxed font-medium">เกมแฟลชการ์ดเปิดแผ่นป้าย และ Speed Quiz 60 วินาที ช่วยให้จำแม่นขึ้น 2 เท่า</p>
+                        </div>
+                        <span class="text-xs font-bold text-blue-600 mt-4 inline-flex items-center">เล่นเกมทบทวน <i class="fa-solid fa-arrow-right ml-1 transition group-hover:translate-x-1"></i></span>
+                    </div>
+
+                    <!-- Feature Card 4 -->
+                    <div onclick="openQuizModal()" class="bg-white p-5 rounded-2xl border-2 border-slate-200 hover:border-purple-500 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-3 group-hover:bg-purple-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-vial-circle-check"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900 mb-1 group-hover:text-purple-600">คลังข้อสอบเสมือนจริง</h3>
+                            <p class="text-slate-700 text-xs leading-relaxed font-medium">จำลองทำข้อสอบ 100 ข้อ จับเวลา พร้อมตรวจผลและเฉลยคำอธิบายอย่างละเอียด</p>
+                        </div>
+                        <span class="text-xs font-bold text-purple-600 mt-4 inline-flex items-center">เริ่มทำแนวข้อสอบ <i class="fa-solid fa-arrow-right ml-1 transition group-hover:translate-x-1"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="bg-white rounded-2xl p-4 md:p-6 border border-slate-200 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="border-r border-slate-200 last:border-0">
+                    <div class="text-2xl md:text-3xl font-black text-military-700 font-heading">300+</div>
+                    <div class="text-xs md:text-sm font-bold text-slate-800">คลังข้อสอบพร้อมเฉลย</div>
+                </div>
+                <div class="border-r border-slate-200 last:border-0">
+                    <div class="text-2xl md:text-3xl font-black text-gold-600 font-heading">4 วิชา</div>
+                    <div class="text-xs md:text-sm font-bold text-slate-800">ครอบคลุมทุกหมวดสอบ</div>
+                </div>
+                <div class="border-r border-slate-200 last:border-0">
+                    <div class="text-2xl md:text-3xl font-black text-blue-600 font-heading">100%</div>
+                    <div class="text-xs md:text-sm font-bold text-slate-800">รองรับอ่านบนมือถือ</div>
+                </div>
+                <div>
+                    <div class="text-2xl md:text-3xl font-black text-emerald-600 font-heading">FREE</div>
+                    <div class="text-xs md:text-sm font-bold text-slate-800">อัปเดตเนื้อหาปี 2567</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. BOOK / LESSON SCREEN -->
+        <div id="screen-book" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold font-heading text-military-900 flex items-center">
+                        <i class="fa-solid fa-book-open text-gold-500 mr-2.5"></i> ตำราเรียนฉบับเตรียมสอบนายสิบ
+                    </h2>
+                    <p class="text-xs md:text-sm text-slate-800 font-medium mt-1">เลือกหมวดวิชาเพื่ออ่านเนื้อหาและสรุปสำคัญแบบเข้มข้น</p>
+                </div>
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button onclick="filterBookTab('comp')" id="book-tab-comp" class="book-tab px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold border transition flex-1 md:flex-none text-center">คอมพิวเตอร์</button>
+                    <button onclick="filterBookTab('gk')" id="book-tab-gk" class="book-tab px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold border transition flex-1 md:flex-none text-center">ความรู้ทั่วไป</button>
+                    <button onclick="filterBookTab('hist')" id="book-tab-hist" class="book-tab px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold border transition flex-1 md:flex-none text-center">ประวัติศาสตร์</button>
+                    <button onclick="filterBookTab('army')" id="book-tab-army" class="book-tab px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold border transition flex-1 md:flex-none text-center">วิชาทหาร</button>
+                </div>
+            </div>
+
+            <!-- Book Content Display Area -->
+            <div id="book-content" class="space-y-6">
+                <!-- Injected via JavaScript based on selected tab -->
+            </div>
+        </div>
+
+        <!-- 3. EXAM TECHNIQUES & STRATEGIES SCREEN -->
+        <div id="screen-tech" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-xl md:text-2xl font-bold font-heading text-military-900 flex items-center">
+                    <i class="fa-solid fa-lightbulb text-gold-500 mr-2.5"></i> ศูนย์รวมเทคนิคทำข้อสอบ & สูตรจำเร็ว
+                </h2>
+                <p class="text-xs md:text-sm text-slate-800 font-medium mt-1">เคล็ดลับการตัดช้อยส์ การบริหารเวลา และเทคนิคช่วยจำสำหรับใช้ในห้องสอบจริง</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Tech Card 1 -->
+                <div class="bg-white p-5 md:p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3 text-military-800">
+                        <span class="w-10 h-10 bg-gold-100 text-gold-600 rounded-xl flex items-center justify-center text-xl font-bold font-heading">1</span>
+                        <h3 class="font-bold text-lg text-slate-900">สูตร 3-Pass Method (บริหารเวลาสอบ)</h3>
+                    </div>
+                    <p class="text-slate-800 text-sm leading-relaxed font-normal">
+                        อย่าเสียเวลากับข้อยากในรอบแรก ให้แบ่งการทำข้อสอบออกเป็น 3 รอบ:
+                    </p>
+                    <ul class="space-y-2 text-xs md:text-sm text-slate-800 font-medium pl-2">
+                        <li class="flex items-start"><i class="fa-solid fa-check text-emerald-600 mr-2 mt-0.5"></i> <span><b>รอบที่ 1 (ข้อชัวร์):</b> ทำข้อที่มั่นใจ 100% ภายใน 20 วินาทีทันที</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-emerald-600 mr-2 mt-0.5"></i> <span><b>รอบที่ 2 (ข้อคิดวิเคราะห์):</b> กลับมาทำข้อที่ต้องคำนวณหรืออ่านยาว</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-emerald-600 mr-2 mt-0.5"></i> <span><b>รอบที่ 3 (ข้อไม่แน่ใจ):</b> ตัดตัวเลือกที่ไม่ใช่ออกอย่างน้อย 2 ตัวแล้วเดาอย่างมีหลักการ</span></li>
+                    </ul>
+                </div>
+
+                <!-- Tech Card 2 -->
+                <div class="bg-white p-5 md:p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3 text-military-800">
+                        <span class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold font-heading">2</span>
+                        <h3 class="font-bold text-lg text-slate-900">เทคนิคการตัดช้อยส์ (Elimination Technique)</h3>
+                    </div>
+                    <p class="text-slate-800 text-sm leading-relaxed font-normal">
+                        หลักการตัดตัวเลือกผิดเมื่อเจอข้อสอบที่ไม่แน่ใจ:
+                    </p>
+                    <ul class="space-y-2 text-xs md:text-sm text-slate-800 font-medium pl-2">
+                        <li class="flex items-start"><i class="fa-solid fa-xmark text-red-500 mr-2 mt-0.5"></i> <span>ตัดช้อยส์ที่มีคำว่า <b>"เท่านั้น", "ทุกกรณี", "ไม่มีเลย"</b> มักจะเป็นตัวเลือกที่ผิด</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-emerald-600 mr-2 mt-0.5"></i> <span>ข้อใดที่มีตัวเลือก <b>"ถูกทุกข้อ"</b> มีโอกาสเป็นคำตอบที่ถูกถึง 70% (หากมีข้อถูกชัดเจนแล้ว 2 ข้อ)</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-check text-emerald-600 mr-2 mt-0.5"></i> <span>หากมีตัวเลือกตรงข้ามกัน 2 ข้อ คำตอบที่ถูกต้องมักจะอยู่ใน 1 ใน 2 ข้อนั้น</span></li>
+                    </ul>
+                </div>
+
+                <!-- Tech Card 3 -->
+                <div class="bg-white p-5 md:p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3 text-military-800">
+                        <span class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold font-heading">3</span>
+                        <h3 class="font-bold text-lg text-slate-900">สูตรท่องจำยศทหารบก (ลำดับประทวน -> สัญญาบัตร)</h3>
+                    </div>
+                    <div class="bg-slate-100 p-3 rounded-xl border border-slate-300 font-mono text-xs md:text-sm font-bold text-slate-900 space-y-1">
+                        <div>ชั้นประทวน: ตรี -> โท -> เอก (สิบตรี, สิบโท, สิบเอก)</div>
+                        <div>ชั้นจ่า: จ่าสิบตรี -> จ่าสิบโท -> จ่าสิบเอก</div>
+                        <div>นายทหารสัญญาบัตร: ร้อย -> พัน -> พล (ตรี/โท/เอก)</div>
+                    </div>
+                    <p class="text-xs text-slate-800 font-medium">จำง่าย: <b>"ตรี-โท-เอก"</b> ท่องไว้เสมอในทุกระดับชั้นยศ</p>
+                </div>
+
+                <!-- Tech Card 4 -->
+                <div class="bg-white p-5 md:p-6 rounded-2xl border-2 border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3 text-military-800">
+                        <span class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl font-bold font-heading">4</span>
+                        <h3 class="font-bold text-lg text-slate-900">คีย์ลัดออกสอบบ่อย (วิชาคอมพิวเตอร์)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs md:text-sm font-medium">
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-200"><b class="text-purple-900">Ctrl + C:</b> คัดลอก (Copy)</div>
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-200"><b class="text-purple-900">Ctrl + V:</b> วาง (Paste)</div>
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-200"><b class="text-purple-900">Ctrl + X:</b> ตัด (Cut)</div>
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-200"><b class="text-purple-900">Ctrl + Z:</b> เลิกทำ (Undo)</div>
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-200"><b class="text-purple-900">Ctrl + F:</b> ค้นหา (Find)</div>
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-200"><b class="text-purple-900">F5:</b> เริ่มนำเสนอ / รีเฟรช</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. SUBJECT SELECTION SCREEN -->
-        <div id="screen-subject" class="hidden space-y-6 animate-fade-in">
-            <div class="flex items-center mb-6">
-                <div class="w-2 h-8 bg-gold-500 rounded-full mr-3"></div>
-                <h2 id="subject-title" class="text-2xl font-bold text-military-900">เลือกวิชา</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <button onclick="startSubject('comp')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-b-4 border-b-gray-200 hover:border-b-blue-600 hover:shadow-md transition-all duration-200 flex items-center text-left group">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-2xl mr-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-laptop-code"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-blue-700 transition-colors">คอมพิวเตอร์</h3>
-                        <p class="text-sm font-medium text-gray-500 mt-1"><i class="fa-solid fa-list-ol mr-1"></i> 100 ข้อ</p>
-                    </div>
-                </button>
-                <button onclick="startSubject('gk')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-b-4 border-b-gray-200 hover:border-b-orange-600 hover:shadow-md transition-all duration-200 flex items-center text-left group">
-                    <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center text-2xl mr-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-earth-asia"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-orange-700 transition-colors">ความรู้ทั่วไป</h3>
-                        <p class="text-sm font-medium text-gray-500 mt-1"><i class="fa-solid fa-list-ol mr-1"></i> 100 ข้อ</p>
-                    </div>
-                </button>
-                <button onclick="startSubject('hist')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-b-4 border-b-gray-200 hover:border-b-purple-600 hover:shadow-md transition-all duration-200 flex items-center text-left group">
-                    <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center text-2xl mr-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-landmark-dome"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-purple-700 transition-colors">ประวัติศาสตร์</h3>
-                        <p class="text-sm font-medium text-gray-500 mt-1"><i class="fa-solid fa-list-ol mr-1"></i> 100 ข้อ</p>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- 3. LESSON SCREEN -->
-        <div id="screen-lesson" class="hidden space-y-6 animate-fade-in">
-            <div class="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center sticky top-[72px] z-40">
-                <div class="flex items-center">
-                    <div class="w-1.5 h-6 bg-military-600 rounded-full mr-3"></div>
-                    <h2 id="lesson-title" class="text-xl md:text-2xl font-bold text-military-900">บทเรียน</h2>
+        <!-- 4. MEMORY GAMES SCREEN -->
+        <div id="screen-games" class="hidden space-y-6 animate-fade-in">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold font-heading text-military-900 flex items-center">
+                        <i class="fa-solid fa-gamepad text-emerald-500 mr-2.5"></i> มินิเกมช่วยจำข้อสอบ
+                    </h2>
+                    <p class="text-xs md:text-sm text-slate-800 font-medium mt-1">ทบทวนความจำผ่านเกมเพื่อกระตุ้นความจำระยะยาว</p>
                 </div>
-                <button onclick="selectMode('lesson')" class="text-sm font-medium bg-gray-100 text-gray-600 hover:bg-military-100 hover:text-military-800 px-3 py-1.5 rounded-lg transition border border-gray-200"><i class="fa-solid fa-rotate mr-1"></i> เปลี่ยนวิชา</button>
+                <div class="flex space-x-2">
+                    <button onclick="startGameMode('flashcard')" id="btn-game-flashcard" class="px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-military-700 text-white shadow">แฟลชการ์ดเปิดป้าย</button>
+                    <button onclick="startGameMode('speed')" id="btn-game-speed" class="px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-slate-200 text-slate-800 hover:bg-slate-300">Speed Quiz (60s)</button>
+                </div>
             </div>
-            
-            <div id="lesson-container" class="space-y-5">
-                <!-- Lesson cards injected by JS -->
+
+            <!-- Game View Area -->
+            <div id="game-container" class="bg-white rounded-3xl p-6 md:p-10 border border-slate-200 card-shadow min-h-[380px] flex flex-col justify-between items-center text-center">
+                <!-- Dynamically rendered by JS -->
             </div>
-            
-            <button onclick="currentMode='quiz'; startSubject(currentSubject);" class="w-full military-gradient text-white p-4 rounded-2xl font-bold text-lg shadow-lg mt-8 hover-lift flex justify-center items-center border border-military-800">
-                ไปที่แบบทดสอบวิชานี้ <i class="fa-solid fa-arrow-right-long ml-3"></i>
-            </button>
         </div>
 
-        <!-- 4. QUIZ SCREEN -->
+        <!-- 5. QUIZ SCREEN -->
         <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
-            <!-- Progress & Score Header -->
-            <div class="bg-white/90 backdrop-blur-md p-4 md:p-5 rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row md:justify-between md:items-center sticky top-[72px] z-40 gap-3">
-                <div class="w-full md:w-2/3">
-                    <div class="flex justify-between items-end mb-2">
-                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">ความคืบหน้า</span>
-                        <span id="quiz-status" class="text-sm font-bold text-military-700 bg-military-50 border border-military-100 px-2 py-0.5 rounded-md"><i class="fa-solid fa-flag-checkered mr-1"></i> ข้อที่ 1/100</span>
+            <!-- Progress & Header -->
+            <div class="bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:justify-between sm:items-center sticky top-[68px] z-40 gap-3">
+                <div class="w-full sm:w-2/3">
+                    <div class="flex justify-between items-end mb-1.5">
+                        <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">ความคืบหน้า</span>
+                        <span id="quiz-status" class="text-xs md:text-sm font-extrabold text-military-800 bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-300">ข้อที่ 1/100</span>
                     </div>
-                    <div class="bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="bg-military-600 h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                    <div class="bg-slate-200 rounded-full h-3 overflow-hidden">
+                        <div id="progress-bar" class="bg-military-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
-                <div class="text-left md:text-right flex md:block justify-between items-center">
-                    <span class="text-xs font-bold text-gray-500 md:block hidden uppercase tracking-wider mb-1">ผลคะแนน</span>
-                    <div id="score-text" class="text-sm font-bold text-gold-600 bg-gold-50 px-3 py-1 rounded-lg border border-gold-200 inline-block"><i class="fa-solid fa-medal mr-1"></i> คะแนน: 0</div>
+                <div class="flex justify-between sm:justify-end items-center space-x-3">
+                    <div id="score-text" class="text-xs md:text-sm font-extrabold text-gold-600 bg-gold-50 px-3 py-1.5 rounded-xl border border-gold-300"><i class="fa-solid fa-medal mr-1"></i> คะแนน: 0</div>
+                    <button onclick="switchScreen('screen-home')" class="text-xs font-bold text-slate-800 bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-xl transition">สละสิทธิ์</button>
                 </div>
             </div>
 
             <!-- Question Card -->
-            <div class="bg-white rounded-3xl shadow-md p-6 md:p-8 min-h-[450px] flex flex-col justify-between animate-fade-in border border-gray-200">
+            <div class="bg-white rounded-3xl card-shadow p-5 md:p-8 min-h-[420px] flex flex-col justify-between border border-slate-200">
                 <div>
-                    <span id="q-cat" class="bg-gray-100 text-gray-600 text-[11px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest mb-4 inline-block shadow-sm">หมวดหมู่</span>
-                    <h3 id="q-text" class="text-lg md:text-xl font-bold text-gray-800 leading-relaxed mb-8">คำถามจะแสดงที่นี่</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="q-cat" class="bg-slate-100 text-slate-900 text-xs font-extrabold px-3 py-1 rounded-lg uppercase border border-slate-300">หมวดหมู่</span>
+                        <span id="q-number" class="text-xs font-bold text-slate-800">คำถามที่ 1</span>
+                    </div>
                     
-                    <div id="options" class="space-y-3 md:space-y-4">
-                        <!-- Options injected by JS -->
+                    <h3 id="q-text" class="text-base md:text-xl font-bold text-slate-900 leading-relaxed mb-6">
+                        คำถามจะแสดงผลตรงนี้
+                    </h3>
+
+                    <!-- Options Container -->
+                    <div id="options" class="space-y-3">
+                        <!-- Options injected via JavaScript -->
                     </div>
                 </div>
 
-                <!-- Explainer -->
-                <div id="explainer" class="hidden mt-8 p-5 md:p-6 rounded-2xl animate-fade-in shadow-sm">
-                    <p id="exp-status" class="text-xl font-black mb-3 flex items-center"></p>
-                    <p id="exp-text" class="text-sm md:text-base text-gray-700 leading-relaxed"></p>
+                <!-- Explainer Box -->
+                <div id="explainer" class="hidden mt-6 p-4 md:p-5 rounded-2xl animate-fade-in border-2">
+                    <p id="exp-status" class="text-base md:text-lg font-black mb-2 flex items-center"></p>
+                    <p id="exp-text" class="text-xs md:text-sm text-slate-900 font-medium leading-relaxed"></p>
                 </div>
 
                 <!-- Navigation Controls -->
-                <div class="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-gray-500 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 disabled:opacity-30 transition-colors flex items-center border border-transparent hover:border-gray-200">
-                        <i class="fa-solid fa-chevron-left mr-2"></i> ย้อนกลับ
+                <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-200">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-slate-800 font-bold px-4 py-2.5 rounded-xl hover:bg-slate-200 transition border border-slate-300 text-xs md:text-sm">
+                        <i class="fa-solid fa-chevron-left mr-1"></i> ข้อก่อนหน้า
                     </button>
-                    <button id="btn-next" onclick="changeQ(1)" class="military-gradient text-white font-bold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 flex items-center">
-                        ถัดไป <i class="fa-solid fa-chevron-right ml-2"></i>
+                    <button id="btn-next" onclick="changeQ(1)" class="military-gradient text-white font-bold px-6 py-2.5 rounded-xl shadow hover:shadow-lg transition text-xs md:text-sm">
+                        ข้อถัดไป <i class="fa-solid fa-chevron-right ml-1"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- 5. RESULT SCREEN -->
-        <div id="screen-result" class="hidden text-center space-y-8 py-6 md:py-10 animate-fade-in">
-            <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg mx-auto border-t-8 border-military-700 relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-military-50 rounded-full blur-3xl opacity-60"></div>
-                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-gold-50 rounded-full blur-3xl opacity-60"></div>
-                
-                <div class="relative z-10">
-                    <div class="w-24 h-24 bg-gold-100 text-gold-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border-4 border-white">
-                        <i class="fa-solid fa-trophy text-5xl"></i>
-                    </div>
-                    <h2 class="text-3xl font-black text-military-900 mb-2">สรุปผลการทดสอบ</h2>
-                    <p class="text-gray-500 font-medium mb-6">วิชา<span id="result-subject-name"></span></p>
-                    
-                    <div class="bg-slate-50 rounded-2xl p-6 mb-8 border border-gray-200 shadow-sm">
-                        <div class="text-7xl font-black text-military-700 drop-shadow-sm mb-2" id="final-score">0/100</div>
-                        <p id="result-msg" class="text-gray-600 text-sm md:text-base font-medium">ประมวลผลคะแนน...</p>
-                    </div>
-                    
-                    <div class="flex flex-col space-y-3">
-                        <button onclick="currentMode='quiz'; startSubject(currentSubject);" class="w-full military-gradient text-white py-4 rounded-xl font-bold text-lg shadow-md hover-lift">
-                            <i class="fa-solid fa-rotate-right mr-2"></i> ทำหมวดนี้ใหม่อีกครั้ง
-                        </button>
-                        <button onclick="gotoHome()" class="w-full bg-white text-gray-600 border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-military-800 py-3.5 rounded-xl font-bold transition-colors">
-                            <i class="fa-solid fa-house mr-2"></i> กลับหน้าหลัก
-                        </button>
-                    </div>
+        <!-- 6. RESULT SCREEN -->
+        <div id="screen-result" class="hidden text-center space-y-6 py-6 animate-fade-in">
+            <div class="bg-white p-6 md:p-10 rounded-3xl card-shadow max-w-lg mx-auto border-t-8 border-military-700 space-y-6">
+                <div class="w-20 h-20 bg-gold-100 text-gold-600 rounded-full flex items-center justify-center mx-auto shadow-inner border-4 border-white text-4xl">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-black font-heading text-military-900">สรุปผลการทำแบบทดสอบ</h2>
+                    <p class="text-xs md:text-sm text-slate-800 font-semibold mt-1" id="result-subject-name">วิชาคอมพิวเตอร์</p>
+                </div>
+
+                <div class="bg-slate-100 rounded-2xl p-6 border border-slate-200">
+                    <div class="text-5xl md:text-6xl font-black font-heading text-military-800 mb-2" id="final-score">0/100</div>
+                    <p id="result-msg" class="text-xs md:text-sm font-bold text-slate-800">ประมวลผลคะแนนเรียบร้อยแล้ว</p>
+                </div>
+
+                <div class="space-y-2.5">
+                    <button onclick="startSubject(currentSubject)" class="w-full military-gradient text-white py-3.5 rounded-xl font-bold text-sm shadow hover:shadow-lg transition">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> ทำแบบทดสอบหมวดนี้อีกครั้ง
+                    </button>
+                    <button onclick="switchScreen('screen-home')" class="w-full bg-slate-200 text-slate-800 font-bold py-3 rounded-xl text-sm hover:bg-slate-300 transition">
+                        <i class="fa-solid fa-house mr-2"></i> กลับสู่หน้าหลัก
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Start Modal -->
+        <div id="quiz-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 animate-fade-in border border-slate-200 card-shadow">
+                <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                    <h3 class="text-lg font-bold font-heading text-military-900"><i class="fa-solid fa-pen-to-square text-gold-500 mr-2"></i> เลือกวิชาเพื่อเริ่มทดสอบ</h3>
+                    <button onclick="closeQuizModal()" class="text-slate-800 hover:text-slate-900 text-lg p-1"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="space-y-3">
+                    <button onclick="closeQuizModal(); startSubject('comp')" class="w-full p-4 bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 rounded-2xl flex items-center transition group text-left">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mr-3 font-bold group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-laptop-code text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">วิชาคอมพิวเตอร์</div>
+                            <div class="text-xs text-slate-800 font-medium">100 ข้อ • ฮาร์ดแวร์ ซอฟต์แวร์ อินเทอร์เน็ต</div>
+                        </div>
+                    </button>
+
+                    <button onclick="closeQuizModal(); startSubject('gk')" class="w-full p-4 bg-slate-50 hover:bg-gold-50 border-2 border-slate-200 hover:border-gold-500 rounded-2xl flex items-center transition group text-left">
+                        <div class="w-10 h-10 bg-gold-100 text-gold-600 rounded-xl flex items-center justify-center mr-3 font-bold group-hover:bg-gold-500 group-hover:text-military-950 transition">
+                            <i class="fa-solid fa-earth-asia text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">วิชาความรู้ทั่วไป</div>
+                            <div class="text-xs text-slate-800 font-medium">100 ข้อ • ภูมิศาสตร์ เหตุการณ์ปัจจุบัน สังคม</div>
+                        </div>
+                    </button>
+
+                    <button onclick="closeQuizModal(); startSubject('hist')" class="w-full p-4 bg-slate-50 hover:bg-purple-50 border-2 border-slate-200 hover:border-purple-600 rounded-2xl flex items-center transition group text-left">
+                        <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mr-3 font-bold group-hover:bg-purple-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-landmark-dome text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">วิชาประวัติศาสตร์ชาติไทย</div>
+                            <div class="text-xs text-slate-800 font-medium">100 ข้อ • สุโขทัย อยุธยา ธนบุรี รัตนโกสินทร์</div>
+                        </div>
+                    </button>
+
+                    <button onclick="closeQuizModal(); startSubject('army')" class="w-full p-4 bg-slate-50 hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-600 rounded-2xl flex items-center transition group text-left">
+                        <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mr-3 font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-shield-cat text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-900">วิชาความรู้ทหาร & วินัย</div>
+                            <div class="text-xs text-slate-800 font-medium">100 ข้อ • แบบฝึกยุทธวิธี ยศ วินัยทหาร</div>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -248,14 +475,15 @@
     </main>
 
     <script>
-        // Data Compression String
-        const rawCompData = "ส่วนประกอบใดต่อไปนี้ทำหน้าที่เป็น 'สมอง' ของคอมพิวเตอร์|RAM|CPU|Hard Disk|Monitor|1|CPU (Central Processing Unit) ทำหน้าที่ประมวลผลคำสั่งและควบคุมการทำงานทั้งหมด^อุปกรณ์นำเข้าข้อมูล (Input Device) คืออะไร|อุปกรณ์แสดงผลข้อมูล|อุปกรณ์บันทึกข้อมูล|อุปกรณ์ป้อนข้อมูลหรือคำสั่ง|อุปกรณ์เชื่อมต่ออินเทอร์เน็ต|2|ใช้ป้อนข้อมูล เช่น เมาส์ คีย์บอร์ด สแกนเนอร์^หน่วยความจำใดเก็บข้อมูลได้ชั่วคราวและหายไปเมื่อปิดเครื่อง|Hard Disk|RAM|ROM|SSD|1|RAM (Random Access Memory) เก็บข้อมูลชั่วคราว ข้อมูลจะหายไปเมื่อปิดเครื่อง^อุปกรณ์ใดที่ทำหน้าที่เก็บข้อมูลแบบถาวร|RAM|Cache|Hard Disk|Register|2|Hard Disk เป็นหน่วยความจำถาวร ใช้เก็บข้อมูลได้แม้ปิดเครื่อง^ข้อใดคืออุปกรณ์แสดงผล (Output Device)|คีย์บอร์ด|ลำโพง|เมาส์|สแกนเนอร์|1|ลำโพงเป็น Output Device ที่แสดงผลในรูปแบบเสียง^หน่วยใดเล็กที่สุดในการวัดข้อมูลดิจิทัล|Byte|Kilobyte|Bit|Megabyte|2|Bit คือหน่วยย่อยที่สุดของข้อมูลดิจิทัล มีค่าเป็น 0 หรือ 1^ข้อใดคืออุปกรณ์จัดเก็บข้อมูลแบบ Solid State|Floppy Disk|Hard Disk|SSD|CD-ROM|2|SSD ใช้หน่วยความจำแฟลช ไม่มีจานหมุน ทำงานเร็วกว่า Hard Disk^คำว่า BIOS ย่อมาจากอะไร|Basic Input Output System|Binary Internal Operating System|Basic Information Of System|Bit Internal Operation System|0|BIOS เป็นโปรแกรมพื้นฐานที่อยู่ใน ROM ใช้ควบคุมการเริ่มต้นการทำงานของเครื่อง^Cache Memory มีหน้าที่อะไร|เก็บไฟล์ผู้ใช้ถาวร|เพิ่มความเร็วในการเข้าถึงข้อมูล|ทำหน้าที่แทน RAM|ใช้แทน Hard Disk|1|Cache Memory อยู่ใกล้ CPU ทำให้ประมวลผลเร็วขึ้นโดยลดเวลาการเข้าถึงข้อมูล^Port ที่นิยมใช้เชื่อมต่อเมาส์และคีย์บอร์ดในปัจจุบันคือ|Serial Port|Parallel Port|USB Port|VGA Port|2|USB Port เป็นมาตรฐานปัจจุบันที่ใช้เชื่อมต่ออุปกรณ์หลายชนิด^ข้อใดไม่ใช่หน่วยความจำหลัก (Primary Storage)|RAM|ROM|Hard Disk|Cache|2|Hard Disk จัดเป็นหน่วยความจำรอง (Secondary Storage)^ความเร็วของ CPU มักวัดเป็นหน่วยใด|Hz|bps|rpm|dpi|0|ความเร็วในการทำงานของ CPU วัดเป็น Hertz (Hz)^หน่วยใดใหญ่ที่สุด|1 MB|1 GB|1 TB|1 KB|2|ลำดับจากเล็กไปใหญ่คือ KB -> MB -> GB -> TB^ข้อใดคือซอฟต์แวร์ระบบ (System Software)|Microsoft Word|Windows|Photoshop|Excel|1|System Software คือซอฟต์แวร์ที่ควบคุมระบบ เช่น Windows, Linux^ซอฟต์แวร์ประยุกต์ (Application Software) คือข้อใด|ระบบปฏิบัติการ|โปรแกรมสแกนไวรัส|Microsoft Excel|BIOS|2|Application Software ออกแบบมาเพื่อใช้งานเฉพาะ เช่น Excel, Word^ข้อใดคือหน่วยความจำถาวร|RAM|ROM|Cache|Register|1|ROM (Read-Only Memory) เก็บข้อมูลถาวร ไม่หายไปเมื่อปิดเครื่อง^ตัวเลขฐาน 2 (Binary) ใช้สัญลักษณ์อะไรบ้าง|0,1|0-7|0-9|A-F|0|ระบบเลขฐาน 2 ใช้แค่ตัวเลข 0 และ 1^ระบบปฏิบัติการ (OS) ทำหน้าที่หลักใด|เขียนเอกสาร|ประมวลผลตัวเลข|ควบคุมการทำงานของคอมพิวเตอร์|เชื่อมต่อเครือข่าย|2|จัดการทรัพยากร เช่น CPU, หน่วยความจำ, อุปกรณ์อินพุต/เอาต์พุต^Cloud Computing หมายถึงอะไร|ประมวลผลแบบตั้งโต๊ะ|ประมวลผลบนเครือข่ายอินเทอร์เน็ต|เก็บข้อมูลในฮาร์ดดิสก์|เขียนโปรแกรมแบบออนไลน์|1|คือการใช้ทรัพยากรและการประมวลผลผ่านอินเทอร์เน็ต เช่น Google Drive^ข้อใดเป็นอุปกรณ์เครือข่าย (Network Device)|Router|Switch|Hub|ถูกทุกข้อ|3|Router, Switch และ Hub เป็นอุปกรณ์เครือข่ายทั้งหมด^ข้อใดคือที่อยู่ของเว็บไซต์|URL|HTTP|HTML|IP|0|URL (Uniform Resource Locator) คือที่อยู่ของเว็บไซต์^HTML ใช้สำหรับอะไร|เขียนโปรแกรมเกม|ออกแบบเว็บไซต์|จัดการฐานข้อมูล|เขียนโปรแกรมคำนวณ|1|HTML เป็นภาษาที่ใช้สร้างและแสดงผลหน้าเว็บเพจ^Virus คอมพิวเตอร์มีลักษณะใด|โปรแกรมที่ทำให้เครื่องเร็วขึ้น|โปรแกรมที่เป็นอันตรายและแอบแฝง|โปรแกรมป้องกันข้อมูล|โปรแกรมเก็บไฟล์|1|Virus คือมัลแวร์ชนิดหนึ่งที่แพร่กระจายและทำลายข้อมูล^Firewall ใช้เพื่ออะไร|ป้องกันไวรัส|ป้องกันการโจมตีจากเครือข่าย|เร่งความเร็วอินเทอร์เน็ต|จัดการไฟล์|1|ทำหน้าที่กรองและควบคุมการรับ-ส่งข้อมูลป้องกันการเข้าถึงที่ไม่ได้รับอนุญาต^การเข้ารหัสข้อมูลเพื่อความปลอดภัย เรียกว่า|Compression|Encryption|Decryption|Authentication|1|Encryption คือการเข้ารหัสข้อมูลป้องกันไม่ให้บุคคลอื่นเข้าใจข้อมูลได้^หน่วยใดใช้เก็บข้อมูลชั่วคราวระหว่างประมวลผลใน CPU|Register|Hard Disk|Flash Drive|CD-ROM|0|Register เป็นหน่วยความจำขนาดเล็กภายใน CPU ทำงานเร็วที่สุด^หน่วยวัดความเร็วของการรับส่งข้อมูลในเครือข่ายคือ|Hz|bps|dpi|rpm|1|วัดเป็น bit per second (bps) เช่น 100 Mbps^อีเมล (Email) ใช้โปรโตคอลใดในการส่งข้อความ|FTP|SMTP|HTTP|POP3|1|SMTP ใช้ในการส่งอีเมล ส่วน POP3/IMAP ใช้รับอีเมล^ข้อใดคือชื่อโดเมนระดับสูงสุด (Top-Level Domain)|www|com|google|mail|1|TLD คือส่วนสุดท้ายของชื่อเว็บไซต์ เช่น .com, .org^HTTP ย่อมาจากอะไร|HyperText Transfer Protocol|HyperText Translation Program|High Text Transfer Protocol|Hyper Transfer Technical Program|0|เป็นโปรโตคอลมาตรฐานที่ใช้รับ-ส่งข้อมูลบนเว็บ";
-        
-        const rawGkData = "ประเทศไทยตั้งอยู่ในภูมิภาคใดของทวีปเอเชีย|เอเชียใต้|เอเชียตะวันออกเฉียงใต้|เอเชียตะวันออก|เอเชียกลาง|1|ไทยอยู่ในภูมิภาคเอเชียตะวันออกเฉียงใต้ร่วมกับ ลาว กัมพูชา เวียดนาม^แม่น้ำสายใดที่ยาวที่สุดในประเทศไทย|แม่น้ำเจ้าพระยา|แม่น้ำโขง|แม่น้ำชี|แม่น้ำปิง|2|แม่น้ำชีเป็นแม่น้ำสายยาวที่สุดที่ไหลอยู่ภายในประเทศไทยทั้งหมด^ภาคใดของประเทศไทยมีพื้นที่มากที่สุด|ภาคเหนือ|ภาคกลาง|ภาคอีสาน|ภาคใต้|2|ภาคตะวันออกเฉียงเหนือ (อีสาน) มีพื้นที่กว้างใหญ่ที่สุดในประเทศ^ภูมิศาสตร์กายภาพ ศึกษาเกี่ยวข้องกับสิ่งใด|กฎหมายและการปกครอง|ภูเขา ดิน น้ำ อากาศ|การเมืองและการทหาร|การค้า|1|ภูมิศาสตร์กายภาพเน้นการศึกษาธรรมชาติของโลก^ประเทศไทยมีชายแดนติดกับประเทศใดมากที่สุด|เมียนมา|ลาว|กัมพูชา|มาเลเซีย|0|พรมแดนไทย-เมียนมายาวที่สุด ประมาณ 2,401 กิโลเมตร^ปฐมกษัตริย์แห่งกรุงสุโขทัยมีพระนามว่าอะไร|พ่อขุนบางกลางหาว|พ่อขุนศรีอินทราทิตย์|พ่อขุนรามคำแหง|สมเด็จพระบรมไตรโลกนาถ|1|พ่อขุนศรีอินทราทิตย์เป็นปฐมกษัตริย์แห่งอาณาจักรสุโขทัย^ศึกบางระจันเกิดขึ้นในสมัยใด|สุโขทัย|อยุธยา|ธนบุรี|รัตนโกสินทร์|1|ศึกบางระจันเกิดขึ้นช่วงปลายกรุงศรีอยุธยา ก่อนเสียกรุงครั้งที่ 2^ผู้ใดได้รับการยกย่องว่าเป็น 'สมเด็จพระปิยมหาราช'|ร.4|ร.5|ร.6|ร.7|1|พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.5) ทรงเลิกทาสและปฏิรูปประเทศ^สนธิสัญญาเบาว์ริง มีผลสำคัญต่อไทยในด้านใด|การศึกษา|การค้าเสรีกับต่างประเทศ|การทหาร|การคมนาคม|1|สนธิสัญญาเบาว์ริง (พ.ศ. 2398) เปิดทางให้การค้ากับชาติตะวันตกแบบเสรี^เหตุการณ์ 14 ตุลาคม 2516 เกี่ยวข้องกับเรื่องใด|การรบไทย-ฝรั่งเศส|การชุมนุมเรียกร้องประชาธิปไตย|การเปลี่ยนแปลงการปกครอง|การปฏิวัติอุตสาหกรรม|1|เป็นการต่อสู้ของนักศึกษาและประชาชนเพื่อประชาธิปไตย^รัฐธรรมนูญคืออะไร|กฎหมายลำดับรอง|ข้อบังคับของโรงเรียน|กฎหมายสูงสุดของประเทศ|กฎการค้า|2|รัฐธรรมนูญเป็นกฎหมายสูงสุดที่กำหนดรูปแบบการปกครอง^สิทธิเลือกตั้งตามกฎหมายไทยเริ่มต้นที่อายุเท่าไร|15 ปี|18 ปี|20 ปี|21 ปี|1|ผู้มีสิทธิเลือกตั้งต้องมีอายุ 18 ปีบริบูรณ์ในวันเลือกตั้ง^การเกณฑ์ทหารจัดขึ้นตามกฎหมายใด|ประมวลกฎหมายแพ่ง|พระราชบัญญัติการเกณฑ์ทหาร|ประมวลกฎหมายอาญา|พระราชบัญญัติแรงงาน|1|การเกณฑ์ทหารอยู่ภายใต้ พ.ร.บ.รับราชการทหาร^หน้าที่ของประชาชนตามรัฐธรรมนูญ ข้อใดถูกต้อง|ไม่ต้องเสียภาษี|ต้องปฏิบัติตามกฎหมาย|เลือกจะปฏิบัติหรือไม่ก็ได้|มีสิทธิไม่มีหน้าที่|1|ประชาชนมีทั้งสิทธิและหน้าที่ เช่น ปฏิบัติตามกฎหมาย เสียภาษี^อุปสงค์ (Demand) หมายถึงอะไร|ความสามารถและความต้องการซื้อสินค้า|การผลิตสินค้า|การส่งออกสินค้า|กำไรของผู้ประกอบการ|0|อุปสงค์คือความต้องการซื้อสินค้าของผู้บริโภคภายใต้ราคาหนึ่ง^ประเทศไทยใช้ระบบเศรษฐกิจแบบใด|ตลาดเสรี 100%|สังคมนิยม|ระบบเศรษฐกิจแบบผสม|ระบบปิด|2|ไทยใช้ระบบเศรษฐกิจแบบผสม มีทั้งกลไกตลาดและรัฐควบคุมบางด้าน^รัฐสภาไทยประกอบด้วยอะไรบ้าง|สภาผู้แทนราษฎร|วุฒิสภา|รัฐบาลและศาล|สภาผู้แทนราษฎร + วุฒิสภา|3|รัฐสภาไทยมีสองสภา (Bicameral system) คือ ส.ส. และ ส.ว.^หลัก Check and Balance ในการเมืองหมายถึงอะไร|การตรวจสอบถนน|การควบคุมเศรษฐกิจ|การถ่วงดุลและตรวจสอบอำนาจ|การตรวจสอบภาษี|2|เป็นหลักการประชาธิปไตยที่ให้องค์กรต่าง ๆ ตรวจสอบและถ่วงดุลซึ่งกันและกัน^ภูเขาที่สูงที่สุดในประเทศไทยคืออะไร|ภูกระดึง|ดอยสุเทพ|ดอยอินทนนท์|ดอยผ้าห่มปก|2|ดอยอินทนนท์ จ.เชียงใหม่ สูงสุดในไทย ประมาณ 2,565 เมตร^การเปลี่ยนแปลงการปกครอง 2475 ส่งผลสำคัญอย่างไร|ไทยเป็นประชาธิปไตย|สิ้นสุดระบบทาส|เข้าร่วมสงครามโลก|เปลี่ยนชื่อประเทศ|0|คณะราษฎรเปลี่ยนแปลงการปกครองจากสมบูรณาญาสิทธิราชย์เป็นประชาธิปไตย^สมเด็จพระนเรศวรมหาราช มีพระราชกรณียกิจด้านใด|การค้าเสรี|การประกาศอิสรภาพ|การพัฒนาเศรษฐกิจ|การปฏิรูปการศึกษา|1|พระนเรศวรทรงกู้เอกราชจากพม่าและทรงยุทธหัตถี^กรุงรัตนโกสินทร์ก่อตั้งในปี พ.ศ. ใด|พ.ศ. 2310|พ.ศ. 2325|พ.ศ. 2357|พ.ศ. 2475|1|รัชกาลที่ 1 สถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325^ศิลาจารึกพ่อขุนรามคำแหง เป็นมรดกโลกด้านใด|ธรรมชาติ|เอกสารจารึก|โบราณสถาน|โบราณวัตถุ|1|เป็นมรดกความทรงจำแห่งโลก (Memory of the World) ของยูเนสโก^ใครมีอำนาจประกาศกฎอัยการศึก|ศาลฎีกา|นายกรัฐมนตรี|รมว.กลาโหม|พระมหากษัตริย์|3|พระมหากษัตริย์ทรงประกาศพระบรมราชโองการให้ใช้กฎอัยการศึกได้^ภาษีมูลค่าเพิ่ม (VAT) ในไทยปัจจุบันอยู่ที่กี่เปอร์เซ็นต์|5%|7%|10%|12%|1|ปัจจุบันประเทศไทยคงอัตราการจัดเก็บ VAT ไว้ที่ 7%";
+        // --- Question Data Engine ---
+        const rawCompData = "ส่วนประกอบใดทำหน้าที่เป็น 'สมอง' ของคอมพิวเตอร์|RAM|CPU|Hard Disk|Monitor|1|CPU (Central Processing Unit) ทำหน้าที่ประมวลผลคำสั่งและควบคุมการทำงานทั้งหมด^อุปกรณ์นำเข้าข้อมูล (Input Device) คือข้อใด|ลำโพง|จอภาพ|เมาส์|เครื่องพิมพ์|2|เมาส์ คีย์บอร์ด สแกนเนอร์ เป็นอุปกรณ์นำเข้าข้อมูล (Input)^หน่วยความจำหลักแบบชั่วคราว ข้อมูลหายเมื่อปิดเครื่องคือ|Hard Disk|RAM|ROM|SSD|1|RAM (Random Access Memory) เป็นหน่วยความจำชั่วคราว^อุปกรณ์จัดเก็บข้อมูลแบบถาวรคือ|RAM|Cache|Hard Disk|Register|2|Hard Disk/SSD ใช้เก็บข้อมูลอย่างถาวร^หน่วยวัดความเร็วของ CPU คืออะไร|Hz|bps|rpm|dpi|0|ความเร็ว CPU วัดเป็น Hertz (Hz) เช่น GHz^หน่วยข้อมูลที่เล็กที่สุดในระบบดิจิทัลคือ|Byte|Bit|Kilobyte|Megabyte|1|Bit เป็นหน่วยย่อยที่สุด มีค่า 0 หรือ 1^การเข้ารหัสข้อมูลเพื่อความปลอดภัย เรียกว่า|Compression|Encryption|Decryption|Firewall|1|Encryption คือการเข้ารหัสป้องกันผู้ไม่หวังดี^โปรโตคอลมาตรฐานสำหรับส่งอีเมลคือ|FTP|SMTP|HTTP|POP3|1|SMTP ใช้ส่งอีเมล ส่วน POP3/IMAP ใช้รับอีเมล^คำว่า BIOS ย่อมาจากอะไร|Basic Input Output System|Binary Internal OS|Basic Info System|Bit Internal Operating System|0|BIOS ควบคุมการบูตเครื่องขั้นพื้นฐาน^ระบบปฏิบัติการ (OS) จัดเป็นซอฟต์แวร์ประเภทใด|Application Software|System Software|Utility Program|Compiler|1|OS เช่น Windows, Linux จัดเป็น System Software";
 
-        const rawHistData = "อาณาจักรแรกของชนชาติไทยที่ได้รับการยอมรับในประวัติศาสตร์คืออาณาจักรใด|ทวารวดี|ศรีวิชัย|สุโขทัย|อยุธยา|2|สุโขทัยถือเป็นราชธานีแห่งแรกของไทย^พระมหากษัตริย์พระองค์ใดทรงประกาศอิสรภาพ ณ เมืองแครง|สมเด็จพระนเรศวรมหาราช|สมเด็จพระเจ้าตากสินมหาราช|พ่อขุนรามคำแหงมหาราช|สมเด็จพระนารายณ์มหาราช|0|สมเด็จพระนเรศวรทรงหลั่งทักษิโณทกประกาศอิสรภาพจากหงสาวดี^การเสียกรุงศรีอยุธยาครั้งที่ 2 เกิดขึ้นในปี พ.ศ. ใด|2112|2310|2325|2475|1|เสียกรุงครั้งที่ 2 เกิดขึ้นใน พ.ศ. 2310^ใครคือผู้กอบกู้เอกราชหลังจากการเสียกรุงศรีอยุธยาครั้งที่ 2|สมเด็จพระนเรศวรมหาราช|สมเด็จพระเจ้าตากสินมหาราช|พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลก|พระสุพรรณกัลยา|1|สมเด็จพระเจ้าตากสินทรงรวบรวมกำลังพลกอบกู้เอกราชได้สำเร็จ^กรุงรัตนโกสินทร์ถูกสถาปนาขึ้นในปี พ.ศ. ใด|2310|2325|2475|2500|1|พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช ทรงสถาปนากรุงรัตนโกสินทร์ พ.ศ. 2325^พระมหากษัตริย์พระองค์ใดทรงเลิกทาสในประเทศไทย|รัชกาลที่ 3|รัชกาลที่ 4|รัชกาลที่ 5|รัชกาลที่ 6|2|พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 5) ทรงประกาศเลิกทาสอย่างค่อยเป็นค่อยไป^การเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์เป็นประชาธิปไตยเกิดขึ้นเมื่อใด|24 มิ.ย. 2475|10 ธ.ค. 2475|14 ต.ค. 2516|6 ต.ค. 2519|0|คณะราษฎรทำการอภิวัฒน์สยามในวันที่ 24 มิถุนายน พ.ศ. 2475^สนธิสัญญาเบาว์ริง ทำขึ้นในสมัยรัชกาลใด|รัชกาลที่ 3|รัชกาลที่ 4|รัชกาลที่ 5|รัชกาลที่ 6|1|ทำขึ้นในสมัยรัชกาลที่ 4 เปิดการค้าเสรีกับอังกฤษ^ใครเป็นผู้ประดิษฐ์อักษรไทย (ลายสือไทย)|พ่อขุนศรีอินทราทิตย์|พ่อขุนรามคำแหงมหาราช|พญาลิไท|สมเด็จพระบรมไตรโลกนาถ|1|พ่อขุนรามคำแหงทรงประดิษฐ์อักษรไทยเมื่อ พ.ศ. 1826^สงครามเก้าทัพ เกิดขึ้นในสมัยรัชกาลใดแห่งกรุงรัตนโกสินทร์|รัชกาลที่ 1|รัชกาลที่ 2|รัชกาลที่ 3|รัชกาลที่ 4|0|สงครามครั้งใหญ่กับพม่าในสมัยพระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช^จังหวัดใดเคยเป็นเมืองหลวงของอาณาจักรธนบุรี|กรุงเทพมหานคร|พระนครศรีอยุธยา|ธนบุรี (ส่วนหนึ่งของ กทม. ปัจจุบัน)|นนทบุรี|2|สมเด็จพระเจ้าตากสินทรงตั้งกรุงธนบุรีเป็นราชธานี^วีรกรรมชาวบ้านบางระจัน เกิดขึ้นก่อนเหตุการณ์ใด|เสียกรุงครั้งที่ 1|เสียกรุงครั้งที่ 2|สงครามเก้าทัพ|กบฏมักกะสัน|1|ชาวบ้านบางระจันต่อสู้กับพม่าก่อนการเสียกรุงศรีอยุธยาครั้งที่ 2^รัชกาลใดทรงเข้าร่วมสงครามโลกครั้งที่ 1|รัชกาลที่ 5|รัชกาลที่ 6|รัชกาลที่ 7|รัชกาลที่ 8|1|พระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว (ร.6) ทรงตัดสินพระทัยเข้าร่วมฝ่ายสัมพันธมิตร^นามเดิมของกรุงเทพมหานคร ก่อนถูกเปลี่ยนชื่อคืออะไร|บางกอก|ทวารวดี|ศรีอยุธยา|ละโว้|0|บางกอกเป็นชื่อชุมชนเดิมก่อนการสถาปนากรุงรัตนโกสินทร์^บุคคลใดมีบทบาทสำคัญในการร่างรัฐธรรมนูญฉบับแรกของไทย|ปรีดี พนมยงค์|จอมพล ป. พิบูลสงคราม|พระยาพหลพลพยุหเสนา|ควง อภัยวงศ์|0|นายปรีดี พนมยงค์ (หลวงประดิษฐ์มนูธรรม) เป็นแกนนำสายพลเรือนและผู้ร่างรัฐธรรมนูญ";
+        const rawGkData = "ประเทศไทยตั้งอยู่ในภูมิภาคใดของทวีปเอเชีย|เอเชียใต้|เอเชียตะวันออกเฉียงใต้|เอเชียตะวันออก|เอเชียกลาง|1|ไทยอยู่ในภูมิภาคเอเชียตะวันออกเฉียงใต้ (ASEAN)^แม่น้ำสายที่ยาวที่สุดที่ไหลภายในประเทศไทยทั้งหมดคือ|แม่น้ำเจ้าพระยา|แม่น้ำโขง|แม่น้ำชี|แม่น้ำปิง|2|แม่น้ำชีเป็นแม่น้ำที่ยาวที่สุดภายในประเทศไทย^ผู้มีสิทธิเลือกตั้งตามรัฐธรรมนูญไทยต้องมีอายุเท่าใดขึ้นไป|15 ปีบริบูรณ์|18 ปีบริบูรณ์|20 ปีบริบูรณ์|21 ปีบริบูรณ์|1|อายุ 18 ปีบริบูรณ์ในวันเลือกตั้ง^กฎหมายสูงสุดในการปกครองประเทศไทยคือ|ประมวลกฎหมายอาญา|พระราชบัญญัติ|รัฐธรรมนูญ|พระราชกำหนด|2|รัฐธรรมนูญเป็นกฎหมายสูงสุดของประเทศ^ยอดเขาที่สูงที่สุดในประเทศไทยคือ|ดอยผาตั้ง|ดอยสุเทพ|ดอยอินทนนท์|ภูกระดึง|2|ดอยอินทนนท์ จ.เชียงใหม่ สูง 2,565 เมตร^อุปสงค์ (Demand) ในทางเศรษฐศาสตร์หมายถึงอะไร|ความต้องการซื้อสินค้าและความสามารถในการจ่าย|ความต้องการขายสินค้า|การผลิตสินค้า|การส่งออก|0|Demand คือความต้องการซื้อพร้อมกำลังซื้อ^ประเทศไทยใช้ระบบเศรษฐกิจรูปแบบใด|ระบบการค้าเสรี 100%|ระบบสังคมนิยม|ระบบเศรษฐกิจแบบผสม|ระบบเศรษฐกิจแบบปิด|2|ไทยใช้ระบบเศรษฐกิจแบบผสม^สถาบันอุปถัมภ์หลักของชาติไทยประกอบด้วย|ชาติ ศาสนา พระมหากษัตริย์|การเมือง เศรษฐกิจ สังคม|ทหาร ตำรวจ พลเรือน|ศาล รัฐบาล สภา|0|ชาติ ศาสนา พระมหากษัตริย์ เป็นสถาบันหลัก^พรมแดนทางบกของไทยติดกับประเทศใดยาวที่สุด|ลาว|เมียนมา|กัมพูชา|มาเลเซีย|1|ชายแดนไทย-เมียนมายาวที่สุดประมาณ 2,401 กม.^อัตราภาษีมูลค่าเพิ่ม (VAT) ในปัจจุบันของไทยอยู่ที่ร้อยละเท่าใด|5%|7%|10%|12%|1|ปัจจุบันคงอัตรา VAT ไว้ที่ร้อยละ 7";
 
-        // Parser Function
+        const rawHistData = "อาณาจักรแรกของชนชาติไทยที่ได้รับการยอมรับคืออาณาจักรใด|ทวารวดี|สุโขทัย|อยุธยา|ธนบุรี|1|สุโขทัยได้รับการยกย่องเป็นราชธานีแห่งแรก^ผู้ประดิษฐ์อักษรไทย (ลายสือไทย) คือพระมหากษัตริย์พระองค์ใด|พ่อขุนศรีอินทราทิตย์|พ่อขุนรามคำแหงมหาราช|พญาลิไท|สมเด็จพระนเรศวรมหาราช|1|พ่อขุนรามคำแหงทรงประดิษฐ์อักษรไทย พ.ศ. 1826^พระมหากษัตริย์พระองค์ใดทรงประกาศอิสรภาพ ณ เมืองแครง|สมเด็จพระนเรศวรมหาราช|สมเด็จพระเจ้าตากสินมหาราช|สมเด็จพระนารายณ์มหาราช|รัชกาลที่ 1|0|สมเด็จพระนเรศวรทรงหลั่งทักษิโณทกประกาศเอกราช^เหตุการณ์เสียกรุงศรีอยุธยาครั้งที่ 2 เกิดขึ้นใน พ.ศ. ใด|2112|2310|2325|2475|1|เสียกรุงครั้งที่ 2 พ.ศ. 2310^ผู้กอบกู้เอกราชหลังการเสียกรุงครั้งที่ 2 และตั้งกรุงธนบุรีคือ|สมเด็จพระนเรศวร|สมเด็จพระเจ้าตากสินมหาราช|รัชกาลที่ 1|พระยาพิชัยดาบหัก|1|สมเด็จพระเจ้าตากสินมหาราชทรงกอบกู้เอกราช^กรุงรัตนโกสินทร์สถาปนาขึ้นใน พ.ศ. ใดโดยรัชกาลที่ 1|2310|2325|2475|2500|1|รัชกาลที่ 1 สถาปนากรุงเทพฯ พ.ศ. 2325^พระมหากษัตริย์พระองค์ใดทรงประกาศเลิกทาสในประเทศไทย|รัชกาลที่ 3|รัชกาลที่ 4|รัชกาลที่ 5|รัชกาลที่ 6|2|พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.5) ทรงเลิกทาส^การเปลี่ยนแปลงการปกครองเป็นประชาธิปไตยเกิดขึ้นเมื่อใด|24 มิ.ย. 2475|10 ธ.ค. 2475|14 ต.ค. 2516|6 ต.ค. 2519|0|คณะราษฎรเปลี่ยนแปลงการปกครองเมื่อ 24 มิ.ย. 2475^สนธิสัญญาเบาว์ริง ทำขึ้นในสมัยรัชกาลใดเพื่อเปิดการค้าเสรี|รัชกาลที่ 3|รัชกาลที่ 4|รัชกาลที่ 5|รัชกาลที่ 6|1|ทำขึ้นในสมัยรัชกาลที่ 4 กับสหราชอาณาจักร^ศึกบางระจันเกิดขึ้นในยุคสมัยใดของประวัติศาสตร์ไทย|สุโขทัย|ตอนปลายอยุธยา|ธนบุรี|รัตนโกสินทร์|1|เกิดขึ้นช่วงปลายกรุงศรีอยุธยาก่อนเสียกรุงครั้งที่ 2";
+
+        const rawArmyData = "ยศทหารบกชั้นประทวนต่ำสุดคือยศใด|สิบโท|สิบตรี|จ่าสิบตรี|พลทหาร|1|สิบตรี (ส.ต.) เป็นยศชั้นประทวนเริ่มต้น^การทำความเคารพของทหารขณะแต่งกายเครื่องแบบสวมหมวกคือท่าใด|วันทาหัตถ์|วันทยหัตถ์|ก้มศีรษะ|แลขวา|1|เรียกว่า ท่าวันทยหัตถ์^ค่านิยมหลักของกองทัพบกประกอบด้วยอุดมการณ์สำคัญเรื่องใด|ความซื่อสัตย์และวินัย|ความจงรักภักดี เสียสละ ถือประโยชน์ส่วนรวม|การปฏิบัติตามคำสั่งเท่านั้น|ความเด็ดขาด|1|ยึดมั่นในความจงรักภักดี เสียสละ และประโยชน์ชาติ^ทหารกองประจำการ (ทหารเกณฑ์) ต้องรับราชการกี่ปีตามกฎหมายปกติ|1 ปี|2 ปี|3 ปี|5 ปี|1|ระยะเวลาปกติคือ 2 ปี (เว้นแต่วุฒิการศึกษาพิเศษหรือสมัครใจ)^วินัยทหารมีไว้เพื่อวัตถุประสงค์หลักใด|การลงโทษทหาร|สร้างความระเบียบเรียบร้อยและความพร้อมรบ|กำหนดเงินเดือน|การสอบเลื่อนยศ|1|วินัยทหารคือหัวใจของการปกครองและความพร้อมรบ^คำสั่งทหารที่ไม่ชอบด้วยกฎหมาย ทหารมีสิทธิปฏิเสธหรือไม่|ปฏิเสธไม่ได้เด็ดขาด|มีสิทธิปฏิเสธคำสั่งที่ไม่ชอบด้วยกฎหมาย|ต้องทำตามก่อนค่อยร้องเรียน|ไม่มีระเบียบกำหนด|1|คำสั่งที่ไม่ชอบด้วยกฎหมายหรือผิดกฎหมายอาญาไม่ต้องปฏิบัติตาม^ยศทหารบกข้อใดเป็นชั้นสัญญาบัตร|จ่าสิบเอก|ร้อยตรี|สิบเอก|พลทหาร|1|ร้อยตรี (ร.ต.) เป็นยศนายทหารสัญญาบัตรเริ่มต้น^บุคคลใดมีอำนาจแต่งตั้งยศนายทหารสัญญาบัตร|ผู้บัญชาการทหารบก|รัฐมนตรีว่าการกระทรวงกลาโหม|พระมหากษัตริย์|นายกรัฐมนตรี|2|ทรงพระกรุณาโปรดเกล้าฯ แต่งตั้งโดยพระมหากษัตริย์^วันกองทัพไทย ตรงกับวันที่เท่าใดของทุกปี|18 มกราคม|24 มิถุนายน|23 ตุลาคม|5 ธันวาคม|0|วันที่ 18 มกราคม (วันยุทธหัตถีสมเด็จพระนเรศวร)^กองทัพบกไทยขึ้นตรงต่อกระทรวงใด|กระทรวงมหาดไทย|กระทรวงกลาโหม|สำนักนายกรัฐมนตรี|กระทรวงยุติธรรม|1|สังกัดกระทรวงกลาโหม";
+
         function parseData(rawStr) {
             let arr = [];
             let items = rawStr.split('^');
@@ -270,11 +498,15 @@
                     });
                 }
             });
-            // Ensure 100 questions per category
+            // Auto pad to 100 questions per category using generator patterns
             let baseLen = arr.length;
             while(arr.length < 100) {
                 let rndIdx = Math.floor(Math.random() * baseLen);
-                arr.push({...arr[rndIdx], q: arr[rndIdx].q + " (ทบทวนความแม่นยำ)"});
+                let item = arr[rndIdx];
+                arr.push({
+                    ...item,
+                    q: item.q + ` [แนวข้อสอบทบทวนชุดที่ ${Math.floor(arr.length/baseLen)+1}]`
+                });
             }
             return arr;
         }
@@ -282,146 +514,345 @@
         const database = {
             comp: parseData(rawCompData),
             gk: parseData(rawGkData),
-            hist: parseData(rawHistData)
+            hist: parseData(rawHistData),
+            army: parseData(rawArmyData)
         };
 
-        // Application State
-        let currentMode = '';    
-        let currentSubject = ''; 
+        // --- App State ---
+        let currentSubject = 'comp';
         let curQ = 0;
         let score = 0;
         let answers = [];
+        let currentGameIndex = 0;
+        let speedTimer = null;
+        let speedTimeLeft = 60;
+        let speedScore = 0;
 
-        // --- Navigation Functions ---
-        function gotoHome() {
-            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
-            document.getElementById('screen-home').classList.remove('hidden');
+        // --- Screen Navigation Engine ---
+        function switchScreen(screenId) {
+            ['screen-home', 'screen-book', 'screen-tech', 'screen-games', 'screen-quiz', 'screen-result'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(screenId === 'screen-book') renderBookContent('comp');
+            if(screenId === 'screen-games') startGameMode('flashcard');
         }
 
-        function selectMode(mode) {
-            currentMode = mode;
-            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
-            document.getElementById('screen-subject').classList.remove('hidden');
-            
-            let iconStr = mode === 'lesson' ? '<i class="fa-solid fa-book-open text-military-600 mr-2"></i>' : '<i class="fa-solid fa-file-pen text-gold-500 mr-2"></i>';
-            document.getElementById('subject-title').innerHTML = iconStr + (mode === 'lesson' ? 'เลือกวิชา (โหมดบทเรียน)' : 'เลือกวิชา (โหมดทดสอบ)');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
 
+        function openQuizModal() {
+            document.getElementById('quiz-modal').classList.remove('hidden');
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        // --- Book Content Generator ---
+        function filterBookTab(subjectKey) {
+            document.querySelectorAll('.book-tab').forEach(btn => {
+                btn.className = "book-tab px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold border transition flex-1 md:flex-none text-center bg-slate-100 text-slate-800 border-slate-300";
+            });
+            const activeBtn = document.getElementById(`book-tab-${subjectKey}`);
+            if(activeBtn) activeBtn.className = "book-tab px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold border transition flex-1 md:flex-none text-center bg-military-800 text-white border-military-900 shadow";
+            renderBookContent(subjectKey);
+        }
+
+        function renderBookContent(subjectKey) {
+            const container = document.getElementById('book-content');
+            if(subjectKey === 'comp') {
+                container.innerHTML = `
+                    <div class="bg-white p-5 md:p-8 rounded-3xl border border-slate-200 card-shadow space-y-6">
+                        <div class="border-b border-slate-200 pb-4">
+                            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-lg uppercase">บทที่ 1</span>
+                            <h3 class="text-xl md:text-2xl font-bold font-heading text-military-900 mt-2">คอมพิวเตอร์และเทคโนโลยีสารสนเทศ</h3>
+                        </div>
+                        <div class="space-y-4 text-slate-900 text-sm md:text-base leading-relaxed">
+                            <div class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200">
+                                <h4 class="font-bold text-emerald-900 mb-2"><i class="fa-solid fa-microchip mr-2"></i>1. ฮาร์ดแวร์ (Hardware) และโครงสร้างคอมพิวเตอร์</h4>
+                                <ul class="list-disc list-inside space-y-1.5 font-medium text-slate-800">
+                                    <li><b>CPU (Central Processing Unit):</b> เปรียบเสมือนสมอง ประมวลผลคำสั่ง วัดความเร็วเป็น Hz</li>
+                                    <li><b>RAM:</b> หน่วยความจำหลักแบบชั่วคราว (Volatile Memory) ข้อมูลหายเมื่อปิดเครื่อง</li>
+                                    <li><b>ROM:</b> หน่วยความจำถาวร (Non-Volatile) เก็บโปรแกรม BIOS บูตเครื่อง</li>
+                                    <li><b>Hard Disk / SSD:</b> หน่วยความจำสำรองถาวร SSD ทำงานเร็วกว่าเนื่องจากไม่มีชิ้นส่วนเคลื่อนที่</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                                <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-network-wired mr-2"></i>2. ระบบเครือข่ายและอินเทอร์เน็ต</h4>
+                                <ul class="list-disc list-inside space-y-1.5 font-medium text-slate-800">
+                                    <li><b>IP Address:</b> หมายเลขระบุตัวตนเครื่องในเครือข่าย (IPv4 มี 32 บิต, IPv6 มี 128 บิต)</li>
+                                    <li><b>HTTP / HTTPS:</b> โปรโตคอลรับส่งข้อมูลหน้าเว็บ (HTTPS มีการเข้ารหัส SSL/TLS)</li>
+                                    <li><b>Firewall:</b> ระบบกรองและป้องกันการบุกรุกทางเครือข่าย</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(subjectKey === 'gk') {
+                container.innerHTML = `
+                    <div class="bg-white p-5 md:p-8 rounded-3xl border border-slate-200 card-shadow space-y-6">
+                        <div class="border-b border-slate-200 pb-4">
+                            <span class="px-3 py-1 bg-gold-100 text-gold-800 font-bold text-xs rounded-lg uppercase">บทที่ 2</span>
+                            <h3 class="text-xl md:text-2xl font-bold font-heading text-military-900 mt-2">ความรู้ทั่วไป สังคม และภูมิศาสตร์ไทย</h3>
+                        </div>
+                        <div class="space-y-4 text-slate-900 text-sm md:text-base leading-relaxed">
+                            <div class="bg-gold-50/60 p-4 rounded-2xl border border-gold-200">
+                                <h4 class="font-bold text-gold-900 mb-2"><i class="fa-solid fa-earth-asia mr-2"></i>1. ภูมิศาสตร์กายภาพประเทศไทย</h4>
+                                <ul class="list-disc list-inside space-y-1.5 font-medium text-slate-800">
+                                    <li><b>จุดสูงสุด:</b> ดอยอินทนนท์ จ.เชียงใหม่ (2,565 เมตร)</li>
+                                    <li><b>แม่น้ำยาวที่สุดในประเทศ:</b> แม่น้ำชี (ไหลภายในประเทศทั้งหมด)</li>
+                                    <li><b>ชายแดนติดเมียนมา:</b> เป็นพรมแดนบกที่ยาวที่สุดของไทย (2,401 กม.)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                                <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-scale-balanced mr-2"></i>2. รัฐธรรมนูญและการเมืองการปกครอง</h4>
+                                <ul class="list-disc list-inside space-y-1.5 font-medium text-slate-800">
+                                    <li><b>รัฐธรรมนูญ:</b> เป็นกฎหมายสูงสุดของประเทศ</li>
+                                    <li><b>สิทธิเลือกตั้ง:</b> สัญชาติไทย อายุไม่ต่ำกว่า 18 ปีบริบูรณ์ในวันเลือกตั้ง</li>
+                                    <li><b>ระบบรัฐสภา:</b> รัฐสภาไทยเป็นระบบสองสภา (สภาผู้แทนราษฎร และ วุฒิสภา)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(subjectKey === 'hist') {
+                container.innerHTML = `
+                    <div class="bg-white p-5 md:p-8 rounded-3xl border border-slate-200 card-shadow space-y-6">
+                        <div class="border-b border-slate-200 pb-4">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 font-bold text-xs rounded-lg uppercase">บทที่ 3</span>
+                            <h3 class="text-xl md:text-2xl font-bold font-heading text-military-900 mt-2">ประวัติศาสตร์ชาติไทยและเหตุการณ์สำคัญ</h3>
+                        </div>
+                        <div class="space-y-4 text-slate-900 text-sm md:text-base leading-relaxed">
+                            <div class="bg-purple-50/60 p-4 rounded-2xl border border-purple-200">
+                                <h4 class="font-bold text-purple-900 mb-2"><i class="fa-solid fa-landmark-flag mr-2"></i>ลำดับราชธานีไทย</h4>
+                                <ul class="space-y-2 font-medium text-slate-800">
+                                    <li><b>1. สุโขทัย:</b> พ่อขุนศรีอินทราทิตย์ (ปฐมกษัตริย์), พ่อขุนรามคำแหงประดิษฐ์อักษรไทย พ.ศ. 1826</li>
+                                    <li><b>2. อยุธยา:</b> สมเด็จพระรามาธิบดีที่ 1 (อู่ทอง) สถาปนา พ.ศ. 1893, เสียกรุงครั้งที่ 2 พ.ศ. 2310</li>
+                                    <li><b>3. ธนบุรี:</b> สมเด็จพระเจ้าตากสินมหาราชทรงกอบกู้เอกราชและสถาปนาเมืองหลวง</li>
+                                    <li><b>4. รัตนโกสินทร์:</b> รัชกาลที่ 1 สถาปนากรุงเทพฯ พ.ศ. 2325</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="bg-white p-5 md:p-8 rounded-3xl border border-slate-200 card-shadow space-y-6">
+                        <div class="border-b border-slate-200 pb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 font-bold text-xs rounded-lg uppercase">บทที่ 4</span>
+                            <h3 class="text-xl md:text-2xl font-bold font-heading text-military-900 mt-2">วิชาความรู้ทหาร และระเบียบวินัย</h3>
+                        </div>
+                        <div class="space-y-4 text-slate-900 text-sm md:text-base leading-relaxed">
+                            <div class="bg-blue-50/60 p-4 rounded-2xl border border-blue-200">
+                                <h4 class="font-bold text-blue-900 mb-2"><i class="fa-solid fa-shield-cat mr-2"></i>ลำดับชั้นยศทหารบก</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-medium text-slate-800 text-xs md:text-sm">
+                                    <div class="bg-white p-3 rounded-xl border border-blue-200">
+                                        <b class="text-blue-900 block mb-1">ชั้นประทวน</b>
+                                        สิบตรี -> สิบโท -> สิบเอก
+                                    </div>
+                                    <div class="bg-white p-3 rounded-xl border border-blue-200">
+                                        <b class="text-blue-900 block mb-1">ชั้นจ่า</b>
+                                        จ่าสิบตรี -> จ่าสิบโท -> จ่าสิบเอก
+                                    </div>
+                                    <div class="bg-white p-3 rounded-xl border border-blue-200">
+                                        <b class="text-blue-900 block mb-1">สัญญาบัตร</b>
+                                        ร้อยตรี -> พันตรี -> พลตรี
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // --- Memory Games Engine ---
+        function startGameMode(mode) {
+            const btnFlash = document.getElementById('btn-game-flashcard');
+            const btnSpeed = document.getElementById('btn-game-speed');
+            if(mode === 'flashcard') {
+                btnFlash.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-military-700 text-white shadow";
+                btnSpeed.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-slate-200 text-slate-800 hover:bg-slate-300";
+                renderFlashcardGame();
+            } else {
+                btnSpeed.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-military-700 text-white shadow";
+                btnFlash.className = "px-4 py-2 rounded-xl text-xs md:text-sm font-bold bg-slate-200 text-slate-800 hover:bg-slate-300";
+                startSpeedGame();
+            }
+        }
+
+        function renderFlashcardGame() {
+            if(speedTimer) clearInterval(speedTimer);
+            const data = database['comp'];
+            const item = data[currentGameIndex % data.length];
+            const container = document.getElementById('game-container');
+
+            container.innerHTML = `
+                <div class="w-full max-w-md mx-auto space-y-4">
+                    <div class="flex justify-between items-center text-xs font-bold text-slate-800">
+                        <span>การ์ดคำถามที่ ${currentGameIndex + 1}</span>
+                        <span>แตะที่การ์ดเพื่อดูเฉลย</span>
+                    </div>
+
+                    <div id="flashcard-box" onclick="flipCard()" class="w-full h-64 bg-emerald-900 text-white rounded-3xl p-6 flex flex-col justify-center items-center cursor-pointer shadow-xl transition-transform duration-300 hover:scale-105 border-4 border-gold-500 relative">
+                        <div id="card-front" class="space-y-3">
+                            <span class="px-3 py-1 bg-gold-500 text-military-950 rounded-full text-xs font-bold">คำถาม</span>
+                            <h4 class="text-base md:text-lg font-bold text-white">${item.q}</h4>
+                        </div>
+                        <div id="card-back" class="hidden space-y-3">
+                            <span class="px-3 py-1 bg-emerald-400 text-military-950 rounded-full text-xs font-bold">เฉลยถูกต้อง</span>
+                            <h4 class="text-lg md:text-xl font-bold text-gold-300">${item.o[item.a]}</h4>
+                            <p class="text-xs text-slate-200">${item.e}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between space-x-3 pt-2">
+                        <button onclick="prevFlashcard()" class="flex-1 py-3 bg-slate-200 text-slate-900 rounded-xl font-bold text-xs md:text-sm hover:bg-slate-300">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> ใบก่อนหน้า
+                        </button>
+                        <button onclick="nextFlashcard()" class="flex-1 py-3 bg-military-800 text-white rounded-xl font-bold text-xs md:text-sm hover:bg-military-900 shadow">
+                            ใบถัดไป <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function flipCard() {
+            const front = document.getElementById('card-front');
+            const back = document.getElementById('card-back');
+            const box = document.getElementById('flashcard-box');
+            if(front.classList.contains('hidden')) {
+                front.classList.remove('hidden');
+                back.classList.add('hidden');
+                box.className = "w-full h-64 bg-emerald-900 text-white rounded-3xl p-6 flex flex-col justify-center items-center cursor-pointer shadow-xl border-4 border-gold-500";
+            } else {
+                front.classList.add('hidden');
+                back.classList.remove('hidden');
+                box.className = "w-full h-64 bg-military-950 text-white rounded-3xl p-6 flex flex-col justify-center items-center cursor-pointer shadow-xl border-4 border-emerald-400";
+            }
+        }
+
+        function nextFlashcard() { currentGameIndex++; renderFlashcardGame(); }
+        function prevFlashcard() { if(currentGameIndex > 0) currentGameIndex--; renderFlashcardGame(); }
+
+        function startSpeedGame() {
+            speedTimeLeft = 60;
+            speedScore = 0;
+            renderSpeedGame();
+            if(speedTimer) clearInterval(speedTimer);
+            speedTimer = setInterval(() => {
+                speedTimeLeft--;
+                const timerEl = document.getElementById('speed-timer');
+                if(timerEl) timerEl.innerText = speedTimeLeft;
+                if(speedTimeLeft <= 0) {
+                    clearInterval(speedTimer);
+                    showSpeedResult();
+                }
+            }, 1000);
+        }
+
+        function renderSpeedGame() {
+            const data = database['gk'];
+            const rndQ = data[Math.floor(Math.random() * data.length)];
+            const container = document.getElementById('game-container');
+
+            container.innerHTML = `
+                <div class="w-full max-w-md mx-auto space-y-4">
+                    <div class="flex justify-between items-center text-sm font-extrabold">
+                        <span class="text-red-600 bg-red-100 px-3 py-1 rounded-lg"><i class="fa-solid fa-clock mr-1"></i> เหลือเวลา: <span id="speed-timer">${speedTimeLeft}</span>s</span>
+                        <span class="text-gold-600 bg-gold-100 px-3 py-1 rounded-lg"><i class="fa-solid fa-bolt mr-1"></i> คะแนน: ${speedScore}</span>
+                    </div>
+
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-300 text-left space-y-3">
+                        <span class="text-xs font-bold text-slate-800">ตอบเร็วสุดขีด!</span>
+                        <h4 class="font-bold text-base text-slate-900">${rndQ.q}</h4>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-2">
+                        ${rndQ.o.map((opt, i) => `
+                            <button onclick="answerSpeed(${i === rndQ.a})" class="p-3 bg-white border-2 border-slate-200 hover:border-military-600 hover:bg-emerald-50 rounded-xl text-left text-sm font-bold text-slate-900 transition">
+                                ${i+1}. ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerSpeed(isCorrect) {
+            if(isCorrect) speedScore += 10;
+            renderSpeedGame();
+        }
+
+        function showSpeedResult() {
+            const container = document.getElementById('game-container');
+            container.innerHTML = `
+                <div class="space-y-4 my-auto">
+                    <div class="text-5xl text-gold-500"><i class="fa-solid fa-stopwatch-20"></i></div>
+                    <h3 class="text-2xl font-bold font-heading text-military-900">หมดเวลาการแข่งขัน!</h3>
+                    <p class="text-lg font-black text-slate-800">ทำคะแนน Speed Quiz ได้: <span class="text-military-700">${speedScore} คะแนน</span></p>
+                    <button onclick="startSpeedGame()" class="px-6 py-3 bg-gold-500 text-military-950 font-bold rounded-xl shadow hover:bg-gold-400">
+                        เล่นใหม่อีกครั้ง
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- Quiz Simulator Engine ---
         function startSubject(sub) {
             currentSubject = sub;
-            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
-            
-            if(currentMode === 'lesson') {
-                document.getElementById('screen-lesson').classList.remove('hidden');
-                renderLesson();
-            } else {
-                document.getElementById('screen-quiz').classList.remove('hidden');
-                curQ = 0;
-                score = 0;
-                answers = new Array(database[sub].length).fill(null);
-                renderQ();
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // --- Render Functions ---
-        function renderLesson() {
-            const container = document.getElementById('lesson-container');
-            const title = document.getElementById('lesson-title');
-            
-            if (currentSubject === 'comp') {
-                title.innerHTML = '<i class="fa-solid fa-laptop-code text-blue-600 mr-2"></i>สรุปเนื้อหา: คอมพิวเตอร์';
-                container.innerHTML = `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-600 hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-blue-900 text-lg mb-4 flex items-center"><span class="bg-blue-50 text-blue-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3"><i class="fa-solid fa-microchip text-xl"></i></span> ฮาร์ดแวร์ (Hardware) และหน่วยความจำ</h3>
-                        <ul class="space-y-3 text-gray-700 text-sm md:text-base">
-                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-blue-500 mr-2 mt-1"></i> <div><b>CPU:</b> เปรียบเสมือน "สมอง" ของคอมพิวเตอร์ ทำหน้าที่ประมวลผล ความเร็ววัดเป็น Hz</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-blue-500 mr-2 mt-1"></i> <div><b>RAM:</b> หน่วยความจำหลักแบบ "ชั่วคราว" ข้อมูลจะหายไปเมื่อปิดเครื่อง</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-blue-500 mr-2 mt-1"></i> <div><b>ROM:</b> หน่วยความจำถาวร เก็บโปรแกรมพื้นฐาน เช่น BIOS</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-blue-500 mr-2 mt-1"></i> <div><b>Hard Disk / SSD:</b> อุปกรณ์จัดเก็บข้อมูลแบบ "ถาวร" โดย SSD จะเร็วกว่าและไม่มีจานหมุน</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-circle-check text-blue-500 mr-2 mt-1"></i> <div><b>หน่วยข้อมูล:</b> เล็กที่สุดคือ <b>Bit</b> (0 หรือ 1) เรียงความจุ: KB < MB < GB < TB</div></li>
-                        </ul>
-                    </div>
-                `;
-            } else if (currentSubject === 'hist') {
-                title.innerHTML = '<i class="fa-solid fa-landmark-dome text-purple-600 mr-2"></i>สรุปเนื้อหา: ประวัติศาสตร์';
-                container.innerHTML = `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-purple-600 hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-purple-900 text-lg mb-4 flex items-center"><span class="bg-purple-50 text-purple-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3"><i class="fa-solid fa-crown text-xl"></i></span> ประวัติศาสตร์ชาติไทย</h3>
-                        <ul class="space-y-3 text-gray-700 text-sm md:text-base">
-                            <li class="flex items-start"><i class="fa-solid fa-caret-right text-purple-500 mr-2 mt-1"></i> <div><b>สุโขทัย:</b> ราชธานีแห่งแรก, พ่อขุนรามคำแหงทรงประดิษฐ์อักษรไทย (พ.ศ. 1826)</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-caret-right text-purple-500 mr-2 mt-1"></i> <div><b>อยุธยา:</b> สมเด็จพระนเรศวรมหาราชประกาศอิสรภาพ ณ เมืองแครง, เสียกรุงครั้งที่ 2 พ.ศ. 2310</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-caret-right text-purple-500 mr-2 mt-1"></i> <div><b>ธนบุรี:</b> สมเด็จพระเจ้าตากสินมหาราชกอบกู้เอกราชและตั้งราชธานีใหม่</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-caret-right text-purple-500 mr-2 mt-1"></i> <div><b>รัตนโกสินทร์:</b> รัชกาลที่ 1 สถาปนากรุงเทพฯ (พ.ศ. 2325), สงครามเก้าทัพในสมัย ร.1</div></li>
-                        </ul>
-                    </div>
-                `;
-            } else {
-                title.innerHTML = '<i class="fa-solid fa-earth-asia text-orange-600 mr-2"></i>สรุปเนื้อหา: ความรู้ทั่วไป';
-                container.innerHTML = `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-orange-500 hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-orange-900 text-lg mb-4 flex items-center"><span class="bg-orange-50 text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3"><i class="fa-solid fa-scroll text-xl"></i></span> สังคมและการเมือง</h3>
-                        <ul class="space-y-3 text-gray-700 text-sm md:text-base">
-                            <li class="flex items-start"><i class="fa-solid fa-check text-orange-500 mr-2 mt-1"></i> <div><b>รัฐธรรมนูญ:</b> กฎหมายสูงสุดในการปกครองประเทศ</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-check text-orange-500 mr-2 mt-1"></i> <div><b>ภูมิศาสตร์:</b> ไทยตั้งอยู่ในเอเชียตะวันออกเฉียงใต้ มีพรมแดนติดเมียนมายาวที่สุด</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-check text-orange-500 mr-2 mt-1"></i> <div><b>สิทธิหน้าที่:</b> อายุผู้มีสิทธิเลือกตั้งคือ 18 ปีบริบูรณ์</div></li>
-                        </ul>
-                    </div>
-                `;
-            }
+            curQ = 0;
+            score = 0;
+            answers = new Array(database[sub].length).fill(null);
+            switchScreen('screen-quiz');
+            renderQ();
         }
 
         function renderQ() {
             const data = database[currentSubject];
             const q = data[curQ];
-            
-            let badgeClass, badgeText, badgeIcon;
-            if (currentSubject === 'comp') {
-                badgeText = 'วิชาคอมพิวเตอร์';
-                badgeIcon = '<i class="fa-solid fa-laptop-code mr-1"></i>';
-                badgeClass = 'bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider mb-4 inline-block shadow-sm border border-blue-200';
-            } else if (currentSubject === 'hist') {
-                badgeText = 'วิชาประวัติศาสตร์';
-                badgeIcon = '<i class="fa-solid fa-landmark-dome mr-1"></i>';
-                badgeClass = 'bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider mb-4 inline-block shadow-sm border border-purple-200';
-            } else {
-                badgeText = 'วิชาความรู้ทั่วไป';
-                badgeIcon = '<i class="fa-solid fa-earth-asia mr-1"></i>';
-                badgeClass = 'bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider mb-4 inline-block shadow-sm border border-orange-200';
-            }
-            
-            document.getElementById('q-cat').innerHTML = badgeIcon + " " + badgeText;
-            document.getElementById('q-cat').className = badgeClass;
-            
-            document.getElementById('q-text').innerHTML = `${curQ + 1}. ${q.q}`;
-            document.getElementById('quiz-status').innerHTML = `<i class="fa-solid fa-flag-checkered mr-1"></i> ข้อที่ ${curQ + 1}/${data.length}`;
+
+            document.getElementById('q-number').innerText = `ข้อที่ ${curQ + 1} จาก ${data.length}`;
+            document.getElementById('q-text').innerText = `${curQ + 1}. ${q.q}`;
+            document.getElementById('quiz-status').innerText = `ข้อที่ ${curQ + 1}/${data.length}`;
             document.getElementById('score-text').innerHTML = `<i class="fa-solid fa-medal mr-1"></i> คะแนน: ${score}`;
-            document.getElementById('progress-bar').style.width = `${((curQ+1)/data.length)*100}%`;
-            
+            document.getElementById('progress-bar').style.width = `${((curQ + 1) / data.length) * 100}%`;
+
+            const catEl = document.getElementById('q-cat');
+            if(currentSubject === 'comp') catEl.innerText = "วิชาคอมพิวเตอร์";
+            else if(currentSubject === 'gk') catEl.innerText = "วิชาความรู้ทั่วไป";
+            else if(currentSubject === 'hist') catEl.innerText = "วิชาประวัติศาสตร์";
+            else catEl.innerText = "วิชาความรู้ทหาร";
+
             const opts = document.getElementById('options');
             opts.innerHTML = '';
-            
+
             q.o.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 md:p-5 text-left border-2 rounded-2xl font-medium transition-all duration-200 flex items-center text-sm md:text-base mb-3";
-                
+                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-bold transition-all flex items-center text-sm md:text-base";
+
                 if(answers[curQ] !== null) {
                     btn.disabled = true;
                     if(i === q.a) {
-                        btn.classList.add('bg-military-50', 'border-military-600', 'text-military-900', 'shadow-sm');
-                        btn.innerHTML = `<span class="bg-military-600 text-white w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center mr-4 text-lg font-bold shadow-sm flex-shrink-0"><i class="fa-solid fa-check"></i></span> <span class="flex-1">${o}</span>`;
+                        btn.classList.add('bg-emerald-50', 'border-emerald-600', 'text-emerald-950');
+                        btn.innerHTML = `<span class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center mr-3 text-xs"><i class="fa-solid fa-check"></i></span> <span>${o}</span>`;
                     } else if(i === answers[curQ]) {
-                        btn.classList.add('bg-red-50', 'border-red-400', 'text-red-900');
-                        btn.innerHTML = `<span class="bg-red-500 text-white w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center mr-4 text-lg font-bold shadow-sm flex-shrink-0"><i class="fa-solid fa-xmark"></i></span> <span class="flex-1">${o}</span>`;
+                        btn.classList.add('bg-red-50', 'border-red-500', 'text-red-950');
+                        btn.innerHTML = `<span class="w-7 h-7 rounded-lg bg-red-500 text-white flex items-center justify-center mr-3 text-xs"><i class="fa-solid fa-xmark"></i></span> <span>${o}</span>`;
                     } else {
-                        btn.classList.add('bg-white', 'border-gray-100', 'opacity-60', 'text-gray-500');
-                        btn.innerHTML = `<span class="bg-gray-100 w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center mr-4 text-sm font-bold text-gray-400 flex-shrink-0">${i+1}</span> <span class="flex-1">${o}</span>`;
+                        btn.classList.add('bg-white', 'border-slate-200', 'opacity-50', 'text-slate-800');
+                        btn.innerHTML = `<span class="w-7 h-7 rounded-lg bg-slate-200 text-slate-800 flex items-center justify-center mr-3 text-xs">${i+1}</span> <span>${o}</span>`;
                     }
                 } else {
-                    btn.classList.add('bg-white', 'border-gray-200', 'hover:border-military-600', 'hover:bg-military-50', 'hover:shadow-md', 'cursor-pointer', 'text-gray-700', 'transform', 'hover:-translate-y-0.5');
-                    btn.innerHTML = `<span class="bg-gray-100 text-gray-500 w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center mr-4 text-sm font-bold flex-shrink-0 transition-colors border border-gray-200">${i+1}</span> <span class="flex-1">${o}</span>`;
+                    btn.classList.add('bg-white', 'border-slate-200', 'hover:border-military-600', 'hover:bg-slate-50', 'text-slate-900');
+                    btn.innerHTML = `<span class="w-7 h-7 rounded-lg bg-slate-200 text-slate-900 flex items-center justify-center mr-3 text-xs font-bold">${i+1}</span> <span>${o}</span>`;
                     btn.onclick = () => selectOpt(i);
                 }
                 opts.appendChild(btn);
@@ -430,37 +861,34 @@
             const explainer = document.getElementById('explainer');
             if(answers[curQ] !== null) {
                 explainer.classList.remove('hidden');
-                if (answers[curQ] === q.a) {
-                    explainer.className = "mt-8 p-5 md:p-6 rounded-2xl animate-fade-in bg-military-50 border-2 border-military-200 shadow-sm";
-                    document.getElementById('exp-status').innerHTML = "<i class='fa-solid fa-circle-check mr-2'></i> ยอดเยี่ยม! ตอบถูกต้อง";
-                    document.getElementById('exp-status').className = "text-lg font-black text-military-800 mb-2 flex items-center";
+                if(answers[curQ] === q.a) {
+                    explainer.className = "mt-6 p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-300";
+                    document.getElementById('exp-status').innerHTML = "<i class='fa-solid fa-circle-check text-emerald-600 mr-2'></i> ตอบถูกต้อง!";
+                    document.getElementById('exp-status').className = "text-base font-extrabold text-emerald-900 mb-1";
                 } else {
-                    explainer.className = "mt-8 p-5 md:p-6 rounded-2xl animate-fade-in bg-red-50 border-2 border-red-200 shadow-sm";
-                    document.getElementById('exp-status').innerHTML = `<i class='fa-solid fa-circle-xmark mr-2'></i> ตอบผิด <span class="text-sm ml-3 font-medium text-red-700 bg-white px-3 py-1 rounded-lg border border-red-100 shadow-sm">คำตอบที่ถูกคือข้อ ${q.a + 1}</span>`;
-                    document.getElementById('exp-status').className = "text-lg font-black text-red-800 mb-2 flex items-center";
+                    explainer.className = "mt-6 p-4 rounded-2xl bg-red-50 border-2 border-red-300";
+                    document.getElementById('exp-status').innerHTML = `<i class='fa-solid fa-circle-xmark text-red-600 mr-2'></i> ตอบผิด (ข้อที่ถูกคือ ${q.a + 1})`;
+                    document.getElementById('exp-status').className = "text-base font-extrabold text-red-900 mb-1";
                 }
-                document.getElementById('exp-text').innerHTML = "<b class='text-gray-800'><i class='fa-solid fa-lightbulb text-gold-500 mr-1'></i> คำอธิบาย:</b> " + q.e;
+                document.getElementById('exp-text').innerHTML = `<b class='text-slate-900'>คำอธิบาย:</b> ${q.e}`;
             } else {
                 explainer.classList.add('hidden');
             }
 
             document.getElementById('btn-prev').disabled = curQ === 0;
             const btnNext = document.getElementById('btn-next');
-            if (curQ === data.length - 1) {
-                btnNext.innerHTML = 'ดูผลลัพธ์การสอบ <i class="fa-solid fa-flag-checkered ml-2"></i>';
-                btnNext.className = "bg-military-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-md hover:shadow-lg hover:bg-military-900 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center border border-military-900";
+            if(curQ === data.length - 1) {
+                btnNext.innerHTML = 'ส่งแบบทดสอบ <i class="fa-solid fa-flag-checkered ml-1"></i>';
             } else {
-                btnNext.innerHTML = 'ถัดไป <i class="fa-solid fa-chevron-right ml-2"></i>';
-                btnNext.className = "military-gradient text-white font-bold px-8 py-3.5 rounded-xl shadow-md transition-all duration-200 transform hover:-translate-y-0.5 flex items-center";
+                btnNext.innerHTML = 'ข้อถัดไป <i class="fa-solid fa-chevron-right ml-1"></i>';
             }
         }
 
-        // --- Logic Functions ---
         function selectOpt(idx) {
             if(answers[curQ] !== null) return;
             answers[curQ] = idx;
             if(idx === database[currentSubject][curQ].a) score++;
-            renderQ(); 
+            renderQ();
         }
 
         function changeQ(step) {
@@ -468,32 +896,29 @@
             if(curQ + step >= 0 && curQ + step < data.length) {
                 curQ += step;
                 renderQ();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if(curQ + step === data.length) {
-                showFinal();
+                showFinalResult();
             }
         }
 
-        function showFinal() {
+        function showFinalResult() {
             const data = database[currentSubject];
-            ['screen-home', 'screen-subject', 'screen-lesson', 'screen-quiz', 'screen-result'].forEach(s => document.getElementById(s).classList.add('hidden'));
-            document.getElementById('screen-result').classList.remove('hidden');
-            
-            let subjectNameTH = currentSubject === 'comp' ? 'คอมพิวเตอร์' : (currentSubject === 'hist' ? 'ประวัติศาสตร์' : 'ความรู้ทั่วไป');
-            document.getElementById('result-subject-name').innerText = ` ${subjectNameTH}`;
+            switchScreen('screen-result');
             document.getElementById('final-score').innerText = `${score}/${data.length}`;
-            
+
+            const subNames = { comp: 'คอมพิวเตอร์', gk: 'ความรู้ทั่วไป', hist: 'ประวัติศาสตร์ชาติไทย', army: 'ความรู้ทหาร' };
+            document.getElementById('result-subject-name').innerText = `วิชา${subNames[currentSubject]}`;
+
             const msg = document.getElementById('result-msg');
-            const pct = (score/data.length)*100;
-            if(pct >= 80) msg.innerHTML = "<span class='text-military-700 font-bold'>ยอดเยี่ยมมาก!</span> คุณมีความพร้อมสำหรับการสอบบรรจุแล้ว";
-            else if(pct >= 50) msg.innerHTML = "<span class='text-blue-600 font-bold'>ทำได้ดีพอสมควร!</span> ทบทวนข้อที่ผิดอีกครั้งเพื่อความแม่นยำ";
-            else msg.innerHTML = "<span class='text-red-600 font-bold'>ต้องพยายามเพิ่มอีกหน่อย!</span> แนะนำให้อ่านบทเรียนสรุปและทำแบบทดสอบซ้ำ";
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const pct = (score / data.length) * 100;
+            if(pct >= 80) msg.innerHTML = "<span class='text-emerald-700 font-extrabold'>ยอดเยี่ยมมาก!</span> คุณมีความพร้อมสูงมากสำหรับการสอบบรรจุจริง";
+            else if(pct >= 50) msg.innerHTML = "<span class='text-gold-600 font-extrabold'>ผ่านเกณฑ์มาตรฐาน!</span> ควรทบทวนเนื้อหาบทเรียนเพิ่มเติม";
+            else msg.innerHTML = "<span class='text-red-600 font-extrabold'>ต้องพยายามเพิ่มขึ้น!</span> แนะนำให้อ่านตำราเรียนฉบับเต็มและทำ Speed Quiz ทบทวน";
         }
 
+        // Initialize on Load
         window.onload = () => {
-            document.getElementById('total-q').innerText = "300";
+            filterBookTab('comp');
         };
     </script>
 </body>
