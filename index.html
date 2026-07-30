@@ -2,504 +2,692 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>ศูนย์รวมข้อสอบ นนส. / นสต.</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    /* Color Palette */
-    --army-primary: #1e5631;      
-    --army-light: #4ade80;        
-    --army-bg: #f0fdf4;           
-    
-    --police-primary: #172554;    
-    --police-light: #60a5fa;      
-    --police-bg: #eff6ff;         
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>ศูนย์รวมข้อสอบ นนส. / นสต. - Prep Pass Academy</title>
 
-    --bg-page: #f8fafc;           
-    --text-main: #1e293b;         
-    --text-muted: #64748b;        
-    --white: #ffffff;
-    
-    /* Spacing & Layout */
-    --radius-card: 16px;
-    --radius-btn: 16px; 
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --nav-height: 65px;
-  }
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  
-  body {
-    margin: 0;
-    font-family: 'Sarabun', sans-serif;
-    background-color: var(--bg-page);
-    color: var(--text-main);
-    line-height: 1.5;
-    padding-bottom: calc(var(--nav-height) + 20px); 
-  }
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  /* --- ปรับปรุง Header ให้เล็กและกระชับ --- */
-  header {
-    background: linear-gradient(135deg, var(--army-primary) 0%, #0f172a 50%, var(--police-primary) 100%);
-    color: var(--white);
-    padding: 15px 20px; /* ลด Padding ลงอย่างมาก */
-    border-radius: 0 0 20px 20px;
-    text-align: center;
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    z-index: 20;
-  }
-  
-  h1 { 
-    margin: 0; 
-    font-size: 16px; /* ปรับให้เล็กลง */
-    font-weight: 700; 
-    letter-spacing: 0.5px;
-  }
-  
-  p.subtitle { 
-    margin: 2px 0 0; 
-    font-size: 11px; /* ปรับให้เล็กลง */
-    opacity: 0.8; 
-    font-weight: 300; 
-  }
-
-  /* --- ปรับ Container ไม่ให้ทับซ้อนกับ Header --- */
-  .container {
-    max-width: 600px;
-    margin: 15px auto 0; /* เปลี่ยนเป็นค่าบวก เพื่อไม่ให้ทับกับ Header */
-    padding: 0 16px;
-    position: relative;
-    z-index: 10;
-  }
-
-  .tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease-out;
-  }
-  .tab-content.active {
-    display: block;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .section-card {
-    background: var(--white);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-md);
-    margin-bottom: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.03);
-  }
-
-  .fb-wrapper {
-    display: flex;
-    justify-content: center;
-    background: #fff;
-    width: 100%;
-    overflow: hidden;
-    padding: 10px 0;
-  }
-  .fb-page, .fb-page span, .fb-page iframe {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  details.custom-accordion { width: 100%; }
-  summary.accordion-header {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    cursor: pointer;
-    background: var(--white);
-    font-weight: 700;
-    font-size: 16px;
-    user-select: none;
-  }
-  summary.accordion-header::-webkit-details-marker { display: none; }
-
-  .icon-box {
-    width: 38px; height: 38px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-right: 14px; flex-shrink: 0;
-  }
-  .army-theme .icon-box { background-color: var(--army-bg); color: var(--army-primary); }
-  .army-theme summary { border-left: 4px solid var(--army-primary); }
-  .police-theme .icon-box { background-color: var(--police-bg); color: var(--police-primary); }
-  .police-theme summary { border-left: 4px solid var(--police-primary); }
-
-  .chevron { margin-left: auto; transition: transform 0.3s ease; color: var(--text-muted); }
-  details[open] .chevron { transform: rotate(180deg); }
-
-  .accordion-content {
-    padding: 20px 16px;
-    background: var(--white);
-    border-top: 1px solid #f1f5f9;
-  }
-
-  .btn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    gap: 10px;
-  }
-
-  .link-btn {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    padding: 16px 8px;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: var(--radius-btn);
-    color: var(--text-main);
-    text-decoration: none;
-    font-size: 13px; 
-    font-weight: 600;
-    transition: all 0.2s ease;
-    text-align: center;
-  }
-  
-  .link-btn svg {
-    width: 28px;
-    height: 28px;
-    margin-bottom: 6px;
-    opacity: 0.8;
-  }
-
-  .link-btn:active { transform: scale(0.97); background-color: #f8fafc; }
-  
-  .army-theme .link-btn:hover { border-color: var(--army-light); color: var(--army-primary); }
-  .police-theme .link-btn:hover { border-color: var(--police-light); color: var(--police-primary); }
-
-  .highlight-btn-wrapper { margin: 20px 0; }
-  .highlight-btn {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; padding: 16px;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8);
-    color: white; text-align: center; text-decoration: none;
-    border-radius: var(--radius-card);
-    font-weight: 700; font-size: 16px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-  }
-
-  .comments-section {
-    background: #fff; padding: 20px;
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-md);
-  }
-  .comments-header {
-    font-weight: 700; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .bottom-nav {
-    position: fixed; bottom: 0; left: 0; width: 100%;
-    height: var(--nav-height);
-    background: #ffffff;
-    display: flex; justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    z-index: 1500;
-    border-top: 1px solid #f1f5f9;
-  }
-  .nav-item {
-    display: flex; flex-direction: column; align-items: center;
-    color: var(--text-muted); text-decoration: none;
-    font-size: 11px; gap: 4px;
-    background: none; border: none; cursor: pointer;
-    width: 50%; height: 100%; justify-content: center;
-  }
-  .nav-item.active { color: var(--police-primary); font-weight: 700; }
-  .nav-item svg { width: 22px; height: 22px; }
-
-  .floating-group {
-    position: fixed; right: 0; z-index: 1000;
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 14px 10px 18px;
-    color: white; border: none;
-    border-radius: 50px 0 0 50px;
-    font-size: 13px; font-weight: 700; cursor: pointer;
-    box-shadow: -2px 4px 10px rgba(0,0,0,0.15);
-  }
-  
-  .checkin-btn {
-    bottom: calc(var(--nav-height) + 15px);
-    background: linear-gradient(to left, #d97706, #f59e0b);
-  }
-  .ai-btn {
-    bottom: calc(var(--nav-height) + 65px);
-    background: linear-gradient(to left, #6366f1, #8b5cf6);
-  }
-
-  .chat-container {
-    display: none;
-    position: fixed; bottom: var(--nav-height); right: 0;
-    width: 100%; max-width: 400px;
-    height: 60vh; background: white; z-index: 2000;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
-    flex-direction: column;
-    animation: slideUp 0.3s ease-out;
-  }
-  @media (min-width: 480px) {
-    .chat-container {
-      right: 20px; bottom: calc(var(--nav-height) + 10px);
-      width: 350px; border-radius: 20px;
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Sarabun', 'sans-serif'],
+          display: ['Kanit', 'sans-serif'],
+        },
+        colors: {
+          army: {
+            50: '#f0fdf4',
+            100: '#dcfce7',
+            500: '#22c55e',
+            700: '#15803d',
+            800: '#166534',
+            900: '#14532d',
+            dark: '#0e381e'
+          },
+          police: {
+            50: '#eff6ff',
+            100: '#dbeafe',
+            500: '#3b82f6',
+            700: '#1d4ed8',
+            800: '#1e40af',
+            900: '#1e3a8a',
+            dark: '#0f172a'
+          }
+        }
+      }
     }
   }
-  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+</script>
 
-  .chat-header {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white; padding: 12px 15px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: 700; border-radius: 20px 20px 0 0;
+<style>
+  body {
+    background-color: #0f172a;
+    color: #334155;
+    font-family: 'Sarabun', sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
-  .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
-  .chat-message { max-width: 85%; padding: 10px 12px; border-radius: 12px; font-size: 13px; }
-  .msg-ai { background: white; border: 1px solid #e2e8f0; align-self: flex-start; }
-  .msg-user { background: #6366f1; color: white; align-self: flex-end; }
-  .chat-footer { padding: 10px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 8px; }
-  .chat-input { flex: 1; padding: 8px 15px; border: 1px solid #cbd5e1; border-radius: 20px; outline: none; font-size: 14px; }
-  .chat-send-btn { background: #6366f1; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
-
-  .modal-overlay {
-    display: none; position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5); z-index: 3000;
-    justify-content: center; align-items: center; padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal-box {
-    background: white; width: 100%; max-width: 320px;
-    border-radius: 20px; padding: 20px; text-align: center;
+  
+  .font-display {
+    font-family: 'Kanit', sans-serif;
   }
 
-  svg { display: block; }
-  .hidden { display: none !important; }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+
+  /* Animations & Transitions */
+  .tab-pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tab-pane.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Glassmorphic Backgrounds */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+  }
+  
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+  }
+
+  /* Pulse Ripple Effect */
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.8); }
+  }
+  .streak-glow {
+    animation: pulseGlow 2.5s infinite;
+  }
+
+  /* Accordion Chevron Rotation */
+  details summary .chevron-icon {
+    transition: transform 0.3s ease;
+  }
+  details[open] summary .chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Smooth Slide Up Modal */
+  .bottom-sheet {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bottom-sheet.closed {
+    transform: translateY(100%);
+  }
 </style>
 </head>
-<body>
 
+<body class="min-h-screen flex justify-center items-start sm:py-6">
+
+  <!-- Facebook SDK Root -->
   <div id="fb-root"></div>
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v19.0" nonce="abc123"></script>
 
-  <!-- Header ขนาดกะทัดรัด -->
-  <header>
-    <h1>เตรียมสอบ นนส. / นสต.</h1>
-    <p class="subtitle">แหล่งรวมข้อมูลการสอบและแบบฝึกหัด</p>
-  </header>
-
-  <div class="container">
+  <!-- Main Mobile App Wrapper -->
+  <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[36px] shadow-2xl relative overflow-hidden flex flex-col pb-24 border-slate-700/20 sm:border">
     
-    <!-- ================= TAB: HOME ================= -->
-    <div id="tab-home" class="tab-content active">
-      
-      <div class="section-card army-theme">
-        <details class="custom-accordion" open>
-          <summary class="accordion-header">
-            <div class="icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <span>นายสิบทหารบก (นนส.)</span>
-            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="accordion-content">
-            <div class="btn-grid">
-              <a href="sompasnco.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <span>สอบสัมภาษณ์</span>
-              </a>
-              <a href="kanitnco.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>
-                <span>คณิตศาสตร์</span>
-              </a>
-              <a href="thainco.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                <span>ภาษาไทย</span>
-              </a>
-              <a href="englishnco.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
-                <span>ภาษาอังกฤษ</span>
-              </a>
-              <!-- เพิ่มวิชาใหม่สำหรับ นนส. -->
-              <a href="vitayachadnco.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H15M10 3V14L5 21H19L14 14V3"/></svg>
-                <span>วิทยาศาสตร์</span>
-              </a>
-              <a href="alllearn.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>ความรู้ทั่วไป</span>
-              </a>
-            </div>
+    <!-- APP TOP BAR (HEADER) -->
+    <header class="bg-gradient-to-r from-army-900 via-slate-900 to-police-900 text-white pt-5 pb-6 px-5 rounded-b-[28px] shadow-lg relative z-20">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center text-amber-400 font-bold text-lg shadow-inner">
+            <i class="fa-solid fa-shield-halved"></i>
           </div>
-        </details>
-      </div>
-
-      <div class="section-card police-theme">
-        <details class="custom-accordion">
-          <summary class="accordion-header">
-            <div class="icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path></svg>
-            </div>
-            <span>นายสิบตำรวจ (นสต.)</span>
-            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="accordion-content">
-            <div class="btn-grid">
-              <a href="sompaspolice.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <span>การเตรียมตัวสัมภาษณ์ตำรวจ</span>
-              </a>
-              <a href="PoliceNCOMath.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>
-                <span>คณิตศาสตร์</span>
-              </a>
-              <a href="policethai.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path></svg>
-                <span>ภาษาไทย</span>
-              </a>
-              <a href="policeenglish.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
-                <span>ภาษาอังกฤษ</span>
-              </a>
-              <!-- เพิ่มวิชาใหม่สำหรับ นสต. -->
-              <a href="policecomputer.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                <span>คอมพิวเตอร์</span>
-              </a>
-              <a href="PoliceNCOSociety.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <span>สังคมฯ</span>
-              </a>
-              <a href="PoliceLaw.html" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <span>กฎหมาย</span>
-              </a>
-            </div>
+          <div>
+            <h1 class="font-display font-bold text-lg leading-tight tracking-wide text-white">เตรียมสอบ นนส. / นสต.</h1>
+            <p class="text-xs text-slate-300 font-light">คู่มือติวสอบทหาร & ตำรวจ มืออาชีพ</p>
           </div>
-        </details>
-      </div>
-
-      <div class="highlight-btn-wrapper">
-        <a class="highlight-btn" href="https://sites.google.com/view/tiwkhosoob/แบบทดสอบ-100-ขอ" target="_blank">
-          แบบทดสอบ 100 ข้อ
-        </a>
-      </div>
-    </div>
-
-    <!-- ================= TAB: COMMUNITY ================= -->
-    <div id="tab-community" class="tab-content">
-      <div class="section-card">
-        <div class="fb-wrapper">
-          <div class="fb-page" data-href="https://www.facebook.com/s0ldier02/" data-tabs="timeline" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"></div>
         </div>
+
+        <!-- Streak Counter Button Top Right -->
+        <button onclick="openCheckinModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/20 border border-amber-400/40 rounded-full text-amber-300 font-display text-xs font-semibold hover:bg-amber-500/30 transition-all cursor-pointer">
+          <i class="fa-solid fa-fire text-amber-400 text-sm"></i>
+          <span id="topStreakCount">0</span> วัน
+        </button>
       </div>
-      <div class="comments-section">
-        <div class="comments-header"><span>ความคิดเห็นชุมชน</span></div>
-        <div class="fb-comments" data-href="https://sites.google.com/view/tiwkhosoob/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" data-width="100%" data-numposts="5"></div>
+
+      <!-- Quick Exam Countdown Banner -->
+      <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center justify-between text-xs mt-2">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-slate-200">เตรียมความพร้อมโค้งสุดท้าย</span>
+        </div>
+        <span class="bg-emerald-500/30 text-emerald-300 px-2.5 py-0.5 rounded-full font-display font-medium text-[11px] border border-emerald-400/30">
+          คลังข้อสอบ 2026
+        </span>
+      </div>
+    </header>
+
+    <!-- CONTAINER CONTENT -->
+    <main class="flex-1 px-4 pt-4 relative z-10 space-y-4">
+
+      <!-- TAB 1: HOME -->
+      <div id="tab-home" class="tab-pane active space-y-4">
+        
+        <!-- Highlight Featured Test Banner -->
+        <a href="https://sites.google.com/view/tiwkhosoob/แบบทดสอบ-100-ขอ" target="_blank" 
+           class="group relative block w-full p-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-blue-500/20 overflow-hidden hover:shadow-xl transition-all duration-300 transform active:scale-[0.98]">
+          <div class="absolute -right-4 -bottom-4 opacity-15 text-white text-8xl font-black pointer-events-none font-display">100</div>
+          <div class="relative z-10 flex items-center justify-between">
+            <div>
+              <span class="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full mb-1 backdrop-blur-sm">
+                <i class="fa-solid fa-star text-amber-300 text-[9px]"></i> ชุดข้อสอบแนะนำ
+              </span>
+              <h2 class="font-display text-lg font-bold leading-snug">เก็งข้อสอบจริง 100 ข้อ</h2>
+              <p class="text-xs text-blue-100 mt-0.5 font-light">ทดสอบคลังข้อสอบจำลองเสมือนจริง</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold shadow-md group-hover:translate-x-1 transition-transform">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+
+        <!-- CATEGORY 1: ARMY (นนส.) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+          <details class="group" open>
+            <summary class="flex items-center justify-between p-4 cursor-pointer select-none bg-gradient-to-r from-emerald-50/50 to-transparent">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-army-100 text-army-800 flex items-center justify-center text-lg font-bold shadow-sm">
+                  <i class="fa-solid fa-person-military-rifle"></i>
+                </div>
+                <div>
+                  <h3 class="font-display font-bold text-slate-800 text-base">นายสิบทหารบก (นนส.)</h3>
+                  <p class="text-xs text-slate-500">รวม 6 วิชาเตรียมสอบเข้ากองทัพบก</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs chevron-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </summary>
+
+            <div class="p-4 pt-1 border-t border-slate-100">
+              <div class="grid grid-cols-2 gap-2.5 mt-2">
+                <!-- Links -->
+                <a href="sompasnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-comments"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">สอบสัมภาษณ์</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">เทคนิคการตอบ</span>
+                </a>
+
+                <a href="kanitnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-calculator"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">คณิตศาสตร์</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">สูตร & โจทย์คำนวณ</span>
+                </a>
+
+                <a href="thainco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">ภาษาไทย</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">หลักภาษา & การอ่าน</span>
+                </a>
+
+                <a href="englishnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-language"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">ภาษาอังกฤษ</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">Grammar & Vocab</span>
+                </a>
+
+                <a href="vitayachadnco.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-flask"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">วิทยาศาสตร์</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">ฟิสิกส์ เคมี ชีวะ</span>
+                </a>
+
+                <a href="alllearn.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-army-50 hover:border-army-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-army-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-globe"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-army-900">ความรู้ทั่วไป</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">เหตุการณ์ปัจจุบัน</span>
+                </a>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- CATEGORY 2: POLICE (นสต.) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+          <details class="group">
+            <summary class="flex items-center justify-between p-4 cursor-pointer select-none bg-gradient-to-r from-blue-50/50 to-transparent">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-police-100 text-police-800 flex items-center justify-center text-lg font-bold shadow-sm">
+                  <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div>
+                  <h3 class="font-display font-bold text-slate-800 text-base">นายสิบตำรวจ (นสต.)</h3>
+                  <p class="text-xs text-slate-500">รวม 7 หมวดวิชาหลักนายสิบตำรวจ</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs chevron-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </summary>
+
+            <div class="p-4 pt-1 border-t border-slate-100">
+              <div class="grid grid-cols-2 gap-2.5 mt-2">
+                <!-- Links -->
+                <a href="sompaspolice.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-id-card"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">สัมภาษณ์ตำรวจ</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">แนวทางสอบสัมภาษณ์</span>
+                </a>
+
+                <a href="PoliceNCOMath.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-square-root-variable"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">คณิตศาสตร์</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">ความสามารถทั่วไป</span>
+                </a>
+
+                <a href="policethai.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-spell-check"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">ภาษาไทย</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">การจับใจความ & สะกด</span>
+                </a>
+
+                <a href="policeenglish.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-language"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">ภาษาอังกฤษ</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">Reading & Structure</span>
+                </a>
+
+                <a href="policecomputer.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-laptop-code"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">คอมพิวเตอร์</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">เทคโนโลยีสารสนเทศ</span>
+                </a>
+
+                <a href="PoliceNCOSociety.html" target="_blank" class="flex flex-col items-center justify-center p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group text-center">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base mb-2 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-users"></i>
+                  </div>
+                  <span class="font-display font-semibold text-xs text-slate-700 group-hover:text-police-900">สังคมฯ & จริยธรรม</span>
+                  <span class="text-[10px] text-slate-400 mt-0.5">วัฒนธรรม & อาเซียน</span>
+                </a>
+
+                <a href="PoliceLaw.html" target="_blank" class="col-span-2 flex items-center justify-center gap-3 p-3.5 bg-slate-50 hover:bg-police-50 hover:border-police-500/40 border border-slate-200/80 rounded-xl transition-all group">
+                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-police-700 flex items-center justify-center text-base group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                  </div>
+                  <div class="text-left">
+                    <span class="font-display font-semibold text-xs text-slate-700 block group-hover:text-police-900">กฎหมายที่ประชาชนควรรู้</span>
+                    <span class="text-[10px] text-slate-400">ประมวลกฎหมายเบื้องต้น</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </details>
+        </div>
+
+      </div>
+
+      <!-- TAB 2: COMMUNITY -->
+      <div id="tab-community" class="tab-pane space-y-4">
+        
+        <!-- FB Feed Section -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fa-brands fa-facebook text-blue-600 text-xl"></i>
+            <h3 class="font-display font-bold text-slate-800 text-sm">เพจข่าวสาร & แนวข้อสอบ</h3>
+          </div>
+          <div class="overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex justify-center py-2">
+            <div class="fb-page" 
+                 data-href="https://www.facebook.com/s0ldier02/" 
+                 data-tabs="timeline" 
+                 data-width="380"
+                 data-height="400"
+                 data-small-header="true" 
+                 data-adapt-container-width="true" 
+                 data-hide-cover="true">
+            </div>
+          </div>
+        </div>
+
+        <!-- FB Comments Section -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fa-solid fa-comments text-indigo-600 text-lg"></i>
+            <h3 class="font-display font-bold text-slate-800 text-sm">กระดานสนทนาเพื่อนสอบ</h3>
+          </div>
+          <div class="overflow-hidden rounded-xl bg-slate-50 p-2">
+            <div class="fb-comments" 
+                 data-href="https://sites.google.com/view/tiwkhosoob/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" 
+                 data-width="100%" 
+                 data-numposts="5">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- FLOATING QUICK ACTIONS -->
+    <div class="fixed bottom-20 right-4 sm:absolute sm:bottom-20 z-30 flex flex-col items-end gap-2.5 pointer-events-auto">
+      
+      <!-- AI Tutor Floating Button -->
+      <button onclick="toggleChat(true)" 
+              class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-full font-display text-xs font-semibold shadow-lg shadow-indigo-500/30 hover:scale-105 active:scale-95 transition-all">
+        <i class="fa-solid fa-robot text-sm"></i>
+        <span>AI ช่วยติว</span>
+      </button>
+
+      <!-- Checkin Floating Button -->
+      <button onclick="openCheckinModal()" 
+              class="streak-glow flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full font-display text-xs font-semibold shadow-lg hover:scale-105 active:scale-95 transition-all">
+        <i class="fa-solid fa-calendar-check text-sm"></i>
+        <span>เช็คชื่อประจำวัน</span>
+      </button>
+
+    </div>
+
+    <!-- AI TUTOR CHAT DRAWER -->
+    <div id="chatDrawer" class="bottom-sheet closed fixed inset-0 z-50 flex flex-col justify-end bg-slate-900/60 backdrop-blur-sm pointer-events-none">
+      <div class="w-full max-w-md mx-auto bg-white rounded-t-[28px] h-[80vh] max-h-[600px] flex flex-col shadow-2xl pointer-events-auto overflow-hidden">
+        
+        <!-- Chat Header -->
+        <div class="bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-5 py-4 flex items-center justify-between shadow-md">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-base border border-white/30">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-sm">AI ผู้ช่วยติวสอบ 24 ชม.</h3>
+              <p class="text-[10px] text-indigo-100 font-light">ถามแนวข้อสอบ / เฉลยโจทย์ / วางแผนเรียน</p>
+            </div>
+          </div>
+          <button onclick="toggleChat(false)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xs transition-colors">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Preset Prompt Suggestions -->
+        <div class="px-4 py-2.5 bg-indigo-50/60 border-b border-indigo-100/50 flex gap-2 overflow-x-auto text-[11px] no-scrollbar">
+          <button onclick="sendPresetPrompt('ขอเทคนิคการเตรียมสอบสัมภาษณ์หน่อยครับ')" class="px-3 py-1 bg-white border border-indigo-200 text-indigo-700 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">💡 สัมภาษณ์อย่างไรให้ผ่าน</button>
+          <button onclick="sendPresetPrompt('แนะนำสูตรคณิตที่ชอบออกสอบ')" class="px-3 py-1 bg-white border border-indigo-200 text-indigo-700 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">📐 สูตรคณิตต้องจำ</button>
+          <button onclick="sendPresetPrompt('ขอตารางอ่านหนังสือสอบ 30 วัน')" class="px-3 py-1 bg-white border border-indigo-200 text-indigo-700 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">📅 ตารางติว 30 วัน</button>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="chatBody" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs">
+          <!-- Default AI Message -->
+          <div class="flex gap-2.5 items-start">
+            <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 max-w-[82%] shadow-sm text-slate-700 leading-relaxed">
+              สวัสดีครับ! ผมคือ AI ผู้ช่วยติวสอบ นนส. และ นสต. มีคำถามวิชาไหน หรืออยากให้ช่วยเฉลยข้อสอบเรื่องอะไร พิมพ์ถามได้เลยครับ! 🎖️
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input Footer -->
+        <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+          <input type="text" id="chatInput" placeholder="พิมพ์คำถามข้อสอบหรือวิชาที่สงสัย..." 
+                 onkeypress="handleEnter(event)"
+                 class="flex-1 bg-slate-100 border border-slate-200 rounded-full px-4 py-2 text-xs text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all">
+          <button onclick="sendMessage()" 
+                  class="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs shadow-md hover:bg-indigo-700 active:scale-95 transition-all">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+
       </div>
     </div>
 
+    <!-- CHECK-IN MODAL -->
+    <div id="checkinModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+      <div class="w-full max-w-xs bg-white rounded-3xl p-6 shadow-2xl text-center relative transform scale-90 transition-transform duration-300" id="checkinBox">
+        
+        <!-- Close Button -->
+        <button onclick="closeCheckinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Modal Header -->
+        <div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-500 flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <h3 class="font-display font-bold text-lg text-slate-800">เช็คชื่อเรียนประจำวัน</h3>
+        <p class="text-xs text-slate-500 mt-1">สะสมความต่อเนื่อง เพื่อเตรียมพร้อมวันสอบจริง</p>
+
+        <!-- Day Streak Display -->
+        <div class="my-5 p-4 bg-amber-50 rounded-2xl border border-amber-200/60">
+          <span class="text-xs text-amber-800 font-medium block">ทำต่อเนื่องแล้ว</span>
+          <div class="font-display font-black text-4xl text-amber-600 my-1" id="modalStreakCount">0</div>
+          <span class="text-[11px] text-amber-700">วันติดกัน! 🔥</span>
+        </div>
+
+        <!-- 7-Day Visual Progress Pills -->
+        <div class="grid grid-cols-7 gap-1.5 mb-5" id="weekTracker">
+          <!-- JS populates days here -->
+        </div>
+
+        <button id="btnCheckinAction" onclick="doCheckin()" 
+                class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-display font-bold text-sm rounded-xl shadow-lg shadow-amber-500/30 hover:brightness-105 active:scale-95 transition-all">
+          ลงชื่อเข้าติววันนี้
+        </button>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="glass-nav fixed bottom-0 left-0 right-0 max-w-md mx-auto h-16 border-t border-slate-200/80 flex items-center justify-around z-40 px-2 sm:rounded-b-[36px]">
+      <button onclick="switchTab('home', this)" class="nav-btn active flex flex-col items-center justify-center w-1/2 h-full text-police-900 transition-all">
+        <i class="fa-solid fa-house text-base mb-1"></i>
+        <span class="font-display text-[11px] font-semibold">หน้าหลัก</span>
+      </button>
+      <button onclick="switchTab('community', this)" class="nav-btn flex flex-col items-center justify-center w-1/2 h-full text-slate-400 hover:text-slate-600 transition-all">
+        <i class="fa-solid fa-users text-base mb-1"></i>
+        <span class="font-display text-[11px] font-semibold">ชุมชนติวเตอร์</span>
+      </button>
+    </nav>
+
   </div>
 
-  <!-- FLOATING BUTTONS -->
-  <button class="floating-group ai-btn" onclick="toggleChat(true)">AI Assistant</button>
-  <button class="floating-group checkin-btn" onclick="openCheckin()">เช็คชื่อ (Check-in)</button>
-
-  <!-- CHAT WINDOW -->
-  <div class="chat-container" id="chatWindow">
-    <div class="chat-header">
-      <span>AI ติวเตอร์</span>
-      <div onclick="toggleChat(false)" style="cursor:pointer;">✕</div>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <div class="chat-message msg-ai">สวัสดีครับ! ผมคือ AI ผู้ช่วยติวสอบ ถามอะไรก็ได้เลยครับ</div>
-    </div>
-    <div class="chat-footer">
-      <input type="text" class="chat-input" id="chatInput" placeholder="พิมพ์ข้อความ..." onkeypress="handleEnter(event)">
-      <button class="chat-send-btn" onclick="sendMessage()">➤</button>
-    </div>
-  </div>
-
-  <!-- CHECK-IN MODAL -->
-  <div id="checkinModal" class="modal-overlay">
-    <div class="modal-box">
-      <h3>เช็คชื่อประจำวัน</h3>
-      <div id="currentDay" style="font-size:32px; font-weight:800; color:#d97706;">0</div>
-      <button id="btnCheckin" onclick="doCheckin()" style="width:100%; padding:12px; background:#1e5631; color:white; border:none; border-radius:10px; margin-top:10px;">ลงชื่อเข้าใช้</button>
-      <button onclick="closeCheckin()" style="width:100%; padding:10px; background:none; border:none; color:#666;">ปิด</button>
-    </div>
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchTab('home', this)">
-      <span>หน้าหลัก</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('community', this)">
-      <span>ชุมชน</span>
-    </button>
-  </nav>
-
+  <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById('tab-' + tabId).classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      btn.classList.add('active');
-      window.scrollTo(0,0);
+    // --- Tab Switching Logic ---
+    function switchTab(tabName, btn) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      
+      document.querySelectorAll('.nav-btn').forEach(el => {
+        el.classList.remove('text-police-900');
+        el.classList.add('text-slate-400');
+      });
+      
+      btn.classList.remove('text-slate-400');
+      btn.classList.add('text-police-900');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // --- AI Chat Drawer Logic ---
     function toggleChat(show) {
-      const chat = document.getElementById('chatWindow');
-      chat.style.display = show ? 'flex' : 'none';
+      const drawer = document.getElementById('chatDrawer');
+      if (show) {
+        drawer.classList.remove('closed', 'pointer-events-none');
+      } else {
+        drawer.classList.add('closed', 'pointer-events-none');
+      }
     }
 
-    function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
+    function handleEnter(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function sendPresetPrompt(text) {
+      document.getElementById('chatInput').value = text;
+      sendMessage();
+    }
 
     function sendMessage() {
       const input = document.getElementById('chatInput');
-      const txt = input.value.trim();
-      if(!txt) return;
+      const text = input.value.trim();
+      if (!text) return;
+
       const body = document.getElementById('chatBody');
-      body.innerHTML += `<div class="chat-message msg-user">${txt}</div>`;
+
+      // User Message Bubble
+      const userBubble = `
+        <div class="flex gap-2.5 items-start justify-end">
+          <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 max-w-[82%] shadow-sm leading-relaxed">
+            ${escapeHtml(text)}
+          </div>
+        </div>
+      `;
+      body.innerHTML += userBubble;
       input.value = '';
       body.scrollTop = body.scrollHeight;
+
+      // Simulated AI Bot Typing Response
       setTimeout(() => {
-        body.innerHTML += `<div class="chat-message msg-ai">สวัสดีครับ มีอะไรให้ช่วยเกี่ยวกับการสอบถามได้เลย!</div>`;
+        let reply = "ยินดีด้วยครับที่ตั้งใจอ่านหนังสือ! สำหรับคำถามนี้ คุณสามารถศึกษาแนวข้อสอบย้อนหลังได้จากลิงก์รายวิชาในหน้าหลักได้เลยครับ";
+        
+        if(text.includes('สัมภาษณ์')) {
+          reply = "💡 **เคล็ดลับการสอบสัมภาษณ์:** 1. ท่องประวัติส่วนตัว/สถาบันให้แม่นยำ 2. แสดงความจงรักภักดีและทัศนคติที่ดีต่อองค์กร 3. บุคลิกภาพ ท่าทาง และเสียงต้องเข้มแข็งชัดเจนครับ!";
+        } else if(text.includes('คณิต')) {
+          reply = "📐 **หัวข้อคณิตที่ออกบ่อย:** อนุกรม, ร้อยละ/เปอร์เซ็นต์, ความน่าจะเป็น, สมการการทำงาน และโจทย์เงื่อนไขสัญลักษณ์ครับ";
+        } else if(text.includes('ตาราง')) {
+          reply = "📅 **แผนการเรียนแนะนำ:** แบ่งอ่านวันละ 2 วิชา (วิชาคำนวณ 1 + วิชาความจำ 1) และทำโจทย์ย้อนหลังอย่างน้อยวันละ 30 ข้อครับ!";
+        }
+
+        const aiBubble = `
+          <div class="flex gap-2.5 items-start">
+            <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 max-w-[82%] shadow-sm text-slate-700 leading-relaxed">
+              ${reply}
+            </div>
+          </div>
+        `;
+        body.innerHTML += aiBubble;
         body.scrollTop = body.scrollHeight;
-      }, 800);
+      }, 700);
     }
 
-    const STORAGE_KEY = 'exam_checkin';
-    function openCheckin() {
-      updateCheckinUI();
-      document.getElementById('checkinModal').classList.add('active');
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
-    function closeCheckin() {
-      document.getElementById('checkinModal').classList.remove('active');
+
+    // --- Check-in & Streak System (localStorage) ---
+    const STORAGE_KEY = 'prep_app_checkin_data';
+
+    function openCheckinModal() {
+      updateCheckinData();
+      const modal = document.getElementById('checkinModal');
+      const box = document.getElementById('checkinBox');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      box.classList.remove('scale-90');
+      box.classList.add('scale-100');
     }
-    function updateCheckinUI() {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { count: 0, lastDate: '' };
-      document.getElementById('currentDay').innerText = data.count;
+
+    function closeCheckinModal() {
+      const modal = document.getElementById('checkinModal');
+      const box = document.getElementById('checkinBox');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      box.classList.remove('scale-100');
+      box.classList.add('scale-90');
     }
-    function doCheckin() {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { count: 0, lastDate: '' };
+
+    function getCheckinData() {
+      const defaultData = { count: 0, lastDate: '', history: [] };
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData;
+    }
+
+    function updateCheckinData() {
+      const data = getCheckinData();
+      document.getElementById('topStreakCount').innerText = data.count;
+      document.getElementById('modalStreakCount').innerText = data.count;
+
       const today = new Date().toISOString().split('T')[0];
-      if(data.lastDate === today) return;
-      data.count++;
+      const btn = document.getElementById('btnCheckinAction');
+
+      if (data.lastDate === today) {
+        btn.innerText = "ลงชื่อเข้าใช้เรียบร้อยแล้ววันนี้ ✨";
+        btn.disabled = true;
+        btn.classList.remove('from-amber-500', 'to-orange-500');
+        btn.classList.add('from-slate-400', 'to-slate-500', 'opacity-80');
+      } else {
+        btn.innerText = "ลงชื่อเข้าติววันนี้";
+        btn.disabled = false;
+        btn.classList.remove('from-slate-400', 'to-slate-500', 'opacity-80');
+        btn.classList.add('from-amber-500', 'to-orange-500');
+      }
+
+      // Render 7-Day visual indicators
+      const tracker = document.getElementById('weekTracker');
+      const days = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
+      let trackerHtml = '';
+      
+      const currentDayIdx = new Date().getDay();
+      for(let i = 0; i < 7; i++) {
+        const isPastOrToday = i <= currentDayIdx;
+        const activeClass = (isPastOrToday && data.count > 0) ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-400';
+        trackerHtml += `
+          <div class="flex flex-col items-center">
+            <span class="text-[9px] text-slate-400 mb-1">${days[i]}</span>
+            <div class="w-7 h-7 rounded-full ${activeClass} flex items-center justify-center text-[10px] font-bold">
+              ${isPastOrToday && data.count > 0 ? '<i class="fa-solid fa-check"></i>' : (i+1)}
+            </div>
+          </div>
+        `;
+      }
+      tracker.innerHTML = trackerHtml;
+    }
+
+    function doCheckin() {
+      const data = getCheckinData();
+      const today = new Date().toISOString().split('T')[0];
+
+      if (data.lastDate === today) return;
+
+      // Calculate consecutive streak
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      if (data.lastDate === yesterdayStr) {
+        data.count += 1;
+      } else {
+        data.count = 1; // Reset streak if missed a day
+      }
+
       data.lastDate = today;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      updateCheckinUI();
+      updateCheckinData();
     }
+
+    // Initialize on Page Load
+    window.onload = function() {
+      updateCheckinData();
+    };
   </script>
+
 </body>
 </html>
