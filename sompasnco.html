@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="h-full bg-slate-100">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คู่มือเตรียมตัวสอบสัมภาษณ์ นนส. ทบ.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>คู่มือและเทคนิคเตรียมสอบ นนส. ทบ. (ฉบับสมบูรณ์)</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -16,196 +20,634 @@
                     },
                     colors: {
                         army: {
-                            50: '#f2f7f4',
-                            100: '#e1efe6',
-                            200: '#c4dfd0',
-                            300: '#99c5ac',
-                            400: '#69a584',
-                            500: '#468866',
-                            600: '#346c4f',
-                            700: '#2b5641',
-                            800: '#244535',
-                            900: '#1e392d',
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#15803d',
+                            600: '#166534',
+                            700: '#14532d',
+                            800: '#0f3d21',
+                            900: '#052e16',
+                            gold: '#d97706',
+                            goldlight: '#fef3c7'
                         }
                     }
                 }
             }
         }
     </script>
+
     <style>
         body {
             font-family: 'Prompt', sans-serif;
-            background-color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent;
         }
-        .hero-pattern {
-            background-color: #244535;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#346c4f' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+        /* 3D Flip Card Effect */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* High contrast text overrides for mobile clarity */
+        .text-high-contrast {
+            color: #0f172a !important; /* Very dark slate */
+        }
+        
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #166534;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased">
+<body class="h-full text-slate-900 bg-slate-100 flex flex-col antialiased selection:bg-army-500 selection:text-white">
 
-    <!-- Header / Hero Section -->
-    <header class="hero-pattern text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8 shadow-lg relative overflow-hidden">
-        <div class="absolute inset-0 bg-black opacity-20"></div>
-        <div class="max-w-4xl mx-auto relative z-10 text-center">
-            <div class="inline-block p-4 rounded-full bg-army-600 border-4 border-army-400 mb-6 shadow-xl">
-                <i class="fas fa-shield-alt text-5xl text-yellow-400"></i>
+    <!-- Top Header Navigation Bar -->
+    <header class="bg-army-900 text-white sticky top-0 z-40 border-b-2 border-amber-500 shadow-md">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-army-900 font-black text-xl shadow-inner border border-amber-300">
+                    <i class="fas fa-shield-halved text-army-900"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold tracking-wide text-amber-400 leading-tight">คู่มือสอบ นนส. ทบ.</h1>
+                    <p class="text-xs text-slate-300 font-light">คลังความรู้ & เกมติวสอบระดับมืออาชีพ</p>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">เจาะลึกการสอบสัมภาษณ์</h1>
-            <h2 class="text-2xl md:text-3xl font-semibold text-yellow-400 mb-6">นักเรียนนายสิบทหารบก (นนส. ทบ.)</h2>
-            <p class="text-lg md:text-xl text-army-100 max-w-2xl mx-auto leading-relaxed">
-                การสอบสัมภาษณ์คือด่านสำคัญในการประเมินความเหมาะสมในการเป็นทหารอาชีพ เตรียมตัวให้พร้อมเพื่อคว้าโอกาสนี้!
-            </p>
+            <button onclick="toggleBookmark()" id="bookmarkBtn" class="p-2 rounded-full hover:bg-army-800 text-amber-400 focus:outline-none transition" title="บันทึกหน้า">
+                <i class="far fa-bookmark text-xl"></i>
+            </button>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-10 relative z-20">
-        
-        <!-- Section 1: กรรมการดูอะไรบ้าง -->
-        <section class="bg-white rounded-2xl shadow-xl p-8 mb-10 border-t-4 border-army-500">
-            <div class="flex items-center mb-6">
-                <div class="bg-army-100 p-3 rounded-lg text-army-600 mr-4">
-                    <i class="fas fa-clipboard-check text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-900">การสัมภาษณ์เกี่ยวกับอะไร? (กรรมการประเมินอะไร)</h3>
-            </div>
-            <p class="text-gray-600 mb-6">กรรมการไม่ได้ทดสอบวิชาการแล้วในขั้นตอนนี้ แต่จะเน้นประเมิน <strong>"ความเหมาะสมในการเป็นทหาร"</strong> โดยมีหัวข้อหลักๆ ดังนี้:</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition">
-                    <h4 class="font-bold text-army-700 flex items-center mb-2"><i class="fas fa-brain w-6 text-center text-army-500 mr-2"></i> ทัศนคติและอุดมการณ์</h4>
-                    <p class="text-sm text-gray-600">ความรักชาติ ศาสนา พระมหากษัตริย์ ความเสียสละ ทัศนคติต่อกองทัพบก และความเข้าใจในระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข</p>
-                </div>
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition">
-                    <h4 class="font-bold text-army-700 flex items-center mb-2"><i class="fas fa-user-tie w-6 text-center text-army-500 mr-2"></i> บุคลิกภาพและลักษณะทหาร</h4>
-                    <p class="text-sm text-gray-600">การแต่งกาย ทรงผม ความสะอาด กิริยามารยาท การไหว้ การทำความเคารพ (วันทยหัตถ์) น้ำเสียงที่หนักแน่น ชัดเจน และความมั่นใจในตัวเอง</p>
-                </div>
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition">
-                    <h4 class="font-bold text-army-700 flex items-center mb-2"><i class="fas fa-comments w-6 text-center text-army-500 mr-2"></i> ไหวพริบและการแก้ปัญหา</h4>
-                    <p class="text-sm text-gray-600">การตอบคำถามในสภาวะกดดัน การควบคุมอารมณ์เมื่อโดนกรรมการลองใจหรือต้อนด้วยคำถามยากๆ การมีปฏิภาณไหวพริบที่ดี</p>
-                </div>
-                <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md transition">
-                    <h4 class="font-bold text-army-700 flex items-center mb-2"><i class="fas fa-globe-asia w-6 text-center text-army-500 mr-2"></i> ความรู้รอบตัวและประวัติส่วนตัว</h4>
-                    <p class="text-sm text-gray-600">เหตุการณ์บ้านเมืองปัจจุบัน ความรู้พื้นฐานเกี่ยวกับกองทัพบก รวมถึงประวัติการศึกษา ครอบครัว และเหตุผลที่อยากมารับราชการทหาร</p>
-                </div>
-            </div>
-        </section>
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-3xl w-full mx-auto p-3 sm:p-5 pb-24 overflow-y-auto">
 
-        <!-- Section 2: การเตรียมตัว -->
-        <section class="bg-white rounded-2xl shadow-xl p-8 mb-10 border-t-4 border-yellow-500">
-            <div class="flex items-center mb-6">
-                <div class="bg-yellow-100 p-3 rounded-lg text-yellow-600 mr-4">
-                    <i class="fas fa-tasks text-2xl"></i>
+        <!-- TAB 1: คู่มือสัมภาษณ์ (Book View) -->
+        <div id="tab-interview" class="tab-content space-y-5">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-army-900 via-army-800 to-army-900 text-white p-5 rounded-2xl shadow-lg border border-army-600 relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 text-army-700 opacity-20 pointer-events-none">
+                    <i class="fas fa-medal text-9xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900">ต้องเตรียมตัวอย่างไรบ้าง?</h3>
+                <span class="inline-block px-3 py-1 bg-amber-500 text-army-900 text-xs font-bold rounded-full mb-2">
+                    <i class="fas fa-star mr-1"></i> E-Book ฉบับเจาะลึก
+                </span>
+                <h2 class="text-2xl font-extrabold text-white mb-1">คัมภีร์พิชิตรอบสัมภาษณ์</h2>
+                <p class="text-sm text-slate-200 font-light leading-relaxed">
+                    ปรับทัศนคติ บุคลิกภาพ ท่าทางทหาร และการรับมือคำถามกดดันอย่างมืออาชีพ
+                </p>
             </div>
-            
-            <div class="space-y-6">
-                <!-- Step 1 -->
-                <div class="flex">
-                    <div class="flex-shrink-0 mt-1">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-army-600 text-white font-bold">1</div>
+
+            <!-- Chapter 1: บุคลิกภาพและท่าทาง -->
+            <details class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition" open>
+                <summary class="flex justify-between items-center p-4 bg-slate-50 cursor-pointer font-bold text-army-900 border-b border-slate-200 group-open:bg-army-50 group-open:border-army-200">
+                    <span class="flex items-center text-base sm:text-lg">
+                        <i class="fas fa-user-ninja text-army-600 mr-3 text-xl"></i>
+                        บทที่ 1: ลักษณะทหาร & ท่าทางมาตรฐาน
+                    </span>
+                    <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <div class="p-4 space-y-4 text-slate-800 text-sm leading-relaxed">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg">
+                        <p class="font-semibold text-amber-900 text-xs sm:text-sm">
+                            <i class="fas fa-exclamation-circle mr-1 text-amber-600"></i> หัวใจสำคัญ:
+                            กรรมการตัดสินคุณตั้งแต่ "3 วินาทีแรก" ที่ก้าวเท้าเข้าประตูห้องสัมภาษณ์!
+                        </p>
                     </div>
-                    <div class="ml-4">
-                        <h4 class="text-lg font-bold text-gray-800">เอกสารและแฟ้มสะสมผลงาน (Portfolio)</h4>
-                        <ul class="mt-2 list-disc list-inside text-gray-600 text-sm space-y-1">
-                            <li>เตรียมเอกสารส่วนตัว บัตรประชาชน รด.ปี 3 (ถ้ามี) วุฒิการศึกษา ให้ครบตามประกาศ</li>
-                            <li>ทำแฟ้ม Portfolio แนะนำตัวสั้นๆ (ประวัติย่อ, กิจกรรมที่เคยทำ, เกียรติบัตร, รูปถ่ายจิตอาสาหรือการเล่นกีฬา) *ไม่จำเป็นต้องจ้างทำแพงๆ เน้นความเป็นระเบียบและอ่านง่าย</li>
+
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-army-800 text-base flex items-center">
+                            <i class="fas fa-shoe-prints mr-2 text-army-600"></i> ขั้นตอนการเดินเข้าห้องสัมภาษณ์
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 pl-1 font-normal text-slate-900">
+                            <li><strong class="text-army-900">เคาะประตู:</strong> เคาะ 3 ครั้งอย่างมั่นใจ ไม่เบาและไม่แรงเกินไป</li>
+                            <li><strong class="text-army-900">การเดิน:</strong> เดินตัวตรง หลังตรง อกผายไหล่ผึ่ง ย่างก้าวหนักแน่น ไม่เดินสอดส่องสายตาไปมา</li>
+                            <li><strong class="text-army-900">จุดทำความเคารพ:</strong> ยืนตรงหน้าเก้าอี้ (ห่างประมาณ 1 ก้าว) ทำความเคารพด้วยความเข้มแข็ง:
+                                <ul class="list-disc list-inside pl-5 mt-1 text-slate-700 text-xs sm:text-sm">
+                                    <li>ชุดเครื่องแบบทหาร/พลเรือน: ทำท่า "วันทยหัตถ์ (ตะเบ๊ะ)" หรือ "ไหว้" ตามระเบียบ</li>
+                                    <li>รายงานตัว: "กระผม/ดิฉัน [ชื่อ-สกุล] เลขประจำตัวสอบ [...] พร้อมรับการสัมภาษณ์ครับ/ค่ะ!" (เสียงดัง ฟังชัด จากช่องท้อง)</li>
+                                </ul>
+                            </li>
+                            <li><strong class="text-army-900">การนั่ง:</strong> นั่งเมื่อกรรมการเชิญนั่งเท่านั้น! นั่งหลังตรง ไม่พิงพนัก มือวางคว่ำบนหน้าขา เข่าชิดหรือแยกพอประมาณ</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-100 p-3 rounded-lg border border-slate-200">
+                        <h4 class="font-bold text-slate-900 mb-1 text-xs sm:text-sm"><i class="fas fa-eye text-army-600 mr-1"></i> สายตาและการพูด</h4>
+                        <p class="text-slate-800 text-xs sm:text-sm">
+                            มองสบตากรรมการทุกคนอย่างเป็นธรรมชาติ หากมีกรรมการหลายท่าน ให้หันไปสบตาท่านที่ถาม และกวาดสายตามองท่านอื่นอย่างสง่างาม ห้ามหลบตาหรือมองเพดาน/มองพื้นเด็ดขาด
+                        </p>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Chapter 2: เจาะลึกคำถามสัมภาษณ์ยอดฮิต & แนวตอบ -->
+            <details class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition">
+                <summary class="flex justify-between items-center p-4 bg-slate-50 cursor-pointer font-bold text-army-900 border-b border-slate-200 group-open:bg-army-50 group-open:border-army-200">
+                    <span class="flex items-center text-base sm:text-lg">
+                        <i class="fas fa-comments text-army-600 mr-3 text-xl"></i>
+                        บทที่ 2: แนวทางตอบคำถามลองใจ & แรงกดดัน
+                    </span>
+                    <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <div class="p-4 space-y-4 text-slate-800 text-sm">
+
+                    <!-- Q1 -->
+                    <div class="border border-slate-200 rounded-lg p-3 bg-white">
+                        <div class="font-bold text-army-900 text-sm sm:text-base mb-1">
+                            Q1: "ทำไมถึงอยากเป็นทหาร ทั้งที่สวัสดิการหรือรายได้อาจไม่สูงเท่าเอกชน?"
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-800 bg-emerald-50 p-3 rounded border border-emerald-200 mt-2">
+                            <span class="font-bold text-emerald-900">💡 แนวทางตอบแบบมืออาชีพ:</span><br>
+                            "กระผมมองว่าอาชีพทหารไม่ใช่แค่ 'งาน' แต่คือ 'เกียรติยศและความเสียสละ' การได้เข้ามารับใช้ชาติ ปกป้องแผ่นดิน และสร้างความมั่นคงให้ประชาชน เป็นสิ่งที่เงินทองหาซื้อไม่ได้ นอกจากนี้ กองทัพบกยังมีระบบสวัสดิการที่ดูแลครอบครัวอย่างยั่งยืน และมีสายงานการเติบโตที่ชัดเจน กระผมจึงมั่นใจและตั้งใจจริงที่จะฝากชีวิตไว้กับกองทัพบกครับ"
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="border border-slate-200 rounded-lg p-3 bg-white">
+                        <div class="font-bold text-army-900 text-sm sm:text-base mb-1">
+                            Q2: "หากผู้บังคับบัญชาสั่งงานที่คุณคิดว่าไม่ถูกต้องหรือไม่สมเหตุสมผล คุณจะทำอย่างไร?"
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-800 bg-emerald-50 p-3 rounded border border-emerald-200 mt-2">
+                            <span class="font-bold text-emerald-900">💡 แนวทางตอบแบบมืออาชีพ (วัดวินัย + ไหวพริบ):</span><br>
+                            "อันดับแรก ทหารต้องยึดถือ 'วินัยและการปฏิบัติตามคำสั่งของผู้บังคับบัญชา' เป็นหลักครับ กระผมจะปฏิบัติตามคำสั่งนั้นอย่างเต็มกำลัง เว้นแต่ว่าคำสั่งนั้นจะขัดต่อกฎหมายและระเบียบวินัยทหารอย่างชัดเจน หากมีข้อสงสัย กระผมจะหาโอกาสที่เหมาะสมขอคำชี้แนะจากผู้บังคับบัญชาด้วยความเคารพนอบน้อมครับ"
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="border border-slate-200 rounded-lg p-3 bg-white">
+                        <div class="font-bold text-army-900 text-sm sm:text-base mb-1">
+                            Q3: "ถ้าเรียน นนส. แล้วเจอการฝึกหนัก กดดัน ถูกลงโทษหนัก จะทนไหวไหม?"
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-800 bg-emerald-50 p-3 rounded border border-emerald-200 mt-2">
+                            <span class="font-bold text-emerald-900">💡 แนวทางตอบแบบมืออาชีพ:</span><br>
+                            "ทนไหวครับ! กระผมตระหนักดีว่าการฝึกที่เข้มงวดมีเป้าหมายเพื่อหล่อหลอมร่างกายและจิตใจของนักเรียนนายสิบให้แข็งแกร่ง พร้อมรับมือสถานการณ์จริงในสมรภูมิ กระผมได้เตรียมร่างกายและฝึกฝนจิตใจมาเป็นอย่างดี และพร้อมปรับตัวเข้ากับระบบการฝึกของกองทัพบกครับ"
+                        </div>
+                    </div>
+
+                </div>
+            </details>
+
+            <!-- Chapter 3: การเตรียม Portfolio และเอกสาร -->
+            <details class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition">
+                <summary class="flex justify-between items-center p-4 bg-slate-50 cursor-pointer font-bold text-army-900 border-b border-slate-200 group-open:bg-army-50 group-open:border-army-200">
+                    <span class="flex items-center text-base sm:text-lg">
+                        <i class="fas fa-folder-open text-army-600 mr-3 text-xl"></i>
+                        บทที่ 3: แฟ้มสะสมผลงาน (Portfolio) ให้โดนใจ
+                    </span>
+                    <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <div class="p-4 space-y-3 text-slate-800 text-sm">
+                    <p class="font-semibold text-slate-900">โครงสร้าง Portfolio ไม่เกิน 10-15 หน้า เน้นกระชับ อ่านง่าย:</p>
+                    <ul class="space-y-2 list-none font-normal text-slate-800">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-army-600 mr-2 mt-0.5"></i>
+                            <span><strong>หน้าปก:</strong> รูปถ่ายเครื่องแบบ/ชุดสุภาพ หน้าตรง ผมเกรียน เรียบร้อย ระบุชื่อ-สกุล และสายที่สมัครสอบชัดเจน</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-army-600 mr-2 mt-0.5"></i>
+                            <span><strong>ส่วนที่ 1 ประวัติส่วนตัว (Resume):</strong> ข้อมูลครอบครัว ประวัติการศึกษา ความสามารถพิเศษ (เช่น กีฬา ภาษา เครื่องยนต์ นวัตกรรม)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-army-600 mr-2 mt-0.5"></i>
+                            <span><strong>ส่วนที่ 2 กิจกรรมจิตอาสา (Highlight):</strong> ภาพกิจกรรมช่วยเหลือกิจการสาธารณะ งานบำเพ็ญประโยชน์ (กรรมการชอบมาก)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-army-600 mr-2 mt-0.5"></i>
+                            <span><strong>ส่วนที่ 3 ผลงาน/เกียรติบัตร:</strong> กีฬา การแข่งขัน หรือวุฒิบัตรอบรมต่างๆ</span>
+                        </li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+
+        <!-- TAB 2: เทคนิคอ่านหนังสือ & ความรู้สอบ (Techniques Page) -->
+        <div id="tab-techniques" class="tab-content hidden space-y-5">
+            
+            <div class="bg-gradient-to-r from-amber-600 to-amber-800 text-white p-5 rounded-2xl shadow-lg border border-amber-500">
+                <h2 class="text-2xl font-extrabold mb-1">เทคนิคอ่านหนังสือ & คลังความรู้</h2>
+                <p class="text-sm text-amber-100">จำแม่น ประหยัดเวลา และสรุปความรู้ทหารบกที่ต้องรู้ก่อนเข้าสอบ</p>
+            </div>
+
+            <!-- Reading Hacks -->
+            <div class="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <h3 class="text-lg font-bold text-army-900 border-b pb-2 border-slate-200 flex items-center">
+                    <i class="fas fa-brain text-amber-600 mr-2"></i> 3 เทคนิคจำข้อสอบแบบ Active Learning
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div class="font-bold text-army-800 text-sm mb-1"><i class="fas fa-clock text-amber-600 mr-1"></i> 1. Pomodoro ทหาร</div>
+                        <p class="text-xs text-slate-700">อ่าน 25 นาที พัก 5 นาที (ทำซ้ำ 4 รอบแล้วพักยาว 15 นาที) ช่วยให้สมองสดชื่น ไม่ล้าเมื่ออ่านวิชากฎหมาย/ความรู้ทั่วไป</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div class="font-bold text-army-800 text-sm mb-1"><i class="fas fa-comments text-amber-600 mr-1"></i> 2. Feynman Technique</div>
+                        <p class="text-xs text-slate-700">อ่านเนื้อหาเสร็จแล้ว ลองพูดอธิบายหัวข้อนั้นให้ตัวเองฟังด้วยภาษาง่ายๆ หากติดขัดตรงไหน ให้กลับไปอ่านย้ำตรงนั้น</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div class="font-bold text-army-800 text-sm mb-1"><i class="fas fa-layer-group text-amber-600 mr-1"></i> 3. Spaced Repetition</div>
+                        <p class="text-xs text-slate-700">ทบทวนเนื้อหาเป็นระยะ (วันที่ 1, 3, 7, และ 14) ช่วยเปลี่ยนความจำระยะสั้นให้กลายเป็นความจำระยะยาว</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RTA General Knowledge Notes -->
+            <div class="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <h3 class="text-lg font-bold text-army-900 border-b pb-2 border-slate-200 flex items-center">
+                    <i class="fas fa-book-bookmark text-army-600 mr-2"></i> สรุปความรู้พื้นฐานกองทัพบก (ออกสอบบ่อย)
+                </h3>
+
+                <div class="space-y-3 text-xs sm:text-sm">
+                    <!-- Fact 1 -->
+                    <div class="p-3 bg-army-50 rounded-lg border border-army-200">
+                        <span class="font-bold text-army-900 block mb-1">🛡️ คำขวัญและอัตลักษณ์กองทัพบก</span>
+                        <p class="text-slate-800">
+                            <strong>คติพจน์:</strong> "เพื่อชาติ ศาสน์ กษัตริย์ และประชาชน"<br>
+                            <strong>วิสัยทัศน์:</strong> กองทัพบกเป็นกองทัพที่มีความทันสมัย มีศักยภาพ พร้อมปกป้องอธิปไตยและเป็นที่พึ่งของประชาชน
+                        </p>
+                    </div>
+
+                    <!-- Fact 2 -->
+                    <div class="p-3 bg-army-50 rounded-lg border border-army-200">
+                        <span class="font-bold text-army-900 block mb-1">🎖️ เหล่าทหารบกหลัก (17 เหล่า)</span>
+                        <p class="text-slate-800 mb-1">แบ่งออกเป็น 3 ยุทธบริการหลัก:</p>
+                        <ul class="list-disc list-inside space-y-1 text-slate-800 pl-1">
+                            <li><strong>เหล่ารบ:</strong> ราบ, ม้า</li>
+                            <li><strong>เหล่าสนับสนุนการรบ:</strong> ปืนใหญ่, ช่าง, สื่อสาร, การข่าว, สรรพาวุธ</li>
+                            <li><strong>เหล่าช่วยรบ:</strong> พลาธิการ, แพทย์, ขนส่ง, การเงิน, สารวัตรทหาร (ร.ศ.ท.), สารบรรณ ฯลฯ</li>
                         </ul>
                     </div>
-                </div>
-                
-                <!-- Step 2 -->
-                <div class="flex">
-                    <div class="flex-shrink-0 mt-1">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-army-600 text-white font-bold">2</div>
-                    </div>
-                    <div class="ml-4">
-                        <h4 class="text-lg font-bold text-gray-800">การแต่งกายและรูปลักษณ์</h4>
-                        <ul class="mt-2 list-disc list-inside text-gray-600 text-sm space-y-1">
-                            <li>ตัดผมสั้นเกรียน (ตามระเบียบทหาร) โกนหนวดเคราให้เกลี้ยงเกลา</li>
-                            <li>เล็บมือต้องตัดสั้นและสะอาด</li>
-                            <li>ใส่ชุดนักศึกษา (ถ้ากำลังเรียน) หรือชุดสุภาพ (เสื้อเชิ้ตสีอ่อนแขนยาว ผูกเนคไท กางเกงสแล็คสีดำ/กรมท่า รองเท้าหนังขัดมัน)</li>
-                            <li>หากเป็นทหารกองประจำการ ให้แต่งเครื่องแบบตามที่หน่วยกำหนด</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <!-- Step 3 -->
-                <div class="flex">
-                    <div class="flex-shrink-0 mt-1">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-army-600 text-white font-bold">3</div>
-                    </div>
-                    <div class="ml-4">
-                        <h4 class="text-lg font-bold text-gray-800">ซ้อมตอบคำถามและการแนะนำตัว</h4>
-                        <ul class="mt-2 list-disc list-inside text-gray-600 text-sm space-y-1">
-                            <li>ซ้อมพูดแนะนำตัวสั้นๆ 1-2 นาที (ชื่อ, นามสกุล, ภูมิลำเนา, จบจากไหน, ความสามารถพิเศษ) ให้เสียงดังฟังชัด ฉะฉาน</li>
-                            <li>ฝึกท่าทาง การเดินเข้าห้อง การนั่ง (หลังตรง มือวางบนตัก) การทำความเคารพ (ตะเบ๊ะ/ไหว้) ให้ดูขึงขังและสง่างาม</li>
-                        </ul>
+                    <!-- Fact 3 -->
+                    <div class="p-3 bg-army-50 rounded-lg border border-army-200">
+                        <span class="font-bold text-army-900 block mb-1">📅 วันสำคัญทางทหาร</span>
+                        <p class="text-slate-800">
+                            <strong>18 มกราคม ของทุกปี:</strong> "วันกองทัพไทย" (วันกระทำยุทธหัตถีของสมเด็จพระนเรศวรมหาราช) และเป็นวันสวนสนามยามสามสมอ
+                        </p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 3: คำถามยอดฮิต -->
-        <section class="bg-army-800 rounded-2xl shadow-xl p-8 mb-10 text-white">
-            <div class="flex items-center mb-6">
-                <i class="fas fa-question-circle text-3xl text-yellow-400 mr-4"></i>
-                <h3 class="text-2xl font-bold">คำถามยอดฮิตที่มักโดนสัมภาษณ์</h3>
-            </div>
+        </div>
+
+        <!-- TAB 3: เกมจำข้อสอบ & Flashcards (Game View) -->
+        <div id="tab-game" class="tab-content hidden space-y-5">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-army-700 p-4 rounded-lg border border-army-600">
-                    <p class="font-semibold text-yellow-300 mb-1">Q: ทำไมถึงอยากเป็นทหาร?</p>
-                    <p class="text-sm text-gray-200"><strong>แนวคำตอบ:</strong> ตอบด้วยความจริงใจ เช่น รักในอาชีพทหาร อยากรับใช้ชาติ อยากแบ่งเบาภาระครอบครัว (มีความมั่นคง) หรือมีบุคคลต้นแบบ</p>
+            <!-- Game Header -->
+            <div class="bg-gradient-to-r from-army-800 to-slate-900 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-army-600 flex justify-between items-center">
+                <div>
+                    <span class="text-xs bg-amber-500 text-army-900 px-2 py-0.5 rounded font-extrabold uppercase">Interactive Quiz</span>
+                    <h2 class="text-xl sm:text-2xl font-extrabold mt-1">เกมการ์ดซ้อมสัมภาษณ์</h2>
+                    <p class="text-xs text-slate-300">แตะการ์ดเพื่อพลิกดูแนวตอบเฉลย</p>
                 </div>
-                <div class="bg-army-700 p-4 rounded-lg border border-army-600">
-                    <p class="font-semibold text-yellow-300 mb-1">Q: ข้อดี-ข้อเสีย ของคุณคืออะไร?</p>
-                    <p class="text-sm text-gray-200"><strong>แนวคำตอบ:</strong> บอกข้อดีที่สอดคล้องกับการเป็นทหาร (อดทน มีวินัย) ส่วนข้อเสียให้บอกสิ่งที่ไม่ร้ายแรงและกำลังแก้ไขอยู่</p>
-                </div>
-                <div class="bg-army-700 p-4 rounded-lg border border-army-600">
-                    <p class="font-semibold text-yellow-300 mb-1">Q: ทราบไหมว่าเรียน นนส. ฝึกหนักมาก จะทนได้ไหม?</p>
-                    <p class="text-sm text-gray-200"><strong>แนวคำตอบ:</strong> แสดงความมุ่งมั่น น้ำเสียงหนักแน่น "ทนได้ครับ/ค่ะ" พร้อมยกตัวอย่างความอดทนในอดีต (เช่น การเล่นกีฬา การทำงานพิเศษ)</p>
-                </div>
-                <div class="bg-army-700 p-4 rounded-lg border border-army-600">
-                    <p class="font-semibold text-yellow-300 mb-1">Q: ถ้าผู้บังคับบัญชาสั่งในสิ่งที่คุณไม่เห็นด้วย จะทำอย่างไร?</p>
-                    <p class="text-sm text-gray-200"><strong>แนวคำตอบ:</strong> ทหารต้องยึดถือระเบียบวินัยเป็นหลัก จะปฏิบัติตามคำสั่งก่อน เว้นแต่เป็นคำสั่งที่ผิดกฎหมายอย่างชัดเจน (วัดเรื่องความเข้าใจในสายการบังคับบัญชา)</p>
+                <div class="text-center bg-army-900/80 p-2 sm:p-3 rounded-xl border border-army-600">
+                    <span class="text-xs text-slate-300 block">คะแนนสะสม</span>
+                    <span id="scoreDisplay" class="text-xl sm:text-2xl font-black text-amber-400">0</span>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 4: Tips -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white rounded-xl shadow p-6 border-l-4 border-green-500">
-                <h4 class="font-bold text-lg text-gray-800 mb-3 flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Do (สิ่งที่ควรทำ)</h4>
-                <ul class="space-y-2 text-sm text-gray-600">
-                    <li><i class="fas fa-angle-right text-green-500 mr-1"></i> สบตากรรมการขณะตอบคำถามทุกคน</li>
-                    <li><i class="fas fa-angle-right text-green-500 mr-1"></i> ตอบคำถามด้วยน้ำเสียงดัง ฟังชัด ลงท้ายด้วย "ครับ" เสมอ</li>
-                    <li><i class="fas fa-angle-right text-green-500 mr-1"></i> ถ้านั่งเก้าอี้ ให้นั่งตัวตรง หลังไม่พิงพนัก มือประสานหรือวางบนตัก</li>
-                    <li><i class="fas fa-angle-right text-green-500 mr-1"></i> หากตอบไม่ได้ ให้ตอบตามตรงว่า "ไม่ทราบครับ แต่จะกลับไปศึกษาหาความรู้เพิ่มเติมครับ"</li>
-                </ul>
+            <!-- Category Filters -->
+            <div class="flex space-x-2 overflow-x-auto pb-1">
+                <button onclick="filterFlashcards('all')" class="filter-btn active-filter px-3 py-1.5 rounded-full text-xs font-bold bg-army-700 text-white border border-army-600 whitespace-nowrap">ทั้งหมด</button>
+                <button onclick="filterFlashcards('interview')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-300 whitespace-nowrap">การสัมภาษณ์</button>
+                <button onclick="filterFlashcards('military')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-300 whitespace-nowrap">ความรู้ทหาร</button>
             </div>
-            
-            <div class="bg-white rounded-xl shadow p-6 border-l-4 border-red-500">
-                <h4 class="font-bold text-lg text-gray-800 mb-3 flex items-center"><i class="fas fa-times-circle text-red-500 mr-2"></i> Don't (สิ่งที่ไม่ควรทำ)</h4>
-                <ul class="space-y-2 text-sm text-gray-600">
-                    <li><i class="fas fa-angle-right text-red-500 mr-1"></i> เถียง หรือแสดงอารมณ์ฉุนเฉียวเมื่อถูกกรรมการกดดัน</li>
-                    <li><i class="fas fa-angle-right text-red-500 mr-1"></i> นั่งไขว่ห้าง กระดิกเท้า หรือแสดงอาการประหม่าลุกลี้ลุกลน</li>
-                    <li><i class="fas fa-angle-right text-red-500 mr-1"></i> ตอบคำถามยืดยาว ออกนอกเรื่อง ไม่ตรงประเด็น</li>
-                    <li><i class="fas fa-angle-right text-red-500 mr-1"></i> นำโทรศัพท์มือถือเข้าห้องสัมภาษณ์ (หรือลืมปิดเสียง)</li>
-                </ul>
+
+            <!-- Flashcard Display Area -->
+            <div class="perspective-1000 w-full min-h-[280px] sm:min-h-[320px]">
+                <div id="flashcard" onclick="flipCard()" class="transform-style-3d relative w-full min-h-[280px] sm:min-h-[320px] bg-white rounded-2xl shadow-md border-2 border-army-500 p-5 sm:p-6 flex flex-col justify-between cursor-pointer select-none">
+                    
+                    <!-- Card Front -->
+                    <div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span id="cardCategory" class="text-xs font-bold px-2.5 py-1 bg-army-100 text-army-800 rounded-full">หมวดหมู่</span>
+                                <span class="text-xs text-slate-400 font-mono" id="cardProgress">1/10</span>
+                            </div>
+                            <h3 id="cardQuestion" class="text-base sm:text-lg font-bold text-slate-900 mt-2 leading-snug">
+                                คำถามจะปรากฏที่นี่...
+                            </h3>
+                        </div>
+                        <div class="text-center pt-4 border-t border-slate-100">
+                            <span class="text-xs font-medium text-amber-600 animate-pulse">
+                                <i class="fas fa-hand-pointer mr-1"></i> แตะเพื่อพลิกดูเฉลยแนวตอบ
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Back -->
+                    <div class="backface-hidden rotate-y-180 absolute inset-0 p-6 flex flex-col justify-between bg-army-900 text-white rounded-2xl">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold px-2 py-0.5 bg-amber-500 text-army-900 rounded">แนวทางคำตอบ / เฉลย</span>
+                                <i class="fas fa-check-circle text-emerald-400"></i>
+                            </div>
+                            <p id="cardAnswer" class="text-xs sm:text-sm text-slate-100 leading-relaxed mt-2">
+                                คำตอบจะปรากฏที่นี่...
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-army-700 flex justify-between items-center">
+                            <span class="text-xs text-slate-300">เข้าใจข้อนี้ไหม?</span>
+                            <div class="space-x-2">
+                                <button onclick="event.stopPropagation(); markCard(false)" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition">ยังไม่คล่อง</button>
+                                <button onclick="event.stopPropagation(); markCard(true)" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition">จำได้แล้ว (+10)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </section>
+
+            <!-- Controls -->
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="prevCard()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-xs sm:text-sm flex items-center shadow-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> ข้อก่อนหน้า
+                </button>
+                <button onclick="nextCard()" class="px-5 py-2 bg-army-700 hover:bg-army-800 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center shadow-md">
+                    ข้อถัดไป <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- TAB 4: เช็กลิสต์ความพร้อม (Checklist View) -->
+        <div id="tab-checklist" class="tab-content hidden space-y-5">
+            <div class="bg-gradient-to-r from-army-900 to-army-800 text-white p-5 rounded-2xl shadow-lg border border-army-600">
+                <h2 class="text-2xl font-extrabold mb-1">เช็กลิสต์เตรียมความพร้อม</h2>
+                <p class="text-sm text-slate-200">ตรวจสอบความเรียบร้อยก่อนเดินทางไปสนามสอบ</p>
+            </div>
+
+            <div class="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <h3 class="font-bold text-army-900 text-base border-b pb-2 border-slate-200">
+                    <i class="fas fa-clipboard-list text-amber-600 mr-2"></i> รายการที่ต้องจัดเตรียม
+                </h3>
+
+                <div id="checklistItems" class="space-y-3">
+                    <!-- Checkbox Item 1 -->
+                    <label class="flex items-start p-3 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                        <input type="checkbox" onchange="saveChecklist()" class="chk-item w-5 h-5 mt-0.5 text-army-600 rounded border-slate-300 focus:ring-army-500">
+                        <span class="ml-3 text-xs sm:text-sm text-slate-900 font-medium">บัตรประจำตัวประชาชน & บัตรประจำตัวสอบ นนส. (ของจริง + สำเนา)</span>
+                    </label>
+
+                    <!-- Checkbox Item 2 -->
+                    <label class="flex items-start p-3 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                        <input type="checkbox" onchange="saveChecklist()" class="chk-item w-5 h-5 mt-0.5 text-army-600 rounded border-slate-300 focus:ring-army-500">
+                        <span class="ml-3 text-xs sm:text-sm text-slate-900 font-medium">หลักฐานการวุฒิการศึกษา (ม.6 / ปวช. / กศน.) ฉบับจริง</span>
+                    </label>
+
+                    <!-- Checkbox Item 3 -->
+                    <label class="flex items-start p-3 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                        <input type="checkbox" onchange="saveChecklist()" class="chk-item w-5 h-5 mt-0.5 text-army-600 rounded border-slate-300 focus:ring-army-500">
+                        <span class="ml-3 text-xs sm:text-sm text-slate-900 font-medium">ใบสำคัญการเกณฑ์ทหาร (สด.8, สด.43 หรือ สด.9)</span>
+                    </label>
+
+                    <!-- Checkbox Item 4 -->
+                    <label class="flex items-start p-3 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                        <input type="checkbox" onchange="saveChecklist()" class="chk-item w-5 h-5 mt-0.5 text-army-600 rounded border-slate-300 focus:ring-army-500">
+                        <span class="ml-3 text-xs sm:text-sm text-slate-900 font-medium">ทรงผมสั้นเกรียนตามระเบียบ & โกนหนวดเคราเรียบร้อย</span>
+                    </label>
+
+                    <!-- Checkbox Item 5 -->
+                    <label class="flex items-start p-3 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                        <input type="checkbox" onchange="saveChecklist()" class="chk-item w-5 h-5 mt-0.5 text-army-600 rounded border-slate-300 focus:ring-army-500">
+                        <span class="ml-3 text-xs sm:text-sm text-slate-900 font-medium">การแต่งกาย: เสื้อเชิ้ตสุภาพ / ชุดนักเรียน-นักศึกษา / เครื่องแบบทหารขัดเงา</span>
+                    </label>
+
+                    <!-- Checkbox Item 6 -->
+                    <label class="flex items-start p-3 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                        <input type="checkbox" onchange="saveChecklist()" class="chk-item w-5 h-5 mt-0.5 text-army-600 rounded border-slate-300 focus:ring-army-500">
+                        <span class="ml-3 text-xs sm:text-sm text-slate-900 font-medium">แฟ้มสะสมผลงาน (Portfolio) พิมพ์รูปภาพชัดเจน อ่านง่าย</span>
+                    </label>
+                </div>
+            </div>
+        </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-sm">
-        <p>© 2026 คู่มือเตรียมตัวสอบสัมภาษณ์ นนส. ทบ. | จัดทำเพื่อเป็นแนวทางแก่น้องๆ ผู้มีความมุ่งมั่น</p>
-        <p class="mt-2 text-yellow-500">"ความมีวินัย คือหัวใจของทหาร"</p>
-    </footer>
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-50">
+        <div class="max-w-3xl mx-auto flex justify-around py-2">
+            
+            <button onclick="switchTab('interview')" id="nav-interview" class="nav-btn active-nav flex flex-col items-center py-1 px-3 text-army-700 font-bold transition">
+                <i class="fas fa-book-open text-lg mb-0.5"></i>
+                <span class="text-[10px] sm:text-xs">คู่มือสัมภาษณ์</span>
+            </button>
 
+            <button onclick="switchTab('techniques')" id="nav-techniques" class="nav-btn flex flex-col items-center py-1 px-3 text-slate-500 hover:text-army-700 font-medium transition">
+                <i class="fas fa-lightbulb text-lg mb-0.5"></i>
+                <span class="text-[10px] sm:text-xs">เทคนิคอ่าน/สรุป</span>
+            </button>
+
+            <button onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center py-1 px-3 text-slate-500 hover:text-army-700 font-medium transition">
+                <i class="fas fa-gamepad text-lg mb-0.5"></i>
+                <span class="text-[10px] sm:text-xs">เกมแฟลชการ์ด</span>
+            </button>
+
+            <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn flex flex-col items-center py-1 px-3 text-slate-500 hover:text-army-700 font-medium transition">
+                <i class="fas fa-tasks text-lg mb-0.5"></i>
+                <span class="text-[10px] sm:text-xs">เช็กลิสต์</span>
+            </button>
+
+        </div>
+    </nav>
+
+    <script>
+        // Data for Flashcards
+        const allFlashcards = [
+            {
+                category: 'interview',
+                catLabel: 'สัมภาษณ์',
+                q: 'กรรมการถาม: "ทำไมคุณถึงคิดว่าตนเองเหมาะสมที่จะเป็นนักเรียนนายสิบทหารบก?"',
+                a: 'เน้นตอบ 3 ประเด็นหลัก: 1) ความพร้อมด้านร่างกายและจิตใจที่อดทน 2) วินัยและความระเบียบตรงต่อเวลา 3) ความมุ่งมั่นตั้งใจที่จะพัฒนาตนเองในสายอาชีพทหารเพื่อรับใช้ประเทศชาติ'
+            },
+            {
+                category: 'interview',
+                catLabel: 'สัมภาษณ์',
+                q: 'กรรมการถาม: "หากคุณสอบไม่ติดในรอบนี้ คุณจะทำอย่างไรต่อไป?"',
+                a: 'แสดงความมุ่งมั่นไม่ยอมแพ้: "กระผมจะนำข้อบกพร่องกลับไปปรับปรุงแก้ไข ตั้งหน้าตั้งตาฝึกฝนร่างกายและทบทวนความรู้ แล้วกลับมาสมัครสอบในปีถัดไปจนกว่าจะสำเร็จครับ!"'
+            },
+            {
+                category: 'military',
+                catLabel: 'ความรู้ทหาร',
+                q: 'วันกองทัพไทย ตรงกับวันที่เท่าไหร่ และมีความสำคัญอย่างไร?',
+                a: 'ตรงกับวันที่ 18 มกราคม ของทุกปี เป็นวันระลึกถึงสมเด็จพระนเรศวรมหาราชทรงกระทำยุทธหัตถีชนะพระมหาอุปราชา'
+            },
+            {
+                category: 'military',
+                catLabel: 'ความรู้ทหาร',
+                q: 'เหล่าทหารบก แบ่งออกเป็นกี่เหล่า และมีเหล่าอะไรบ้างในกลุ่ม "เหล่ารบ"?',
+                a: 'มีทั้งหมด 17 เหล่า โดยกลุ่ม "เหล่ารบ" มี 2 เหล่าหลัก คือ 1) เหล่าทหารราบ (กำลังหลักในการรบ) และ 2) เหล่าทหารม้า (ยุทธวิธีคล่องตัว/ยานเกราะ)'
+            },
+            {
+                category: 'interview',
+                catLabel: 'สัมภาษณ์',
+                q: 'กรรมการถาม: "ข้อเสียที่ร้ายแรงที่สุดของคุณคืออะไร?"',
+                a: 'ตอบข้อเสียจริงที่ไม่ขัดกับกฎระเบียบทหาร และต้องบอกทางแก้ไขเสมอ เช่น: "กระผมเคยเป็นคนตื่นเต้นเวลาพูดต่อหน้าคนจำนวนมาก แต่ปัจจุบันได้แก้ไขด้วยการฝึกซ้อมพูดและร่วมกิจกรรมจิตอาสาจนมั่นใจขึ้นครับ"'
+            },
+            {
+                category: 'military',
+                catLabel: 'ความรู้ทหาร',
+                q: 'จ่าสิบเอก (จ.ส.อ.) จัดเป็นยศทหารระดับใดในกองทัพบก?',
+                a: 'จัดเป็นยศชั้นประทวนสูงสุด (นายสิบ) ก่อนที่จะเลื่อนยศขึ้นเป็นนายทหารชั้นสัญญาบัตร (ร้อยตรี)'
+            }
+        ];
+
+        let currentCards = [...allFlashcards];
+        let currentIndex = 0;
+        let isFlipped = false;
+        let score = 0;
+
+        // Initialize on Load
+        window.onload = function() {
+            renderCard();
+            loadChecklist();
+            loadBookmarkState();
+        };
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-army-700', 'font-bold', 'active-nav');
+                btn.classList.add('text-slate-500', 'font-medium');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            activeNav.classList.remove('text-slate-500', 'font-medium');
+            activeNav.classList.add('text-army-700', 'font-bold', 'active-nav');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Flashcard Logic
+        function renderCard() {
+            if (currentCards.length === 0) return;
+            const card = currentCards[currentIndex];
+            document.getElementById('cardCategory').innerText = card.catLabel;
+            document.getElementById('cardProgress').innerText = `${currentIndex + 1}/${currentCards.length}`;
+            document.getElementById('cardQuestion').innerText = card.q;
+            document.getElementById('cardAnswer').innerText = card.a;
+
+            // Reset flip state
+            const flashcardEl = document.getElementById('flashcard');
+            flashcardEl.classList.remove('rotate-y-180');
+            isFlipped = false;
+        }
+
+        function flipCard() {
+            const flashcardEl = document.getElementById('flashcard');
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                flashcardEl.classList.add('rotate-y-180');
+            } else {
+                flashcardEl.classList.remove('rotate-y-180');
+            }
+        }
+
+        function nextCard() {
+            if (currentIndex < currentCards.length - 1) {
+                currentIndex++;
+            } else {
+                currentIndex = 0; // Loop back
+            }
+            renderCard();
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = currentCards.length - 1;
+            }
+            renderCard();
+        }
+
+        function markCard(known) {
+            if (known) {
+                score += 10;
+                document.getElementById('scoreDisplay').innerText = score;
+            }
+            nextCard();
+        }
+
+        function filterFlashcards(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-army-700', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            event.target.classList.remove('bg-white', 'text-slate-700');
+            event.target.classList.add('bg-army-700', 'text-white');
+
+            if (cat === 'all') {
+                currentCards = [...allFlashcards];
+            } else {
+                currentCards = allFlashcards.filter(c => c.category === cat);
+            }
+            currentIndex = 0;
+            renderCard();
+        }
+
+        // Save & Load Checklist using LocalStorage
+        function saveChecklist() {
+            const checkboxes = document.querySelectorAll('.chk-item');
+            const states = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('rta_nco_checklist', JSON.stringify(states));
+        }
+
+        function loadChecklist() {
+            const saved = localStorage.getItem('rta_nco_checklist');
+            if (saved) {
+                const states = JSON.json(saved);
+                const checkboxes = document.querySelectorAll('.chk-item');
+                checkboxes.forEach((cb, idx) => {
+                    if (states[idx] !== undefined) cb.checked = states[idx];
+                });
+            }
+        }
+
+        // Bookmark Toggle State
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmarkBtn');
+            const isBookmarked = btn.classList.contains('text-amber-300');
+            if (isBookmarked) {
+                btn.classList.remove('text-amber-300');
+                btn.classList.add('text-amber-400');
+                btn.innerHTML = '<i class="far fa-bookmark text-xl"></i>';
+                localStorage.setItem('rta_bookmarked', 'false');
+            } else {
+                btn.classList.add('text-amber-300');
+                btn.innerHTML = '<i class="fas fa-bookmark text-xl"></i>';
+                localStorage.setItem('rta_bookmarked', 'true');
+            }
+        }
+
+        function loadBookmarkState() {
+            if (localStorage.getItem('rta_bookmarked') === 'true') {
+                const btn = document.getElementById('bookmarkBtn');
+                btn.innerHTML = '<i class="fas fa-bookmark text-xl"></i>';
+            }
+        }
+    </script>
 </body>
 </html>
