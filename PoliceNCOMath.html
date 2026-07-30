@@ -67,11 +67,17 @@
     </script>
 
     <style>
-        body { background-color: #f1f5f9; font-family: 'Sarabun', sans-serif; }
+        html, body { 
+            background-color: #f1f5f9; 
+            font-family: 'Sarabun', sans-serif; 
+            overflow-x: hidden;
+            max-width: 100vw;
+            -webkit-tap-highlight-color: transparent;
+        }
         .police-gradient { background: linear-gradient(135deg, #0a192f 0%, #1a365d 60%, #0d2137 100%); }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f3d578 50%, #aa820a 100%); }
         .gold-text { background: linear-gradient(135deg, #fce083 0%, #d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .math-content { overflow-x: auto; max-width: 100%; }
+        .math-content { overflow-x: auto; max-width: 100%; word-break: break-word; -webkit-overflow-scrolling: touch; }
         
         /* 3D Flip Card Styles for Flashcards */
         .perspective-1000 { perspective: 1000px; }
@@ -80,65 +86,74 @@
         .rotate-y-180 { transform: rotateY(180deg); }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.8);
         }
         
         .hover-lift { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 25px -5px rgba(10, 25, 47, 0.12); }
+        .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(10, 25, 47, 0.12); }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* Custom mobile-friendly scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col justify-between selection:bg-police-500 selection:text-white">
 
     <!-- Top Navigation Bar -->
     <nav class="police-gradient text-white shadow-xl sticky top-0 z-50 border-b-2 border-gold-500/50">
-        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center p-3 md:p-4 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center p-2.5 sm:p-3 md:p-4 px-3 sm:px-4 gap-2">
             
             <!-- Logo & Brand -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMode('home')">
-                <div class="w-10 h-10 md:w-11 md:h-11 bg-gold-500/20 rounded-xl border border-gold-400/40 flex items-center justify-center text-gold-300 shadow-inner">
-                    <i class="fa-solid fa-shield-halved text-xl md:text-2xl"></i>
+            <div class="flex items-center justify-between w-full sm:w-auto">
+                <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchMode('home')">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-gold-500/20 rounded-xl border border-gold-400/40 flex items-center justify-center text-gold-300 shadow-inner shrink-0">
+                        <i class="fa-solid fa-shield-halved text-lg sm:text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display font-extrabold text-sm sm:text-base md:text-xl tracking-wider text-white uppercase leading-tight flex items-center gap-1.5">
+                            POLICE ACADEMY <span class="bg-gold-500 text-police-950 text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded uppercase">PRO</span>
+                        </span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-300 font-medium">คลังความรู้ & หนังสือสอบนายสิบตำรวจ</span>
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-display font-extrabold text-base md:text-xl tracking-wider text-white uppercase leading-tight flex items-center gap-1.5">
-                        POLICE ACADEMY <span class="bg-gold-500 text-police-950 text-[10px] font-black px-1.5 py-0.5 rounded uppercase">PRO</span>
-                    </span>
-                    <span class="text-[11px] text-slate-300 font-medium">คลังความรู้ & หนังสือสอบนายสิบตำรวจ</span>
-                </div>
+
+                <!-- Sound Toggle for Mobile (Top right) -->
+                <button onclick="toggleAudio()" id="audio-btn" class="sm:hidden p-2 bg-white/10 active:bg-white/20 rounded-lg text-slate-300 transition text-xs" title="เปิด/ปิด เสียง">
+                    <i class="fa-solid fa-volume-high" id="audio-icon-mobile"></i>
+                </button>
             </div>
 
-            <!-- Navigation Menu Items -->
-            <div class="flex items-center space-x-1 md:space-x-2 mt-2 sm:mt-0 text-xs md:text-sm font-medium overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-                <button onclick="switchMode('home')" id="nav-home" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
-                    <i class="fa-solid fa-house"></i><span>หน้าหลัก</span>
+            <!-- Navigation Menu Items (Horizontally scrollable on mobile) -->
+            <div class="flex items-center space-x-1 sm:space-x-2 text-xs font-medium overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar">
+                <button onclick="switchMode('home')" id="nav-home" class="nav-btn px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1 shrink-0 text-slate-200">
+                    <i class="fa-solid fa-house text-xs"></i><span>หน้าหลัก</span>
                 </button>
-                <button onclick="switchMode('book')" id="nav-book" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
-                    <i class="fa-solid fa-book-bookmark text-gold-400"></i><span>หนังสือสรุป</span>
+                <button onclick="switchMode('book')" id="nav-book" class="nav-btn px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1 shrink-0 text-slate-200">
+                    <i class="fa-solid fa-book-bookmark text-gold-400 text-xs"></i><span>หนังสือสรุป</span>
                 </button>
-                <button onclick="switchMode('tech')" id="nav-tech" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
-                    <i class="fa-solid fa-lightbulb text-amber-300"></i><span>เทคนิคสอบ</span>
+                <button onclick="switchMode('tech')" id="nav-tech" class="nav-btn px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1 shrink-0 text-slate-200">
+                    <i class="fa-solid fa-lightbulb text-amber-300 text-xs"></i><span>เทคนิคสอบ</span>
                 </button>
-                <button onclick="switchMode('games')" id="nav-games" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1.5 text-slate-200">
-                    <i class="fa-solid fa-gamepad text-emerald-400"></i><span>มินิเกมฝึกจำ</span>
+                <button onclick="switchMode('games')" id="nav-games" class="nav-btn px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-white/10 transition flex items-center space-x-1 shrink-0 text-slate-200">
+                    <i class="fa-solid fa-gamepad text-emerald-400 text-xs"></i><span>เกมฝึกจำ</span>
                 </button>
-                <button onclick="switchMode('quiz')" id="nav-quiz" class="px-3.5 py-1.5 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-police-950 font-bold rounded-lg shadow-md transition transform active:scale-95 flex items-center space-x-1.5 ml-1">
-                    <i class="fa-solid fa-pen-to-square"></i><span>เริ่มทำสอบ</span>
+                <button onclick="switchMode('quiz')" id="nav-quiz" class="px-3 sm:px-3.5 py-1.5 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-police-950 font-bold rounded-lg shadow-md transition transform active:scale-95 flex items-center space-x-1 shrink-0">
+                    <i class="fa-solid fa-pen-to-square text-xs"></i><span>เริ่มทำสอบ</span>
                 </button>
-                <!-- Sound Toggle -->
-                <button onclick="toggleAudio()" id="audio-btn" class="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-slate-300 transition ml-1" title="เปิด/ปิด เสียง">
+                <!-- Desktop Sound Toggle -->
+                <button onclick="toggleAudio()" id="audio-btn-desktop" class="hidden sm:block p-2 bg-white/10 hover:bg-white/20 rounded-lg text-slate-300 transition ml-1" title="เปิด/ปิด เสียง">
                     <i class="fa-solid fa-volume-high" id="audio-icon"></i>
                 </button>
             </div>
@@ -146,33 +161,33 @@
     </nav>
 
     <!-- Main Content Container -->
-    <main class="max-w-6xl mx-auto p-3 md:p-6 w-full flex-grow">
+    <main class="max-w-6xl mx-auto p-2.5 sm:p-4 md:p-6 w-full flex-grow">
 
         <!-- 1. HOME SCREEN / DASHBOARD -->
-        <div id="screen-home" class="space-y-6 animate-fade-in">
+        <div id="screen-home" class="space-y-4 sm:space-y-6 animate-fade-in">
             
             <!-- Hero Banner -->
-            <div class="police-gradient rounded-3xl p-6 md:p-10 text-white shadow-2xl relative overflow-hidden border border-police-700">
-                <div class="absolute -right-10 -bottom-10 opacity-10 text-[200px] pointer-events-none text-white">
+            <div class="police-gradient rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-10 text-white shadow-2xl relative overflow-hidden border border-police-700">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-[140px] sm:text-[200px] pointer-events-none text-white">
                     <i class="fa-solid fa-building-shield"></i>
                 </div>
-                <div class="relative z-10 max-w-2xl space-y-4">
-                    <div class="inline-flex items-center space-x-2 bg-gold-500/20 border border-gold-500/40 px-3 py-1 rounded-full text-gold-300 text-xs font-bold uppercase tracking-wider">
+                <div class="relative z-10 max-w-2xl space-y-3 sm:space-y-4">
+                    <div class="inline-flex items-center space-x-1.5 bg-gold-500/20 border border-gold-500/40 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-gold-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider">
                         <i class="fa-solid fa-award"></i>
                         <span>คู่มือสอบติดนายสิบตำรวจ ฉบับปรับปรุงใหม่</span>
                     </div>
-                    <h1 class="text-3xl md:text-5xl font-display font-extrabold leading-tight">
+                    <h1 class="text-2xl sm:text-3xl md:text-5xl font-display font-extrabold leading-tight">
                         คณิตศาสตร์ & เทคนิคสอบ <span class="gold-text">นายสิบตำรวจ</span>
                     </h1>
-                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                    <p class="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
                         รวบรวมเนื้อหาเชิงลึกระดับหนังสือตระเวนติว สูตรลัดตัดช้อยส์ มินิเกมช่วยจำ และคลังข้อสอบเสมือนจริง 100 ข้อ พร้อมระบบวิเคราะห์ความพร้อมก่อนลงสนามจริง
                     </p>
                     
-                    <div class="pt-2 flex flex-wrap gap-3">
-                        <button onclick="switchMode('quiz')" class="px-6 py-3 bg-gradient-to-r from-gold-500 to-amber-500 text-police-950 font-display font-extrabold rounded-xl shadow-lg hover:brightness-110 transition flex items-center space-x-2">
+                    <div class="pt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                        <button onclick="switchMode('quiz')" class="w-full sm:w-auto justify-center px-5 py-3 bg-gradient-to-r from-gold-500 to-amber-500 text-police-950 font-display font-extrabold rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition flex items-center space-x-2 text-sm">
                             <i class="fa-solid fa-play"></i><span>เริ่มทำแนวข้อสอบ 100 ข้อ</span>
                         </button>
-                        <button onclick="switchMode('book')" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition flex items-center space-x-2">
+                        <button onclick="switchMode('book')" class="w-full sm:w-auto justify-center px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition flex items-center space-x-2 text-sm">
                             <i class="fa-solid fa-book-open"></i><span>อ่านสรุปเนื้อหา E-Book</span>
                         </button>
                     </div>
@@ -180,92 +195,92 @@
             </div>
 
             <!-- Stats & Quick Progress -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-police-500">
-                    <div class="w-12 h-12 bg-police-50 text-police-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+                <div class="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl flex items-center space-x-3 border-l-4 border-police-500">
+                    <div class="w-9 h-9 sm:w-12 sm:h-12 bg-police-50 text-police-600 rounded-xl flex items-center justify-center text-base sm:text-xl shrink-0">
                         <i class="fa-solid fa-layer-group"></i>
                     </div>
-                    <div>
-                        <div class="text-xs text-slate-500 font-bold uppercase">เนื้อหาบทเรียน</div>
-                        <div class="text-lg font-bold text-police-900">6 หมวดหมู่หลัก</div>
+                    <div class="min-w-0">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase truncate">เนื้อหาบทเรียน</div>
+                        <div class="text-sm sm:text-lg font-bold text-police-900 truncate">6 หมวดหมู่หลัก</div>
                     </div>
                 </div>
-                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-gold-500">
-                    <div class="w-12 h-12 bg-gold-50 text-gold-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                <div class="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl flex items-center space-x-3 border-l-4 border-gold-500">
+                    <div class="w-9 h-9 sm:w-12 sm:h-12 bg-gold-50 text-gold-600 rounded-xl flex items-center justify-center text-base sm:text-xl shrink-0">
                         <i class="fa-solid fa-lightbulb"></i>
                     </div>
-                    <div>
-                        <div class="text-xs text-slate-500 font-bold uppercase">สูตรลัด & เทคนิค</div>
-                        <div class="text-lg font-bold text-police-900">40+ เทคนิคเด็ด</div>
+                    <div class="min-w-0">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase truncate">สูตรลัด & เทคนิค</div>
+                        <div class="text-sm sm:text-lg font-bold text-police-900 truncate">40+ เทคนิคเด็ด</div>
                     </div>
                 </div>
-                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-emerald-500">
-                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                <div class="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl flex items-center space-x-3 border-l-4 border-emerald-500">
+                    <div class="w-9 h-9 sm:w-12 sm:h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-base sm:text-xl shrink-0">
                         <i class="fa-solid fa-gamepad"></i>
                     </div>
-                    <div>
-                        <div class="text-xs text-slate-500 font-bold uppercase">เกมฝึกความจำ</div>
-                        <div class="text-lg font-bold text-police-900">3 โหมดฝึกสมอง</div>
+                    <div class="min-w-0">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase truncate">เกมฝึกความจำ</div>
+                        <div class="text-sm sm:text-lg font-bold text-police-900 truncate">3 โหมดฝึกสมอง</div>
                     </div>
                 </div>
-                <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-4 border-purple-500">
-                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                <div class="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl flex items-center space-x-3 border-l-4 border-purple-500">
+                    <div class="w-9 h-9 sm:w-12 sm:h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-base sm:text-xl shrink-0">
                         <i class="fa-solid fa-clipboard-check"></i>
                     </div>
-                    <div>
-                        <div class="text-xs text-slate-500 font-bold uppercase">คลังข้อสอบจริง</div>
-                        <div class="text-lg font-bold text-police-900">100 ข้อ พร้อมเฉลย</div>
+                    <div class="min-w-0">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase truncate">คลังข้อสอบจริง</div>
+                        <div class="text-sm sm:text-lg font-bold text-police-900 truncate">100 ข้อ พร้อมเฉลย</div>
                     </div>
                 </div>
             </div>
 
             <!-- Feature Navigation Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
                 
                 <!-- Card 1: E-Book -->
-                <div onclick="switchMode('book')" class="glass-card p-6 rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
+                <div onclick="switchMode('book')" class="glass-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
                     <div>
-                        <div class="w-14 h-14 bg-police-700 text-gold-400 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition transform">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-police-700 text-gold-400 rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:scale-110 transition transform">
                             <i class="fa-solid fa-book"></i>
                         </div>
-                        <h3 class="font-display font-bold text-xl text-police-900 mb-2">หนังสือสรุปบทเรียน (E-Book)</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-police-900 mb-1.5">หนังสือสรุปบทเรียน (E-Book)</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                             สรุปเนื้อหาคณิตศาสตร์เข้มข้น อนุกรม, สมการ, ร้อยละ, เซต, สถิติ, ห.ร.ม.-ค.ร.น. พร้อมตัวอย่างและจุดหลอก
                         </p>
                     </div>
-                    <span class="text-police-600 font-bold text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
+                    <span class="text-police-600 font-bold text-xs sm:text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
                         <span>เปิดอ่านบทเรียน</span> <i class="fa-solid fa-arrow-right"></i>
                     </span>
                 </div>
 
                 <!-- Card 2: Tech & Hacks -->
-                <div onclick="switchMode('tech')" class="glass-card p-6 rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
+                <div onclick="switchMode('tech')" class="glass-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
                     <div>
-                        <div class="w-14 h-14 bg-amber-500 text-police-950 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition transform">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-amber-500 text-police-950 rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:scale-110 transition transform">
                             <i class="fa-solid fa-brain"></i>
                         </div>
-                        <h3 class="font-display font-bold text-xl text-police-900 mb-2">รวมเทคนิคสอบ & การอ่าน</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-police-900 mb-1.5">รวมเทคนิคสอบ & การอ่าน</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                             สูตรการอ่าน Spaced Repetition, เทคนิคการตัดช้อยส์, การบริหารเวลา 150 ข้อในห้องสอบให้ทันเวลา
                         </p>
                     </div>
-                    <span class="text-amber-600 font-bold text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
+                    <span class="text-amber-600 font-bold text-xs sm:text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
                         <span>ศึกษาเทคนิคสอบ</span> <i class="fa-solid fa-arrow-right"></i>
                     </span>
                 </div>
 
                 <!-- Card 3: Memory Games -->
-                <div onclick="switchMode('games')" class="glass-card p-6 rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
+                <div onclick="switchMode('games')" class="glass-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl hover-lift cursor-pointer border border-slate-200 group flex flex-col justify-between">
                     <div>
-                        <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition transform">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:scale-110 transition transform">
                             <i class="fa-solid fa-bolt"></i>
                         </div>
-                        <h3 class="font-display font-bold text-xl text-police-900 mb-2">มินิเกมฝึกจำสูตรลัด</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-police-900 mb-1.5">มินิเกมฝึกจำสูตรลัด</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                             ทบทวนสูตรคณิตผ่านแฟลชการ์ด 3D, เกมจับคู่ความเร็ว และดวลโจทย์เร็ว 60 วินาที ช่วยให้จำแม่น ไม่ลืมในห้องสอบ
                         </p>
                     </div>
-                    <span class="text-emerald-600 font-bold text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
+                    <span class="text-emerald-600 font-bold text-xs sm:text-sm flex items-center space-x-2 group-hover:translate-x-2 transition">
                         <span>เล่นเกมทบทวน</span> <i class="fa-solid fa-arrow-right"></i>
                     </span>
                 </div>
@@ -273,17 +288,17 @@
             </div>
 
             <!-- Daily Formula / Quote Card -->
-            <div class="bg-gradient-to-r from-police-900 to-police-800 text-white p-6 rounded-3xl shadow-lg border border-gold-500/30 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gold-500/20 rounded-2xl border border-gold-400/40 flex items-center justify-center text-gold-300 text-2xl shrink-0">
+            <div class="bg-gradient-to-r from-police-900 to-police-800 text-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-lg border border-gold-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gold-500/20 rounded-2xl border border-gold-400/40 flex items-center justify-center text-gold-300 text-xl sm:text-2xl shrink-0">
                         <i class="fa-solid fa-quote-left"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-gold-400 text-sm uppercase">คติเตือนใจนายสิบตำรวจ</h4>
-                        <p class="text-slate-200 text-sm md:text-base italic">"เหงื่อออกในเวลาซ้อม ดีกว่าเสียน้ำตาและโอกาสในวันสอบจริง"</p>
+                        <h4 class="font-bold text-gold-400 text-xs sm:text-sm uppercase">คติเตือนใจนายสิบตำรวจ</h4>
+                        <p class="text-slate-200 text-xs sm:text-sm md:text-base italic">"เหงื่อออกในเวลาซ้อม ดีกว่าเสียน้ำตาและโอกาสในวันสอบจริง"</p>
                     </div>
                 </div>
-                <button onclick="switchMode('quiz')" class="px-5 py-2.5 bg-gold-500 hover:bg-gold-400 text-police-950 font-bold text-sm rounded-xl transition shrink-0">
+                <button onclick="switchMode('quiz')" class="w-full sm:w-auto px-4 py-2.5 bg-gold-500 hover:bg-gold-400 text-police-950 font-bold text-xs sm:text-sm rounded-xl transition shrink-0">
                     ทดสอบฝีมือเลย
                 </button>
             </div>
@@ -291,59 +306,59 @@
         </div>
 
         <!-- 2. E-BOOK & LESSONS SCREEN -->
-        <div id="screen-book" class="hidden space-y-6 animate-fade-in">
+        <div id="screen-book" class="hidden space-y-4 sm:space-y-6 animate-fade-in">
             
             <!-- Book Header -->
-            <div class="glass-card p-4 rounded-2xl border border-slate-200 flex flex-wrap justify-between items-center sticky top-[72px] z-40 gap-3 shadow-md">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-police-700 text-gold-400 rounded-xl flex items-center justify-center text-lg">
+            <div class="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-stretch sm:items-center sticky top-[60px] sm:top-[72px] z-40 gap-2.5 shadow-md">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-police-700 text-gold-400 rounded-xl flex items-center justify-center text-base sm:text-lg shrink-0">
                         <i class="fa-solid fa-book-open"></i>
                     </div>
                     <div>
-                        <h2 class="font-display font-bold text-lg text-police-900">หนังสือสรุปบทเรียนและสูตรลัด</h2>
-                        <p class="text-xs text-slate-500">เลือกหมวดหมู่ที่ต้องการศึกษา</p>
+                        <h2 class="font-display font-bold text-base sm:text-lg text-police-900 leading-tight">หนังสือสรุปบทเรียนและสูตรลัด</h2>
+                        <p class="text-[11px] sm:text-xs text-slate-500">เลือกหมวดหมู่ที่ต้องการศึกษา</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-2 overflow-x-auto max-w-full pb-1 sm:pb-0">
-                    <button onclick="filterChapter('all')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-police-600 text-white">ทั้งหมด</button>
-                    <button onclick="filterChapter('series')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">อนุกรม</button>
-                    <button onclick="filterChapter('percent')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">ร้อยละ/กำไร</button>
-                    <button onclick="filterChapter('equation')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">สมการ/โจทย์ปัญหา</button>
-                    <button onclick="filterChapter('lcm')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">ห.ร.ม./ค.ร.น.</button>
-                    <button onclick="filterChapter('logic')" class="chap-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">เซต/ตรรกศาสตร์</button>
+                <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
+                    <button onclick="filterChapter('all')" class="chap-tab-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-police-600 text-white shrink-0">ทั้งหมด</button>
+                    <button onclick="filterChapter('series')" class="chap-tab-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">อนุกรม</button>
+                    <button onclick="filterChapter('percent')" class="chap-tab-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">ร้อยละ/กำไร</button>
+                    <button onclick="filterChapter('equation')" class="chap-tab-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">สมการ/โจทย์ปัญหา</button>
+                    <button onclick="filterChapter('lcm')" class="chap-tab-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">ห.ร.ม./ค.ร.น.</button>
+                    <button onclick="filterChapter('logic')" class="chap-tab-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">เซต/ตรรกศาสตร์</button>
                 </div>
             </div>
 
             <!-- Chapters Container -->
-            <div id="chapters-container" class="space-y-6">
-                <!-- Chapters will be populated dynamically via JavaScript -->
+            <div id="chapters-container" class="space-y-4 sm:space-y-6">
+                <!-- Chapters populated dynamically -->
             </div>
 
         </div>
 
         <!-- 3. READING TECHNIQUES & EXAM HACKS SCREEN -->
-        <div id="screen-tech" class="hidden space-y-6 animate-fade-in">
+        <div id="screen-tech" class="hidden space-y-4 sm:space-y-6 animate-fade-in">
             
-            <div class="glass-card p-6 rounded-3xl border border-slate-200">
-                <div class="flex items-center space-x-3 mb-4">
-                    <div class="w-12 h-12 bg-amber-500 text-police-950 rounded-2xl flex items-center justify-center text-2xl">
+            <div class="glass-card p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200">
+                <div class="flex items-center space-x-3 mb-2 sm:mb-4">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500 text-police-950 rounded-2xl flex items-center justify-center text-xl sm:text-2xl shrink-0">
                         <i class="fa-solid fa-graduation-cap"></i>
                     </div>
                     <div>
-                        <h2 class="font-display font-bold text-2xl text-police-900">รวมเทคนิคการสอบ & กลยุทธ์การอ่านหนังสือ</h2>
-                        <p class="text-sm text-slate-500">หลักการเตรียมตัวสไตล์คนสอบติดอันดับ Top นายสิบตำรวจ</p>
+                        <h2 class="font-display font-bold text-lg sm:text-2xl text-police-900 leading-tight">รวมเทคนิคการสอบ & กลยุทธ์การอ่านหนังสือ</h2>
+                        <p class="text-xs sm:text-sm text-slate-500">หลักการเตรียมตัวสไตล์คนสอบติดอันดับ Top นายสิบตำรวจ</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mt-4 sm:mt-6">
                     
                     <!-- Hack 1: Time Management -->
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
-                            <i class="fa-regular fa-clock text-amber-500"></i>
+                    <div class="bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm space-y-2 sm:space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-sm sm:text-lg">
+                            <i class="fa-regular fa-clock text-amber-500 shrink-0"></i>
                             <span>1. กลยุทธ์บริหารเวลา 150 ข้อในห้องสอบ</span>
                         </div>
-                        <p class="text-sm text-slate-600 leading-relaxed">
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                             ข้อสอบนายสิบตำรวจให้เวลาเฉลี่ยข้อละ <b>1.2 นาที</b> (150 ข้อ 180 นาที) ควรแบ่งรอบทำดังนี้:
                         </p>
                         <ul class="text-xs text-slate-700 space-y-2 bg-slate-50 p-3 rounded-xl">
@@ -355,12 +370,12 @@
                     </div>
 
                     <!-- Hack 2: Elimination Strategy -->
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
-                            <i class="fa-solid fa-filter-circle-dollar text-emerald-500"></i>
+                    <div class="bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm space-y-2 sm:space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-sm sm:text-lg">
+                            <i class="fa-solid fa-filter-circle-dollar text-emerald-500 shrink-0"></i>
                             <span>2. เทคนิคตัดช้อยส์ (Elimination Technique)</span>
                         </div>
-                        <p class="text-sm text-slate-600 leading-relaxed">
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                             เมื่อเจอข้อที่ไม่แน่ใจ ให้ใช้หลักการตัดตัวเลือกดังนี้:
                         </p>
                         <ul class="text-xs text-slate-700 space-y-2 bg-slate-50 p-3 rounded-xl">
@@ -372,29 +387,29 @@
                     </div>
 
                     <!-- Hack 3: Active Recall & Spaced Repetition -->
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
-                            <i class="fa-solid fa-arrows-rotate text-blue-500"></i>
+                    <div class="bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm space-y-2 sm:space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-sm sm:text-lg">
+                            <i class="fa-solid fa-arrows-rotate text-blue-500 shrink-0"></i>
                             <span>3. สูตรอ่านหนังสือ Spaced Repetition</span>
                         </div>
-                        <p class="text-sm text-slate-600 leading-relaxed">
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                             อย่าอ่านแบบรวดเดียวจบ ให้ทบทวนแบบเว้นระยะเพื่อเปลี่ยนความจำระยะสั้นเป็นระยะยาว:
                         </p>
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-bold pt-1">
-                            <div class="p-2 bg-blue-50 text-blue-800 rounded-lg">วันที่ 1<br><span class="font-normal text-[10px]">อ่านเนื้อหา</span></div>
-                            <div class="p-2 bg-blue-100 text-blue-900 rounded-lg">วันที่ 2<br><span class="font-normal text-[10px]">ทวน Flashcard</span></div>
-                            <div class="p-2 bg-blue-200 text-blue-950 rounded-lg">วันที่ 7<br><span class="font-normal text-[10px]">ทำโจทย์รวม</span></div>
-                            <div class="p-2 bg-blue-600 text-white rounded-lg">วันที่ 30<br><span class="font-normal text-[10px]">สอบจับเวลา</span></div>
+                        <div class="grid grid-cols-4 gap-1.5 sm:gap-2 text-center text-xs font-bold pt-1">
+                            <div class="p-1.5 sm:p-2 bg-blue-50 text-blue-800 rounded-lg">วันที่ 1<br><span class="font-normal text-[9px] sm:text-[10px]">อ่านเนื้อหา</span></div>
+                            <div class="p-1.5 sm:p-2 bg-blue-100 text-blue-900 rounded-lg">วันที่ 2<br><span class="font-normal text-[9px] sm:text-[10px]">ทวน Flashcard</span></div>
+                            <div class="p-1.5 sm:p-2 bg-blue-200 text-blue-950 rounded-lg">วันที่ 7<br><span class="font-normal text-[9px] sm:text-[10px]">ทำโจทย์รวม</span></div>
+                            <div class="p-1.5 sm:p-2 bg-blue-600 text-white rounded-lg">วันที่ 30<br><span class="font-normal text-[9px] sm:text-[10px]">สอบจับเวลา</span></div>
                         </div>
                     </div>
 
                     <!-- Hack 4: Exam Trap Alerts -->
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center space-x-2 text-police-700 font-bold text-lg">
-                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+                    <div class="bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm space-y-2 sm:space-y-3">
+                        <div class="flex items-center space-x-2 text-police-700 font-bold text-sm sm:text-lg">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500 shrink-0"></i>
                             <span>4. 5 จุดหลอกยอดฮิตในข้อสอบนายสิบ</span>
                         </div>
-                        <p class="text-sm text-slate-600 leading-relaxed">
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                             ระวังตกหลุมพรางคำถามเหล่านี้:
                         </p>
                         <ul class="text-xs text-slate-700 space-y-2 bg-slate-50 p-3 rounded-xl">
@@ -411,67 +426,67 @@
         </div>
 
         <!-- 4. MEMORY MINI-GAMES SCREEN -->
-        <div id="screen-games" class="hidden space-y-6 animate-fade-in">
+        <div id="screen-games" class="hidden space-y-4 sm:space-y-6 animate-fade-in">
             
             <!-- Game Modes Header -->
-            <div class="glass-card p-4 rounded-2xl border border-slate-200 flex flex-wrap justify-between items-center gap-3">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg">
+            <div class="glass-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-base sm:text-lg shrink-0">
                         <i class="fa-solid fa-gamepad"></i>
                     </div>
                     <div>
-                        <h2 class="font-display font-bold text-lg text-police-900">ศูนย์มินิเกมฝึกความจำสูตรลัด</h2>
-                        <p class="text-xs text-slate-500">เลือกโหมดเกมเพื่อกระตุ้นความจำก่อนสอบ</p>
+                        <h2 class="font-display font-bold text-base sm:text-lg text-police-900 leading-tight">ศูนย์มินิเกมฝึกความจำสูตรลัด</h2>
+                        <p class="text-[11px] sm:text-xs text-slate-500">เลือกโหมดเกมเพื่อกระตุ้นความจำก่อนสอบ</p>
                     </div>
                 </div>
                 
-                <div class="flex space-x-2">
-                    <button onclick="switchGameTab('flashcard')" id="tab-game-flashcard" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-emerald-600 text-white">🎴 แฟลชการ์ด</button>
-                    <button onclick="switchGameTab('match')" id="tab-game-match" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700">🧩 จับคู่สูตร</button>
-                    <button onclick="switchGameTab('rapid')" id="tab-game-rapid" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700">⚡ 60 วิ ดวลเร็ว</button>
+                <div class="flex space-x-1.5 w-full sm:w-auto overflow-x-auto no-scrollbar">
+                    <button onclick="switchGameTab('flashcard')" id="tab-game-flashcard" class="px-3 py-1.5 rounded-xl font-bold text-xs bg-emerald-600 text-white shrink-0">🎴 แฟลชการ์ด</button>
+                    <button onclick="switchGameTab('match')" id="tab-game-match" class="px-3 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700 shrink-0">🧩 จับคู่สูตร</button>
+                    <button onclick="switchGameTab('rapid')" id="tab-game-rapid" class="px-3 py-1.5 rounded-xl font-bold text-xs bg-slate-200 text-slate-700 shrink-0">⚡ 60 วิ ดวลเร็ว</button>
                 </div>
             </div>
 
             <!-- Game Sub-View 1: Flashcards -->
-            <div id="game-sub-flashcard" class="space-y-6">
-                <div class="max-w-md mx-auto text-center space-y-4">
-                    <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">คลิกการ์ดเพื่อพลิกดูสูตรเฉลย</div>
+            <div id="game-sub-flashcard" class="space-y-4 sm:space-y-6">
+                <div class="max-w-md mx-auto text-center space-y-3 sm:space-y-4">
+                    <div class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest">แตะที่การ์ดเพื่อพลิกดูสูตรเฉลย</div>
                     
                     <!-- 3D Card Container -->
-                    <div onclick="flipFlashcard()" class="perspective-1000 w-full h-64 cursor-pointer">
-                        <div id="flashcard-inner" class="relative w-full h-full transform-style-3d transition-transform duration-500 shadow-2xl rounded-3xl">
+                    <div onclick="flipFlashcard()" class="perspective-1000 w-full h-56 sm:h-64 cursor-pointer">
+                        <div id="flashcard-inner" class="relative w-full h-full transform-style-3d transition-transform duration-500 shadow-xl rounded-2xl sm:rounded-3xl">
                             <!-- Card Front -->
-                            <div class="absolute inset-0 w-full h-full backface-hidden police-gradient rounded-3xl p-6 text-white flex flex-col justify-between border-2 border-gold-500/40">
+                            <div class="absolute inset-0 w-full h-full backface-hidden police-gradient rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between border-2 border-gold-500/40">
                                 <div class="flex justify-between items-center">
-                                    <span class="text-xs font-bold bg-gold-500/20 text-gold-300 px-2.5 py-1 rounded-full border border-gold-400/30" id="card-category">อนุกรม</span>
-                                    <i class="fa-solid fa-rotate text-slate-400"></i>
+                                    <span class="text-[10px] sm:text-xs font-bold bg-gold-500/20 text-gold-300 px-2.5 py-0.5 sm:py-1 rounded-full border border-gold-400/30" id="card-category">อนุกรม</span>
+                                    <i class="fa-solid fa-rotate text-slate-400 text-xs sm:text-sm"></i>
                                 </div>
-                                <div class="text-xl font-bold text-center px-4 leading-relaxed" id="card-front-text">
+                                <div class="text-base sm:text-xl font-bold text-center px-2 leading-relaxed" id="card-front-text">
                                     สูตรการหาผลบวกอนุกรมเลขคณิต
                                 </div>
-                                <div class="text-xs text-slate-400 text-center">แตะเพื่อพลิกเฉลย</div>
+                                <div class="text-[10px] sm:text-xs text-slate-400 text-center">แตะเพื่อพลิกเฉลย</div>
                             </div>
                             <!-- Card Back -->
-                            <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-amber-50 to-amber-100 rounded-3xl p-6 text-police-950 flex flex-col justify-between border-2 border-gold-500">
+                            <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-police-950 flex flex-col justify-between border-2 border-gold-500">
                                 <div class="flex justify-between items-center">
-                                    <span class="text-xs font-bold bg-gold-200 text-gold-900 px-2.5 py-1 rounded-full">เฉลยสูตรลัด</span>
-                                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                                    <span class="text-[10px] sm:text-xs font-bold bg-gold-200 text-gold-900 px-2.5 py-0.5 sm:py-1 rounded-full">เฉลยสูตรลัด</span>
+                                    <i class="fa-solid fa-circle-check text-emerald-600 text-xs sm:text-sm"></i>
                                 </div>
-                                <div class="text-lg font-extrabold text-center px-2 math-content text-police-900" id="card-back-text">
+                                <div class="text-sm sm:text-lg font-extrabold text-center px-2 math-content text-police-900" id="card-back-text">
                                     $S_n = \frac{n}{2}(\text{ต้น} + \text{ปลาย})$
                                 </div>
-                                <div class="text-xs text-slate-500 text-center">แตะอีกครั้งเพื่อพลิกกลับ</div>
+                                <div class="text-[10px] sm:text-xs text-slate-500 text-center">แตะอีกครั้งเพื่อพลิกกลับ</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Flashcard Controls -->
-                    <div class="flex justify-between items-center pt-2">
-                        <button onclick="prevFlashcard()" class="px-4 py-2 bg-white text-slate-700 font-bold rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                    <div class="flex justify-between items-center pt-1">
+                        <button onclick="prevFlashcard()" class="px-3.5 py-2 bg-white text-slate-700 font-bold text-xs sm:text-sm rounded-xl border border-slate-200 hover:bg-slate-50 transition active:scale-95">
                             <i class="fa-solid fa-chevron-left mr-1"></i> ก่อนหน้า
                         </button>
-                        <span class="text-sm font-bold text-police-800" id="card-counter">1 / 10</span>
-                        <button onclick="nextFlashcard()" class="px-4 py-2 bg-police-700 text-white font-bold rounded-xl hover:bg-police-800 transition">
+                        <span class="text-xs sm:text-sm font-bold text-police-800" id="card-counter">1 / 10</span>
+                        <button onclick="nextFlashcard()" class="px-3.5 py-2 bg-police-700 text-white font-bold text-xs sm:text-sm rounded-xl hover:bg-police-800 transition active:scale-95">
                             ถัดไป <i class="fa-solid fa-chevron-right ml-1"></i>
                         </button>
                     </div>
@@ -479,45 +494,45 @@
             </div>
 
             <!-- Game Sub-View 2: Speed Formula Match -->
-            <div id="game-sub-match" class="hidden space-y-4">
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 flex justify-between items-center">
+            <div id="game-sub-match" class="hidden space-y-3 sm:space-y-4">
+                <div class="bg-white p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <div>
-                        <h3 class="font-bold text-police-900">เกมจับคู่สูตรลัด</h3>
-                        <p class="text-xs text-slate-500">จับคู่ชื่อสูตรทางซ้าย กับ ความหมายสูตรทางขวาให้ถูกต้อง</p>
+                        <h3 class="font-bold text-sm sm:text-base text-police-900">เกมจับคู่สูตรลัด</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500">จับคู่ชื่อสูตรทางซ้าย กับ ความหมายสูตรทางขวาให้ถูกต้อง</p>
                     </div>
                     <button onclick="initMatchGame()" class="px-3 py-1.5 bg-emerald-600 text-white font-bold text-xs rounded-lg hover:bg-emerald-700 transition">
-                        <i class="fa-solid fa-rotate-right mr-1"></i> รีเซ็ตการเล่น
+                        <i class="fa-solid fa-rotate-right mr-1"></i> รีเซ็ต
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="match-grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4" id="match-grid">
                     <!-- Match pairs generated by JS -->
                 </div>
             </div>
 
             <!-- Game Sub-View 3: 60-Second Rapid Fire -->
             <div id="game-sub-rapid" class="hidden space-y-4">
-                <div class="bg-slate-900 text-white p-6 rounded-3xl border border-slate-800 text-center space-y-4 relative overflow-hidden">
+                <div class="bg-slate-900 text-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800 text-center space-y-3 sm:space-y-4 relative overflow-hidden">
                     <div class="flex justify-between items-center">
                         <div class="text-left">
-                            <span class="text-xs text-slate-400 uppercase font-bold">เวลานับถอยหลัง</span>
-                            <div class="text-3xl font-display font-extrabold text-amber-400" id="rapid-timer">60s</div>
+                            <span class="text-[10px] sm:text-xs text-slate-400 uppercase font-bold">เวลานับถอยหลัง</span>
+                            <div class="text-2xl sm:text-3xl font-display font-extrabold text-amber-400" id="rapid-timer">60s</div>
                         </div>
                         <div class="text-right">
-                            <span class="text-xs text-slate-400 uppercase font-bold">คะแนนปัจจุบัน</span>
-                            <div class="text-3xl font-display font-extrabold text-emerald-400" id="rapid-score">0</div>
+                            <span class="text-[10px] sm:text-xs text-slate-400 uppercase font-bold">คะแนนปัจจุบัน</span>
+                            <div class="text-2xl sm:text-3xl font-display font-extrabold text-emerald-400" id="rapid-score">0</div>
                         </div>
                     </div>
 
                     <!-- Question Container -->
-                    <div id="rapid-game-area" class="py-6 space-y-4">
-                        <div class="text-xl font-bold text-white math-content min-h-[60px]" id="rapid-q-text">
+                    <div id="rapid-game-area" class="py-4 sm:py-6 space-y-4">
+                        <div class="text-base sm:text-xl font-bold text-white math-content min-h-[50px] sm:min-h-[60px]" id="rapid-q-text">
                             กดปุ่ม "เริ่มดวลคำถาม" เพื่อเริ่มทดสอบความเร็ว!
                         </div>
-                        <div class="grid grid-cols-2 gap-3 max-w-lg mx-auto" id="rapid-opts">
+                        <div class="grid grid-cols-2 gap-2 sm:gap-3 max-w-lg mx-auto" id="rapid-opts">
                             <!-- Options generated dynamically -->
                         </div>
-                        <button onclick="startRapidGame()" id="rapid-start-btn" class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-display font-extrabold text-lg rounded-xl shadow-lg hover:scale-105 transition">
+                        <button onclick="startRapidGame()" id="rapid-start-btn" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-display font-extrabold text-base sm:text-lg rounded-xl shadow-lg hover:scale-105 transition active:scale-95">
                             <i class="fa-solid fa-bolt mr-2"></i>เริ่มดวลคำถาม 60 วิ!
                         </button>
                     </div>
@@ -527,35 +542,35 @@
         </div>
 
         <!-- 5. QUIZ SCREEN / EXAM SIMULATOR -->
-        <div id="screen-quiz" class="hidden space-y-4 animate-fade-in">
+        <div id="screen-quiz" class="hidden space-y-3 sm:space-y-4 animate-fade-in">
             
             <!-- Quiz Control Sticky Header -->
-            <div class="glass-card p-3 md:p-4 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-center sticky top-[72px] z-40 gap-3 shadow-md">
-                <div class="w-full md:w-1/2">
-                    <div class="flex justify-between items-center mb-1 text-xs font-bold text-police-900">
+            <div class="glass-card p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-center sticky top-[60px] sm:top-[72px] z-40 gap-2 sm:gap-3 shadow-md">
+                <div class="w-full sm:w-1/2">
+                    <div class="flex justify-between items-center mb-1 text-[11px] sm:text-xs font-bold text-police-900">
                         <span id="quiz-status">ข้อที่ 1/100</span>
                         <span id="score-text" class="text-police-600">คะแนน: 0</span>
                     </div>
-                    <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="bg-gradient-to-r from-police-600 to-gold-500 h-2.5 rounded-full transition-all duration-300" style="width: 1%"></div>
+                    <div class="w-full bg-slate-200 rounded-full h-2 sm:h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-police-600 to-gold-500 h-full rounded-full transition-all duration-300" style="width: 1%"></div>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-end">
+                <div class="flex items-center space-x-1.5 sm:space-x-2 w-full sm:w-auto justify-between sm:justify-end">
                     <!-- Bookmark button -->
-                    <button onclick="toggleBookmark()" id="btn-bookmark" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center space-x-1">
+                    <button onclick="toggleBookmark()" id="btn-bookmark" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center space-x-1">
                         <i class="fa-regular fa-bookmark" id="bookmark-icon"></i>
-                        <span>ติดดาว</span>
+                        <span class="hidden xs:inline">ติดดาว</span>
                     </button>
 
                     <!-- Question Grid Modal Trigger -->
-                    <button onclick="toggleQGridModal()" class="px-3 py-1.5 bg-police-100 hover:bg-police-200 text-police-800 rounded-xl text-xs font-bold transition flex items-center space-x-1">
+                    <button onclick="toggleQGridModal()" class="px-2.5 py-1.5 bg-police-100 hover:bg-police-200 text-police-800 rounded-lg text-xs font-bold transition flex items-center space-x-1">
                         <i class="fa-solid fa-table-cells"></i>
                         <span>ผังข้อสอบ (100)</span>
                     </button>
 
                     <!-- Timer Badge -->
-                    <div class="flex items-center space-x-2 bg-police-900 text-gold-400 font-display font-extrabold px-3 py-1.5 rounded-xl border border-police-700 text-sm">
+                    <div class="flex items-center space-x-1.5 bg-police-900 text-gold-400 font-display font-extrabold px-2.5 py-1 rounded-lg border border-police-700 text-xs sm:text-sm">
                         <i class="fa-regular fa-clock"></i>
                         <span id="timer">00:00</span>
                     </div>
@@ -563,44 +578,44 @@
             </div>
 
             <!-- Question Card -->
-            <div class="bg-white rounded-3xl shadow-lg p-6 md:p-8 min-h-[480px] flex flex-col justify-between border border-slate-200 relative">
+            <div class="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-4 sm:p-8 min-h-[420px] sm:min-h-[480px] flex flex-col justify-between border border-slate-200 relative">
                 
                 <div>
                     <!-- Category Badge -->
-                    <div class="mb-4 flex justify-between items-center">
-                        <span id="q-category" class="bg-police-50 text-police-700 text-xs font-bold px-3 py-1 rounded-full border border-police-100">
+                    <div class="mb-3 sm:mb-4 flex justify-between items-center">
+                        <span id="q-category" class="bg-police-50 text-police-700 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full border border-police-100 truncate max-w-[200px] sm:max-w-none">
                             หมวดหมู่: คณิตศาสตร์ทั่วไป
                         </span>
-                        <span id="flag-badge" class="hidden text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                        <span id="flag-badge" class="hidden text-[11px] sm:text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 shrink-0">
                             <i class="fa-solid fa-star mr-1"></i> ปักหมุดไว้
                         </span>
                     </div>
 
                     <!-- Question Text -->
-                    <h3 id="q-text" class="text-base md:text-xl font-bold text-slate-800 leading-relaxed mb-6 math-content">
+                    <h3 id="q-text" class="text-sm sm:text-lg md:text-xl font-bold text-slate-800 leading-relaxed mb-4 sm:mb-6 math-content">
                         กำลังโหลดคำถาม...
                     </h3>
 
                     <!-- Choices Options List -->
-                    <div id="options" class="space-y-3"></div>
+                    <div id="options" class="space-y-2 sm:space-y-3"></div>
                 </div>
 
                 <!-- Solution / Explainer Box -->
-                <div id="explainer" class="hidden mt-6 p-5 rounded-2xl border-2 animate-fade-in">
-                    <p id="exp-status" class="text-base font-bold mb-1"></p>
-                    <div id="exp-text" class="text-xs md:text-sm text-slate-700 math-content leading-relaxed"></div>
+                <div id="explainer" class="hidden mt-4 sm:mt-6 p-4 sm:p-5 rounded-2xl border-2 animate-fade-in">
+                    <p id="exp-status" class="text-sm sm:text-base font-bold mb-1"></p>
+                    <div id="exp-text" class="text-xs sm:text-sm text-slate-700 math-content leading-relaxed"></div>
                 </div>
 
                 <!-- Navigation Controls Footer -->
-                <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-100">
-                    <button id="btn-prev" onclick="changeQ(-1)" class="text-slate-500 font-bold px-4 py-2.5 rounded-xl hover:bg-slate-100 disabled:opacity-30 transition flex items-center space-x-1">
-                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                <div class="flex justify-between items-center mt-6 pt-3 sm:pt-4 border-t border-slate-100">
+                    <button id="btn-prev" onclick="changeQ(-1)" class="text-slate-500 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl hover:bg-slate-100 disabled:opacity-30 transition text-xs sm:text-sm flex items-center space-x-1">
+                        <i class="fa-solid fa-chevron-left text-[10px] sm:text-xs"></i>
                         <span>ข้อก่อนหน้า</span>
                     </button>
                     
-                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-6 py-3 rounded-xl shadow-md hover:brightness-110 transition transform active:scale-95 flex items-center space-x-2">
+                    <button id="btn-next" onclick="changeQ(1)" class="police-gradient text-white font-bold px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl shadow-md hover:brightness-110 active:scale-95 transition flex items-center space-x-1.5 text-xs sm:text-sm">
                         <span id="next-btn-text">ข้อถัดไป</span>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                        <i class="fa-solid fa-chevron-right text-[10px] sm:text-xs"></i>
                     </button>
                 </div>
 
@@ -609,12 +624,12 @@
         </div>
 
         <!-- Question Grid Navigator Modal (1-100) -->
-        <div id="qgrid-modal" class="hidden fixed inset-0 z-50 bg-police-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl p-6 max-h-[85vh] flex flex-col border border-slate-200">
-                <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+        <div id="qgrid-modal" class="hidden fixed inset-0 z-50 bg-police-950/80 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-4">
+            <div class="bg-white w-full max-w-3xl rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 max-h-[88vh] flex flex-col border border-slate-200">
+                <div class="flex justify-between items-center pb-3 border-b border-slate-100">
                     <div>
-                        <h3 class="font-display font-bold text-xl text-police-900">ผังการทำข้อสอบ (100 ข้อ)</h3>
-                        <p class="text-xs text-slate-500">กดที่ตัวเลขข้อเพื่อข้ามไปยังข้อนั้นๆ</p>
+                        <h3 class="font-display font-bold text-base sm:text-xl text-police-900">ผังการทำข้อสอบ (100 ข้อ)</h3>
+                        <p class="text-[10px] sm:text-xs text-slate-500">กดที่ตัวเลขข้อเพื่อข้ามไปยังข้อนั้นๆ</p>
                     </div>
                     <button onclick="toggleQGridModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition">
                         <i class="fa-solid fa-xmark"></i>
@@ -622,19 +637,19 @@
                 </div>
 
                 <!-- Legend -->
-                <div class="flex flex-wrap gap-4 py-3 text-xs font-medium text-slate-600 border-b border-slate-100">
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-emerald-500 rounded-full"></span> ตอบแล้ว</span>
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-slate-200 rounded-full"></span> ยังไม่ได้ตอบ</span>
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-400 rounded-full"></span> ปักหมุดทวน</span>
+                <div class="flex flex-wrap gap-3 py-2.5 text-[11px] font-medium text-slate-600 border-b border-slate-100">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></span> ตอบแล้ว</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-slate-200 rounded-full"></span> ยังไม่ได้ตอบ</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-amber-400 rounded-full"></span> ปักหมุดทวน</span>
                 </div>
 
                 <!-- Grid Buttons Container -->
-                <div class="overflow-y-auto py-4 my-2 flex-grow">
-                    <div id="qgrid-buttons" class="grid grid-cols-5 sm:grid-cols-10 gap-2"></div>
+                <div class="overflow-y-auto py-3 my-1 flex-grow">
+                    <div id="qgrid-buttons" class="grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2"></div>
                 </div>
 
-                <div class="pt-3 border-t border-slate-100 text-right">
-                    <button onclick="toggleQGridModal()" class="px-5 py-2 bg-police-700 text-white text-sm font-bold rounded-xl hover:bg-police-800 transition">
+                <div class="pt-2.5 border-t border-slate-100 text-right">
+                    <button onclick="toggleQGridModal()" class="w-full sm:w-auto px-5 py-2 bg-police-700 text-white text-xs sm:text-sm font-bold rounded-xl hover:bg-police-800 transition">
                         ปิดหน้าผัง
                     </button>
                 </div>
@@ -642,43 +657,43 @@
         </div>
 
         <!-- 6. RESULT SCREEN -->
-        <div id="screen-result" class="hidden text-center space-y-6 py-6 animate-fade-in">
-            <div class="bg-white p-6 md:p-10 rounded-3xl shadow-2xl max-w-2xl mx-auto border-t-8 border-police-700 space-y-6">
+        <div id="screen-result" class="hidden text-center space-y-4 sm:space-y-6 py-4 sm:py-6 animate-fade-in">
+            <div class="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl mx-auto border-t-8 border-police-700 space-y-4 sm:space-y-6">
                 
-                <div id="result-icon" class="w-20 h-20 bg-gold-100 text-gold-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
-                    <i class="fa-solid fa-trophy text-4xl"></i>
+                <div id="result-icon" class="w-16 h-16 sm:w-20 sm:h-20 bg-gold-100 text-gold-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                    <i class="fa-solid fa-trophy text-3xl sm:text-4xl"></i>
                 </div>
 
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-display font-extrabold text-police-900">สรุปผลการทำแบบทดสอบ</h2>
-                    <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest font-bold">Police Exam Capability Score</p>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-display font-extrabold text-police-900">สรุปผลการทำแบบทดสอบ</h2>
+                    <p class="text-[10px] sm:text-xs text-slate-400 mt-0.5 uppercase tracking-widest font-bold">Police Exam Capability Score</p>
                 </div>
 
-                <div class="text-6xl md:text-7xl font-display font-black text-police-800 gold-text" id="final-score">
+                <div class="text-5xl sm:text-6xl md:text-7xl font-display font-black text-police-800 gold-text" id="final-score">
                     0/100
                 </div>
 
-                <p id="result-msg" class="text-slate-600 font-medium text-sm md:text-base italic max-w-md mx-auto"></p>
+                <p id="result-msg" class="text-slate-600 font-medium text-xs sm:text-sm md:text-base italic max-w-md mx-auto"></p>
 
                 <!-- Statistics Summary Cards -->
-                <div class="grid grid-cols-3 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div class="grid grid-cols-3 gap-2 sm:gap-3 bg-slate-50 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200">
                     <div>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold">เวลาที่ใช้</p>
-                        <p id="final-time" class="font-bold text-police-900 text-sm md:text-base">-</p>
+                        <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">เวลาที่ใช้</p>
+                        <p id="final-time" class="font-bold text-police-900 text-xs sm:text-sm md:text-base">-</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold">ความแม่นยำ</p>
-                        <p id="final-percent" class="font-bold text-emerald-600 text-sm md:text-base">0%</p>
+                        <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">ความแม่นยำ</p>
+                        <p id="final-percent" class="font-bold text-emerald-600 text-xs sm:text-sm md:text-base">0%</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold">ตอบถูกล่วงหน้า</p>
-                        <p id="final-correct" class="font-bold text-police-700 text-sm md:text-base">0 ข้อ</p>
+                        <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">ตอบถูกล่วงหน้า</p>
+                        <p id="final-correct" class="font-bold text-police-700 text-xs sm:text-sm md:text-base">0 ข้อ</p>
                     </div>
                 </div>
 
                 <!-- Topic Strengths Breakdown -->
-                <div class="text-left space-y-3 bg-white p-4 rounded-2xl border border-slate-200">
-                    <h4 class="font-bold text-sm text-police-900 flex items-center space-x-2">
+                <div class="text-left space-y-2.5 bg-white p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200">
+                    <h4 class="font-bold text-xs sm:text-sm text-police-900 flex items-center space-x-2">
                         <i class="fa-solid fa-chart-pie text-police-500"></i>
                         <span>วิเคราะห์ความเชี่ยวชาญรายบท</span>
                     </h4>
@@ -686,11 +701,11 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button onclick="switchMode('quiz')" class="flex-1 police-gradient text-white py-3.5 rounded-xl font-bold hover:brightness-110 transition shadow-md">
+                <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                    <button onclick="switchMode('quiz')" class="flex-1 police-gradient text-white py-3 rounded-xl font-bold hover:brightness-110 transition shadow-md text-sm">
                         <i class="fa-solid fa-rotate-right mr-1.5"></i> ทำใหม่อีกครั้ง
                     </button>
-                    <button onclick="switchMode('book')" class="flex-1 bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 py-3.5 rounded-xl font-bold transition">
+                    <button onclick="switchMode('book')" class="flex-1 bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 py-3 rounded-xl font-bold transition text-sm">
                         <i class="fa-solid fa-book-open mr-1.5"></i> กลับไปอ่านบทเรียน
                     </button>
                 </div>
@@ -756,13 +771,14 @@
 
         function toggleAudio() {
             audioMuted = !audioMuted;
-            const icon = document.getElementById('audio-icon');
-            if (audioMuted) {
-                icon.className = "fa-solid fa-volume-xmark text-rose-400";
-            } else {
-                icon.className = "fa-solid fa-volume-high";
-                playAudio('click');
-            }
+            const iconDesktop = document.getElementById('audio-icon');
+            const iconMobile = document.getElementById('audio-icon-mobile');
+            const iconClass = audioMuted ? "fa-solid fa-volume-xmark text-rose-400" : "fa-solid fa-volume-high";
+            
+            if (iconDesktop) iconDesktop.className = iconClass;
+            if (iconMobile) iconMobile.className = iconClass;
+            
+            if (!audioMuted) playAudio('click');
         }
 
         // ==========================================
@@ -1196,23 +1212,23 @@
 
             q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 text-left border-2 rounded-2xl font-medium transition flex items-center justify-between math-content cursor-pointer";
+                btn.className = "w-full p-3 sm:p-4 text-left border-2 rounded-xl sm:rounded-2xl font-medium transition flex items-center justify-between math-content cursor-pointer text-xs sm:text-sm active:scale-[0.99]";
                 
                 if(userAnswers[curQ] !== null) {
                     btn.disabled = true;
                     if(i === q.ans) {
                         btn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900');
-                        btn.innerHTML = `<span><span class="bg-emerald-200 text-emerald-900 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+                        btn.innerHTML = `<span><span class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded-md mr-2 text-[11px] font-bold">${i+1}</span> ${o}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-base shrink-0 ml-2"></i>`;
                     } else if(i === userAnswers[curQ]) {
                         btn.classList.add('bg-rose-50', 'border-rose-400', 'text-rose-900');
-                        btn.innerHTML = `<span><span class="bg-rose-200 text-rose-900 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span> <i class="fa-solid fa-circle-xmark text-rose-600 text-lg"></i>`;
+                        btn.innerHTML = `<span><span class="bg-rose-200 text-rose-900 px-2 py-0.5 rounded-md mr-2 text-[11px] font-bold">${i+1}</span> ${o}</span> <i class="fa-solid fa-circle-xmark text-rose-600 text-base shrink-0 ml-2"></i>`;
                     } else {
                         btn.classList.add('opacity-40', 'bg-slate-50', 'border-slate-200');
-                        btn.innerHTML = `<span><span class="bg-slate-200 text-slate-600 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span>`;
+                        btn.innerHTML = `<span><span class="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-md mr-2 text-[11px] font-bold">${i+1}</span> ${o}</span>`;
                     }
                 } else {
                     btn.classList.add('bg-slate-50', 'border-slate-200', 'hover:border-police-500', 'hover:bg-police-50/50');
-                    btn.innerHTML = `<span><span class="bg-slate-200 text-slate-600 px-2 py-1 rounded-lg mr-3 text-xs font-bold">${i+1}</span> ${o}</span>`;
+                    btn.innerHTML = `<span><span class="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-md mr-2 text-[11px] font-bold">${i+1}</span> ${o}</span>`;
                     btn.onclick = () => selectAnswer(i);
                 }
                 opts.appendChild(btn);
@@ -1223,10 +1239,10 @@
             if(userAnswers[curQ] !== null) {
                 explainer.classList.remove('hidden');
                 if(userAnswers[curQ] === q.ans) {
-                    explainer.className = "mt-6 p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-900 animate-fade-in";
+                    explainer.className = "mt-4 sm:mt-6 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-900 animate-fade-in";
                     document.getElementById('exp-status').innerHTML = "✅ ถูกต้อง! เก่งมาก";
                 } else {
-                    explainer.className = "mt-6 p-5 rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-900 animate-fade-in";
+                    explainer.className = "mt-4 sm:mt-6 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-900 animate-fade-in";
                     document.getElementById('exp-status').innerHTML = `❌ ยังไม่ถูกต้อง (เฉลยคือข้อ ${q.ans + 1})`;
                 }
                 document.getElementById('exp-text').innerHTML = `<b>คำอธิบาย / วิธีคิด:</b> ${q.exp}`;
@@ -1283,9 +1299,9 @@
                     let colorClass = "bg-slate-100 text-slate-700 hover:bg-slate-200";
                     if(userAnswers[i] !== null) colorClass = "bg-emerald-500 text-white font-bold";
                     if(bookmarks[i]) colorClass = "bg-amber-400 text-police-950 font-bold";
-                    if(i === curQ) colorClass += " ring-2 ring-police-900 ring-offset-2";
+                    if(i === curQ) colorClass += " ring-2 ring-police-900 ring-offset-1";
 
-                    btn.className = `p-2 rounded-xl text-xs flex flex-col items-center justify-center transition ${colorClass}`;
+                    btn.className = `p-1.5 sm:p-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold flex flex-col items-center justify-center transition ${colorClass}`;
                     btn.innerText = i + 1;
                     btn.onclick = () => {
                         curQ = i;
